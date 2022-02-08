@@ -12,21 +12,20 @@ namespace Mauxnimale_CE2
 {
     public partial class MainWindow : Form
     {
-        InterfaceAbs interfac; //pas interface parce que sinon ca marche mal
+        InterfaceAbs window; //pas interface parce que sinon ca marche mal
         public MainWindow()
         {
-            InitializeComponent();
 
-            MinimalHeader test = new MinimalHeader(this);
-            test.load();
+            window = new InterfaceConnection();
+            window.load();
 
-            Refresh();
+            InitializeComponent();            
         }
 
         public void switchInterface(InterfaceAbs interf)
         {
-            interfac = interf;
-            interfac.load();
+            window = interf;
+            window.load();
         }
     }
 }

@@ -10,41 +10,42 @@ namespace Mauxnimale_CE2
     class InterfaceConnection : InterfaceAbs
     {
         Footer footer;
+        Header header;
         DateTimePicker dateTimePicker = new DateTimePicker();
         Button connection;
 
-        Label date;
-        Form1 form;
+        MainWindow form;
         //Lister ici les différents éléments qui seront utilisés dans l'interface
 
-        public InterfaceConnection(Form1 form)
+        public InterfaceConnection(MainWindow form)
         {
             this.form = form;
+            footer = new Footer(form);
+            header = new Header(form);
         }
 
         public override void load()
         {
             generate_Button();
-            generate_Labels();
+            header.load("Connection");
+            footer.load();
+
         }
 
         public void generate_Button()
         {
             connection = new Button();
             connection.Click += new EventHandler(this.connection_click);
-            /*connection.Size = new System.Drawing.Size(110, 42);*/
+            connection.AutoSize = true;
             connection.Location = new System.Drawing.Point((this.form.Width / 2) - (connection.Width/2), (this.form.Width / 4));
+            connection.BackColor = System.Drawing.Color.FromArgb(255,156,3);  
+            connection.ForeColor = System.Drawing.Color.White;
             connection.Text = "Connection";
-            connection.Font = new System.Drawing.Font("Minion Pro", 20);
+            connection.TabStop = false; 
+            connection.FlatStyle = FlatStyle.Flat;  
+            connection.FlatAppearance.BorderSize = 0;
+            connection.Font = new System.Drawing.Font("Roboto", 20, System.Drawing.FontStyle.Bold);
             form.Controls.Add(connection);
-        }
-
-        public void generate_Labels()
-        {
-            date = new Label();
-            dateTimePicker = new DateTimePicker();
-            date.Text = dateTimePicker.Value.ToString("yyyy-MM-dd");
-            date.Location = new System.Drawing.Point(this.form.Width - 100, 5);
         }
 
         public void connection_click(object sender, EventArgs e)

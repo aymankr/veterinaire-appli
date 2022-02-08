@@ -63,9 +63,9 @@ namespace Mauxnimale_CE2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap logo {
+        internal static System.Drawing.Bitmap AppLogo {
             get {
-                object obj = ResourceManager.GetObject("logo", resourceCulture);
+                object obj = ResourceManager.GetObject("AppLogo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

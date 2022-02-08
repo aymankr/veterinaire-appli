@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace Mauxnimale_CE2
 {
-    public partial class Form1 : Form
+    public partial class MainWindow : Form
     {
         InterfaceAbs interfac; //pas interface parce que sinon ca marche mal
-        public Form1()
+        public MainWindow()
         {
             InitializeComponent();
 
-            Title test = new Title(this);
+            MinimalHeader test = new MinimalHeader(this);
             test.load();
 
             Refresh();

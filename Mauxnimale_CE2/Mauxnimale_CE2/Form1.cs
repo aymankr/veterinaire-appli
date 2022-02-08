@@ -17,8 +17,8 @@ namespace Mauxnimale_CE2
         {
             InitializeComponent();
 
-            //interfac = new InterfaceConnexion(this);
-            //interfac.load();
+            interfac = new InterfaceConnection(this);
+            interfac.load();
 
             Refresh();
         }

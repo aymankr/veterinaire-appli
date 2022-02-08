@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,13 +12,15 @@ namespace Mauxnimale_CE2
     {
         Label admin;
         Label mentions;
+        Rectangle up;
+        Rectangle down;
 
         public void load(Form1 form)
         {
-            generate_Label(form);
+            generate_Labels(form);
         }
 
-        public void generate_Label(Form1 form)
+        public void generate_Labels(Form1 form)
         {
             admin = new Label();
             admin.Text = "Contact admin";
@@ -29,6 +32,20 @@ namespace Mauxnimale_CE2
 
             form.Controls.Add(admin);
             form.Controls.Add(mentions);
+        }
+
+        public void generate_Rectangles(Form1 form)
+        {
+            Pen pen = new Pen();
+            up = new Rectangle();
+            up.Height = 181;
+            up.Width = form.Width;
+            up.X = 0;
+            up.Y = form.Height - up.Height;
+            
+
+
+            down = new Rectangle();
         }
 
     }

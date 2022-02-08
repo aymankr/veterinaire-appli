@@ -47,12 +47,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExempleInterface.cs" />
+    <Compile Include="Footer.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Header.cs" />
     <Compile Include="InterfaceAbs.cs" />
     <Compile Include="AppPicture.cs">
       <SubType>Component</SubType>

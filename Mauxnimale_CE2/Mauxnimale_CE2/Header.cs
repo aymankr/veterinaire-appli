@@ -13,9 +13,9 @@ namespace Mauxnimale_CE2
         Label date, title;
         DateTimePicker dateTimePicker;
 
-        public Header(Form1 forme)
+        public Header(Form1 form)
         {
-            form = forme;
+            this.form = form;
         }
 
         public void load(String t)
@@ -29,7 +29,7 @@ namespace Mauxnimale_CE2
             date = new Label();
             dateTimePicker = new DateTimePicker();
             date.Text = dateTimePicker.Value.ToString("yyyy-MM-dd");
-            date.Location = new System.Drawing.Point(this.form.Width - 100, 5);
+            date.Location = new System.Drawing.Point(form.Width - 100, 5);
             form.Controls.Add(date);
         }
 

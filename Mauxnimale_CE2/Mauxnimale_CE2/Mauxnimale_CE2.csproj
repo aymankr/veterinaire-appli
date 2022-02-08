@@ -56,13 +56,9 @@
     </Compile>
     <Compile Include="Header.cs" />
     <Compile Include="InterfaceAbs.cs" />
-<<<<<<< HEAD
     <Compile Include="AppPicture.cs">
       <SubType>Component</SubType>
     </Compile>
-=======
-    <Compile Include="InterfaceConnection.cs" />
->>>>>>> 31295ad (page Connection, boutton à resize, labels footer à replacer)
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Title.cs" />

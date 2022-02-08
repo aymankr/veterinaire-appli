@@ -9,11 +9,11 @@ namespace Mauxnimale_CE2
 {
     class InterfaceConnection : InterfaceAbs
     {
+        Footer footer;
         DateTimePicker dateTimePicker = new DateTimePicker();
         Button connection;
+
         Label date;
-        Label admin;
-        Label mentions;
         Form1 form;
         //Lister ici les différents éléments qui seront utilisés dans l'interface
 
@@ -26,6 +26,7 @@ namespace Mauxnimale_CE2
         {
             generate_Button();
             generate_Labels();
+            footer.load(form);
         }
 
         public void generate_Button()
@@ -45,19 +46,6 @@ namespace Mauxnimale_CE2
             dateTimePicker = new DateTimePicker();
             date.Text = dateTimePicker.Value.ToString("yyyy-MM-dd");
             date.Location = new System.Drawing.Point(this.form.Width - 100, 5);
-
-            admin = new Label();
-            admin.Text = "Contact admin";
-            admin.Location = new System.Drawing.Point(15, this.form.Height - 40);
-
-            mentions = new Label();
-            mentions.Text = "Mentions légales";
-            mentions.Location = new System.Drawing.Point(this.form.Width - 100, this.form.Height - 40);
-
-            form.Controls.Add(date);
-            form.Controls.Add(admin);
-            form.Controls.Add(mentions);
-
         }
 
         public void connection_click(object sender, EventArgs e)

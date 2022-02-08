@@ -9,11 +9,11 @@ namespace Mauxnimale_CE2
 {
     class Header
     {
-        Form1 form;
+        MainWindow form;
         Label date, title;
         DateTimePicker dateTimePicker;
 
-        public Header(Form1 form)
+        public Header(MainWindow form)
         {
             this.form = form;
         }

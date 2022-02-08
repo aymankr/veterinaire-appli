@@ -11,14 +11,14 @@ namespace Mauxnimale_CE2
     class Footer
     {
         PaintEventArgs e;
-        Form1 form;
+        MainWindow form;
 
         Label admin;
         Label mentions;
         Rectangle up;
         Rectangle down;
 
-        public Footer(Form1 form)
+        public Footer(MainWindow form)
         {
             this.form = form;
         }

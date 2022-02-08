@@ -16,7 +16,7 @@ namespace Mauxnimale_CE2
         public MainWindow()
         {
 
-            window = new InterfaceConnection();
+            window = new InterfaceConnection(this);
             window.load();
 
             InitializeComponent();            

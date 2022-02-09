@@ -16,10 +16,10 @@ namespace Mauxnimale_CE2
         public MainWindow()
         {
 
+            InitializeComponent();
             window = new InterfaceConnection(this);
             window.load();
-
-            InitializeComponent();            
+          
         }
 
         public void switchInterface(InterfaceAbs interf)

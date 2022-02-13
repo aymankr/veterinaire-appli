@@ -25,10 +25,7 @@ namespace Mauxnimale_CE2
 
         public void button_click(object sender, EventArgs e)
         {
-            foreach (Control item in form.Controls)
-            {
-                form.Controls.Remove(item);
-            }
+            form.Controls.Clear();
             //form.changerClasse(new Interface...());
         }
     }

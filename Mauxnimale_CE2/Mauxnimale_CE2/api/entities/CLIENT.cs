@@ -7,33 +7,31 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Mauxnimale_CE2
+namespace Mauxnimale_CE2.api.entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class PRODUIT
+    public partial class CLIENT
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PRODUIT()
+        public CLIENT()
         {
-            this.PRODUITLIES = new HashSet<PRODUITLIES>();
-            this.PRODUITVENDU = new HashSet<PRODUITVENDU>();
+            this.ANIMAL = new HashSet<ANIMAL>();
+            this.FACTURE_PRODUIT = new HashSet<FACTURE_PRODUIT>();
+            this.RENDEZ_VOUS = new HashSet<RENDEZ_VOUS>();
         }
     
-        public int IDPRODUIT { get; set; }
-        public int IDTYPE { get; set; }
-        public int QUANTITEENSTOCK { get; set; }
-        public string NOMPRODUIT { get; set; }
-        public byte[] IMAGEPRODUIT { get; set; }
-        public decimal PRIXDEVENTECLIENT { get; set; }
-        public decimal PRIXDACHAT { get; set; }
-        public System.DateTime DATEPEREMPTION { get; set; }
+        public int IDCLIENT { get; set; }
+        public string NOMCLIENT { get; set; }
+        public string PRENOMCLIENT { get; set; }
+        public string TELCLIENT { get; set; }
     
-        public virtual TYPE_PRODUIT TYPE_PRODUIT { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PRODUITLIES> PRODUITLIES { get; set; }
+        public virtual ICollection<ANIMAL> ANIMAL { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PRODUITVENDU> PRODUITVENDU { get; set; }
+        public virtual ICollection<FACTURE_PRODUIT> FACTURE_PRODUIT { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RENDEZ_VOUS> RENDEZ_VOUS { get; set; }
     }
 }

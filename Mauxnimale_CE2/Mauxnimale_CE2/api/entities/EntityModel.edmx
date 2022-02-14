@@ -1017,7 +1017,7 @@
           <End Role="MALADIE" Type="Self.MALADIE" Multiplicity="*" />
           <End Role="SOIN" Type="Self.SOIN" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="PT4_S4P2C_E2Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="PT4_S4P2C_E2Entities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ANIMAL" EntityType="Self.ANIMAL" />
           <EntitySet Name="CLIENT" EntityType="Self.CLIENT" />
           <EntitySet Name="ESPECE" EntityType="Self.ESPECE" />
@@ -1123,7 +1123,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="PT4_S4P2C_E2ModelStoreContainer" CdmEntityContainer="PT4_S4P2C_E2Entities">
+        <EntityContainerMapping StorageEntityContainer="PT4_S4P2C_E2ModelStoreContainer" CdmEntityContainer="PT4_S4P2C_E2Entities1">
           <EntitySetMapping Name="ANIMAL">
             <EntityTypeMapping TypeName="PT4_S4P2C_E2Model.ANIMAL">
               <MappingFragment StoreEntitySet="ANIMAL">

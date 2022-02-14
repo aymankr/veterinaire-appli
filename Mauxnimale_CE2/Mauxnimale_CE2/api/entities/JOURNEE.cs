@@ -7,23 +7,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Mauxnimale_CE2
+namespace Mauxnimale_CE2.api.entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class TYPE_PRODUIT
+    public partial class JOURNEE
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TYPE_PRODUIT()
+        public JOURNEE()
         {
-            this.PRODUIT = new HashSet<PRODUIT>();
+            this.JOURNEE_SALARIE = new HashSet<JOURNEE_SALARIE>();
+            this.RENDEZ_VOUS = new HashSet<RENDEZ_VOUS>();
         }
     
-        public int IDTYPE { get; set; }
-        public string NOMTYPE { get; set; }
+        public int IDJOURNEE { get; set; }
+        public System.DateTime DATE { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PRODUIT> PRODUIT { get; set; }
+        public virtual ICollection<JOURNEE_SALARIE> JOURNEE_SALARIE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RENDEZ_VOUS> RENDEZ_VOUS { get; set; }
     }
 }

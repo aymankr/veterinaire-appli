@@ -7,25 +7,24 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Mauxnimale_CE2
+namespace Mauxnimale_CE2.api.entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class RACE
+    public partial class TYPE_RDV
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public RACE()
+        public TYPE_RDV()
         {
-            this.ANIMAL = new HashSet<ANIMAL>();
+            this.RENDEZ_VOUS = new HashSet<RENDEZ_VOUS>();
         }
     
-        public int IDRACE { get; set; }
-        public int IDESPECE { get; set; }
-        public string NOMRACE { get; set; }
+        public int IDTYPE { get; set; }
+        public string NOMTYPE { get; set; }
+        public decimal MONTANT { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ANIMAL> ANIMAL { get; set; }
-        public virtual ESPECE ESPECE { get; set; }
+        public virtual ICollection<RENDEZ_VOUS> RENDEZ_VOUS { get; set; }
     }
 }

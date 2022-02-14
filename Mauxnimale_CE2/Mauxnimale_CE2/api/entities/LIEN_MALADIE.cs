@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Mauxnimale_CE2
+namespace Mauxnimale_CE2.api.entities
 {
     using System;
     using System.Collections.Generic;

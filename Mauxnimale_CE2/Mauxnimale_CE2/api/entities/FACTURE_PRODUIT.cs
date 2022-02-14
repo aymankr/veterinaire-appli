@@ -7,26 +7,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Mauxnimale_CE2
+namespace Mauxnimale_CE2.api.entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class MALADIE
+    public partial class FACTURE_PRODUIT
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public MALADIE()
+        public FACTURE_PRODUIT()
         {
-            this.LIEN_MALADIE = new HashSet<LIEN_MALADIE>();
-            this.SOIN = new HashSet<SOIN>();
+            this.PRODUITVENDU = new HashSet<PRODUITVENDU>();
         }
     
-        public int IDMALADIE { get; set; }
-        public string NOMMALADIE { get; set; }
+        public int IDFACTURE { get; set; }
+        public int IDCLIENT { get; set; }
+        public System.DateTime DATE { get; set; }
+        public decimal MONTANT { get; set; }
     
+        public virtual CLIENT CLIENT { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LIEN_MALADIE> LIEN_MALADIE { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SOIN> SOIN { get; set; }
+        public virtual ICollection<PRODUITVENDU> PRODUITVENDU { get; set; }
     }
 }

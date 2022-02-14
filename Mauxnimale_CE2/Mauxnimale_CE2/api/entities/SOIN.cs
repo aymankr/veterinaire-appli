@@ -7,21 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Mauxnimale_CE2
+namespace Mauxnimale_CE2.api.entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class JOURNEE_SALARIE
+    public partial class SOIN
     {
-        public int IDJOURNEESALARIE { get; set; }
-        public int IDCOMPTE { get; set; }
-        public int IDJOURNEE { get; set; }
-        public System.TimeSpan HEUREDEBUT { get; set; }
-        public System.TimeSpan HEUREFIN { get; set; }
-        public bool CONGE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public SOIN()
+        {
+            this.MALADIE = new HashSet<MALADIE>();
+        }
     
-        public virtual JOURNEE JOURNEE { get; set; }
-        public virtual SALARIE SALARIE { get; set; }
+        public int IDSOINS { get; set; }
+        public string DESCRIPTION { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MALADIE> MALADIE { get; set; }
     }
 }

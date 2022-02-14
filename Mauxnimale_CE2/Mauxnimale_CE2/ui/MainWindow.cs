@@ -9,7 +9,7 @@ namespace Mauxnimale_CE2
         {
             InitializeComponent();
 
-            interfac = new InterfaceInscription(this);
+            interfac = new InterfaceConnection(this);
             interfac.load();
 
             Refresh();

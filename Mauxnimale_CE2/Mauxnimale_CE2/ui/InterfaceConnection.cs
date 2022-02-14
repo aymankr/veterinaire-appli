@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Mauxnimale_CE2.ui.components.componentsTools;
+using Mauxnimale_CE2.ui.Components;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +13,7 @@ namespace Mauxnimale_CE2
     class InterfaceConnection : AInterface
     {
 
+        UIButton button;
 
         Footer footer;
         Header header;
@@ -39,34 +43,97 @@ namespace Mauxnimale_CE2
 
         public void generate_Button()
         {
-            connection = new Button();
+            button = new UIButton(UIColor.ORANGE, "Connection", 190);
+            /*button.Font = UIFont.BigButtonFont;*/
+            button.Location = new Point((this.form.Width / 2) - (button.Width / 2), 3 * (this.form.Height / 4));
+
+            /*connection = new Button();
             connection.Click += new EventHandler(this.connection_click);
-            connection.BackColor = System.Drawing.Color.FromArgb(255,156,3);  
-            connection.ForeColor = System.Drawing.Color.White;
+            connection.BackColor = Color.FromArgb(255,156,3);  
+            connection.ForeColor = Color.White;
             connection.Text = "Connection";
             connection.TabStop = false; 
             connection.FlatStyle = FlatStyle.Flat;  
             connection.FlatAppearance.BorderSize = 0;
-            connection.Font = new System.Drawing.Font("Roboto", 20, System.Drawing.FontStyle.Bold);
+            connection.Font = new Font("Roboto", 20, System.Drawing.FontStyle.Bold);
             connection.AutoSize = true;
-            connection.Location = new System.Drawing.Point((this.form.Width / 2) - (connection.Width / 2), 3 * (this.form.Height / 4));
-            form.Controls.Add(connection);
+            connection.Location = new Point((this.form.Width / 2) - (connection.Width / 2), 3 * (this.form.Height / 4));
+            form.Controls.Add(connection);*/
+            form.Controls.Add(button);
+        }
+
+
+        public void setBox(TextBox box, String text)
+        {
+            box.Size = new Size(form.Width / 2, form.Height * 5 / 100);
+            box.Font = new Font("Poppins", form.Height * 3 / 100);
+            box.ForeColor = Color.Gray;
+            box.Text = text;
+            form.Controls.Add(box);
         }
 
         public void generate_TextBox()
         {
             login = new TextBox();
-            login.Text = "login";
+            login.LostFocus += new EventHandler(loginLeave);
+            login.GotFocus += new EventHandler(loginEnter);
+            login.Location = new Point(form.Width / 4, form.Height * 25 / 100);
+            setBox(login, "login");
+
+            password = new TextBox();   
+            password.LostFocus += new EventHandler(passwordLeave);
+            password.GotFocus += new EventHandler(passwordEnter);
+            password.Location = new Point(form.Width / 4, form.Height * 35 / 100);
+            password.PasswordChar = '•';
+            setBox(password, "password");
+
         }
+
+
 
         public void connection_click(object sender, EventArgs e)
         {
-            foreach (Control item in window.Controls)
+            foreach (Control item in form.Controls)
             {
-                window.Controls.Remove(item);
+                form.Controls.Remove(item);
             }
         }
 
+        private void loginEnter(object sender, EventArgs e)
+        {
+            if (login.Text == "login")
+            {
+                login.Text = "";
+                login.ForeColor = Color.Black;
+            }
+        }
+
+        private void loginLeave(object sender, EventArgs e)
+        {
+            if (login.Text.Length == 0)
+            {
+                login.Text = "login";
+                login.ForeColor = Color.Gray;
+            }
+        }
+       
+        private void passwordEnter(object sender, EventArgs e)
+        {
+            if (password.Text == "password")
+            {
+                password.Text = "";
+                password.ForeColor = Color.Black;
+            }
+        }
+
+        private void passwordLeave(object sender, EventArgs e)
+        {
+            if (password.Text.Length == 0)
+            {
+                password.Text = "password";
+                password.ForeColor = Color.Gray;
+            }
+        }
 
     }
 }

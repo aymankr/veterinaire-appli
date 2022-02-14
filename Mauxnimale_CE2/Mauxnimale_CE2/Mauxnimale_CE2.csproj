@@ -58,31 +58,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="api\entities\ANIMAL.cs" />
-    <Compile Include="api\entities\CLIENT.cs" />
-    <Compile Include="api\entities\EntityModel.Context.cs" />
-    <Compile Include="api\entities\EntityModel.Context1.cs" />
-    <Compile Include="api\entities\EntityModel.cs" />
-    <Compile Include="api\entities\EntityModel.Designer.cs" />
-    <Compile Include="api\entities\EntityModel1.cs" />
-    <Compile Include="api\entities\EntityModel1.Designer.cs" />
-    <Compile Include="api\entities\ESPECE.cs" />
-    <Compile Include="api\entities\FACTURE_PRODUIT.cs" />
-    <Compile Include="api\entities\JOURNEE.cs" />
-    <Compile Include="api\entities\JOURNEE_SALARIE.cs" />
-    <Compile Include="api\entities\LIEN_MALADIE.cs" />
-    <Compile Include="api\entities\LOG.cs" />
-    <Compile Include="api\entities\MALADIE.cs" />
-    <Compile Include="api\entities\ORDONNANCE.cs" />
-    <Compile Include="api\entities\PRODUIT.cs" />
-    <Compile Include="api\entities\PRODUITLIES.cs" />
-    <Compile Include="api\entities\PRODUITVENDU.cs" />
-    <Compile Include="api\entities\RACE.cs" />
-    <Compile Include="api\entities\RENDEZ_VOUS.cs" />
-    <Compile Include="api\entities\SALARIE.cs" />
-    <Compile Include="api\entities\SOIN.cs" />
-    <Compile Include="api\entities\TYPE_PRODUIT.cs" />
-    <Compile Include="api\entities\TYPE_RDV.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ui\AInterface.cs" />
@@ -95,7 +70,9 @@
     <Compile Include="ui\components\componentsTools\UIPicture.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ui\components\componentsTools\UITextBox.cs" />
+    <Compile Include="ui\components\componentsTools\UITextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ui\components\componentsTools\UITitleLabel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -143,7 +120,9 @@
   <ItemGroup>
     <None Include="Resources\images\logo.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="api\entities\" />
+  </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

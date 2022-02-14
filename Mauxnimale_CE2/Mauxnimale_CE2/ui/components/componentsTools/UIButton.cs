@@ -22,6 +22,7 @@ namespace Mauxnimale_CE2.ui.components.componentsTools
             FlatAppearance.BorderSize = 0;
             TextAlign = ContentAlignment.MiddleCenter;
             Font = new Font("Poppins", width / 8);
+            AutoSize = true;
             Margin = new Padding(0);
         }
     }

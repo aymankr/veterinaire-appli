@@ -8,12 +8,12 @@ using System.Windows.Forms;
 namespace Mauxnimale_CE2
 {
     //Ceci est une classe exemple, toutes les interfaces devront au moins comporter ce qui est dans cette classe
-    class ExempleInterface : InterfaceAbs
+    class ExempleInterface : AInterface
     {
-        Form1 form;
+        MainWindow form;
         //Lister ici les différents éléments qui seront utilisés dans l'interface
 
-        public ExempleInterface(Form1 forme)
+        public ExempleInterface(MainWindow forme)
         {
             this.form = forme;
         }
@@ -25,10 +25,7 @@ namespace Mauxnimale_CE2
 
         public void button_click(object sender, EventArgs e)
         {
-            foreach (Control item in form.Controls)
-            {
-                form.Controls.Remove(item);
-            }
+            form.Controls.Clear();
             //form.changerClasse(new Interface...());
         }
     }

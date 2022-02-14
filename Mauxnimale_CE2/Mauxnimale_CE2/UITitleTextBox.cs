@@ -6,7 +6,7 @@ namespace Mauxnimale_CE2.UI.Components
     /// <summary>
     /// Text box that fit content with Poppins font and blue color by default.
     /// </summary>
-    internal class UITitleTextBox : TextBox
+    internal class UITitleTextBox : Label
     {
         /// <summary>
         /// Instanciate an UITitleTextBox at 0;0, with the given text and font size.

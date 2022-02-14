@@ -32,6 +32,7 @@ namespace Mauxnimale_CE2.api.entities
         public string PRENOM { get; set; }
         public string NOM { get; set; }
         public bool PREMIERECONNEXION { get; set; }
+        public Nullable<decimal> SALAIRE { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<JOURNEE_SALARIE> JOURNEE_SALARIE { get; set; }

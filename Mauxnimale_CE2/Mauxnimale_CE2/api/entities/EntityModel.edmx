@@ -111,7 +111,7 @@
           <Property Name="IMAGEPRODUIT" Type="image" />
           <Property Name="PRIXDEVENTECLIENT" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="PRIXDACHAT" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="DATEPEREMPTION" Type="date" Nullable="false" />
+          <Property Name="DATEPEREMPTION" Type="date" />
         </EntityType>
         <EntityType Name="PRODUITLIES">
           <Key>
@@ -167,6 +167,7 @@
           <Property Name="PRENOM" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="NOM" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="PREMIERECONNEXION" Type="bit" Nullable="false" />
+          <Property Name="SALAIRE" Type="decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="SOIGNER">
           <Key>
@@ -698,7 +699,7 @@
           <Property Name="IMAGEPRODUIT" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="PRIXDEVENTECLIENT" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="PRIXDACHAT" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="DATEPEREMPTION" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DATEPEREMPTION" Type="DateTime" Precision="0" />
           <NavigationProperty Name="TYPE_PRODUIT" Relationship="Self.FK_PRODUIT_TYPE_PRODUIT" FromRole="PRODUIT" ToRole="TYPE_PRODUIT" />
           <NavigationProperty Name="PRODUITLIES" Relationship="Self.FK_PRODUITLIES_PRODUIT" FromRole="PRODUIT" ToRole="PRODUITLIES" />
           <NavigationProperty Name="PRODUITVENDU" Relationship="Self.FK_PRODUITVENDU_PRODUIT" FromRole="PRODUIT" ToRole="PRODUITVENDU" />
@@ -768,6 +769,7 @@
           <Property Name="PRENOM" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="NOM" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PREMIERECONNEXION" Type="Boolean" Nullable="false" />
+          <Property Name="SALAIRE" Type="Decimal" Precision="10" Scale="2" />
           <NavigationProperty Name="JOURNEE_SALARIE" Relationship="Self.FK_JOURNEE_SALARIE_SALARIE" FromRole="SALARIE" ToRole="JOURNEE_SALARIE" />
         </EntityType>
         <EntityType Name="SOIN">
@@ -1292,6 +1294,7 @@
                 <ScalarProperty Name="PRENOM" ColumnName="PRENOM" />
                 <ScalarProperty Name="NOM" ColumnName="NOM" />
                 <ScalarProperty Name="PREMIERECONNEXION" ColumnName="PREMIERECONNEXION" />
+                <ScalarProperty Name="SALAIRE" ColumnName="SALAIRE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

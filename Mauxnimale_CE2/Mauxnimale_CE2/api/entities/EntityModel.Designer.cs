@@ -1,4 +1,4 @@
-﻿// La génération de code T4 est activée pour le modèle '\\iut.bx1\Etudiants\Home\aykachmar\Documents\pt4_veto_s4p2c_e2\Mauxnimale_CE2\Mauxnimale_CE2\api\entities\EntityModel.edmx'. 
+﻿// La génération de code T4 est activée pour le modèle 'V:\Courses\S4\PT4\pt4_veto_s4p2c_e2\Mauxnimale_CE2\Mauxnimale_CE2\api\entities\EntityModel.edmx'. 
 // Pour activer la génération de code héritée, définissez la valeur de la propriété
 // du concepteur 'Stratégie de génération de code' sur 'ObjectContext hérité'. Cette propriété est disponible dans la fenêtre Propriétés lorsque le modèle
 //  est ouvert dans le concepteur.

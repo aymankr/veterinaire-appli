@@ -31,6 +31,7 @@ namespace Mauxnimale_CE2.api.entities
         public Nullable<System.DateTime> DATEFINSTAGE { get; set; }
         public string PRENOM { get; set; }
         public string NOM { get; set; }
+        public bool PREMIERECONNEXION { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<JOURNEE_SALARIE> JOURNEE_SALARIE { get; set; }

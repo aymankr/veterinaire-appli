@@ -13,10 +13,10 @@ namespace Mauxnimale_CE2.api.entities
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class PT4_S4P2C_E2Entities1 : DbContext
+    public partial class PT4_S4P2C_E2Entities : DbContext
     {
-        public PT4_S4P2C_E2Entities1()
-            : base("name=PT4_S4P2C_E2Entities1")
+        public PT4_S4P2C_E2Entities()
+            : base("name=PT4_S4P2C_E2Entities")
         {
         }
     

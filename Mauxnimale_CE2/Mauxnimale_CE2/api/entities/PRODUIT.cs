@@ -28,7 +28,7 @@ namespace Mauxnimale_CE2.api.entities
         public byte[] IMAGEPRODUIT { get; set; }
         public decimal PRIXDEVENTECLIENT { get; set; }
         public decimal PRIXDACHAT { get; set; }
-        public System.DateTime DATEPEREMPTION { get; set; }
+        public Nullable<System.DateTime> DATEPEREMPTION { get; set; }
     
         public virtual TYPE_PRODUIT TYPE_PRODUIT { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

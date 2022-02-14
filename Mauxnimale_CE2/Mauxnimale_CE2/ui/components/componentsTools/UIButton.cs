@@ -18,9 +18,11 @@ namespace Mauxnimale_CE2.ui.components.componentsTools
             Text = text;
             ForeColor = Color.White;
             FlatStyle = FlatStyle.Flat;
+            TabStop = false;
             FlatAppearance.BorderSize = 0;
-            Font = new System.Drawing.Font("Poppins", width / 8);
-            Size = new Size(width, width / 3);
+            TextAlign = ContentAlignment.MiddleCenter;
+            Font = new Font("Poppins", width / 8);
+            Margin = new Padding(0);
         }
     }
 }

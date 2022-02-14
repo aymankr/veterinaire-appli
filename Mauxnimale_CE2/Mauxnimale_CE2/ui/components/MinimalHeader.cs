@@ -20,7 +20,7 @@ namespace Mauxnimale_CE2.UI
             logo.Parent = Panel1;
 
             // Setup title
-            UITitleTextBox title = new UITitleTextBox("Mauxnimale", 30);
+            UITiltleLabel title = new UITiltleLabel("Mauxnimale", 30);
             title.Name = "ApplicationTitle";
             title.Parent = Panel2;
 

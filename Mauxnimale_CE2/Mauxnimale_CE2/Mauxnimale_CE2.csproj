@@ -140,10 +140,12 @@
       <DependentUpon>UIButton.cs</DependentUpon>
     </Compile>
     <Compile Include="ui\components\componentsTools\UIColor.cs" />
+    <Compile Include="ui\components\componentsTools\UIFont.cs" />
     <Compile Include="ui\components\componentsTools\UIPicture.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ui\components\componentsTools\UITitleTextBox.cs">
+    <Compile Include="ui\components\componentsTools\UITextBox.cs" />
+    <Compile Include="ui\components\componentsTools\UITitleLabel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ui\components\Footer.cs" />

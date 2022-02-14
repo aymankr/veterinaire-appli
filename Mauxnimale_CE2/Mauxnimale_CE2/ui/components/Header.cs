@@ -9,7 +9,7 @@ namespace Mauxnimale_CE2
     {
         MainWindow window;
         Label date;
-        UITitleTextBox title;
+        UITiltleLabel title;
         DateTimePicker dateTimePicker;
 
         public Header(MainWindow form)
@@ -34,7 +34,7 @@ namespace Mauxnimale_CE2
 
         public void generate_Title(String t)
         {
-            title = new UITitleTextBox(new Point(this.window.Width / 5, window.Height*25/1000), t, window.Height*75/1000);
+            title = new UITiltleLabel(new Point(this.window.Width / 5, window.Height*25/1000), t, window.Height*75/1000);
             window.Controls.Add(title);
         }
     }

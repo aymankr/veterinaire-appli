@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 
 namespace Mauxnimale_CE2
 {
-    class InterfaceInscription : InterfaceAbs
+    class InterfaceInscription : AInterface
     {
-        Form1 form;
+        MainWindow form;
 
-        Header head;
-        Footer foot;
+        Header header;
+        Footer footer;
 
         TextBox name, firstName, pswd, confirmPswd;
         Button inscription;
@@ -93,18 +88,18 @@ namespace Mauxnimale_CE2
         }
         #endregion 
 
-        public InterfaceInscription(Form1 forme)
+        public InterfaceInscription(MainWindow forme)
         {
             this.form = forme;
-            head = new Header(forme);
-            foot = new Footer(forme);
+            header = new Header(forme);
+            footer = new Footer(forme);
         }
 
 
         public override void load()
         {
-            head.load("Inscription");
-            foot.load();
+            header.load("Inscription");
+            footer.load();
             generateBox();
             generateLabel();
             generateButton();
@@ -114,10 +109,10 @@ namespace Mauxnimale_CE2
         {
             alert = new Label();
             alert.Text = "";
-            alert.Font = new System.Drawing.Font("Poppins", 10);
+            alert.Font = new System.Drawing.Font("Poppins", form.Height * 3 / 100);
             alert.ForeColor = Color.Red;
-            alert.Size = new System.Drawing.Size(form.Width / 2, 20);
-            alert.Location = new Point(form.Width / 4, 235);
+            alert.Size = new System.Drawing.Size(form.Width / 2, form.Height*6/100);
+            alert.Location = new Point(form.Width / 4, form.Height*62/100);
             form.Controls.Add(alert);
         }
 
@@ -126,7 +121,7 @@ namespace Mauxnimale_CE2
             inscription = new Button();
             inscription.Text = "Inscription";
             inscription.Click += new EventHandler(inscription_click);
-            inscription.Location = new Point(form.Width / (5/2), 265);
+            inscription.Location = new Point(form.Width / (5/2), form.Height * 72 / 100);
             form.Controls.Add(inscription);
         }
 
@@ -135,32 +130,32 @@ namespace Mauxnimale_CE2
             name = new TextBox();
             name.LostFocus += new EventHandler(nameLeave);
             name.GotFocus += new EventHandler(nameEnter);
-            name.Location = new Point(form.Width / 4, 115);
+            name.Location = new Point(form.Width / 4, form.Height * 22 / 100);
             setBox(name, "Votre prénom");
 
             firstName = new TextBox();
             firstName.LostFocus += new EventHandler(firstNameLeave);
             firstName.GotFocus += new EventHandler(firstNameEnter);
-            firstName.Location = new Point(form.Width / 4, 145);
+            firstName.Location = new Point(form.Width / 4, form.Height * 32 / 100);
             setBox(firstName, "Votre nom");
 
             pswd = new TextBox();
             pswd.LostFocus += new EventHandler(pswdLeave);
             pswd.GotFocus += new EventHandler(pswdEnter);
-            pswd.Location = new Point(form.Width / 4, 185);
+            pswd.Location = new Point(form.Width / 4, form.Height * 42 / 100);
             setBox(pswd, "Votre mot de passe");
 
             confirmPswd = new TextBox();
             confirmPswd.LostFocus += new EventHandler(confirmPswdLeave);
             confirmPswd.GotFocus += new EventHandler(confirmPswdEnter);
-            confirmPswd.Location = new Point(form.Width / 4, 215);
+            confirmPswd.Location = new Point(form.Width / 4, form.Height * 52 / 100);
             setBox(confirmPswd, "Confirmation du mot de passe");
         }
 
         public void setBox(TextBox box, String text)
         {
-            box.Size = new System.Drawing.Size(form.Width/2, 20);
-            box.Font = new System.Drawing.Font("Poppins", 10);
+            box.Size = new System.Drawing.Size(form.Width/2, form.Height * 5 / 100);
+            box.Font = new System.Drawing.Font("Poppins", form.Height * 3/ 100);
             box.ForeColor = Color.Gray;
             box.Text = text;
             form.Controls.Add(box);

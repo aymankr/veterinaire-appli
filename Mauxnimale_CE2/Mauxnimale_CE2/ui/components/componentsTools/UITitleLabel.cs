@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
 
-namespace Mauxnimale_CE2.UI.Components
+namespace Mauxnimale_CE2.ui.Components
 {
     /// <summary>
     /// Text box that fit content with Poppins font and blue color by default.

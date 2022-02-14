@@ -5,12 +5,7 @@ namespace Mauxnimale_CE2
 {
     class Footer
     {
-<<<<<<< HEAD:Mauxnimale_CE2/Mauxnimale_CE2/Footer.cs
-        PaintEventArgs e;
-        MainWindow form;
-=======
         MainWindow window;
->>>>>>> 0caef9d232032591dd3b35aa5b3b0ac3b9c1a264:Mauxnimale_CE2/Mauxnimale_CE2/ui/components/Footer.cs
 
         Label admin;
         Label mentions;

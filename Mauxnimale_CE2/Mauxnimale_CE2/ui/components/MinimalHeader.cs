@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
-using Mauxnimale_CE2.UI.Components;
+using Mauxnimale_CE2.ui.Components;
 
 namespace Mauxnimale_CE2.UI
 {

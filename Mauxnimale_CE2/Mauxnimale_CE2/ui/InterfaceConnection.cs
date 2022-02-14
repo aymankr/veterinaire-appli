@@ -1,8 +1,5 @@
-﻿using Mauxnimale_CE2.ui.components.componentsTools;
-using Mauxnimale_CE2.UI.Components;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,8 +13,6 @@ namespace Mauxnimale_CE2
 
         Footer footer;
         Header header;
-
-        UIButton button;
 
         Button connection;
         TextBox login;
@@ -44,23 +39,18 @@ namespace Mauxnimale_CE2
 
         public void generate_Button()
         {
-            button = new UIButton(UIColor.ORANGE,"Bouton",160);  
-            button.Location = new Point(form.Width/2,form.Height/2);
-
-
             connection = new Button();
             connection.Click += new EventHandler(this.connection_click);
-            connection.BackColor = Color.FromArgb(255,156,3);  
-            connection.ForeColor = Color.White;
+            connection.BackColor = System.Drawing.Color.FromArgb(255,156,3);  
+            connection.ForeColor = System.Drawing.Color.White;
             connection.Text = "Connection";
             connection.TabStop = false; 
             connection.FlatStyle = FlatStyle.Flat;  
             connection.FlatAppearance.BorderSize = 0;
-            connection.Font = new Font("Roboto", 20, FontStyle.Bold);
+            connection.Font = new System.Drawing.Font("Roboto", 20, System.Drawing.FontStyle.Bold);
             connection.AutoSize = true;
-            connection.Location = new Point((this.form.Width / 2) - (connection.Width / 2), 3 * (this.form.Height / 4));
+            connection.Location = new System.Drawing.Point((this.form.Width / 2) - (connection.Width / 2), 3 * (this.form.Height / 4));
             form.Controls.Add(connection);
-            form.Controls.Add(button);
         }
 
         public void generate_TextBox()
@@ -71,9 +61,9 @@ namespace Mauxnimale_CE2
 
         public void connection_click(object sender, EventArgs e)
         {
-            foreach (Control item in form.Controls)
+            foreach (Control item in window.Controls)
             {
-                form.Controls.Remove(item);
+                window.Controls.Remove(item);
             }
         }
 

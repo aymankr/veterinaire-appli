@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Mauxnimale_CE2.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,32 +49,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExempleInterface.cs" />
-    <Compile Include="Footer.cs" />
-    <Compile Include="Header.cs" />
-    <Compile Include="AInterface.cs" />
-    <Compile Include="InterfaceInscription.cs" />
-    <Compile Include="MainWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainWindow.Designer.cs">
-      <DependentUpon>MainWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MinimalHeader.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UIColor.cs" />
-    <Compile Include="UIPicture.cs">
+    <Compile Include="ui\AInterface.cs" />
+    <Compile Include="ui\components\componentsTools\UIColor.cs" />
+    <Compile Include="ui\components\componentsTools\UIPicture.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UITitleTextBox.cs">
+    <Compile Include="ui\components\componentsTools\UITitleTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <EmbeddedResource Include="MainWindow.resx">
+    <Compile Include="ui\components\Footer.cs" />
+    <Compile Include="ui\components\Header.cs" />
+    <Compile Include="ui\components\MinimalHeader.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ui\ExempleInterface.cs" />
+    <Compile Include="ui\InterfaceConnection.cs" />
+    <Compile Include="ui\InterfaceInscription.cs" />
+    <Compile Include="ui\MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
-    </EmbeddedResource>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -82,6 +83,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ui\MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -97,6 +101,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\images\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="api\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

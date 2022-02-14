@@ -52,6 +52,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ui\AInterface.cs" />
+    <Compile Include="ui\components\componentsTools\UIButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ui\components\componentsTools\UIButton.Designer.cs">
+      <DependentUpon>UIButton.cs</DependentUpon>
+    </Compile>
     <Compile Include="ui\components\componentsTools\UIColor.cs" />
     <Compile Include="ui\components\componentsTools\UIPicture.cs">
       <SubType>Component</SubType>

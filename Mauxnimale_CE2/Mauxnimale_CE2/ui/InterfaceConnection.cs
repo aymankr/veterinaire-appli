@@ -7,26 +7,27 @@ using System.Windows.Forms;
 
 namespace Mauxnimale_CE2
 {
-    class InterfaceConnection : InterfaceAbs
+    class InterfaceConnection : AInterface
     {
         Footer footer;
         DateTimePicker dateTimePicker = new DateTimePicker();
         Button connection;
 
         Label date;
-        Form1 form;
+        MainWindow window;
         //Lister ici les différents éléments qui seront utilisés dans l'interface
 
-        public InterfaceConnection(Form1 form)
+        public InterfaceConnection(MainWindow window)
         {
-            this.form = form;
+            this.window = window;
+            this.footer = new Footer(window);
         }
 
         public override void load()
         {
             generate_Button();
             generate_Labels();
-            footer.load(form);
+            footer.load();
         }
 
         public void generate_Button()
@@ -34,10 +35,10 @@ namespace Mauxnimale_CE2
             connection = new Button();
             connection.Click += new EventHandler(this.connection_click);
             /*connection.Size = new System.Drawing.Size(110, 42);*/
-            connection.Location = new System.Drawing.Point((this.form.Width / 2) - (connection.Width/2), (this.form.Width / 4));
+            connection.Location = new System.Drawing.Point((this.window.Width / 2) - (connection.Width/2), (this.window.Width / 4));
             connection.Text = "Connection";
             connection.Font = new System.Drawing.Font("Minion Pro", 20);
-            form.Controls.Add(connection);
+            window.Controls.Add(connection);
         }
 
         public void generate_Labels()
@@ -45,16 +46,15 @@ namespace Mauxnimale_CE2
             date = new Label();
             dateTimePicker = new DateTimePicker();
             date.Text = dateTimePicker.Value.ToString("yyyy-MM-dd");
-            date.Location = new System.Drawing.Point(this.form.Width - 100, 5);
+            date.Location = new System.Drawing.Point(this.window.Width - 100, 5);
         }
 
         public void connection_click(object sender, EventArgs e)
         {
-            foreach (Control item in form.Controls)
+            foreach (Control item in window.Controls)
             {
-                form.Controls.Remove(item);
+                window.Controls.Remove(item);
             }
-            //form.changerClasse(new Interface...());
         }
 
 

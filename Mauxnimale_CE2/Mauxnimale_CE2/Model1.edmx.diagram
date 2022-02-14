@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8ecc88312ac44e34889c75ed7e78fd34" Name="Diagram1">
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.ANIMAL" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.CLIENT" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.ESPECE" Width="1.5" PointX="1.5" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.FACTURE_PRODUIT" Width="1.5" PointX="3" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.JOURNEE" Width="1.5" PointX="6" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.JOURNEE_SALARIE" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.LIEN_MALADIE" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.LOG" Width="1.5" PointX="9.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.MALADIE" Width="1.5" PointX="3" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.ORDONNANCE" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.PRODUIT" Width="1.5" PointX="5.25" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.PRODUITLIES" Width="1.5" PointX="7.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.PRODUITVENDU" Width="1.5" PointX="5.25" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.RACE" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.RENDEZ_VOUS" Width="1.5" PointX="8.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.SALARIE" Width="1.5" PointX="6" PointY="23.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.SOIN" Width="1.5" PointX="5.25" PointY="27.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.TYPE_PRODUIT" Width="1.5" PointX="3" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.TYPE_RDV" Width="1.5" PointX="6" PointY="15.625" IsExpanded="true" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_ANIMAL_CLIENT" ManuallyRouted="false" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_ANIMAL_RACE" ManuallyRouted="false" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_LIEN_MALADIE_ANIMAL" ManuallyRouted="false" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_ORDONNANCE_ANIMAL" ManuallyRouted="false" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_FACTURE_PRODUIT_CLIENT" ManuallyRouted="false" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_RENDEZ_VOUS_CLIENT" ManuallyRouted="false" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_RACE_ESPECE" ManuallyRouted="false" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_PRODUITVENDU_FACTURE_PRODUIT" ManuallyRouted="false" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_JOURNEE_SALARIE_JOURNEE" ManuallyRouted="false" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_RENDEZ_VOUS_JOURNEE" ManuallyRouted="false" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_JOURNEE_SALARIE_SALARIE" ManuallyRouted="false" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_LIEN_MALADIE_MALADIE" ManuallyRouted="false" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_ORDONNANCE_RENDEZ_VOUS" ManuallyRouted="false" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_PRODUITLIES_ORDONNANCE" ManuallyRouted="false" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_PRODUIT_TYPE_PRODUIT" ManuallyRouted="false" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_PRODUITLIES_PRODUIT" ManuallyRouted="false" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_PRODUITVENDU_PRODUIT" ManuallyRouted="false" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_RENDEZ_VOUS_TYPE_RDV" ManuallyRouted="false" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.PATIENT" ManuallyRouted="false" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.SOIGNER" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

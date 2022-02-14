@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace Mauxnimale_CE2
 {
-    class InterfaceConnection : InterfaceAbs
+    class InterfaceConnection : AInterface
     {
 
 
@@ -61,11 +61,10 @@ namespace Mauxnimale_CE2
 
         public void connection_click(object sender, EventArgs e)
         {
-            foreach (Control item in form.Controls)
+            foreach (Control item in window.Controls)
             {
-                form.Controls.Remove(item);
+                window.Controls.Remove(item);
             }
-            //form.changerClasse(new Interface...());
         }
 
 

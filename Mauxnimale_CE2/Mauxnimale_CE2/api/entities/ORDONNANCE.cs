@@ -7,32 +7,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Mauxnimale_CE2
+namespace Mauxnimale_CE2.api.entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class SALARIE
+    public partial class ORDONNANCE
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SALARIE()
+        public ORDONNANCE()
         {
-            this.JOURNEE_SALARIE = new HashSet<JOURNEE_SALARIE>();
+            this.PRODUITLIES = new HashSet<PRODUITLIES>();
         }
     
-        public int IDCOMPTE { get; set; }
-        public string LOGIN { get; set; }
-        public string MDP { get; set; }
-        public string EMAIL { get; set; }
-        public string TEL { get; set; }
-        public string ADRESSE { get; set; }
-        public bool ASSISTANT { get; set; }
-        public Nullable<System.DateTime> DATEDEBUTSTAGE { get; set; }
-        public Nullable<System.DateTime> DATEFINSTAGE { get; set; }
-        public string PRENOM { get; set; }
-        public string NOM { get; set; }
+        public int IDORDONNANCE { get; set; }
+        public Nullable<int> IDRDV { get; set; }
+        public int IDANIMAL { get; set; }
     
+        public virtual ANIMAL ANIMAL { get; set; }
+        public virtual RENDEZ_VOUS RENDEZ_VOUS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<JOURNEE_SALARIE> JOURNEE_SALARIE { get; set; }
+        public virtual ICollection<PRODUITLIES> PRODUITLIES { get; set; }
     }
 }

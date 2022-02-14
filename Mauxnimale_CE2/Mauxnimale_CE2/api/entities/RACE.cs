@@ -7,34 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Mauxnimale_CE2
+namespace Mauxnimale_CE2.api.entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class RENDEZ_VOUS
+    public partial class RACE
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public RENDEZ_VOUS()
+        public RACE()
         {
-            this.ORDONNANCE = new HashSet<ORDONNANCE>();
             this.ANIMAL = new HashSet<ANIMAL>();
         }
     
-        public int IDRDV { get; set; }
-        public int IDTYPE { get; set; }
-        public int IDCLIENT { get; set; }
-        public int IDJOURNEE { get; set; }
-        public System.TimeSpan HEUREDEBUT { get; set; }
-        public System.TimeSpan HEUREFIN { get; set; }
-        public string RAISON { get; set; }
+        public int IDRACE { get; set; }
+        public int IDESPECE { get; set; }
+        public string NOMRACE { get; set; }
     
-        public virtual CLIENT CLIENT { get; set; }
-        public virtual JOURNEE JOURNEE { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ORDONNANCE> ORDONNANCE { get; set; }
-        public virtual TYPE_RDV TYPE_RDV { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ANIMAL> ANIMAL { get; set; }
+        public virtual ESPECE ESPECE { get; set; }
     }
 }

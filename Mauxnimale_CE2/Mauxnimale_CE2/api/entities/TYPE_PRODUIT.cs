@@ -7,23 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Mauxnimale_CE2
+namespace Mauxnimale_CE2.api.entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class SOIN
+    public partial class TYPE_PRODUIT
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SOIN()
+        public TYPE_PRODUIT()
         {
-            this.MALADIE = new HashSet<MALADIE>();
+            this.PRODUIT = new HashSet<PRODUIT>();
         }
     
-        public int IDSOINS { get; set; }
-        public string DESCRIPTION { get; set; }
+        public int IDTYPE { get; set; }
+        public string NOMTYPE { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MALADIE> MALADIE { get; set; }
+        public virtual ICollection<PRODUIT> PRODUIT { get; set; }
     }
 }

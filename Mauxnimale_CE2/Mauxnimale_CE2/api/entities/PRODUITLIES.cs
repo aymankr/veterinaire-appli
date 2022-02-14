@@ -7,18 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Mauxnimale_CE2
+namespace Mauxnimale_CE2.api.entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class PRODUITVENDU
+    public partial class PRODUITLIES
     {
         public int IDPRODUIT { get; set; }
-        public int IDFACTURE { get; set; }
-        public int QUANTITE { get; set; }
+        public int IDORDONNANCE { get; set; }
+        public int QUANTITEPRODUITS { get; set; }
     
-        public virtual FACTURE_PRODUIT FACTURE_PRODUIT { get; set; }
+        public virtual ORDONNANCE ORDONNANCE { get; set; }
         public virtual PRODUIT PRODUIT { get; set; }
     }
 }

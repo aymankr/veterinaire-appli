@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Mauxnimale_CE2
+namespace Mauxnimale_CE2.api.entities
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class PT4_S4P2C_E2Entities : DbContext
+    public partial class PT4_S4P2C_E2Entities1 : DbContext
     {
-        public PT4_S4P2C_E2Entities()
-            : base("name=PT4_S4P2C_E2Entities")
+        public PT4_S4P2C_E2Entities1()
+            : base("name=PT4_S4P2C_E2Entities1")
         {
         }
     

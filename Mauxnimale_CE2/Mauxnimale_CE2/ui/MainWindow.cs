@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using Mauxnimale_CE2.ui;
+using System.Windows.Forms;
 
 namespace Mauxnimale_CE2
 {
@@ -9,8 +10,8 @@ namespace Mauxnimale_CE2
         {
             InitializeComponent();
 
-            //interfac = new InterfaceInscription(this);
-            //interfac.load();
+            interfac = new InterfaceHome(this);
+            interfac.load();
 
             Refresh();
         }

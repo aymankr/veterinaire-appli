@@ -10,8 +10,8 @@ namespace Mauxnimale_CE2
         {
             InitializeComponent();
 
-            interfac = new InterfaceHome(this);
-            interfac.load();
+            //interfac = new InterfaceHome(this);
+            //interfac.load();
 
             Refresh();
         }

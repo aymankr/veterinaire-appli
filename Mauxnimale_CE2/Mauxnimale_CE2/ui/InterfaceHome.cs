@@ -3,6 +3,7 @@ using Mauxnimale_CE2.UI.Components;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace Mauxnimale_CE2.ui
         Footer footer;
 
         UIButton manageCongé, manageMaladie, manageVentes, stats, manageConsultation, manageStock;
+        Button compte;
         Label incEvent;
         TextBox events;
 
@@ -81,14 +83,25 @@ namespace Mauxnimale_CE2.ui
             manageConsultation.Location = new System.Drawing.Point(window.Width * 6 / 10, window.Height * 425 / 1000);
             window.Controls.Add(manageConsultation);
 
-            manageCongé = new UIButton(UIColor.DARKBLUE, "Gestion des congés", window.Width / 4);
-            manageCongé.Location = new System.Drawing.Point(window.Width * 325 / 1000, window.Height * 625 / 1000);
-            window.Controls.Add(manageCongé);
+            /* parti a finir lors de la création des fonctions API
+            if(admin){*/
+                manageCongé = new UIButton(UIColor.DARKBLUE, "Gestion des congés", window.Width / 4);
+                manageCongé.Location = new System.Drawing.Point(window.Width * 325 / 1000, window.Height * 625 / 1000);
+                window.Controls.Add(manageCongé);
 
-            stats = new UIButton(UIColor.DARKBLUE, "Statistiques", window.Width / 4);
-            stats.Location = new System.Drawing.Point(window.Width * 6 / 10, window.Height * 625 / 1000);
-            window.Controls.Add(stats);
+                stats = new UIButton(UIColor.DARKBLUE, "Statistiques", window.Width / 4);
+                stats.Location = new System.Drawing.Point(window.Width * 6 / 10, window.Height * 625 / 1000);
+                window.Controls.Add(stats);
+            //}
 
+            compte = new Button();
+            compte.FlatAppearance.BorderSize = 0;
+            compte.Size = new Size(window.Width/10, window.Height/10);
+            compte.Location = new System.Drawing.Point(window.Width * 87 / 100, window.Height * 15 / 100);
+            window.Controls.Add(compte);
+
+            compte.Paint += new PaintEventHandler(comptePaint);
+            compte.Click += new EventHandler(manageCompteClick);
             manageCongé.Click += new EventHandler(manageCongéClick);
             manageStock.Click += new EventHandler(manageStockClick);
             manageMaladie.Click += new EventHandler(manageMaladieClick);
@@ -98,44 +111,59 @@ namespace Mauxnimale_CE2.ui
         }
 
         #region eventHandler
+
+        protected void comptePaint(object sender, PaintEventArgs pe)
+        {
+            Graphics g = pe.Graphics;
+            g.DrawEllipse(new Pen(UIColor.ORANGE), 0, 0, compte.Size.Width, compte.Size.Height);
+            g.FillEllipse(new SolidBrush(UIColor.ORANGE), 0, 0, compte.Size.Width, compte.Size.Height);
+            g.DrawString("☺", new System.Drawing.Font("Roboto", compte.Size.Width / 2), new SolidBrush(Color.White), compte.Size.Width / 6, compte.Size.Height / 200);
+
+            GraphicsPath path = new GraphicsPath();
+            path.AddEllipse(0, 0, compte.Size.Width, compte.Size.Height);
+            compte.Region = new Region(path);
+
+
+        }
+
+        public void manageCompteClick(object sender, EventArgs e)
+        {
+            window.Controls.Clear();
+            //form.changerClasse(new Interface...());
+        }
+
         public void manageCongéClick(object sender, EventArgs e)
         {
-            //Partie BD : Inscrire l'utilisateur en vérifiant qu'il n'existe pas déja
             window.Controls.Clear();
             //form.changerClasse(new Interface...());
         }
 
         public void manageStockClick(object sender, EventArgs e)
         {
-            //Partie BD : Inscrire l'utilisateur en vérifiant qu'il n'existe pas déja
             window.Controls.Clear();
             //form.changerClasse(new Interface...());
         }
 
         public void manageMaladieClick(object sender, EventArgs e)
         {
-            //Partie BD : Inscrire l'utilisateur en vérifiant qu'il n'existe pas déja
             window.Controls.Clear();
             //form.changerClasse(new Interface...());
         }
 
         public void manageVentesClick(object sender, EventArgs e)
         {
-            //Partie BD : Inscrire l'utilisateur en vérifiant qu'il n'existe pas déja
             window.Controls.Clear();
             //form.changerClasse(new Interface...());
         }
 
         public void manageConsultationClick(object sender, EventArgs e)
         {
-            //Partie BD : Inscrire l'utilisateur en vérifiant qu'il n'existe pas déja
             window.Controls.Clear();
             //form.changerClasse(new Interface...());
         }
 
         public void statsClick(object sender, EventArgs e)
         {
-            //Partie BD : Inscrire l'utilisateur en vérifiant qu'il n'existe pas déja
             window.Controls.Clear();
             //form.changerClasse(new Interface...());
         }

@@ -200,5 +200,10 @@ namespace Mauxnimale_CE2
             }
             return true;
         }
+
+        public override void updateSize()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

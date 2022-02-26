@@ -117,7 +117,7 @@ namespace Mauxnimale_CE2.ui
             Graphics g = pe.Graphics;
             g.DrawEllipse(new Pen(UIColor.ORANGE), 0, 0, compte.Size.Width, compte.Size.Height);
             g.FillEllipse(new SolidBrush(UIColor.ORANGE), 0, 0, compte.Size.Width, compte.Size.Height);
-            g.DrawString("☺", new System.Drawing.Font("Roboto", compte.Size.Width / 2), new SolidBrush(Color.White), compte.Size.Width / 6, compte.Size.Height / 200);
+            g.DrawString("☺", new System.Drawing.Font("Roboto", (compte.Size.Width + compte.Size.Height) / 4), new SolidBrush(Color.White), compte.Width/4, compte.Height/200);
 
             GraphicsPath path = new GraphicsPath();
             path.AddEllipse(0, 0, compte.Size.Width, compte.Size.Height);
@@ -168,5 +168,11 @@ namespace Mauxnimale_CE2.ui
             //form.changerClasse(new Interface...());
         }
         #endregion
+
+        public override void updateSize()
+        {
+            window.Controls.Clear();
+            this.load();
+        }
     }
 }

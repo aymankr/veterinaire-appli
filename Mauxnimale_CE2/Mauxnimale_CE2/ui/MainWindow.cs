@@ -1,4 +1,5 @@
 ﻿using Mauxnimale_CE2.ui;
+using System;
 using System.Windows.Forms;
 
 namespace Mauxnimale_CE2
@@ -9,8 +10,9 @@ namespace Mauxnimale_CE2
         public MainWindow()
         {
             InitializeComponent();
+            Resize += new EventHandler(windowResize);
 
-            //interfac = new InterfaceHome(this);
+            //interfac = new InterfaceStatsPage(this);
             //interfac.load();
 
             Refresh();
@@ -20,6 +22,12 @@ namespace Mauxnimale_CE2
         {
             interfac = inter;
             interfac.load();
+        }
+
+        public void windowResize(object sender, EventArgs e)
+        {
+            interfac.updateSize();
+            Refresh();
         }
     }
 }

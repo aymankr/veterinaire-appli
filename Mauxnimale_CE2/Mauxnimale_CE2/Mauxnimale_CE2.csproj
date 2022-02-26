@@ -155,6 +155,7 @@
     <Compile Include="ui\InterfaceConnection.cs" />
     <Compile Include="ui\InterfaceHome.cs" />
     <Compile Include="ui\InterfaceInscription.cs" />
+    <Compile Include="ui\InterfaceStatsPage.cs" />
     <Compile Include="ui\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>

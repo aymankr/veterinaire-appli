@@ -3,5 +3,6 @@
     public abstract class AInterface
     {
         public abstract void load();
+        public abstract void updateSize();
     }
 }

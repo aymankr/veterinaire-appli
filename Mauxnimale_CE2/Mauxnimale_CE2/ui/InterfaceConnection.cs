@@ -18,6 +18,8 @@ namespace Mauxnimale_CE2
         Footer footer;
         Header header;
 
+        UIButton button;
+
         Button connection;
         TextBox login;
         TextBox password;

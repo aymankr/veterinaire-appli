@@ -21,6 +21,7 @@ namespace Mauxnimale_CE2.ui
         UIButton confirm, remove;
         Label daysLeft;
         ListBox workers;
+        List<string> workersList = new List<string>();
         TextBox days;
 
         //valeur modifié grace a des requetes
@@ -43,7 +44,7 @@ namespace Mauxnimale_CE2.ui
             generateListBox();
         }
 
-        //cette fonction dépend de la variable string "daysString" par conséquent, il faudra actualiser la page a chaque fois que cette variable est actualisé
+        //cette fonction dépend de la variable string "daysString" par conséquent, il faudra actualiser la page à chaque fois que cette variable est actualisé
         public void generateBox()
         {
             days = new TextBox();
@@ -57,14 +58,19 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(days);
         }
 
+        //cette fonction dépend de la variable List<string> "workersList" par conséquent, il faudra actualiser la page à chaque fois que cette variable est actualisé
         public void generateListBox()
         {
             workers = new ListBox();
             workers.Size = new System.Drawing.Size(window.Width / 3, window.Height / 15);
-            workers.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 100);
+            workers.Font = new System.Drawing.Font("Poppins", window.Height * 2 / 100);
             workers.Location = new Point(window.Width / 2, window.Height * 3 / 15);
             workers.ForeColor = Color.Gray;
             workers.Items.Add("Sélectionnez un salarié");
+            foreach(string worker in workersList)
+            {
+                workers.Items.Add(worker);
+            }
             window.Controls.Add(workers);
         }
 

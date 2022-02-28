@@ -19,7 +19,13 @@ namespace Mauxnimale_CE2.api.entities
         {
             this.PRODUITLIES = new HashSet<PRODUITLIES>();
         }
-    
+        public ORDONNANCE(ANIMAL animal, RENDEZ_VOUS rendez_vous)
+        {
+            this.PRODUITLIES = new HashSet<PRODUITLIES>();
+            ANIMAL = animal;
+            RENDEZ_VOUS = rendez_vous;
+        }
+
         public int IDORDONNANCE { get; set; }
         public int IDANIMAL { get; set; }
     

@@ -16,6 +16,7 @@ namespace Mauxnimale_CE2.api
         public static void addAppointment(TYPE_RDV appointmentType, ORDONNANCE prescription, CLIENT costumer, ANIMAL animal, JOURNEE day, string reason, string startHour, string endHour)
         {
             RENDEZ_VOUS newAppointment = new RENDEZ_VOUS();
+            newAppointment.TYPE_RDV = appointmentType;
             newAppointment.CLIENT = costumer;
             newAppointment.ANIMAL.Add(animal); // a costumer can have many animals
             newAppointment.JOURNEE = day;

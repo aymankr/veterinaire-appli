@@ -31,13 +31,13 @@ namespace Mauxnimale_CE2
         {
             this.SuspendLayout();
             // 
-            // Form1
+            // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1424, 985);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "MainWindow";
+            this.Text = "MainWindow";
             this.ResumeLayout(false);
 
         }

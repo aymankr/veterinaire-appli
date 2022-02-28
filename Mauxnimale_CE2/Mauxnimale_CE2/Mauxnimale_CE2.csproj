@@ -58,92 +58,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="api\entities\ANIMAL.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="api\entities\CLIENT.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="api\entities\EntityModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntityModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="api\entities\EntityModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="api\entities\EntityModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntityModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="api\entities\ESPECE.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="api\entities\FACTURE_PRODUIT.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="api\entities\JOURNEE.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="api\entities\JOURNEE_SALARIE.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="api\entities\LIEN_MALADIE.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="api\entities\LOG.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="api\entities\MALADIE.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="api\entities\ORDONNANCE.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="api\entities\PRODUIT.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="api\entities\PRODUITLIES.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="api\entities\PRODUITVENDU.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="api\entities\RACE.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="api\entities\RENDEZ_VOUS.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="api\entities\SALARIE.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="api\entities\SOIN.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="api\entities\TYPE_PRODUIT.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="api\entities\TYPE_RDV.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ui\AInterface.cs" />
     <Compile Include="ui\components\componentsTools\UIButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ui\components\componentsTools\UIButton.Designer.cs">
-      <DependentUpon>UIButton.cs</DependentUpon>
-    </Compile>
+    <Compile Include="ui\components\componentsTools\UIButton.Designer.cs" />
     <Compile Include="ui\components\componentsTools\UIColor.cs" />
+    <Compile Include="ui\components\componentsTools\UIFont.cs" />
     <Compile Include="ui\components\componentsTools\UIPicture.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ui\components\componentsTools\UITitleTextBox.cs">
+    <Compile Include="ui\components\componentsTools\UITextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ui\components\componentsTools\UITitleLabel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ui\components\Footer.cs" />
@@ -181,13 +111,6 @@
     <EmbeddedResource Include="ui\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EntityDeploy Include="api\entities\EntityModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EntityModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="api\entities\EntityModel.edmx.diagram">
-      <DependentUpon>EntityModel.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -206,16 +129,7 @@
     <None Include="Resources\images\logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="api\entities\EntityModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EntityModel.edmx</DependentUpon>
-      <LastGenOutput>EntityModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="api\entities\EntityModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EntityModel.edmx</DependentUpon>
-      <LastGenOutput>EntityModel.cs</LastGenOutput>
-    </Content>
+    <Folder Include="api\entities\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

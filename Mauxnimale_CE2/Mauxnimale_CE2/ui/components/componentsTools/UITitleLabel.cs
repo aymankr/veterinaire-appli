@@ -1,20 +1,20 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
 
-namespace Mauxnimale_CE2.UI.Components
+namespace Mauxnimale_CE2.ui.Components
 {
     /// <summary>
     /// Text box that fit content with Poppins font and blue color by default.
     /// </summary>
-    internal class UITitleTextBox : Label
+    internal class UITiltleLabel : Label
     {
         /// <summary>
-        /// Instanciate an UITitleTextBox at 0;0, with the given text and font size.
+        /// Instanciate an UITiltleLabel at 0;0, with the given text and font size.
         /// The color of the text is blue.
         /// </summary>
         /// <param name="text">The text to display</param>
         /// <param name="fontSize">The size of the font</param>
-        public UITitleTextBox(string text, int fontSize)
+        public UITiltleLabel(string text, int fontSize)
         {
             Text = text;
             Font = new Font("Poppins", fontSize);
@@ -25,12 +25,12 @@ namespace Mauxnimale_CE2.UI.Components
         }
 
         /// <summary>
-        /// Instanciate an UITitleTextBox at location 0;0, with the given text, font size and color.
+        /// Instanciate an UITiltleLabel at location 0;0, with the given text, font size and color.
         /// </summary>
         /// <param name="text">The text to display</param>
         /// <param name="fontSize">The size of the font</param>
         /// <param name="color">The color of the text</param>
-        public UITitleTextBox(string text, int fontSize, Color color)
+        public UITiltleLabel(string text, int fontSize, Color color)
         {
             Text = text;
             Font = new Font("Poppins", fontSize);
@@ -41,13 +41,13 @@ namespace Mauxnimale_CE2.UI.Components
         }
 
         /// <summary>
-        /// Instanciate an UITitleTextBox at the given location, with the given text and font size.
+        /// Instanciate an UITiltleLabel at the given location, with the given text and font size.
         /// The color of the text is blue.
         /// </summary>
         /// <param name="location">The location of the text box</param>
         /// <param name="text">The text to display</param>
         /// <param name="fontSize">The size of the font</param>
-        public UITitleTextBox(Point location, string text, int fontSize)
+        public UITiltleLabel(Point location, string text, int fontSize)
         {
             Text = text;
             Font = new Font("Poppins", fontSize);
@@ -58,13 +58,13 @@ namespace Mauxnimale_CE2.UI.Components
         }
 
         /// <summary>
-        /// Instanciate an UITitleTextBox at the given location, with the given text, font size and color.
+        /// Instanciate an UITiltleLabel at the given location, with the given text, font size and color.
         /// </summary>
         /// <param name="location">The location of the text box</param>
         /// <param name="text">The text to display</param>
         /// <param name="fontSize">The size of the font</param>
         /// <param name="color">The color of the text</param>
-        public UITitleTextBox(Point location, string text, int fontSize, Color color)
+        public UITiltleLabel(Point location, string text, int fontSize, Color color)
         {
             Text = text;
             Font = new Font("Poppins", fontSize);

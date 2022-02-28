@@ -748,19 +748,8 @@
           <Property Name="DATEFINSTAGE" Type="DateTime" Precision="0" />
           <Property Name="PRENOM" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="NOM" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-          <Property Name="PREMIERECONNEXION" Type="Boolean" Nullable="false" />
-<<<<<<< HEAD
-=======
->>>>>>> 0b1e7c4 (entities imported from db)
-=======
-          <Property Name="SALAIRE" Type="Decimal" Precision="10" Scale="2" />
->>>>>>> main
-=======
           <Property Name="PREMIERECONNEXION" Type="Boolean" Nullable="false" />
           <Property Name="SALAIRE" Type="Decimal" Precision="10" Scale="2" />
->>>>>>> 4bb567c (update orm)
           <NavigationProperty Name="JOURNEE_SALARIE" Relationship="Self.FK_JOURNEE_SALARIE_SALARIE" FromRole="SALARIE" ToRole="JOURNEE_SALARIE" />
         </EntityType>
         <EntityType Name="SOIN">
@@ -1000,15 +989,7 @@
           <End Role="MALADIE" Type="Self.MALADIE" Multiplicity="*" />
           <End Role="SOIN" Type="Self.SOIN" Multiplicity="*" />
         </Association>
-<<<<<<< HEAD
-<<<<<<< HEAD
         <EntityContainer Name="PT4_S4P2C_E2Entities" annotation:LazyLoadingEnabled="true">
-=======
-        <EntityContainer Name="PT4_S4P2C_E2Entities1" annotation:LazyLoadingEnabled="true">
->>>>>>> 0b1e7c4 (entities imported from db)
-=======
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
->>>>>>> 4bb567c (update orm)
           <EntitySet Name="ANIMAL" EntityType="Self.ANIMAL" />
           <EntitySet Name="CLIENT" EntityType="Self.CLIENT" />
           <EntitySet Name="ESPECE" EntityType="Self.ESPECE" />
@@ -1110,15 +1091,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-<<<<<<< HEAD
-<<<<<<< HEAD
         <EntityContainerMapping StorageEntityContainer="PT4_S4P2C_E2ModelStoreContainer" CdmEntityContainer="PT4_S4P2C_E2Entities">
-=======
-        <EntityContainerMapping StorageEntityContainer="PT4_S4P2C_E2ModelStoreContainer" CdmEntityContainer="PT4_S4P2C_E2Entities1">
->>>>>>> 0b1e7c4 (entities imported from db)
-=======
-        <EntityContainerMapping StorageEntityContainer="PT4_S4P2C_E2ModelStoreContainer" CdmEntityContainer="Entities">
->>>>>>> 4bb567c (update orm)
           <EntitySetMapping Name="ANIMAL">
             <EntityTypeMapping TypeName="PT4_S4P2C_E2Model.ANIMAL">
               <MappingFragment StoreEntitySet="ANIMAL">

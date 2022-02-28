@@ -21,7 +21,7 @@ namespace Mauxnimale_CE2.ui.components.componentsTools
             TabStop = false;
             FlatAppearance.BorderSize = 0;
             TextAlign = ContentAlignment.MiddleCenter;
-            Font = new Font("Poppins", width / 8);
+            Font = new Font("Poppins", width / 16);
             AutoSize = true;
             Margin = new Padding(0);
         }

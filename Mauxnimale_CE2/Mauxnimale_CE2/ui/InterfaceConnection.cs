@@ -18,8 +18,6 @@ namespace Mauxnimale_CE2
         Footer footer;
         Header header;
 
-        UIButton button;
-
         Button connection;
         TextBox login;
         TextBox password;
@@ -46,21 +44,8 @@ namespace Mauxnimale_CE2
         public void generate_Button()
         {
             button = new UIButton(UIColor.ORANGE, "Connection", 190);
-            /*button.Font = UIFont.BigButtonFont;*/
-            button.Location = new Point((this.form.Width / 2) - (button.Width / 2), 3 * (this.form.Height / 4));
-
-            /*connection = new Button();
-            connection.Click += new EventHandler(this.connection_click);
-            connection.BackColor = Color.FromArgb(255,156,3);  
-            connection.ForeColor = Color.White;
-            connection.Text = "Connection";
-            connection.TabStop = false; 
-            connection.FlatStyle = FlatStyle.Flat;  
-            connection.FlatAppearance.BorderSize = 0;
-            connection.Font = new Font("Roboto", 20, System.Drawing.FontStyle.Bold);
-            connection.AutoSize = true;
-            connection.Location = new Point((this.form.Width / 2) - (connection.Width / 2), 3 * (this.form.Height / 4));
-            form.Controls.Add(connection);*/
+            button.Font = UIFont.BigButtonFont;
+            button.Location = new Point((this.form.Width / 2) - (button.Width / 2) - 25, 2 * (this.form.Height / 3));
             form.Controls.Add(button);
         }
 
@@ -79,13 +64,13 @@ namespace Mauxnimale_CE2
             login = new TextBox();
             login.LostFocus += new EventHandler(loginLeave);
             login.GotFocus += new EventHandler(loginEnter);
-            login.Location = new Point(form.Width / 4, form.Height * 25 / 100);
+            login.Location = new Point(form.Width / 4, form.Height * 35 / 100);
             setBox(login, "login");
 
             password = new TextBox();   
             password.LostFocus += new EventHandler(passwordLeave);
             password.GotFocus += new EventHandler(passwordEnter);
-            password.Location = new Point(form.Width / 4, form.Height * 35 / 100);
+            password.Location = new Point(form.Width / 4, form.Height * 45 / 100);
             password.PasswordChar = '•';
             setBox(password, "password");
 

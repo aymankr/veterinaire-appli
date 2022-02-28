@@ -86,6 +86,7 @@ namespace Mauxnimale_CE2
             }
         }
 
+<<<<<<< HEAD
         private void loginEnter(object sender, EventArgs e)
         {
             if (login.Text == "login")
@@ -122,5 +123,11 @@ namespace Mauxnimale_CE2
             }
         }
 
+=======
+        public override void updateSize()
+        {
+            throw new NotImplementedException();
+        }
+>>>>>>> main
     }
 }

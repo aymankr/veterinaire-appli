@@ -26,6 +26,7 @@ namespace Mauxnimale_CE2
         public void generate_Labels()
         {
             date = new Label();
+            date.BackColor = Color.Transparent;
             dateTimePicker = new DateTimePicker();
             date.Text = dateTimePicker.Value.ToString("yyyy-MM-dd");
             date.Location = new System.Drawing.Point(window.Width - 100, 5);
@@ -34,7 +35,8 @@ namespace Mauxnimale_CE2
 
         public void generate_Title(String t)
         {
-            title = new UITiltleLabel(new Point(this.window.Width / 5, window.Height*25/1000), t, window.Height*75/1000);
+            title = new UITitleTextBox(new Point(this.window.Width / 7, window.Height*25/1000), t, window.Height*50/1000);
+            title.BackColor = Color.Transparent;
             window.Controls.Add(title);
         }
     }

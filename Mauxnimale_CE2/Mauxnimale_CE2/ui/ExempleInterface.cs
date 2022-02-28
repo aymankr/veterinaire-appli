@@ -28,5 +28,10 @@ namespace Mauxnimale_CE2
             form.Controls.Clear();
             //form.changerClasse(new Interface...());
         }
+
+        public override void updateSize()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

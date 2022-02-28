@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mauxnimale_CE2.UI.Components;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -20,10 +21,15 @@ namespace Mauxnimale_CE2.ui.components.componentsTools
             FlatStyle = FlatStyle.Flat;
             TabStop = false;
             FlatAppearance.BorderSize = 0;
+<<<<<<< HEAD
             TextAlign = ContentAlignment.MiddleCenter;
             Font = new Font("Poppins", width / 16);
             AutoSize = true;
             Margin = new Padding(0);
+=======
+            Font = new System.Drawing.Font("Roboto", width / 16);
+            Size = new Size(width, width / 3);
+>>>>>>> main
         }
     }
 }

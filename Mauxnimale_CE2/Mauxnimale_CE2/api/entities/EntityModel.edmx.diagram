@@ -9,14 +9,14 @@
         <EntityTypeShape EntityType="PT4_S4P2C_E2Model.CLIENT" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="PT4_S4P2C_E2Model.ESPECE" Width="1.5" PointX="1.5" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="PT4_S4P2C_E2Model.FACTURE_PRODUIT" Width="1.5" PointX="3" PointY="12.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.JOURNEE" Width="1.5" PointX="6" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.JOURNEE" Width="1.5" PointX="6" PointY="3.125" IsExpanded="true" />
         <EntityTypeShape EntityType="PT4_S4P2C_E2Model.JOURNEE_SALARIE" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.LIEN_MALADIE" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.LOG" Width="1.5" PointX="9.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.LIEN_MALADIE" Width="1.5" PointX="5.25" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.LOG" Width="1.5" PointX="9.75" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="PT4_S4P2C_E2Model.MALADIE" Width="1.5" PointX="3" PointY="15.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.ORDONNANCE" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.PRODUIT" Width="1.5" PointX="5.25" PointY="18.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.PRODUITLIES" Width="1.5" PointX="7.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.ORDONNANCE" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.PRODUIT" Width="1.5" PointX="5.25" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.PRODUITLIES" Width="1.5" PointX="7.5" PointY="9" IsExpanded="true" />
         <EntityTypeShape EntityType="PT4_S4P2C_E2Model.PRODUITVENDU" Width="1.5" PointX="5.25" PointY="12.625" IsExpanded="true" />
         <EntityTypeShape EntityType="PT4_S4P2C_E2Model.RACE" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="PT4_S4P2C_E2Model.RENDEZ_VOUS" Width="1.5" PointX="8.25" PointY="7.625" IsExpanded="true" />
@@ -36,7 +36,6 @@
         <AssociationConnector Association="PT4_S4P2C_E2Model.FK_RENDEZ_VOUS_JOURNEE" ManuallyRouted="false" />
         <AssociationConnector Association="PT4_S4P2C_E2Model.FK_JOURNEE_SALARIE_SALARIE" ManuallyRouted="false" />
         <AssociationConnector Association="PT4_S4P2C_E2Model.FK_LIEN_MALADIE_MALADIE" ManuallyRouted="false" />
-        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_ORDONNANCE_RENDEZ_VOUS" ManuallyRouted="false" />
         <AssociationConnector Association="PT4_S4P2C_E2Model.FK_PRODUITLIES_ORDONNANCE" ManuallyRouted="false" />
         <AssociationConnector Association="PT4_S4P2C_E2Model.FK_PRODUIT_TYPE_PRODUIT" ManuallyRouted="false" />
         <AssociationConnector Association="PT4_S4P2C_E2Model.FK_PRODUITLIES_PRODUIT" ManuallyRouted="false" />

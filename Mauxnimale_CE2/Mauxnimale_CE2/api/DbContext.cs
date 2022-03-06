@@ -7,13 +7,13 @@ using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2.api
 {
-    public static class Tools
+    public static class DbContext
     {
-        private static PT4_S4P2C_E2Entities1 database = new PT4_S4P2C_E2Entities1();
+        private static PT4_S4P2C_E2Entities dbContext = new PT4_S4P2C_E2Entities();
 
-        public static PT4_S4P2C_E2Entities1 getDatabase()
+        public static PT4_S4P2C_E2Entities get()
         {
-            return database;
+            return dbContext;
         }
     }
 }

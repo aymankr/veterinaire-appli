@@ -13,7 +13,7 @@ namespace Mauxnimale_CE2.api
         /**
          * Method to add an appointment to the database and to set attributes
          */
-        public static void addAppointment(TYPE_RDV appointmentType, ORDONNANCE prescription, CLIENT costumer, ANIMAL animal, JOURNEE day, string reason, string startHour, string endHour)
+        public static RENDEZ_VOUS addAppointment(TYPE_RDV appointmentType, CLIENT costumer, ANIMAL animal, JOURNEE day, string reason, string startHour, string endHour)
         {
             RENDEZ_VOUS newAppointment = new RENDEZ_VOUS();
             newAppointment.TYPE_RDV = appointmentType;
@@ -23,9 +23,9 @@ namespace Mauxnimale_CE2.api
             newAppointment.HEUREDEBUT = TimeSpan.Parse(startHour);
             newAppointment.HEUREFIN = TimeSpan.Parse(endHour);
             newAppointment.RAISON = reason;
-            newAppointment.ORDONNANCE.Add(prescription); // many animals, so there are many prescriptions
-            Tools.getDatabase().RENDEZ_VOUS.Add(newAppointment);
-            Tools.getDatabase().SaveChanges();
+            DbContext.get().RENDEZ_VOUS.Add(newAppointment);
+            DbContext.get().SaveChanges();
+            return newAppointment;
         }
 
         /**
@@ -34,8 +34,8 @@ namespace Mauxnimale_CE2.api
         public static void deleteAppointment(RENDEZ_VOUS currentAppointment)
         {
             // current appointment is the selected item
-            Tools.getDatabase().RENDEZ_VOUS.Remove(currentAppointment);
-            Tools.getDatabase().SaveChanges();
+            DbContext.get().RENDEZ_VOUS.Remove(currentAppointment);
+            DbContext.get().SaveChanges();
         }
     }
 }

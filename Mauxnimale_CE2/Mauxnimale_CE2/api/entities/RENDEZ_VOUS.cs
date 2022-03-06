@@ -20,9 +20,8 @@ namespace Mauxnimale_CE2.api.entities
             this.ANIMAL = new HashSet<ANIMAL>();
         }
 
-        public RENDEZ_VOUS(CLIENT client, JOURNEE journee, TimeSpan heuredebut, TimeSpan heurefin, string raison, ANIMAL animal, ORDONNANCE ordonnance)
+        public RENDEZ_VOUS(CLIENT client, JOURNEE journee, TimeSpan heuredebut, TimeSpan heurefin, string raison, ANIMAL animal)
         {
-            this.ORDONNANCE = new HashSet<ORDONNANCE>();
             this.ANIMAL = new HashSet<ANIMAL>();
             CLIENT = client;
             JOURNEE = journee;
@@ -30,7 +29,6 @@ namespace Mauxnimale_CE2.api.entities
             HEUREFIN = heurefin;
             RAISON = raison;
             ANIMAL.Add(animal);
-            ORDONNANCE.Add(ordonnance);
         }
 
         public int IDRDV { get; set; }

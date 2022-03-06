@@ -23,7 +23,6 @@ namespace Mauxnimale_CE2.api.entities
         {
             this.PRODUITLIES = new HashSet<PRODUITLIES>();
             ANIMAL = animal;
-            RENDEZ_VOUS = rendez_vous;
         }
 
         public int IDORDONNANCE { get; set; }

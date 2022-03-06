@@ -21,7 +21,17 @@ namespace Mauxnimale_CE2.api.entities
             this.FACTURE_PRODUIT = new HashSet<FACTURE_PRODUIT>();
             this.RENDEZ_VOUS = new HashSet<RENDEZ_VOUS>();
         }
-    
+
+        public CLIENT(string nom, string prenom, string tel)
+        {
+            this.ANIMAL = new HashSet<ANIMAL>();
+            this.FACTURE_PRODUIT = new HashSet<FACTURE_PRODUIT>();
+            this.RENDEZ_VOUS = new HashSet<RENDEZ_VOUS>();
+            NOMCLIENT = nom;
+            PRENOMCLIENT = prenom;
+            TELCLIENT = tel;
+        }
+
         public int IDCLIENT { get; set; }
         public string NOMCLIENT { get; set; }
         public string PRENOMCLIENT { get; set; }

@@ -1,4 +1,4 @@
-﻿using Mauxnimale_CE2.UI.Components;
+﻿using Mauxnimale_CE2.ui.Components;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

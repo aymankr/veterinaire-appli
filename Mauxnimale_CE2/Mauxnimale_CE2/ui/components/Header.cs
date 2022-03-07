@@ -36,7 +36,7 @@ namespace Mauxnimale_CE2
 
         public void generate_Title(String t)
         {
-            title = new UITitleLabel(new Point(this.window.Width / 7, window.Height*25/1000), t, window.Height*50/1000);
+            title = new UITitleTextBox(new Point(this.window.Width / 7, window.Height*25/1000), t, Math.Min(window.Height*5/100, window.Width * 3 / 100));
             title.BackColor = Color.Transparent;
             window.Controls.Add(title);
         }

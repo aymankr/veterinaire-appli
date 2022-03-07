@@ -10,12 +10,17 @@ namespace Mauxnimale_CE2
     //Ceci est une classe exemple, toutes les interfaces devront au moins comporter ce qui est dans cette classe
     class ExempleInterface : AInterface
     {
-        MainWindow form;
+        MainWindow window;
+
+        Header header;
+        Footer footer;
         //Lister ici les différents éléments qui seront utilisés dans l'interface
 
         public ExempleInterface(MainWindow forme)
         {
-            this.form = forme;
+            this.window = forme;
+            header = new Header(window);
+            footer = new Footer(window);
         }
 
         public override void load()
@@ -25,13 +30,14 @@ namespace Mauxnimale_CE2
 
         public void button_click(object sender, EventArgs e)
         {
-            form.Controls.Clear();
+            window.Controls.Clear();
             //form.changerClasse(new Interface...());
         }
 
         public override void updateSize()
         {
-            throw new NotImplementedException();
+            window.Controls.Clear();
+            this.load();
         }
     }
 }

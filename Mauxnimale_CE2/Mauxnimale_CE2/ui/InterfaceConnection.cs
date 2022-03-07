@@ -17,7 +17,7 @@ namespace Mauxnimale_CE2
 
         Footer footer;
         Header header;
-
+        
         Button connection;
         TextBox login;
         TextBox password;
@@ -47,6 +47,7 @@ namespace Mauxnimale_CE2
             button.Font = UIFont.BigButtonFont;
             button.Location = new Point((this.form.Width / 2) - (button.Width / 2) - 25, 2 * (this.form.Height / 3));
             form.Controls.Add(button);
+            button.Click += new EventHandler(connection_click);
         }
 
 
@@ -75,8 +76,6 @@ namespace Mauxnimale_CE2
             setBox(password, "password");
 
         }
-
-
 
         public void connection_click(object sender, EventArgs e)
         {

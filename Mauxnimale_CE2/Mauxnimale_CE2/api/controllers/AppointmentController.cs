@@ -34,6 +34,7 @@ namespace Mauxnimale_CE2.api
         public static void deleteAppointment(RENDEZ_VOUS currentAppointment)
         {
             // current appointment is the selected item
+            currentAppointment.ANIMAL.Clear();
             DbContext.get().RENDEZ_VOUS.Remove(currentAppointment);
             DbContext.get().SaveChanges();
         }

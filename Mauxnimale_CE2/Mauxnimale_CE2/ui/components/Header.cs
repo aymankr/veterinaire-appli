@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Mauxnimale_CE2.ui.Components;
+using Mauxnimale_CE2.ui.components.componentsTools;
 
 namespace Mauxnimale_CE2
 {
@@ -9,7 +10,7 @@ namespace Mauxnimale_CE2
     {
         MainWindow window;
         Label date;
-        UITiltleLabel title;
+        UITitleLabel title;
         DateTimePicker dateTimePicker;
 
         public Header(MainWindow form)
@@ -35,7 +36,7 @@ namespace Mauxnimale_CE2
 
         public void generate_Title(String t)
         {
-            title = new UITitleTextBox(new Point(this.window.Width / 7, window.Height*25/1000), t, window.Height*50/1000);
+            title = new UITitleLabel(new Point(this.window.Width / 7, window.Height*25/1000), t, window.Height*50/1000);
             title.BackColor = Color.Transparent;
             window.Controls.Add(title);
         }

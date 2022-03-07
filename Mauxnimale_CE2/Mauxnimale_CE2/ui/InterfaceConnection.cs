@@ -38,7 +38,6 @@ namespace Mauxnimale_CE2
             footer.load();
             generate_Button();
             generate_TextBox();
-            Console.WriteLine(this.form.Height +": Y\n"+this.form.Width+": X");   
         }
 
         public void generate_Button()
@@ -84,6 +83,7 @@ namespace Mauxnimale_CE2
             {
                 form.Controls.Remove(item);
             }
+            Console.WriteLine("aled")
         }
 
         private void loginEnter(object sender, EventArgs e)

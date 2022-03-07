@@ -21,11 +21,7 @@ namespace Mauxnimale_CE2.ui.components.componentsTools
             FlatStyle = FlatStyle.Flat;
             TabStop = false;
             FlatAppearance.BorderSize = 0;
-<<<<<<< HEAD
             Font = new Font("Roboto", width / 16);
-=======
-            Font = new System.Drawing.Font("Roboto", width / 16);
->>>>>>> efcd1bba50a1b7c49c4750f760b6a0e25f379f4d
             Size = new Size(width, width / 3);
         }
     }

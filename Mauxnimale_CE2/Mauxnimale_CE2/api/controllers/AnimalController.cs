@@ -68,5 +68,13 @@ namespace Mauxnimale_CE2.api.controllers
 
             return !isAlreadyRegistered;
         }
+
+        public static void removeAnimal(ANIMAL animalToRemove)
+        {
+            animalToRemove.RENDEZ_VOUS.Clear();
+            PT4_S4P2C_E2Entities dbContext = DbContext.get();
+            dbContext.ANIMAL.Remove(animalToRemove);
+            dbContext.SaveChanges();
+        }
     }
 }

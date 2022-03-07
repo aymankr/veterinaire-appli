@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
 
-namespace Mauxnimale_CE2.UI.Components
+namespace Mauxnimale_CE2.ui.Components
 {
     /// <summary>
     /// Picture box displaying an image in stretch mode.

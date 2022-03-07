@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
-using Mauxnimale_CE2.UI.Components;
+using Mauxnimale_CE2.ui.Components;
 
 namespace Mauxnimale_CE2.UI
 {
@@ -20,7 +20,7 @@ namespace Mauxnimale_CE2.UI
             logo.Parent = Panel1;
 
             // Setup title
-            UITitleTextBox title = new UITitleTextBox("Mauxnimale", 30);
+            UITitleLabel title = new UITitleLabel("Mauxnimale", 30);
             title.Name = "ApplicationTitle";
             title.Parent = Panel2;
 

@@ -58,6 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="api\controllers\AppointmentController.cs" />
+    <Compile Include="api\DbContext.cs" />
     <Compile Include="api\entities\ANIMAL.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
@@ -136,14 +138,15 @@
     <Compile Include="ui\components\componentsTools\UIButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ui\components\componentsTools\UIButton.Designer.cs">
-      <DependentUpon>UIButton.cs</DependentUpon>
-    </Compile>
     <Compile Include="ui\components\componentsTools\UIColor.cs" />
+    <Compile Include="ui\components\componentsTools\UIFont.cs" />
     <Compile Include="ui\components\componentsTools\UIPicture.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ui\components\componentsTools\UITitleTextBox.cs">
+    <Compile Include="ui\components\componentsTools\UITextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ui\components\componentsTools\UITitleLabel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ui\components\Footer.cs" />
@@ -207,6 +210,10 @@
     <None Include="Resources\images\logo.png" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
     <Content Include="api\entities\EntityModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EntityModel.edmx</DependentUpon>
@@ -217,9 +224,6 @@
       <DependentUpon>EntityModel.edmx</DependentUpon>
       <LastGenOutput>EntityModel.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

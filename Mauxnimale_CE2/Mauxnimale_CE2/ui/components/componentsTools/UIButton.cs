@@ -1,4 +1,4 @@
-﻿using Mauxnimale_CE2.UI.Components;
+﻿using Mauxnimale_CE2.ui.Components;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +19,7 @@ namespace Mauxnimale_CE2.ui.components.componentsTools
             Text = text;
             ForeColor = Color.White;
             FlatStyle = FlatStyle.Flat;
+            TabStop = false;
             FlatAppearance.BorderSize = 0;
             Font = new System.Drawing.Font("Roboto", width / 16);
             Size = new Size(width, width / 3);

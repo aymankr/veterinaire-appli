@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Mauxnimale_CE2.ui.components.componentsTools;
+using Mauxnimale_CE2.ui.Components;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,51 +12,113 @@ namespace Mauxnimale_CE2
 {
     class InterfaceConnection : AInterface
     {
-        Footer footer;
-        DateTimePicker dateTimePicker = new DateTimePicker();
-        Button connection;
 
-        Label date;
-        MainWindow window;
+        UIButton button;
+
+        Footer footer;
+        Header header;
+
+        Button connection;
+        TextBox login;
+        TextBox password;
+
+        MainWindow form;
         //Lister ici les différents éléments qui seront utilisés dans l'interface
 
-        public InterfaceConnection(MainWindow window)
+        public InterfaceConnection(MainWindow form)
         {
-            this.window = window;
-            this.footer = new Footer(window);
+            this.form = form;
+            footer = new Footer(form);
+            header = new Header(form);
         }
 
         public override void load()
         {
-            generate_Button();
-            generate_Labels();
+            header.load("Connection");
             footer.load();
+            generate_Button();
+            generate_TextBox();
+            Console.WriteLine(this.form.Height +": Y\n"+this.form.Width+": X");   
         }
 
         public void generate_Button()
         {
-            connection = new Button();
-            connection.Click += new EventHandler(this.connection_click);
-            /*connection.Size = new System.Drawing.Size(110, 42);*/
-            connection.Location = new System.Drawing.Point((this.window.Width / 2) - (connection.Width/2), (this.window.Width / 4));
-            connection.Text = "Connection";
-            connection.Font = new System.Drawing.Font("Minion Pro", 20);
-            window.Controls.Add(connection);
+            button = new UIButton(UIColor.ORANGE, "Connection", 190);
+            button.Font = UIFont.BigButtonFont;
+            button.Location = new Point((this.form.Width / 2) - (button.Width / 2) - 25, 2 * (this.form.Height / 3));
+            form.Controls.Add(button);
         }
 
-        public void generate_Labels()
+
+        public void setBox(TextBox box, String text)
         {
-            date = new Label();
-            dateTimePicker = new DateTimePicker();
-            date.Text = dateTimePicker.Value.ToString("yyyy-MM-dd");
-            date.Location = new System.Drawing.Point(this.window.Width - 100, 5);
+            box.Size = new Size(form.Width / 2, form.Height * 5 / 100);
+            box.Font = new Font("Poppins", form.Height * 3 / 100);
+            box.ForeColor = Color.Gray;
+            box.Text = text;
+            form.Controls.Add(box);
         }
+
+        public void generate_TextBox()
+        {
+            login = new TextBox();
+            login.LostFocus += new EventHandler(loginLeave);
+            login.GotFocus += new EventHandler(loginEnter);
+            login.Location = new Point(form.Width / 4, form.Height * 35 / 100);
+            setBox(login, "login");
+
+            password = new TextBox();   
+            password.LostFocus += new EventHandler(passwordLeave);
+            password.GotFocus += new EventHandler(passwordEnter);
+            password.Location = new Point(form.Width / 4, form.Height * 45 / 100);
+            password.PasswordChar = '•';
+            setBox(password, "password");
+
+        }
+
+
 
         public void connection_click(object sender, EventArgs e)
         {
-            foreach (Control item in window.Controls)
+            foreach (Control item in form.Controls)
             {
-                window.Controls.Remove(item);
+                form.Controls.Remove(item);
+            }
+        }
+
+        private void loginEnter(object sender, EventArgs e)
+        {
+            if (login.Text == "login")
+            {
+                login.Text = "";
+                login.ForeColor = Color.Black;
+            }
+        }
+
+        private void loginLeave(object sender, EventArgs e)
+        {
+            if (login.Text.Length == 0)
+            {
+                login.Text = "login";
+                login.ForeColor = Color.Gray;
+            }
+        }
+       
+        private void passwordEnter(object sender, EventArgs e)
+        {
+            if (password.Text == "password")
+            {
+                password.Text = "";
+                password.ForeColor = Color.Black;
+            }
+        }
+
+        private void passwordLeave(object sender, EventArgs e)
+        {
+            if (password.Text.Length == 0)
+            {
+                password.Text = "password";
+                password.ForeColor = Color.Gray;
             }
         }
 

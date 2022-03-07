@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Mauxnimale_CE2.api;
+using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2
 {

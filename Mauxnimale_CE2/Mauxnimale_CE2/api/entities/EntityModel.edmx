@@ -89,7 +89,6 @@
             <PropertyRef Name="IDORDONNANCE" />
           </Key>
           <Property Name="IDORDONNANCE" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IDRDV" Type="int" />
           <Property Name="IDANIMAL" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PATIENT">
@@ -292,18 +291,6 @@
             </Principal>
             <Dependent Role="ORDONNANCE">
               <PropertyRef Name="IDANIMAL" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ORDONNANCE_RENDEZ_VOUS">
-          <End Role="RENDEZ_VOUS" Type="Self.RENDEZ_VOUS" Multiplicity="0..1" />
-          <End Role="ORDONNANCE" Type="Self.ORDONNANCE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RENDEZ_VOUS">
-              <PropertyRef Name="IDRDV" />
-            </Principal>
-            <Dependent Role="ORDONNANCE">
-              <PropertyRef Name="IDRDV" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -517,10 +504,6 @@
             <End Role="ANIMAL" EntitySet="ANIMAL" />
             <End Role="ORDONNANCE" EntitySet="ORDONNANCE" />
           </AssociationSet>
-          <AssociationSet Name="FK_ORDONNANCE_RENDEZ_VOUS" Association="Self.FK_ORDONNANCE_RENDEZ_VOUS">
-            <End Role="RENDEZ_VOUS" EntitySet="RENDEZ_VOUS" />
-            <End Role="ORDONNANCE" EntitySet="ORDONNANCE" />
-          </AssociationSet>
           <AssociationSet Name="FK_PATIENT_ANIMAL" Association="Self.FK_PATIENT_ANIMAL">
             <End Role="ANIMAL" EntitySet="ANIMAL" />
             <End Role="PATIENT" EntitySet="PATIENT" />
@@ -682,10 +665,8 @@
             <PropertyRef Name="IDORDONNANCE" />
           </Key>
           <Property Name="IDORDONNANCE" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IDRDV" Type="Int32" />
           <Property Name="IDANIMAL" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ANIMAL" Relationship="Self.FK_ORDONNANCE_ANIMAL" FromRole="ORDONNANCE" ToRole="ANIMAL" />
-          <NavigationProperty Name="RENDEZ_VOUS" Relationship="Self.FK_ORDONNANCE_RENDEZ_VOUS" FromRole="ORDONNANCE" ToRole="RENDEZ_VOUS" />
           <NavigationProperty Name="PRODUITLIES" Relationship="Self.FK_PRODUITLIES_ORDONNANCE" FromRole="ORDONNANCE" ToRole="PRODUITLIES" />
         </EntityType>
         <EntityType Name="PRODUIT">
@@ -749,7 +730,6 @@
           <Property Name="RAISON" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="CLIENT" Relationship="Self.FK_RENDEZ_VOUS_CLIENT" FromRole="RENDEZ_VOUS" ToRole="CLIENT" />
           <NavigationProperty Name="JOURNEE" Relationship="Self.FK_RENDEZ_VOUS_JOURNEE" FromRole="RENDEZ_VOUS" ToRole="JOURNEE" />
-          <NavigationProperty Name="ORDONNANCE" Relationship="Self.FK_ORDONNANCE_RENDEZ_VOUS" FromRole="RENDEZ_VOUS" ToRole="ORDONNANCE" />
           <NavigationProperty Name="TYPE_RDV" Relationship="Self.FK_RENDEZ_VOUS_TYPE_RDV" FromRole="RENDEZ_VOUS" ToRole="TYPE_RDV" />
           <NavigationProperty Name="ANIMAL" Relationship="Self.PATIENT" FromRole="RENDEZ_VOUS" ToRole="ANIMAL" />
         </EntityType>
@@ -941,18 +921,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ORDONNANCE_RENDEZ_VOUS">
-          <End Role="RENDEZ_VOUS" Type="Self.RENDEZ_VOUS" Multiplicity="0..1" />
-          <End Role="ORDONNANCE" Type="Self.ORDONNANCE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RENDEZ_VOUS">
-              <PropertyRef Name="IDRDV" />
-            </Principal>
-            <Dependent Role="ORDONNANCE">
-              <PropertyRef Name="IDRDV" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PRODUITLIES_ORDONNANCE">
           <End Role="ORDONNANCE" Type="Self.ORDONNANCE" Multiplicity="1" />
           <End Role="PRODUITLIES" Type="Self.PRODUITLIES" Multiplicity="*" />
@@ -1089,10 +1057,6 @@
             <End Role="MALADIE" EntitySet="MALADIE" />
             <End Role="LIEN_MALADIE" EntitySet="LIEN_MALADIE" />
           </AssociationSet>
-          <AssociationSet Name="FK_ORDONNANCE_RENDEZ_VOUS" Association="Self.FK_ORDONNANCE_RENDEZ_VOUS">
-            <End Role="RENDEZ_VOUS" EntitySet="RENDEZ_VOUS" />
-            <End Role="ORDONNANCE" EntitySet="ORDONNANCE" />
-          </AssociationSet>
           <AssociationSet Name="FK_PRODUITLIES_ORDONNANCE" Association="Self.FK_PRODUITLIES_ORDONNANCE">
             <End Role="ORDONNANCE" EntitySet="ORDONNANCE" />
             <End Role="PRODUITLIES" EntitySet="PRODUITLIES" />
@@ -1220,7 +1184,6 @@
             <EntityTypeMapping TypeName="PT4_S4P2C_E2Model.ORDONNANCE">
               <MappingFragment StoreEntitySet="ORDONNANCE">
                 <ScalarProperty Name="IDORDONNANCE" ColumnName="IDORDONNANCE" />
-                <ScalarProperty Name="IDRDV" ColumnName="IDRDV" />
                 <ScalarProperty Name="IDANIMAL" ColumnName="IDANIMAL" />
               </MappingFragment>
             </EntityTypeMapping>

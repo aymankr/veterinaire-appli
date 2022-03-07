@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using Mauxnimale_CE2.ui;
+using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Mauxnimale_CE2
@@ -42,9 +44,16 @@ namespace Mauxnimale_CE2
             mentions.Font = new Font("Roboto", 15, FontStyle.Bold);
             mentions.ForeColor = Color.White;
             
+            admin.Click += new EventHandler(adminClick);
 
             window.Controls.Add(admin);
             window.Controls.Add(mentions);
+        }
+
+        public void adminClick(object sender, EventArgs e)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceAdmin(window));
         }
 
         public void draw_Rectangles(object sender, PaintEventArgs e)

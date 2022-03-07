@@ -1,5 +1,5 @@
 ﻿using Mauxnimale_CE2.ui.components.componentsTools;
-using Mauxnimale_CE2.UI.Components;
+using Mauxnimale_CE2.ui.Components;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -93,15 +93,6 @@ namespace Mauxnimale_CE2.ui
             month.Minimum = 1;
             month.Location = new Point(window.Width * 18 / 24, window.Height / 2);
             window.Controls.Add(month);
-
-            hour = new NumericUpDown();
-            hour.Size = new System.Drawing.Size(window.Width / 12, window.Height / 10);
-            hour.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 100);
-            hour.ForeColor = Color.Black;
-            hour.Maximum = 23;
-            hour.Minimum = 0;
-            hour.Location = new Point(window.Width * 12 / 24, window.Height / 2);
-            window.Controls.Add(hour);
         }
         //cette fonction dépend de la variable List<string> "workersList" par conséquent, il faudra actualiser la page à chaque fois que cette variable est actualisé
         public void generateListBox()
@@ -157,15 +148,10 @@ namespace Mauxnimale_CE2.ui
             daysLeft.Location = new Point(window.Width / 8, window.Height * 3 / 10);
             window.Controls.Add(daysLeft);
 
-            h = new Label();
             m = new Label();
             d = new Label();
-            h.Text = "h";
             d.Text = "d";
             m.Text = "m";
-            h.Location = new Point(window.Width * 14 / 24, window.Height / 2);
-            h.Size = new System.Drawing.Size(window.Width / 24, window.Height / 10);
-            h.Font = new System.Drawing.Font("Poppins", window.Height * 2 / 100);
 
             d.Location = new Point(window.Width * 17 / 24, window.Height / 2);
             d.Size = new System.Drawing.Size(window.Width / 24, window.Height / 10);
@@ -174,7 +160,6 @@ namespace Mauxnimale_CE2.ui
             m.Location = new Point(window.Width * 20 / 24, window.Height / 2);
             m.Size = new System.Drawing.Size(window.Width / 24, window.Height / 10);
             m.Font = new System.Drawing.Font("Poppins", window.Height * 2 / 100);
-            window.Controls.Add(h);
             window.Controls.Add(d);
             window.Controls.Add(m);
         }

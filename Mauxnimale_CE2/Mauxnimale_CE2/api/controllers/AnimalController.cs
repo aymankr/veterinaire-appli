@@ -40,6 +40,13 @@ namespace Mauxnimale_CE2.api.controllers
         /// <returns>true if the animal has been registered (added to the database) successfully, false otherwise.</returns>
         public static bool registerAnimal(RACE race, CLIENT owner, string name, string birthYear, int height, int weight, bool isMale)
         {
+            int birthYearNumber = 0;
+            if (birthYear.Length != 4 || !int.TryParse(birthYear, out birthYearNumber))
+            {
+                Console.WriteLine("Birth year: " + birthYear + " is not correct. Length has to be 4 and it has to be a number (a year).");
+                return false;
+            }
+
             ANIMAL animalToRegister = new ANIMAL();
             animalToRegister.RACE = race;
             animalToRegister.IDRACE = race.IDRACE;

@@ -1,4 +1,5 @@
-﻿using Mauxnimale_CE2.api.entities;
+﻿using System;
+using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2.api.controllers
 {
@@ -14,7 +15,7 @@ namespace Mauxnimale_CE2.api.controllers
         /// <returns>true if an animal with the same owner and name as the one given exists, false otherwise.</returns>
         public static bool isAlreadyRegistered(ANIMAL animalToVerify)
         {
-            PT4_S4P2C_E2Entities dbContext = new PT4_S4P2C_E2Entities();
+            PT4_S4P2C_E2Entities dbContext = DbContext.get();
 
             foreach (ANIMAL registeredAnimal in dbContext.ANIMAL)
             {
@@ -39,14 +40,30 @@ namespace Mauxnimale_CE2.api.controllers
         /// <returns>true if the animal has been registered (added to the database) successfully, false otherwise.</returns>
         public static bool registerAnimal(RACE race, CLIENT owner, string name, string birthYear, int height, int weight, bool isMale)
         {
-            ANIMAL animalToRegister = new ANIMAL(race, owner, name, birthYear, height, weight, isMale);
+            ANIMAL animalToRegister = new ANIMAL();
+            animalToRegister.RACE = race;
+            animalToRegister.IDRACE = race.IDRACE;
+            animalToRegister.CLIENT = owner;
+            animalToRegister.IDCLIENT = owner.IDCLIENT;
+            animalToRegister.NOM = name;
+            animalToRegister.ANNEENAISSANCE = birthYear;
+            animalToRegister.TAILLE = height;
+            animalToRegister.POIDS = weight;
+            animalToRegister.ESTMALE = isMale;
+            
             bool isAlreadyRegistered = AnimalController.isAlreadyRegistered(animalToRegister);
 
             if (!isAlreadyRegistered)
             {
-                PT4_S4P2C_E2Entities dbContext = new PT4_S4P2C_E2Entities();
+                Console.WriteLine("Animal doest not exists in database, we add it.");
+
+                PT4_S4P2C_E2Entities dbContext = DbContext.get();
                 dbContext.ANIMAL.Add(animalToRegister);
                 dbContext.SaveChanges();
+            }
+            else
+            {
+                Console.WriteLine("Animal already exists in database, can't add it.");
             }
 
             return !isAlreadyRegistered;

@@ -45,6 +45,7 @@ namespace Mauxnimale_CE2
             mentions.ForeColor = Color.White;
             
             admin.Click += new EventHandler(adminClick);
+            mentions.Click += new EventHandler(legalClick);
 
             window.Controls.Add(admin);
             window.Controls.Add(mentions);
@@ -54,6 +55,12 @@ namespace Mauxnimale_CE2
         {
             window.Controls.Clear();
             window.switchInterface(new InterfaceAdmin(window));
+        }
+
+        public void legalClick(object sender, EventArgs e)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceLegalMentions(window));
         }
 
         public void draw_Rectangles(object sender, PaintEventArgs e)

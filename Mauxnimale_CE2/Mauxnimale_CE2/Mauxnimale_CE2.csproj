@@ -162,6 +162,7 @@
     <Compile Include="ui\InterfaceGestionCongé.cs" />
     <Compile Include="ui\InterfaceHome.cs" />
     <Compile Include="ui\InterfaceInscription.cs" />
+    <Compile Include="ui\InterfaceLegalMentions.cs" />
     <Compile Include="ui\InterfaceStatsPage.cs" />
     <Compile Include="ui\MainWindow.cs">
       <SubType>Form</SubType>

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2.ui
 {
@@ -23,11 +24,12 @@ namespace Mauxnimale_CE2.ui
         Label incEvent;
         TextBox events;
 
-        public InterfaceHome(MainWindow window)
+        public InterfaceHome(MainWindow window, SALARIE s)
         {
             this.window = window;
             header = new Header(window);
             footer = new Footer(window);
+            salarie = s;
 
         }
         public override void load()

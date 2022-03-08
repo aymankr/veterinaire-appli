@@ -37,5 +37,16 @@ namespace Mauxnimale_CE2.api
             DbContext.get().RENDEZ_VOUS.Remove(currentAppointment);
             DbContext.get().SaveChanges();
         }
+
+        /**
+         * Get appointments of this date
+         */
+        public static ICollection<RENDEZ_VOUS> getAppointmentsFromDate(DateTime date)
+        {
+            JOURNEE day = (JOURNEE)(from d in DbContext.get().JOURNEE 
+                                    where d.DATE.Equals(date) 
+                                    select d);
+            return day.RENDEZ_VOUS;
+        }
     }
 }

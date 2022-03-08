@@ -21,21 +21,7 @@ namespace Mauxnimale_CE2.api.entities
             this.ORDONNANCE = new HashSet<ORDONNANCE>();
             this.RENDEZ_VOUS = new HashSet<RENDEZ_VOUS>();
         }
-
-        public ANIMAL(int idrace, int idclient, string nom, string anneenaissance, int taille, int poids, bool estmale)
-        {
-            this.LIEN_MALADIE = new HashSet<LIEN_MALADIE>();
-            this.ORDONNANCE = new HashSet<ORDONNANCE>();
-            this.RENDEZ_VOUS = new HashSet<RENDEZ_VOUS>();
-            IDRACE = idrace;
-            IDCLIENT = idclient;
-            NOM = nom;
-            ANNEENAISSANCE = anneenaissance;
-            TAILLE = taille;
-            POIDS = poids;
-            ESTMALE = estmale;
-        }
-
+    
         public int IDANIMAL { get; set; }
         public int IDRACE { get; set; }
         public int IDCLIENT { get; set; }

@@ -1,4 +1,5 @@
-﻿using Mauxnimale_CE2.ui.components.componentsTools;
+﻿using Mauxnimale_CE2.ui;
+using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.ui.Components;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Mauxnimale_CE2
 
         Footer footer;
         Header header;
-
+        
         Button connection;
         TextBox login;
         TextBox password;
@@ -46,6 +47,7 @@ namespace Mauxnimale_CE2
             button.Font = UIFont.BigButtonFont;
             button.Location = new Point((this.form.Width / 2) - (button.Width / 2) - 25, 2 * (this.form.Height / 3));
             form.Controls.Add(button);
+            button.Click += new EventHandler(connection_click);
         }
 
 
@@ -75,14 +77,16 @@ namespace Mauxnimale_CE2
 
         }
 
-
-
         public void connection_click(object sender, EventArgs e)
         {
-            foreach (Control item in form.Controls)
+            if (login.Text != null && password.Text != null && Connection.GetSALARIE(login.Text, password.Text) != null)
             {
-                form.Controls.Remove(item);
-            }
+                form.Controls.Clear();
+                form.switchInterface(new InterfaceHome(form, Connection.GetSALARIE(login.Text, password.Text)));
+            } else
+            {
+                MessageBox.Show("identifiant ou mot de passe incorrecte");
+            }           
         }
 
         private void loginEnter(object sender, EventArgs e)

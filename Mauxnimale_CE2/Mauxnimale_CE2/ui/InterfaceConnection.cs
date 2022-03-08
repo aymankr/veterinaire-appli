@@ -83,7 +83,6 @@ namespace Mauxnimale_CE2
             {
                 form.Controls.Remove(item);
             }
-            Console.WriteLine("aled")
         }
 
         private void loginEnter(object sender, EventArgs e)

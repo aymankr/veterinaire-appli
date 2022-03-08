@@ -12,12 +12,14 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mauxnimale_CE2.api.entities;
 using System.Windows.Forms;
 
 namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceGestionConsultation : AInterface
     {
+        Salarie
 
         MainWindow window;
 
@@ -25,13 +27,11 @@ namespace Mauxnimale_CE2.ui
         Footer footer;
 
         UIButton modifConsult, createOrdonance, deleteConsult, createConsult;
-        UIRoundButton back, backConsult,forwardConsult;
-
-        ComboBox clientCombo, animalCombo, maladieCombo, soinCombo, dateCombo;
-        Label clientLabel, animalLabel, maladieLabel, soinLabel, dateLabel, descriptionLabel;
+        UIRoundButton back;
+        MonthCalendar calendar;
 
         Label incEvent;
-        TextBox events;
+        ListBox consultationsDuJour, infosConsultation;
 
         public InterfaceGestionConsultation(MainWindow window)
         {
@@ -46,7 +46,7 @@ namespace Mauxnimale_CE2.ui
             footer.load();
             generateButton();
             generateLabel();
-            generateTextBox();
+            generateListBox();
         }
 
         public void generateLabel()
@@ -54,82 +54,65 @@ namespace Mauxnimale_CE2.ui
             incEvent = new Label();
             incEvent.Text = "Consultations à venir";
             incEvent.TextAlign = ContentAlignment.MiddleLeft;
-            incEvent.Font = new System.Drawing.Font("Poppins", window.Height * 2 / 100);
-            incEvent.ForeColor = Color.Black;
-            incEvent.Size = new System.Drawing.Size(window.Width * 3 / 10, window.Height * 1 / 10);
+            incEvent.Font = new Font("Poppins", window.Height * 2 / 100);
+            incEvent.ForeColor = UIColor.DARKBLUE;
+            incEvent.Size = new Size(window.Width * 3 / 10, window.Height * 1 / 10);
             incEvent.Location = new Point(window.Width * 25 / 1000, window.Height / 10);
             window.Controls.Add(incEvent);
         }
 
-        public void generateTextBox()
+        public void generateListBox()
         {
-            events = new TextBox();
-            events.Text = "";
-            events.Font = new System.Drawing.Font("Poppins", window.Height * 2 / 100);
-            events.ForeColor = Color.Black;
-            events.BackColor = Color.White;
-            events.ReadOnly = true;
-            events.Multiline = true;
-            events.Size = new System.Drawing.Size(window.Width * 25 / 100, window.Height * 45 / 100);
-            events.Location = new Point(window.Width * 25 / 1000, window.Height * 2 / 10);
-            window.Controls.Add(events);
+            consultationsDuJour = new ListBox();
+            consultationsDuJour.Text = "";
+            consultationsDuJour.Font = new Font("Poppins", window.Height * 1 / 100);
+            consultationsDuJour.ForeColor = Color.Black;
+            consultationsDuJour.BackColor = Color.White;
+            consultationsDuJour.Location = new Point(window.Width * 275 / 1000, window.Height * 2 / 10);
+            consultationsDuJour.Size = new Size(window.Width * 20 / 100, window.Height * 45 / 100);
+            window.Controls.Add(consultationsDuJour);
+
+            infosConsultation = new ListBox();
+            infosConsultation.Text = "";
+            infosConsultation.Font = new Font("Poppins", window.Height * 1 / 100);
+            infosConsultation.ForeColor = Color.Black;
+            infosConsultation.BackColor = Color.White;
+            infosConsultation.Location = new Point(window.Width * 500 / 1000, window.Height * 2 / 10);
+            infosConsultation.Size = new Size(window.Width * 40 / 100, window.Height * 45 / 100);
+            window.Controls.Add(infosConsultation);
+
+
+
+            calendar = new MonthCalendar();
+            calendar.Location = new Point(window.Width * 25 / 1000, window.Height * 2 / 10);
+            calendar.Size = new Size(window.Width * 20 / 100, window.Height * 45 / 100);
+            calendar.DateSelected += new DateRangeEventHandler(dateSelection);
+            window.Controls.Add(calendar);
         }
+
 
         public void generateButton()
         {
-            modifConsult = new UIButton(UIColor.DARKBLUE, "Modifier Consultation", window.Width *3  / 20);
-            modifConsult.Location = new System.Drawing.Point(window.Width * 400 / 1000, window.Height * 14 / 20);
+            modifConsult = new UIButton(UIColor.DARKBLUE, "Modifier Consultation", window.Width * 3  / 20);
+            modifConsult.Location = new Point(window.Width * 5 / 15, window.Height * 14 / 20);
             window.Controls.Add(modifConsult);
 
-            createOrdonance = new UIButton(UIColor.DARKBLUE, "Créer ordonance", window.Width*3 / 20);
-            createOrdonance.Location = new System.Drawing.Point(window.Width * 6 / 10, window.Height * 14 / 20);
+            createOrdonance = new UIButton(UIColor.DARKBLUE, "Créer ordonance", window.Width * 3 / 20);
+            createOrdonance.Location = new Point(window.Width * 8 / 15, window.Height * 14 / 20);
             window.Controls.Add(createOrdonance);
 
-            deleteConsult = new UIButton(UIColor.DARKBLUE, "Supprimer Consultation", window.Width *3 / 20);
-            deleteConsult.Location = new System.Drawing.Point(window.Width * 800 / 1000, window.Height * 14 / 20);
+            deleteConsult = new UIButton(UIColor.DARKBLUE, "Supprimer Consultation", window.Width * 3 / 20);
+            deleteConsult.Location = new Point(window.Width * 11 / 15, window.Height * 14 / 20);
             window.Controls.Add(deleteConsult);
 
-            createConsult = new UIButton(UIColor.DARKBLUE, "Créer Consultation", window.Width / 10);
-            createConsult.Location = new System.Drawing.Point(((window.Width * 2 / 10 + window.Width / 20)/2) - createConsult.Width/2, window.Height * 15 / 20);
+            createConsult = new UIButton(UIColor.DARKBLUE, "Créer Consultation", window.Width * 3 / 20);
+            createConsult.Location = new Point(window.Width * 2 / 15, window.Height * 14 / 20);
             window.Controls.Add(createConsult);
 
             back = new UIRoundButton(window.Width / 20, "<");
             back.Location = new Point(window.Width * 9 / 10, window.Height / 10);
             window.Controls.Add(back);
             back.Click += new EventHandler(backClick);
-
-            backConsult = new UIRoundButton(window.Width / 40, "<");
-            backConsult.Location = new Point(window.Width / 20, window.Height * 15 / 20);
-            window.Controls.Add(backConsult);
-            backConsult.Click += new EventHandler(backConsultClick);
-
-            forwardConsult = new UIRoundButton(window.Width / 40, ">");
-            forwardConsult.Location = new Point(window.Width * 2 / 10, window.Height * 15 / 20);
-            forwardConsult.Text = ">";
-            window.Controls.Add(forwardConsult);
-            forwardConsult.Click += new EventHandler(forwardConsultClick);
-
-            /*//* parti a finir lors de la création des fonctions API
-            if(admin){*//*
-            manageCongé = new UIButton(UIColor.DARKBLUE, "Gestion des congés", window.Width / 4);
-            manageCongé.Location = new System.Drawing.Point(window.Width * 325 / 1000, window.Height * 625 / 1000);
-            window.Controls.Add(manageCongé);
-
-            stats = new UIButton(UIColor.DARKBLUE, "Statistiques", window.Width / 4);
-            stats.Location = new System.Drawing.Point(window.Width * 6 / 10, window.Height * 625 / 1000);
-            window.Controls.Add(stats);
-            //}*/
-
-
-            /*compte = new Button();
-            compte.FlatAppearance.BorderSize = 0;
-            compte.Size = new Size(window.Width / 10, window.Height / 10);
-            compte.Location = new System.Drawing.Point(window.Width * 87 / 100, window.Height * 15 / 100);
-            window.Controls.Add(compte);
-            
-            compte.Paint += new PaintEventHandler(comptePaint);
-            compte.Click += new EventHandler(manageCompteClick);*/
-            /*     stats.Click += new EventHandler(statsClick);*/
 
 
             modifConsult.Click += new EventHandler(modifConsultClick);
@@ -141,27 +124,9 @@ namespace Mauxnimale_CE2.ui
 
         #region eventHandler
 
-        /* protected void comptePaint(object sender, PaintEventArgs pe)
-         {
-             Graphics g = pe.Graphics;
-             g.DrawEllipse(new Pen(UIColor.ORANGE), 0, 0, compte.Size.Width, compte.Size.Height);
-             g.FillEllipse(new SolidBrush(UIColor.ORANGE), 0, 0, compte.Size.Width, compte.Size.Height);
-             g.DrawString("☺", new System.Drawing.Font("Roboto", (compte.Size.Width + compte.Size.Height) / 4), new SolidBrush(Color.White), compte.Width / 4, compte.Height / 200);
-
-             GraphicsPath path = new GraphicsPath();
-             path.AddEllipse(0, 0, compte.Size.Width, compte.Size.Height);
-             compte.Region = new Region(path);
-
-
-         }*/
-        private void forwardConsultClick(object sender, EventArgs e)
+        private void dateSelection(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
-        }
-
-        private void backConsultClick(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
+            consultationsDuJour.Items.Add("aujourd'hui on est le" + sender.ToString());
         }
 
         public void backClick(object sender, EventArgs e)
@@ -200,11 +165,6 @@ namespace Mauxnimale_CE2.ui
             //form.changerClasse(new Interface...());
         }
 
-        public void statsClick(object sender, EventArgs e)
-        {
-            window.Controls.Clear();
-            //form.changerClasse(new Interface...());
-        }
         #endregion
 
         public override void updateSize()

@@ -38,5 +38,20 @@ namespace Mauxnimale_CE2.api.controllers
             DbContext.get().CLIENT.Remove(c);
             DbContext.get().SaveChanges();
         }
+
+        public static void AddAnimal(CLIENT c, ANIMAL a)
+        {
+            c.ANIMAL.Add(a);
+        }
+
+        public static void RemoveAnimal(CLIENT c, ANIMAL a)
+        {
+            c.ANIMAL.Remove(a);
+        }
+
+        public static List<ANIMAL> ListOfAnimal(CLIENT c)
+        {
+            return c.ANIMAL.ToList();
+        }
     }
 }

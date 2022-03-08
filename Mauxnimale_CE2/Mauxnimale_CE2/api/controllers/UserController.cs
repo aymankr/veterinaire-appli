@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Mauxnimale_CE2.api;
 using Mauxnimale_CE2.api.entities;
@@ -6,6 +7,8 @@ using Mauxnimale_CE2.api.controllers.utils;
 
 public static class ConnectionController
 {
+	/* GET METHODS */
+
 	/// <summary>
 	/// Get the user corresponding to the given login and password if he exists.
 	/// </summary>
@@ -16,12 +19,24 @@ public static class ConnectionController
 	{
 		string hashedPassword = PasswordUtils.getHash(password);
 		var allUsers = from s in DbContext.get().SALARIE
-						  where s.LOGIN == login
-						  where s.MDP == hashedPassword
-						  select s;
+					   where s.LOGIN == login
+					   where s.MDP == hashedPassword
+					   select s;
 
 		return allUsers.FirstOrDefault();
 	}
+
+	/// <summary>
+	/// Get all the employees in the database.
+	/// </summary>
+	/// <returns>A list of all the employees present in the database.</returns>
+	public static List<SALARIE> getAllEmployees()
+	{
+		return DbContext.get().SALARIE.ToList();
+	}
+
+
+	/* UPDATES METHODS */
 
 	public static bool updateInfos(SALARIE user,
 								   string firstName,
@@ -30,17 +45,17 @@ public static class ConnectionController
 								   string password,
 								   string email,
 								   string phoneNumber)
-    {
+	{
 		if (firstName != null && firstName.Any())
-        {
+		{
 			if (InputVerification.noNumber(firstName))
 				user.PRENOM = firstName;
 			else
-            {
+			{
 				Console.WriteLine("First name: " + firstName + " invalid. Contains a number.");
 				return false;
-            }				
-        }
+			}
+		}
 
 		if (lastName != null && lastName.Any())
 		{
@@ -103,9 +118,9 @@ public static class ConnectionController
 	/// <param name="newLogin">The new user's login</param>
 	/// <returns>true if it succeeded, false otherwise</returns>
 	public static bool updateLogin(SALARIE user, string newLogin)
-    {
+	{
 		return updateInfos(user, null, null, newLogin, null, null, null);
-    }
+	}
 
 	/// <summary>
 	/// Update the user's password if valid.
@@ -114,15 +129,15 @@ public static class ConnectionController
 	/// <param name="newLogin">The new user's password</param>
 	/// <returns>true if it succeeded, false otherwise</returns>
 	public static bool updatePassword(SALARIE user, string enteredPrevPassword, string newPassword)
-    {
+	{
 		if (user.MDP != enteredPrevPassword)
-        {
+		{
 			Console.WriteLine("WARNING: Entered previous password does not correspond to the user's password.");
 			return false;
-        }
+		}
 
 		return updateInfos(user, null, null, null, newPassword, null, null);
-    }
+	}
 
 	/// <summary>
 	/// Update the salary of the given employee.
@@ -130,7 +145,7 @@ public static class ConnectionController
 	/// <param name="employee">The employee concerned.</param>
 	/// <param name="newSalary">The new salary amount</param>
 	public static void updateSalary(SALARIE employee, decimal newSalary)
-    {
+	{
 		employee.SALAIRE = newSalary;
 		DbContext.get().SaveChanges();
 		Console.WriteLine("Salary updated.");
@@ -146,10 +161,10 @@ public static class ConnectionController
 	public static bool updateInternshipDates(SALARIE intern, DateTime beginDate, DateTime endDate)
 	{
 		if (!InputVerification.isDateEarlier(beginDate, endDate))
-        {
+		{
 			Console.WriteLine("Begin date: " + beginDate + " is not earlier than end date: " + endDate);
 			return false;
-        }
+		}
 
 		intern.DATEDEBUTSTAGE = beginDate;
 		intern.DATEFINSTAGE = endDate;

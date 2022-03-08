@@ -13,7 +13,7 @@ namespace Mauxnimale_CE2.api
         /**
          * Method to add an appointment to the database and to set attributes
          */
-        public static RENDEZ_VOUS addAppointment(TYPE_RDV appointmentType, CLIENT costumer, ANIMAL animal, JOURNEE day, string reason, string startHour, string endHour)
+        public static void addAppointment(TYPE_RDV appointmentType, CLIENT costumer, ANIMAL animal, JOURNEE day, string reason, string startHour, string endHour)
         {
             RENDEZ_VOUS newAppointment = new RENDEZ_VOUS();
             newAppointment.TYPE_RDV = appointmentType;
@@ -25,7 +25,6 @@ namespace Mauxnimale_CE2.api
             newAppointment.RAISON = reason;
             DbContext.get().RENDEZ_VOUS.Add(newAppointment);
             DbContext.get().SaveChanges();
-            return newAppointment;
         }
 
         /**

@@ -59,6 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="api\controllers\AppointmentController.cs" />
+    <Compile Include="api\controllers\RegistrationController.cs" />
+    <Compile Include="api\controllers\ConnectionController.cs" />
+    <Compile Include="api\controllers\utils\PasswordUtils.cs" />
     <Compile Include="api\DbContext.cs" />
     <Compile Include="api\controllers\AnimalController.cs" />
     <Compile Include="api\entities\ANIMAL.cs">
@@ -162,6 +165,7 @@
     <Compile Include="ui\InterfaceGestionCongé.cs" />
     <Compile Include="ui\InterfaceHome.cs" />
     <Compile Include="ui\InterfaceInscription.cs" />
+    <Compile Include="ui\InterfaceLegalMentions.cs" />
     <Compile Include="ui\InterfaceStatsPage.cs" />
     <Compile Include="ui\MainWindow.cs">
       <SubType>Form</SubType>

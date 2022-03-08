@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Mauxnimale_CE2.ui
 {
-    internal class InterfaceAdmin : AInterface
+    internal class InterfaceLegalMentions : AInterface
     {
         MainWindow window;
 
@@ -19,7 +19,7 @@ namespace Mauxnimale_CE2.ui
         UIRoundButton back;
         //Lister ici les différents éléments qui seront utilisés dans l'interface
 
-        public InterfaceAdmin(MainWindow forme)
+        public InterfaceLegalMentions(MainWindow forme)
         {
             this.window = forme;
             header = new Header(window);
@@ -29,12 +29,12 @@ namespace Mauxnimale_CE2.ui
         public void generateLabel()
         {
             text = new Label();
-            text.Text = "En cas de problème avec l’application Plannimaux®, nous sommes joignables à ces coordonnées \n \n Téléphone: 06 95 35 69 27 \n E - mail : contact @lesdevs.com";
+            text.Text = "MENTIONS LÉGALES \n \n L’application Plannimaux® est éditée par l’équipe projet S3A - E1, enregistrée au registre de l’IUT Informatique de Bordeaux(33). \n \n Hébergeur des Services: OVH –  2 rue Kellermann – 59100 ROUBAIX – France ";
             text.TextAlign = ContentAlignment.MiddleLeft;
             text.Font = new System.Drawing.Font("Poppins", window.Height * 2 / 100);
             text.ForeColor = Color.Black;
             text.Size = new System.Drawing.Size(window.Width / 2, window.Height / 2);
-            text.Location = new Point(window.Width / 4, window.Height  / 4);
+            text.Location = new Point(window.Width / 4, window.Height / 4);
             window.Controls.Add(text);
         }
         public override void load()

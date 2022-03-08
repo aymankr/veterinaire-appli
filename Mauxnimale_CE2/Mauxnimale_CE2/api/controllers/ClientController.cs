@@ -18,5 +18,14 @@ namespace Mauxnimale_CE2.api.controllers
             DbContext.get().CLIENT.Add(c);
             DbContext.get().SaveChanges();
         }
+
+        public static CLIENT getClient(string name, string surname)
+        {
+            var client = from c in DbContext.get().CLIENT
+                              where c.NOMCLIENT == surname
+                              where c.PRENOMCLIENT == name
+                              select c;
+            return client.FirstOrDefault();
+        }
     }
 }

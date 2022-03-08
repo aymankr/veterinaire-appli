@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="api\controllers\AppointmentController.cs" />
+    <Compile Include="api\controllers\ClientController.cs" />
     <Compile Include="api\controllers\RegistrationController.cs" />
     <Compile Include="api\controllers\ConnectionController.cs" />
     <Compile Include="api\controllers\utils\PasswordUtils.cs" />

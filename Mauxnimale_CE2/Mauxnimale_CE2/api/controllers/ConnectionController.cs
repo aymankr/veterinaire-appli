@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.api;
 
@@ -15,7 +14,6 @@ public static class Connection
         {
 			if(s.LOGIN == login && s.MDP == mdp)
             {
-				Console.WriteLine("aaaaaaaaaa : " + s.IDCOMPTE);
 				return s;
             }
         }

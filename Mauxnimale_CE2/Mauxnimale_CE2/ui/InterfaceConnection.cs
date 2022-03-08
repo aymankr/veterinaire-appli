@@ -1,4 +1,5 @@
-﻿using Mauxnimale_CE2.ui.components.componentsTools;
+﻿using Mauxnimale_CE2.ui;
+using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.ui.Components;
 using System;
 using System.Collections.Generic;
@@ -79,10 +80,14 @@ namespace Mauxnimale_CE2
 
         public void connection_click(object sender, EventArgs e)
         {
-            foreach (Control item in form.Controls)
+            if (login.Text != null && password.Text != null && Connection.GetSALARIE(login.Text, password.Text) != null)
             {
-                form.Controls.Remove(item);
-            }
+                form.Controls.Clear();
+                form.switchInterface(new InterfaceHome(form, Connection.GetSALARIE(login.Text, password.Text)));
+            } else
+            {
+                MessageBox.Show("identifiant ou mot de passe incorrecte");
+            }           
         }
 
         private void loginEnter(object sender, EventArgs e)

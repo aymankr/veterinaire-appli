@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2
 {
@@ -13,9 +14,10 @@ namespace Mauxnimale_CE2
         MainWindow form;
         //Lister ici les différents éléments qui seront utilisés dans l'interface
 
-        public ExempleInterface(MainWindow forme)
+        public ExempleInterface(MainWindow forme, SALARIE s)
         {
             this.form = forme;
+            salarie = s;
         }
 
         public override void load()

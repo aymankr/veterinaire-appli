@@ -9,7 +9,7 @@ namespace Mauxnimale_CE2.api.controllers
 {
     internal static class ClientController
     {
-       public static void addClient(string name, string surname, string phoneNumber)
+       public static void AddClient(string name, string surname, string phoneNumber)
         {
             CLIENT c = new CLIENT();
             c.NOMCLIENT = surname;
@@ -19,13 +19,24 @@ namespace Mauxnimale_CE2.api.controllers
             DbContext.get().SaveChanges();
         }
 
-        public static CLIENT getClient(string name, string surname)
+        public static CLIENT GetClient(string name, string surname)
         {
             var client = from c in DbContext.get().CLIENT
                               where c.NOMCLIENT == surname
                               where c.PRENOMCLIENT == name
                               select c;
-            return client.FirstOrDefault();
+            return client.First();
+        }
+
+        public static List<CLIENT> AllClient()
+        {
+            return DbContext.get().CLIENT.ToList();
+        }
+
+        public static void DeleteClient(CLIENT c)
+        {
+            DbContext.get().CLIENT.Remove(c);
+            DbContext.get().SaveChanges();
         }
     }
 }

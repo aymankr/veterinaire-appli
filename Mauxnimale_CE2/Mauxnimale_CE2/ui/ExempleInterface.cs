@@ -19,7 +19,6 @@ namespace Mauxnimale_CE2
 
         public ExempleInterface(MainWindow forme, SALARIE s)
         {
-            this.form = forme;
             salarie = s;
             this.window = forme;
             header = new Header(window);

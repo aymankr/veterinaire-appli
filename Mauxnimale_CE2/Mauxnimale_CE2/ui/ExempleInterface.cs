@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2
 {
@@ -16,8 +17,10 @@ namespace Mauxnimale_CE2
         Footer footer;
         //Lister ici les différents éléments qui seront utilisés dans l'interface
 
-        public ExempleInterface(MainWindow forme)
+        public ExempleInterface(MainWindow forme, SALARIE s)
         {
+            this.form = forme;
+            salarie = s;
             this.window = forme;
             header = new Header(window);
             footer = new Footer(window);

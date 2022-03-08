@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="api\controllers\AppointmentController.cs" />
+    <Compile Include="api\controllers\ConnectionController.cs" />
     <Compile Include="api\DbContext.cs" />
     <Compile Include="api\controllers\AnimalController.cs" />
     <Compile Include="api\entities\ANIMAL.cs">

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2.ui
 {
@@ -18,11 +19,12 @@ namespace Mauxnimale_CE2.ui
         UIButton productPage, clientPage;
         UIRoundButton back;
 
-        public InterfaceStatsPage(MainWindow forme)
+        public InterfaceStatsPage(MainWindow forme, SALARIE s)
         {
             this.window = forme;
             header = new Header(window);
             footer = new Footer(window);
+            salarie = s;
         }
 
         public override void load()
@@ -66,7 +68,7 @@ namespace Mauxnimale_CE2.ui
         public void backClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceHome(window));
+            window.switchInterface(new InterfaceHome(window, salarie));
         }
 
         public override void updateSize()

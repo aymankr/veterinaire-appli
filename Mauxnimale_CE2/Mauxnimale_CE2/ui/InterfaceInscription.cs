@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2
 {
@@ -88,11 +89,12 @@ namespace Mauxnimale_CE2
         }
         #endregion 
 
-        public InterfaceInscription(MainWindow forme)
+        public InterfaceInscription(MainWindow forme, SALARIE s)
         {
             this.form = forme;
             header = new Header(forme);
             footer = new Footer(forme);
+            salarie = s;
         }
 
 

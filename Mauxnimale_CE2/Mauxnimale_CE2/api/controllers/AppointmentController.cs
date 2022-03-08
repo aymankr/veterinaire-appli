@@ -45,7 +45,7 @@ namespace Mauxnimale_CE2.api
         {
             JOURNEE day = (JOURNEE)(from d in DbContext.get().JOURNEE 
                                     where d.DATE.Equals(date) 
-                                    select d);
+                                    select d);  
             return day.RENDEZ_VOUS;
         }
     }

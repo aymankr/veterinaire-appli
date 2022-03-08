@@ -14,6 +14,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Mauxnimale_CE2.api.entities;
 using System.Windows.Forms;
+using System.Collections;
+using Mauxnimale_CE2.api;
 
 namespace Mauxnimale_CE2.ui
 {
@@ -28,10 +30,12 @@ namespace Mauxnimale_CE2.ui
         UIRoundButton back;
         MonthCalendar calendar;
 
+
+        List<RENDEZ_VOUS> rdvOfDay;
         RENDEZ_VOUS selected;
 
         Label incEvent;
-        ListBox consultationsDuJour, infosConsultation;
+        ListBox consultOfDay, infosConsult;
 
         public InterfaceGestionConsultation(MainWindow window, SALARIE s)
         {
@@ -64,23 +68,24 @@ namespace Mauxnimale_CE2.ui
 
         public void generateListBox()
         {
-            consultationsDuJour = new ListBox();
-            consultationsDuJour.Text = "";
-            consultationsDuJour.Font = new Font("Poppins", window.Height * 1 / 100);
-            consultationsDuJour.ForeColor = Color.Black;
-            consultationsDuJour.BackColor = Color.White;
-            consultationsDuJour.Location = new Point(window.Width * 275 / 1000, window.Height * 2 / 10);
-            consultationsDuJour.Size = new Size(window.Width * 20 / 100, window.Height * 45 / 100);
-            window.Controls.Add(consultationsDuJour);
+            consultOfDay = new ListBox();
+            consultOfDay.Text = "";
+            consultOfDay.Font = new Font("Poppins", window.Height * 1 / 100);
+            consultOfDay.ForeColor = Color.Black;
+            consultOfDay.BackColor = Color.White;
+            consultOfDay.Location = new Point(window.Width * 275 / 1000, window.Height * 2 / 10);
+            consultOfDay.Size = new Size(window.Width * 20 / 100, window.Height * 45 / 100);
+            window.Controls.Add(consultOfDay);
+            consultOfDay.SelectedIndexChanged += new EventHandler(rdvSelection);
 
-            infosConsultation = new ListBox();
-            infosConsultation.Text = "";
-            infosConsultation.Font = new Font("Poppins", window.Height * 1 / 100);
-            infosConsultation.ForeColor = Color.Black;
-            infosConsultation.BackColor = Color.White;
-            infosConsultation.Location = new Point(window.Width * 500 / 1000, window.Height * 2 / 10);
-            infosConsultation.Size = new Size(window.Width * 40 / 100, window.Height * 45 / 100);
-            window.Controls.Add(infosConsultation);
+            infosConsult = new ListBox();
+            infosConsult.Text = "";
+            infosConsult.Font = new Font("Poppins", window.Height * 1 / 100);
+            infosConsult.ForeColor = Color.Black;
+            infosConsult.BackColor = Color.White;
+            infosConsult.Location = new Point(window.Width * 500 / 1000, window.Height * 2 / 10);
+            infosConsult.Size = new Size(window.Width * 40 / 100, window.Height * 45 / 100);
+            window.Controls.Add(infosConsult);
 
 
 
@@ -124,12 +129,20 @@ namespace Mauxnimale_CE2.ui
 
 
         #region eventHandler
+        private void rdvSelection(object sender, EventArgs e)
+        {
+            //selected = 
+        }
 
         private void dateSelection(object sender, DateRangeEventArgs e)
         {
-            consultationsDuJour.Items.Add(e.Start.ToShortDateString());
-
-            selected = new RENDEZ_VOUS();
+            DateTime selectedsate = new DateTime(e.Start.Year, e.Start.Month, e.Start.Day);
+            rdvOfDay =new List<RENDEZ_VOUS>(AppointmentController.getAppointmentsFromDate(selectedsate));
+            foreach(RENDEZ_VOUS rdv in rdvOfDay)
+            {
+                //ListBoxItems itm = new ListBoxItems
+            }
+            consultOfDay.Items.Add(rdvOfDay);
         }
 
         public void backClick(object sender, EventArgs e)
@@ -152,8 +165,12 @@ namespace Mauxnimale_CE2.ui
 
         public void deleteConsultClick(object sender, EventArgs e)
         {
-            window.Controls.Clear();
-            //form.changerClasse(new Interface...());
+            DialogResult mb = MessageBox.Show("Are you sure you want to Delete", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            if (mb == DialogResult.OK)
+            {
+                window.Controls.Clear();
+                window.switchInterface(new InterfaceHome(window, salarie));
+            }
         }
 
         public void createConsultClick(object sender, EventArgs e)

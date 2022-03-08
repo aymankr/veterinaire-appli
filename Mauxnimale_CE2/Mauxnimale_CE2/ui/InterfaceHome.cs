@@ -129,7 +129,7 @@ namespace Mauxnimale_CE2.ui
         public void manageCompteClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            //form.changerClasse(new Interface...());
+            window.switchInterface(new InterfaceGestionCompte(window));
         }
 
         public void manageCongéClick(object sender, EventArgs e)

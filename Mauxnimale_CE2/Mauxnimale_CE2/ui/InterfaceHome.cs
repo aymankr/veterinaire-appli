@@ -131,7 +131,7 @@ namespace Mauxnimale_CE2.ui
         public void manageCompteClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceGestionCompte(window));
+            window.switchInterface(new InterfaceGestionCompte(window, salarie));
         }
 
         public void manageCongéClick(object sender, EventArgs e)

@@ -1,4 +1,5 @@
-﻿using Mauxnimale_CE2.ui.components.componentsTools;
+﻿using Mauxnimale_CE2.api.entities;
+using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.ui.Components;
 using System;
 using System.Collections.Generic;
@@ -22,11 +23,12 @@ namespace Mauxnimale_CE2.ui
         TextBox name, prénom, email, phone;
         Label lName, lPrénom, lEmail, lPhone;
 
-        public InterfaceGestionCompte(MainWindow forme)
+        public InterfaceGestionCompte(MainWindow forme, SALARIE s)
         {
             this.window = forme;
             header = new Header(window);
             footer = new Footer(window);
+            salarie = s;
         }
 
         public override void load()
@@ -68,7 +70,7 @@ namespace Mauxnimale_CE2.ui
         public void backClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceHome(window));
+            window.switchInterface(new InterfaceHome(window, salarie));
         }
 
         public void nameLeave(object sender, EventArgs e)

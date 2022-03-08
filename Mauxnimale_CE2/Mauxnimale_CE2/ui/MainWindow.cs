@@ -1,4 +1,4 @@
-﻿using Mauxnimale_CE2.ui;
+using Mauxnimale_CE2.ui;
 using System;
 using System.Windows.Forms;
 

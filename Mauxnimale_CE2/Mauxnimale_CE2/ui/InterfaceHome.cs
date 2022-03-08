@@ -137,7 +137,7 @@ namespace Mauxnimale_CE2.ui
         public void manageCongéClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            //form.changerClasse(new Interface...());
+            window.switchInterface(new InterfaceGestionCongé(window));
         }
 
         public void manageStockClick(object sender, EventArgs e)
@@ -167,7 +167,7 @@ namespace Mauxnimale_CE2.ui
         public void statsClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            //form.changerClasse(new Interface...());
+            window.switchInterface(new InterfaceStatsPage(window));
         }
         #endregion
 

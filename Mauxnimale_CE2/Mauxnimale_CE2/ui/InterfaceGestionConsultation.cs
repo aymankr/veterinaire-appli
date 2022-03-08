@@ -19,8 +19,6 @@ namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceGestionConsultation : AInterface
     {
-        Salarie
-
         MainWindow window;
 
         Header header;
@@ -30,12 +28,15 @@ namespace Mauxnimale_CE2.ui
         UIRoundButton back;
         MonthCalendar calendar;
 
+        RENDEZ_VOUS selected;
+
         Label incEvent;
         ListBox consultationsDuJour, infosConsultation;
 
-        public InterfaceGestionConsultation(MainWindow window)
+        public InterfaceGestionConsultation(MainWindow window, SALARIE s)
         {
             this.window = window;
+            salarie = s;
             header = new Header(window);
             footer = new Footer(window);
 
@@ -124,21 +125,17 @@ namespace Mauxnimale_CE2.ui
 
         #region eventHandler
 
-        private void dateSelection(object sender, EventArgs e)
+        private void dateSelection(object sender, DateRangeEventArgs e)
         {
-            consultationsDuJour.Items.Add("aujourd'hui on est le" + sender.ToString());
+            consultationsDuJour.Items.Add(e.Start.ToShortDateString());
+
+            selected = new RENDEZ_VOUS();
         }
 
         public void backClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceHome(window));
-        }
-
-        public void manageCompteClick(object sender, EventArgs e)
-        {
-            window.Controls.Clear();
-            //form.changerClasse(new Interface...());
+            window.switchInterface(new InterfaceHome(window, salarie));
         }
 
         public void modifConsultClick(object sender, EventArgs e)

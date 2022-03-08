@@ -161,13 +161,13 @@ namespace Mauxnimale_CE2.ui
         public void manageConsultationClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceGestionConsultation(window));
+            window.switchInterface(new InterfaceGestionConsultation(window, salarie));
         }
 
         public void statsClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceStatsPage(window));
+            window.switchInterface(new InterfaceStatsPage(window,salarie));
         }
         #endregion
 

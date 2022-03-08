@@ -14,12 +14,11 @@ namespace Mauxnimale_CE2
     class InterfaceConnection : AInterface
     {
 
-        UIButton button;
+        UIButton connectionButton;
 
         Footer footer;
         Header header;
-        
-        Button connection;
+
         TextBox login;
         TextBox password;
 
@@ -43,11 +42,11 @@ namespace Mauxnimale_CE2
 
         public void generate_Button()
         {
-            button = new UIButton(UIColor.ORANGE, "Connection", 190);
-            button.Font = UIFont.BigButtonFont;
-            button.Location = new Point((this.form.Width / 2) - (button.Width / 2) - 25, 2 * (this.form.Height / 3));
-            form.Controls.Add(button);
-            button.Click += new EventHandler(connection_click);
+            connectionButton = new UIButton(UIColor.ORANGE, "Connection", 190);
+            connectionButton.Font = UIFont.BigButtonFont;
+            connectionButton.Location = new Point((this.form.Width / 2) - (connectionButton.Width / 2) - 25, 2 * (this.form.Height / 3));
+            form.Controls.Add(connectionButton);
+            connectionButton.Click += new EventHandler(connection_click);
         }
 
 

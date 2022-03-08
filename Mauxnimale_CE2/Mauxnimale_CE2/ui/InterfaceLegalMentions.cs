@@ -48,7 +48,7 @@ namespace Mauxnimale_CE2.ui
         public void generateButton()
         {
 
-            back = new UIRoundButton(window.Width / 20);
+            back = new UIRoundButton(window.Width / 20, "<");
             back.Location = new System.Drawing.Point(window.Width * 9 / 10, window.Height / 10);
             back.Click += new EventHandler(backClick);
             window.Controls.Add(back);
@@ -57,7 +57,7 @@ namespace Mauxnimale_CE2.ui
         public void backClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceHome(window));
+            window.switchInterface(new InterfaceHome(window,salarie));
         }
 
         public override void updateSize()

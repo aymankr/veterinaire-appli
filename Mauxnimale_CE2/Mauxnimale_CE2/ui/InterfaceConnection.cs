@@ -78,10 +78,10 @@ namespace Mauxnimale_CE2
 
         public void connection_click(object sender, EventArgs e)
         {
-            if (login.Text != null && password.Text != null && Connection.GetSALARIE(login.Text, password.Text) != null)
+            if (login.Text != null && password.Text != null && ConnectionController.getUser(login.Text, password.Text) != null)
             {
                 form.Controls.Clear();
-                form.switchInterface(new InterfaceHome(form, Connection.GetSALARIE(login.Text, password.Text)));
+                form.switchInterface(new InterfaceHome(form, ConnectionController.getUser(login.Text, password.Text)));
             } else
             {
                 MessageBox.Show("identifiant ou mot de passe incorrecte");

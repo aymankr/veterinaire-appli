@@ -1,61 +1,12 @@
 ﻿using System;
-
-using System.Security.Cryptography;
-using System.Text;
-
 using System.Linq;
 using Mauxnimale_CE2.api.entities;
+using Mauxnimale_CE2.api.controllers.utils;
 
 namespace Mauxnimale_CE2.api.controllers
 {
     internal class RegistrationController
     {
-        /// <summary>
-        /// Creates and returns the hash of the given text.
-        /// </summary>
-        /// <param name="text">The text to get the hash</param>
-        /// <returns>the hash of the given text</returns>
-        private static string getHash(string text)
-        {
-            // SHA512 is disposable by inheritance.  
-            using (var sha256 = SHA256.Create())
-            {
-                // Send a sample text to hash.  
-                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(text));
-                // Get the hashed string.  
-                return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
-            }
-        }
-
-        /// <summary>
-        /// Generates a random string with a given size.
-        /// </summary>
-        /// <param name="size">The size of the string to generate.</param>
-        /// <param name="lowerCase">True to generate a lower case string.</param>
-        /// <returns>The generated string.</returns>
-        private static string generateRandomString(int size = 10, bool lowerCase = false)
-        {
-            var builder = new StringBuilder(size);
-            Random randomizer = new Random();
-
-            // Unicode/ASCII Letters are divided into two blocks
-            // (Letters 65–90 / 97–122):
-            // The first group containing the uppercase letters and
-            // the second group containing the lowercase.  
-
-            // char is a single Unicode character  
-            char offset = lowerCase ? 'a' : 'A';
-            const int lettersOffset = 26; // A...Z or a..z: length=26  
-
-            for (var i = 0; i < size; i++)
-            {
-                var @char = (char)randomizer.Next(offset, offset + lettersOffset);
-                builder.Append(@char);
-            }
-
-            return lowerCase ? builder.ToString().ToLower() : builder.ToString();
-        }
-
         /// <summary>
         /// Verify if the a user with the given login already exists in the database or not.
         /// </summary>
@@ -72,23 +23,27 @@ namespace Mauxnimale_CE2.api.controllers
             return userWithLogin.Any();
         }
 
-        public static bool registerNewUser(string newUserLogin, out string tempHashedPassword)
+        /// <summary>
+        /// Register a new user with assistant permissions with a temporary password.
+        /// </summary>
+        /// <param name="newUserLogin">The login of the new user</param>
+        /// <returns>Null if the registration failed, and the temporary password otherwise.</returns>
+        public static string registerNewUser(string newUserLogin)
         {
             // Verify that the login does not already exists
             if (userWithLoginAlreadyExists(newUserLogin))
             {
                 Console.WriteLine("User with login: " + newUserLogin + " already exists.");
-                tempHashedPassword = null;
-                return false;
+                return null;
             }
 
             // Generate a temporary password
-            tempHashedPassword = getHash(generateRandomString());
+            string tempPassword = PasswordUtils.generateRandomString();
 
             // Create the new user without the informations (will be modified by him and Annie Maux later)
             SALARIE newUser = new SALARIE();
             newUser.LOGIN = newUserLogin;
-            newUser.MDP = tempHashedPassword;
+            newUser.MDP = PasswordUtils.getHash(tempPassword);
             newUser.NOM = "None";
             newUser.PRENOM = "None";
             newUser.SALAIRE = -1;
@@ -103,7 +58,7 @@ namespace Mauxnimale_CE2.api.controllers
             dbContext.SALARIE.Add(newUser);
             dbContext.SaveChanges();
 
-            return true;
+            return tempPassword;
         }
     }
 }

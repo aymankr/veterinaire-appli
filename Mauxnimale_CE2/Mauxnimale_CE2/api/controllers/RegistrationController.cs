@@ -30,6 +30,13 @@ namespace Mauxnimale_CE2.api.controllers
         /// <returns>Null if the registration failed, and the temporary password otherwise.</returns>
         public static string registerNewUser(string newUserLogin)
         {
+            // Verify that the login is valid
+            if (!InputVerification.noSpecialCharacters(newUserLogin))
+            {
+                Console.WriteLine("Login: " + newUserLogin + " is not valid: it contains special characters.");
+                return null;
+            }
+
             // Verify that the login does not already exists
             if (userWithLoginAlreadyExists(newUserLogin))
             {
@@ -58,6 +65,7 @@ namespace Mauxnimale_CE2.api.controllers
             dbContext.SALARIE.Add(newUser);
             dbContext.SaveChanges();
 
+            Console.WriteLine("New user with login: " + newUserLogin + " and password: " + tempPassword + " registered");
             return tempPassword;
         }
     }

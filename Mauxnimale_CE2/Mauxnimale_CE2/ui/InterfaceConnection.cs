@@ -22,12 +22,12 @@ namespace Mauxnimale_CE2
         TextBox login;
         TextBox password;
 
-        MainWindow form;
+        MainWindow window;
         //Lister ici les différents éléments qui seront utilisés dans l'interface
 
         public InterfaceConnection(MainWindow form)
         {
-            this.form = form;
+            this.window = form;
             footer = new Footer(form);
             header = new Header(form);
         }
@@ -44,19 +44,19 @@ namespace Mauxnimale_CE2
         {
             connectionButton = new UIButton(UIColor.ORANGE, "Connection", 190);
             connectionButton.Font = UIFont.BigButtonFont;
-            connectionButton.Location = new Point((this.form.Width / 2) - (connectionButton.Width / 2) - 25, 2 * (this.form.Height / 3));
-            form.Controls.Add(connectionButton);
+            connectionButton.Location = new Point((this.window.Width / 2) - (connectionButton.Width / 2) - 25, 2 * (this.window.Height / 3));
+            window.Controls.Add(connectionButton);
             connectionButton.Click += new EventHandler(connection_click);
         }
 
 
         public void setBox(TextBox box, String text)
         {
-            box.Size = new Size(form.Width / 2, form.Height * 5 / 100);
-            box.Font = new Font("Poppins", form.Height * 3 / 100);
+            box.Size = new Size(window.Width / 2, window.Height * 5 / 100);
+            box.Font = new Font("Poppins", window.Height * 3 / 100);
             box.ForeColor = Color.Gray;
             box.Text = text;
-            form.Controls.Add(box);
+            window.Controls.Add(box);
         }
 
         public void generate_TextBox()
@@ -64,13 +64,13 @@ namespace Mauxnimale_CE2
             login = new TextBox();
             login.LostFocus += new EventHandler(loginLeave);
             login.GotFocus += new EventHandler(loginEnter);
-            login.Location = new Point(form.Width / 4, form.Height * 35 / 100);
+            login.Location = new Point(window.Width / 4, window.Height * 35 / 100);
             setBox(login, "login");
 
             password = new TextBox();   
             password.LostFocus += new EventHandler(passwordLeave);
             password.GotFocus += new EventHandler(passwordEnter);
-            password.Location = new Point(form.Width / 4, form.Height * 45 / 100);
+            password.Location = new Point(window.Width / 4, window.Height * 45 / 100);
             password.PasswordChar = '•';
             setBox(password, "password");
 
@@ -80,8 +80,8 @@ namespace Mauxnimale_CE2
         {
             if (login.Text != null && password.Text != null && ConnectionController.getConnection(login.Text, password.Text) != null)
             {
-                form.Controls.Clear();
-                form.switchInterface(new InterfaceHome(form, ConnectionController.getConnection(login.Text, password.Text)));
+                window.Controls.Clear();
+                window.switchInterface(new InterfaceHome(window, ConnectionController.getConnection(login.Text, password.Text)));
             } else
             {
                 MessageBox.Show("identifiant ou mot de passe incorrecte");
@@ -126,7 +126,8 @@ namespace Mauxnimale_CE2
 
         public override void updateSize()
         {
-            throw new NotImplementedException();
+            window.Controls.Clear();
+            this.load();
         }
     }
 }

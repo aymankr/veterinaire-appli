@@ -1,19 +1,13 @@
-﻿using Mauxnimale_CE2.ui;
-using Mauxnimale_CE2.ui.components.componentsTools;
-using Mauxnimale_CE2.ui.Components;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Mauxnimale_CE2.ui.components;
+using Mauxnimale_CE2.ui.components.componentsTools;
 
-namespace Mauxnimale_CE2
+namespace Mauxnimale_CE2.ui
 {
     class InterfaceConnection : AInterface
     {
-
         UIButton button;
 
         Footer footer;

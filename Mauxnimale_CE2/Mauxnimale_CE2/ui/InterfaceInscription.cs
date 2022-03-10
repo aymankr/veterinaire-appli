@@ -1,211 +1,127 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
+using Mauxnimale_CE2.ui.components;
+using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
+using Mauxnimale_CE2.api.controllers;
+using Mauxnimale_CE2.api.controllers.utils;
 
-namespace Mauxnimale_CE2
+namespace Mauxnimale_CE2.ui
 {
-    class InterfaceInscription : AInterface
+    internal class InterfaceInscription : AInterface
     {
-        MainWindow form;
+        private MainWindow window;
 
-        Header header;
-        Footer footer;
+        private MinimalHeader header;
+        private Footer footer;
 
-        TextBox name, firstName, pswd, confirmPswd;
-        Button inscription;
-        Label alert;
-        //Lister ici les différents éléments qui seront utilisés dans l'interface
+        private UITextBox loginTextBox;
 
-        #region eventHandler
-        private void nameEnter(object sender, EventArgs e)
+        public InterfaceInscription(MainWindow window, SALARIE user)
         {
-            if (name.Text == "Votre prénom")
-            {
-                name.Text = "";
-                name.ForeColor = Color.Black;
-            }
+            this.window = window;
+            header = new MinimalHeader(window);
+            footer = new Footer(window);
+            loginTextBox = generateLoginTextBox();
         }
-
-        private void nameLeave(object sender, EventArgs e)
-        {
-            if (name.Text.Length == 0)
-            {
-                name.Text = "Votre prénom";
-                name.ForeColor = Color.Gray;
-            }
-        }
-        private void firstNameEnter(object sender, EventArgs e)
-        {
-            if (firstName.Text == "Votre nom")
-            {
-                firstName.Text = "";
-                firstName.ForeColor = Color.Black;
-            }
-        }
-
-        private void firstNameLeave(object sender, EventArgs e)
-        {
-            if (firstName.Text.Length == 0)
-            {
-                firstName.Text = "Votre nom";
-                firstName.ForeColor = Color.Gray;
-            }
-        }
-        private void pswdEnter(object sender, EventArgs e)
-        {
-            if (pswd.Text == "Votre mot de passe")
-            {
-                pswd.Text = "";
-                pswd.ForeColor = Color.Black;
-            }
-        }
-
-        private void pswdLeave(object sender, EventArgs e)
-        {
-            if (pswd.Text.Length == 0)
-            {
-                pswd.Text = "Votre mot de passe";
-                pswd.ForeColor = Color.Gray;
-            }
-        }
-        private void confirmPswdEnter(object sender, EventArgs e)
-        {
-            if (confirmPswd.Text == "Confirmation du mot de passe")
-            {
-                confirmPswd.Text = "";
-                confirmPswd.ForeColor = Color.Black;
-            }
-        }
-
-        private void confirmPswdLeave(object sender, EventArgs e)
-        {
-            if (confirmPswd.Text.Length == 0)
-            {
-                confirmPswd.Text = "Confirmation du mot de passe";
-                confirmPswd.ForeColor = Color.Gray;
-            }
-        }
-        #endregion 
-
-        public InterfaceInscription(MainWindow forme, SALARIE s)
-        {
-            this.form = forme;
-            header = new Header(forme);
-            footer = new Footer(forme);
-            salarie = s;
-        }
-
 
         public override void load()
         {
-            header.load("Inscription");
+            header.load();
             footer.load();
-            generateBox();
-            generateLabel();
-            generateButton();
+            window.Controls.Add(generateSubmitButton());
+            window.Controls.Add(loginTextBox);
         }
 
-        public void generateLabel()
+        #region Window components
+
+        private UIButton generateSubmitButton()
         {
-            alert = new Label();
-            alert.Text = "";
-            alert.Font = new System.Drawing.Font("Poppins", form.Height * 3 / 100);
-            alert.ForeColor = Color.Red;
-            alert.Size = new System.Drawing.Size(form.Width / 2, form.Height*6/100);
-            alert.Location = new Point(form.Width / 4, form.Height*62/100);
-            form.Controls.Add(alert);
+            UIButton button = new UIButton(UIColor.ORANGE, "Inscrire", 400);
+            button.Name = "Submit inscription button";
+            button.Parent = window;
+            button.Location = new Point(window.Width / 2 - button.Width / 2, window.Height - window.Height / 4 - button.Height);
+            button.Click += submitInscription;
+            return button;
         }
 
-        public void generateButton()
+        private UITextBox generateLoginTextBox()
         {
-            inscription = new Button();
-            inscription.Text = "Inscription";
-            inscription.Click += new EventHandler(inscription_click);
-            inscription.Location = new Point(form.Width / (5/2), form.Height * 72 / 100);
-            form.Controls.Add(inscription);
+            UITextBox loginTextBox = new UITextBox();
+            loginTextBox.Name = "Login text box";
+            loginTextBox.Parent = window;
+            loginTextBox.Size = new Size(window.Width / 2, window.Height * 5 / 100);
+            loginTextBox.Location = new Point(window.Width / 2 - loginTextBox.Width / 2, window.Height - window.Height / 2 - loginTextBox.Height);
+            loginTextBox.Font = new Font("Poppins", window.Height * 3 / 100);
+            loginTextBox.Text = "New user login";
+            loginTextBox.ForeColor = Color.Gray;
+            loginTextBox.LostFocus += loginFocusLeave;
+            loginTextBox.GotFocus += loginFocusEnter;
+            return loginTextBox;
         }
 
-        public void generateBox()
+        #endregion
+
+        #region Event management
+
+        private void loginFocusEnter(object sender, EventArgs e)
         {
-            name = new TextBox();
-            name.LostFocus += new EventHandler(nameLeave);
-            name.GotFocus += new EventHandler(nameEnter);
-            name.Location = new Point(form.Width / 4, form.Height * 22 / 100);
-            setBox(name, "Votre prénom");
-
-            firstName = new TextBox();
-            firstName.LostFocus += new EventHandler(firstNameLeave);
-            firstName.GotFocus += new EventHandler(firstNameEnter);
-            firstName.Location = new Point(form.Width / 4, form.Height * 32 / 100);
-            setBox(firstName, "Votre nom");
-
-            pswd = new TextBox();
-            pswd.LostFocus += new EventHandler(pswdLeave);
-            pswd.GotFocus += new EventHandler(pswdEnter);
-            pswd.Location = new Point(form.Width / 4, form.Height * 42 / 100);
-            setBox(pswd, "Votre mot de passe");
-
-            confirmPswd = new TextBox();
-            confirmPswd.LostFocus += new EventHandler(confirmPswdLeave);
-            confirmPswd.GotFocus += new EventHandler(confirmPswdEnter);
-            confirmPswd.Location = new Point(form.Width / 4, form.Height * 52 / 100);
-            setBox(confirmPswd, "Confirmation du mot de passe");
-        }
-
-        public void setBox(TextBox box, String text)
-        {
-            box.Size = new System.Drawing.Size(form.Width/2, form.Height * 5 / 100);
-            box.Font = new System.Drawing.Font("Poppins", form.Height * 3/ 100);
-            box.ForeColor = Color.Gray;
-            box.Text = text;
-            form.Controls.Add(box);
-        }
-        public void inscription_click(object sender, EventArgs e)
-        {
-            if (validEntry())
+            if (loginTextBox.Text == "New user login")
             {
-                //Partie BD : Inscrire l'utilisateur en vérifiant qu'il n'existe pas déja
-                form.Controls.Clear();
-                //form.changerClasse(new Interface...());
+                loginTextBox.Text = "";
+                loginTextBox.ForeColor = Color.Black;
             }
         }
 
-        public Boolean validEntry()
+        private void loginFocusLeave(object sender, EventArgs e)
         {
-            string pattern = "^[A-Z]{1}[A-Za-z]{2,}$";
-            if(name.Text == "Votre prénom" || firstName.Text == "Votre prénom" || pswd.Text == "Votre mot de passe" || confirmPswd.Text == "Confirmation du mot de passe")
+            if (loginTextBox.Text.Length == 0)
             {
-                alert.Text = "Il faut remplir tous les champs";
-                return false;
+                loginTextBox.Text = "New user login";
+                loginTextBox.ForeColor = Color.Gray;
             }
-            if (!Regex.IsMatch(name.Text, pattern))
-            {
-                alert.Text = "Veuillez renseignez un prénom valide";
-                return false;
-            }
-            if (!Regex.IsMatch(firstName.Text, pattern))
-            {
-                alert.Text = "Veuillez renseignez un nom valide";
-                return false;
-            }
-            if (pswd.Text.Length < 6)
-            {
-                alert.Text = "Veuillez choisir un mot de passe plus long";
-                return false;
-            }
-            if(pswd.Text != confirmPswd.Text)
-            {
-                alert.Text = "Les mots de passe renseignés ne sont pas identiques";
-                return false;
-            }
-            return true;
         }
+
+        private void submitInscription(object sender, EventArgs e)
+        {
+            // Verify that the login is valid
+            if (loginTextBox.Text.Length == 0 || loginTextBox.Text == "New user login")
+            {
+                string errorMessage = "Please, enter a user login";
+                MessageBox.Show(window, errorMessage, "Invalid input", MessageBoxButtons.OK);
+                return;
+            }
+            if (!InputVerification.noSpecialCharacters(loginTextBox.Text))
+            {
+                string errorMessage = "Login: " + loginTextBox.Text + " is not valid.\nPlease, avoid special characters.";
+                MessageBox.Show(window, errorMessage, "Invalid input", MessageBoxButtons.OK);
+                return;
+            }
+
+            // Try to register
+            string tempPassword = RegistrationController.registerNewUser(loginTextBox.Text);
+
+            // Verify that the user with the login doest not already exists
+            if (tempPassword == null)
+            {
+                string errorMessage = "User with login: " + loginTextBox.Text + " already exists.";
+                MessageBox.Show(window, errorMessage, "User already exists", MessageBoxButtons.OK);
+            }
+            else
+            {
+                // If all good, display the temporary password
+                string message = "User with login: " + loginTextBox.Text + " successfully registered.\nHis temporary password is: " + tempPassword;
+                MessageBox.Show(window, message, "User registered", MessageBoxButtons.OK);
+            }
+
+        }
+
+        #endregion
 
         public override void updateSize()
         {
-            throw new NotImplementedException();
+            //throw new System.NotImplementedException();
         }
     }
 }

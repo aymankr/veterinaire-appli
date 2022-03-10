@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Mauxnimale_CE2.ui.Components
+namespace Mauxnimale_CE2.ui.components.componentsTools
 {
     internal class UIColor
     {

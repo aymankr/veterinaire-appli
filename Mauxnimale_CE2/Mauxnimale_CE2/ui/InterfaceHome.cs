@@ -25,7 +25,7 @@ namespace Mauxnimale_CE2.ui
             this.window = window;
             header = new Header(window);
             footer = new Footer(window);
-            salarie = s;
+            user = s;
 
         }
         public override void load()
@@ -163,7 +163,7 @@ namespace Mauxnimale_CE2.ui
         public void statsClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceStatsPage(window, salarie));
+            window.switchInterface(new InterfaceStatsPage(window, user));
         }
         #endregion
 

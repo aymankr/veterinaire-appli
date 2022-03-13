@@ -4,7 +4,7 @@ namespace Mauxnimale_CE2
 {
     public abstract class AInterface
     {
-        public SALARIE salarie;
+        public SALARIE user;
         public abstract void load();
         public abstract void updateSize();
     }

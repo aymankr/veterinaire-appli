@@ -16,7 +16,7 @@ namespace Mauxnimale_CE2.ui
         private MinimalHeader header;
         private Footer footer;
 
-        private UITextBox loginTextBox;
+        private TextBox loginTextBox;
 
         public InterfaceInscription(MainWindow window, SALARIE user)
         {
@@ -46,15 +46,15 @@ namespace Mauxnimale_CE2.ui
             return button;
         }
 
-        private UITextBox generateLoginTextBox()
+        private TextBox generateLoginTextBox()
         {
-            UITextBox loginTextBox = new UITextBox();
+            TextBox loginTextBox = new TextBox();
             loginTextBox.Name = "Login text box";
             loginTextBox.Parent = window;
             loginTextBox.Size = new Size(window.Width / 2, window.Height * 5 / 100);
             loginTextBox.Location = new Point(window.Width / 2 - loginTextBox.Width / 2, window.Height - window.Height / 2 - loginTextBox.Height);
             loginTextBox.Font = new Font("Poppins", window.Height * 3 / 100);
-            loginTextBox.Text = "New user login";
+            loginTextBox.Text = "Identifiant du nouvel utilisateur";
             loginTextBox.ForeColor = Color.Gray;
             loginTextBox.LostFocus += loginFocusLeave;
             loginTextBox.GotFocus += loginFocusEnter;
@@ -67,7 +67,7 @@ namespace Mauxnimale_CE2.ui
 
         private void loginFocusEnter(object sender, EventArgs e)
         {
-            if (loginTextBox.Text == "New user login")
+            if (loginTextBox.Text == "Identifiant du nouvel utilisateur")
             {
                 loginTextBox.Text = "";
                 loginTextBox.ForeColor = Color.Black;
@@ -86,16 +86,16 @@ namespace Mauxnimale_CE2.ui
         private void submitInscription(object sender, EventArgs e)
         {
             // Verify that the login is valid
-            if (loginTextBox.Text.Length == 0 || loginTextBox.Text == "New user login")
+            if (loginTextBox.Text.Length == 0 || loginTextBox.Text == "Identifiant du nouvel utilisateur")
             {
-                string errorMessage = "Please, enter a user login";
-                MessageBox.Show(window, errorMessage, "Invalid input", MessageBoxButtons.OK);
+                string errorMessage = "Veuillez entrer un identifiant.";
+                MessageBox.Show(window, errorMessage, "Entrées non valides.", MessageBoxButtons.OK);
                 return;
             }
             if (!InputVerification.noSpecialCharacters(loginTextBox.Text))
             {
-                string errorMessage = "Login: " + loginTextBox.Text + " is not valid.\nPlease, avoid special characters.";
-                MessageBox.Show(window, errorMessage, "Invalid input", MessageBoxButtons.OK);
+                string errorMessage = "L'identifiant : " + loginTextBox.Text + " n'est pas valide.\nLes caractères spéciaux ne sont pas autorisés.";
+                MessageBox.Show(window, errorMessage, "Entrées non valides.", MessageBoxButtons.OK);
                 return;
             }
 
@@ -105,14 +105,14 @@ namespace Mauxnimale_CE2.ui
             // Verify that the user with the login doest not already exists
             if (tempPassword == null)
             {
-                string errorMessage = "User with login: " + loginTextBox.Text + " already exists.";
-                MessageBox.Show(window, errorMessage, "User already exists", MessageBoxButtons.OK);
+                string errorMessage = "L'utilisateur avec l'identifiant : " + loginTextBox.Text + " a déjà été enregistré.";
+                MessageBox.Show(window, errorMessage, "Utilisateur déjà enregistré", MessageBoxButtons.OK);
             }
             else
             {
                 // If all good, display the temporary password
-                string message = "User with login: " + loginTextBox.Text + " successfully registered.\nHis temporary password is: " + tempPassword;
-                MessageBox.Show(window, message, "User registered", MessageBoxButtons.OK);
+                string message = "L'utilisateur avec l'identifiant : " + loginTextBox.Text + " a été enregistré.\nSon mot de passe de connexion temporaire est : " + tempPassword;
+                MessageBox.Show(window, message, "Opération réussie", MessageBoxButtons.OK);
             }
 
         }

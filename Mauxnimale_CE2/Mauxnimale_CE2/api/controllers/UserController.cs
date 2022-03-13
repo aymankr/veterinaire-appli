@@ -5,7 +5,7 @@ using Mauxnimale_CE2.api;
 using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.api.controllers.utils;
 
-public static class ConnectionController
+public static class UserController
 {
 	/* GET METHODS */
 
@@ -97,11 +97,11 @@ public static class ConnectionController
 
 		if (phoneNumber != null && phoneNumber.Any())
 		{
-			if (InputVerification.isEmail(phoneNumber))
+			if (InputVerification.isPhoneNumber(phoneNumber))
 				user.TEL = phoneNumber;
 			else
 			{
-				Console.WriteLine("Phone number: " + phoneNumber + " invalid. It does not exclusively contains numbers and/or a \'+\' sign.");
+				Console.WriteLine("Phone number: " + phoneNumber + " invalid. It does not exclusively contains numbers.");
 				return false;
 			}
 		}

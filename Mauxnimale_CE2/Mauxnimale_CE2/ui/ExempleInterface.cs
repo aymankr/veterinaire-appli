@@ -1,12 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using Mauxnimale_CE2.api.entities;
+using Mauxnimale_CE2.ui.components;
 
-namespace Mauxnimale_CE2
+namespace Mauxnimale_CE2.ui
 {
     //Ceci est une classe exemple, toutes les interfaces devront au moins comporter ce qui est dans cette classe
     class ExempleInterface : AInterface

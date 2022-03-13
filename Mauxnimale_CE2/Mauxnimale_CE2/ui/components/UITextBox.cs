@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
-namespace Mauxnimale_CE2.ui.components.componentsTools
+namespace Mauxnimale_CE2.ui.components
 {
     internal partial class UITextBox : TextBox
     {

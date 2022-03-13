@@ -1,6 +1,6 @@
-﻿namespace Mauxnimale_CE2.ui
+﻿namespace Mauxnimale_CE2.ui.components
 {
-    partial class UIRoundButton
+    partial class UIButton
     {
         /// <summary>
         /// Variable nécessaire au concepteur.

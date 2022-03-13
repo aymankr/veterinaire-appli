@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Mauxnimale_CE2.ui.Components;
-using Mauxnimale_CE2.ui.components.componentsTools;
 
-namespace Mauxnimale_CE2
+namespace Mauxnimale_CE2.ui.components
 {
     class Header
     {

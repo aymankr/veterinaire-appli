@@ -1,45 +1,45 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
-using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.ui.components;
+using Mauxnimale_CE2.ui.components.componentsTools;
+using Mauxnimale_CE2.api.entities;
+using Mauxnimale_CE2.api.controllers;
+using Mauxnimale_CE2.api.controllers.utils;
 
 namespace Mauxnimale_CE2.ui
 {
     class InterfaceFirstConnection : AInterface
     {
-        MainWindow form;
+        MainWindow window;
 
         Header header;
         Footer footer;
 
-        TextBox name, firstName, pswd, confirmPswd;
-        Button inscription;
-        Label alert;
-        //Lister ici les différents éléments qui seront utilisés dans l'interface
+        TextBox lastName, firstName, pswd, confirmPswd, email, phoneNumber, address;
+        UIButton inscriptionButton;
 
-        #region eventHandler
-        private void nameEnter(object sender, EventArgs e)
+        #region Input events handling
+        private void lastNameEnter(object sender, EventArgs e)
         {
-            if (name.Text == "Votre prénom")
+            if (lastName.Text == "Nom")
             {
-                name.Text = "";
-                name.ForeColor = Color.Black;
+                lastName.Text = "";
+                lastName.ForeColor = Color.Black;
             }
         }
 
-        private void nameLeave(object sender, EventArgs e)
+        private void lastNameLeave(object sender, EventArgs e)
         {
-            if (name.Text.Length == 0)
+            if (lastName.Text.Length == 0)
             {
-                name.Text = "Votre prénom";
-                name.ForeColor = Color.Gray;
+                lastName.Text = "Nom";
+                lastName.ForeColor = Color.Gray;
             }
         }
         private void firstNameEnter(object sender, EventArgs e)
         {
-            if (firstName.Text == "Votre nom")
+            if (firstName.Text == "Prénom")
             {
                 firstName.Text = "";
                 firstName.ForeColor = Color.Black;
@@ -50,16 +50,68 @@ namespace Mauxnimale_CE2.ui
         {
             if (firstName.Text.Length == 0)
             {
-                firstName.Text = "Votre nom";
+                firstName.Text = "Prénom";
                 firstName.ForeColor = Color.Gray;
+            }
+        }
+        private void emailEnter(object sender, EventArgs e)
+        {
+            if (email.Text == "Email")
+            {
+                email.Text = "";
+                email.ForeColor = Color.Black;
+            }
+        }
+
+        private void emailLeave(object sender, EventArgs e)
+        {
+            if (email.Text.Length == 0)
+            {
+                email.Text = "Email";
+                email.ForeColor = Color.Gray;
+            }
+        }
+        private void phoneNumberEnter(object sender, EventArgs e)
+        {
+            if (phoneNumber.Text == "N° de téléphone")
+            {
+                phoneNumber.Text = "";
+                phoneNumber.ForeColor = Color.Black;
+            }
+        }
+
+        private void phoneNumberLeave(object sender, EventArgs e)
+        {
+            if (phoneNumber.Text.Length == 0)
+            {
+                phoneNumber.Text = "N° de téléphone";
+                phoneNumber.ForeColor = Color.Gray;
+            }
+        }
+        private void addressEnter(object sender, EventArgs e)
+        {
+            if (address.Text == "Adresse")
+            {
+                address.Text = "";
+                address.ForeColor = Color.Black;
+            }
+        }
+
+        private void addressLeave(object sender, EventArgs e)
+        {
+            if (address.Text.Length == 0)
+            {
+                address.Text = "Adresse";
+                address.ForeColor = Color.Gray;
             }
         }
         private void pswdEnter(object sender, EventArgs e)
         {
-            if (pswd.Text == "Votre mot de passe")
+            if (pswd.Text == "Mot de passe")
             {
                 pswd.Text = "";
                 pswd.ForeColor = Color.Black;
+                pswd.PasswordChar = '•';
             }
         }
 
@@ -67,8 +119,9 @@ namespace Mauxnimale_CE2.ui
         {
             if (pswd.Text.Length == 0)
             {
-                pswd.Text = "Votre mot de passe";
+                pswd.Text = "Mot de passe";
                 pswd.ForeColor = Color.Gray;
+                pswd.PasswordChar = (char)0;
             }
         }
         private void confirmPswdEnter(object sender, EventArgs e)
@@ -77,6 +130,7 @@ namespace Mauxnimale_CE2.ui
             {
                 confirmPswd.Text = "";
                 confirmPswd.ForeColor = Color.Black;
+                confirmPswd.PasswordChar = '•';
             }
         }
 
@@ -86,16 +140,17 @@ namespace Mauxnimale_CE2.ui
             {
                 confirmPswd.Text = "Confirmation du mot de passe";
                 confirmPswd.ForeColor = Color.Gray;
+                confirmPswd.PasswordChar = (char)0;
             }
         }
         #endregion 
 
-        public InterfaceFirstConnection(MainWindow forme, SALARIE s)
+        public InterfaceFirstConnection(MainWindow window, SALARIE user)
         {
-            this.form = forme;
-            header = new Header(forme);
-            footer = new Footer(forme);
-            salarie = s;
+            this.window = window;
+            header = new Header(window);
+            footer = new Footer(window);
+            base.user = user;
         }
 
 
@@ -103,102 +158,146 @@ namespace Mauxnimale_CE2.ui
         {
             header.load("Inscription");
             footer.load();
-            generateBox();
-            generateLabel();
+            generateTextBoxes();
             generateButton();
-        }
-
-        public void generateLabel()
-        {
-            alert = new Label();
-            alert.Text = "";
-            alert.Font = new System.Drawing.Font("Poppins", form.Height * 3 / 100);
-            alert.ForeColor = Color.Red;
-            alert.Size = new System.Drawing.Size(form.Width / 2, form.Height*6/100);
-            alert.Location = new Point(form.Width / 4, form.Height*62/100);
-            form.Controls.Add(alert);
         }
 
         public void generateButton()
         {
-            inscription = new Button();
-            inscription.Text = "Inscription";
-            inscription.Click += new EventHandler(inscription_click);
-            inscription.Location = new Point(form.Width / (5/2), form.Height * 72 / 100);
-            form.Controls.Add(inscription);
+            inscriptionButton = new UIButton(UIColor.ORANGE, "Inscription", 200);
+            inscriptionButton.Location = new Point(window.Width / 2 - inscriptionButton.Width / 2, window.Height * 72 / 100);
+            inscriptionButton.Click += new EventHandler(onInscriptionButtonClick);
+            window.Controls.Add(inscriptionButton);
         }
 
-        public void generateBox()
+        public void generateTextBoxes()
         {
-            name = new TextBox();
-            name.LostFocus += new EventHandler(nameLeave);
-            name.GotFocus += new EventHandler(nameEnter);
-            name.Location = new Point(form.Width / 4, form.Height * 22 / 100);
-            setBox(name, "Votre prénom");
+            lastName = new TextBox();
+            lastName.LostFocus += new EventHandler(lastNameLeave);
+            lastName.GotFocus += new EventHandler(lastNameEnter);
+            lastName.Size = new Size(window.Width / 4, lastName.Height);
+            lastName.Location = new Point(window.Width / 2 - lastName.Width - 10, window.Height * 12 / 100);
+            setBox(lastName, "Nom");
 
             firstName = new TextBox();
             firstName.LostFocus += new EventHandler(firstNameLeave);
             firstName.GotFocus += new EventHandler(firstNameEnter);
-            firstName.Location = new Point(form.Width / 4, form.Height * 32 / 100);
-            setBox(firstName, "Votre nom");
+            firstName.Size = new Size(window.Width / 4, lastName.Height);
+            firstName.Location = new Point(window.Width / 2 + 10, window.Height * 12 / 100);
+            setBox(firstName, "Prénom");
+
+            email = new TextBox();
+            email.LostFocus += new EventHandler(emailLeave);
+            email.GotFocus += new EventHandler(emailEnter);
+            email.Size = new Size(window.Width / 2 + 20, window.Height * 5 / 100);
+            email.Location = new Point(window.Width / 4 - 10, window.Height * 22 / 100);
+            setBox(email, "Email");
+
+            phoneNumber = new TextBox();
+            phoneNumber.LostFocus += new EventHandler(phoneNumberLeave);
+            phoneNumber.GotFocus += new EventHandler(phoneNumberEnter);
+            phoneNumber.Size = new Size(window.Width / 2 + 20, window.Height * 5 / 100);
+            phoneNumber.Location = new Point(window.Width / 4 - 10, window.Height * 32 / 100);
+            setBox(phoneNumber, "N° de téléphone");
+
+            address = new TextBox();
+            address.LostFocus += new EventHandler(addressLeave);
+            address.GotFocus += new EventHandler(addressEnter);
+            address.Size = new Size(window.Width / 2 + 20, window.Height * 5 / 100);
+            address.Location = new Point(window.Width / 4 - 10, window.Height * 42 / 100);
+            setBox(address, "Adresse");
 
             pswd = new TextBox();
             pswd.LostFocus += new EventHandler(pswdLeave);
             pswd.GotFocus += new EventHandler(pswdEnter);
-            pswd.Location = new Point(form.Width / 4, form.Height * 42 / 100);
-            setBox(pswd, "Votre mot de passe");
+            pswd.Size = new Size(window.Width / 2 + 20, window.Height * 5 / 100);
+            pswd.Location = new Point(window.Width / 4 - 10, window.Height * 52 / 100);
+            pswd.PasswordChar = (char)0;
+            setBox(pswd, "Mot de passe");
 
             confirmPswd = new TextBox();
             confirmPswd.LostFocus += new EventHandler(confirmPswdLeave);
             confirmPswd.GotFocus += new EventHandler(confirmPswdEnter);
-            confirmPswd.Location = new Point(form.Width / 4, form.Height * 52 / 100);
+            confirmPswd.Size = new Size(window.Width / 2 + 20, window.Height * 5 / 100);
+            confirmPswd.Location = new Point(window.Width / 4 - 10, window.Height * 62 / 100);
+            confirmPswd.PasswordChar = (char)0;
             setBox(confirmPswd, "Confirmation du mot de passe");
         }
 
-        public void setBox(TextBox box, String text)
+        public void setBox(TextBox textBox, string text)
         {
-            box.Size = new System.Drawing.Size(form.Width/2, form.Height * 5 / 100);
-            box.Font = new System.Drawing.Font("Poppins", form.Height * 3/ 100);
-            box.ForeColor = Color.Gray;
-            box.Text = text;
-            form.Controls.Add(box);
+            textBox.Font = new System.Drawing.Font("Poppins", window.Height * 3/ 100);
+            textBox.ForeColor = Color.Gray;
+            textBox.Text = text;
+            window.Controls.Add(textBox);
         }
-        public void inscription_click(object sender, EventArgs e)
+        public void onInscriptionButtonClick(object sender, EventArgs e)
         {
             if (validEntry())
             {
-                //Partie BD : Inscrire l'utilisateur en vérifiant qu'il n'existe pas déja
-                form.Controls.Clear();
-                //form.changerClasse(new Interface...());
+                if (UserController.updateInfos(user, firstName.Text, lastName.Text, null, pswd.Text, email.Text, phoneNumber.Text))
+                {
+                    UserController.setFirstConnectionDone(user);
+                    window.Controls.Clear();
+                    window.switchInterface(new InterfaceHome(window, user));
+                }
             }
         }
 
-        public Boolean validEntry()
+        public bool validEntry()
         {
-            string pattern = "^[A-Z]{1}[A-Za-z]{2,}$";
-            if(name.Text == "Votre prénom" || firstName.Text == "Votre prénom" || pswd.Text == "Votre mot de passe" || confirmPswd.Text == "Confirmation du mot de passe")
+            if(lastName.Text == "Nom" || lastName.Text.Length == 0 ||
+               firstName.Text == "Prénom" || firstName.Text.Length == 0 ||
+               email.Text == "Email" || email.Text.Length == 0 ||
+               phoneNumber.Text == "N° de téléphone" || phoneNumber.Text.Length == 0 ||
+               address.Text == "Adresse" || address.Text.Length == 0 ||
+               pswd.Text == "Mot de passe" || pswd.Text.Length == 0 ||
+               confirmPswd.Text == "Confirmation du mot de passe" || confirmPswd.Text.Length == 0)
             {
-                alert.Text = "Il faut remplir tous les champs";
+                string errorMessage = "Veuillez remplir tous les champs.";
+                MessageBox.Show(window, errorMessage, "Entrées non valides", MessageBoxButtons.OK);
                 return false;
             }
-            if (!Regex.IsMatch(name.Text, pattern))
+            if (!InputVerification.noSpecialCharacters(firstName.Text) || !InputVerification.noNumber(firstName.Text))
             {
-                alert.Text = "Veuillez renseignez un prénom valide";
+                string errorMessage = "Veuillez renseignez un prénom valide.\nLes caractères spéciaux et les chiffres ne sont pas autorisés.";
+                MessageBox.Show(window, errorMessage, "Entrées non valides", MessageBoxButtons.OK);
                 return false;
             }
-            if (!Regex.IsMatch(firstName.Text, pattern))
+            if (!InputVerification.noSpecialCharacters(lastName.Text) || !InputVerification.noNumber(lastName.Text))
             {
-                alert.Text = "Veuillez renseignez un nom valide";
+                string errorMessage = "Veuillez renseignez un nom valide.\nLes caractères spéciaux et les chiffres ne sont pas autorisés.";
+                MessageBox.Show(window, errorMessage, "Entrées non valides", MessageBoxButtons.OK);
                 return false;
             }
-            if (pswd.Text.Length < 6)
+            if (!InputVerification.isEmail(email.Text))
             {
-                alert.Text = "Veuillez choisir un mot de passe plus long";
+                string errorMessage = "Veuillez renseignez une adresse email valide.";
+                MessageBox.Show(window, errorMessage, "Entrées non valides", MessageBoxButtons.OK);
                 return false;
             }
-            if(pswd.Text != confirmPswd.Text)
+            if (!InputVerification.isPhoneNumber(phoneNumber.Text))
             {
-                alert.Text = "Les mots de passe renseignés ne sont pas identiques";
+                string errorMessage = "Veuillez renseignez un numéro de téléphone valide.";
+                MessageBox.Show(window, errorMessage, "Entrées non valides", MessageBoxButtons.OK);
+                return false;
+            }
+            if (!InputVerification.noSpecialCharacters(address.Text))
+            {
+                string errorMessage = "Veuillez renseignez une adresse valide.\nLes caractères spéciaux ne sont pas autorisés.";
+                MessageBox.Show(window, errorMessage, "Entrées non valides", MessageBoxButtons.OK);
+                return false;
+            }
+            if (pswd.Text.Length < 6 || InputVerification.noSpecialCharacters(pswd.Text) || InputVerification.noNumber(pswd.Text))
+            {
+                string errorMessage = "Le mot de passe doit comprendre au moins 6 caractères, dont au moins 1 caractère spécial et un chiffre.";
+                MessageBox.Show(window, errorMessage, "Entrées non valides", MessageBoxButtons.OK);
+                return false;
+            }
+            if (pswd.Text != confirmPswd.Text)
+            {
+                string errorMessage = "Les mots de passe renseignés ne sont pas identiques.";
+                MessageBox.Show(window, errorMessage, "Entrées non valides", MessageBoxButtons.OK);
                 return false;
             }
             return true;
@@ -206,7 +305,7 @@ namespace Mauxnimale_CE2.ui
 
         public override void updateSize()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

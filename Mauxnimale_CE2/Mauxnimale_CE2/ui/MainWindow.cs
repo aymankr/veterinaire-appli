@@ -2,6 +2,9 @@ using Mauxnimale_CE2.ui;
 using System;
 using System.Windows.Forms;
 
+using Mauxnimale_CE2.api;
+using Mauxnimale_CE2.api.entities;
+
 namespace Mauxnimale_CE2
 {
     public partial class MainWindow : Form

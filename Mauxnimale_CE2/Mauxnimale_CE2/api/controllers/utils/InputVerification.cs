@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Mail;
 using System.Text.RegularExpressions;
 
 namespace Mauxnimale_CE2.api.controllers.utils
@@ -45,7 +46,15 @@ namespace Mauxnimale_CE2.api.controllers.utils
         /// <returns>true if the given text matches the email regex pattern, false otherwise.</returns>
         public static bool isEmail(string text)
         {
-            return Regex.IsMatch(text, @"^[\w -\.] +@([\w -] +\.)+[\w -]{ 2,4}$");
+            try
+            {
+                new MailAddress(text);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -55,7 +64,7 @@ namespace Mauxnimale_CE2.api.controllers.utils
         /// <returns>true if the given text matches the phone number regex pattern, false otherwise.</returns>
         public static bool isPhoneNumber(string text)
         {
-            return Regex.IsMatch(text, @"^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$");
+            return Regex.IsMatch(text, @"^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$");
         }
 
         /// <summary>

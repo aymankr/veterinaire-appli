@@ -53,7 +53,7 @@ namespace Mauxnimale_CE2.ui
         public void backClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceHome(window, salarie));
+            window.switchInterface(new InterfaceHome(window, user));
         }
 
         public override void updateSize()

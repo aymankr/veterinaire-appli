@@ -52,5 +52,11 @@ namespace Mauxnimale_CE2.api
             }
             return null;
         }
+
+        public static List<ANIMAL> getAnimalFromRDV(RENDEZ_VOUS rdv)
+        {
+
+            return rdv.ANIMAL.ToList();
+        }
     }
 }

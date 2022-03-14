@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Mauxnimale_CE2.ui.components.componentsTools;
-using Mauxnimale_CE2.ui.Components;
+using Mauxnimale_CE2.ui.components;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -16,12 +16,15 @@ using Mauxnimale_CE2.api.entities;
 using System.Windows.Forms;
 using System.Collections;
 using Mauxnimale_CE2.api;
+using Mauxnimale_CE2.api.controllers;
 
 namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceGestionConsultation : AInterface
     {
         MainWindow window;
+
+        SALARIE salarie;
 
         Header header;
         Footer footer;
@@ -137,9 +140,12 @@ namespace Mauxnimale_CE2.ui
 
             infosConsult.Items.Add(consultOfDay.SelectedItem);
             infosConsult.Items.Add(selected.CLIENT);
-            infosConsult.Items.Add(selected.ANIMAL);
+            foreach (ANIMAL animal in AppointmentController.getAnimalFromRDV(selected))
+            {
+                infosConsult.Items.Add(animal);
+            }
             infosConsult.Items.Add(selected.RAISON);
-            infosConsult.Items.Add(selected.TYPE_RDV);
+            infosConsult.Items.Add(selected.TYPE_RDV.ToString());
 
         }
 
@@ -147,6 +153,10 @@ namespace Mauxnimale_CE2.ui
         {
             consultOfDay.Items.Clear();
             DateTime selectedsate = new DateTime(e.Start.Year, e.Start.Month, e.Start.Day);
+            if (JourneeController.getJOURNEE(selectedsate) == null)
+            {
+                JourneeController.addJournee(selectedsate);
+            }
             rdvOfDay =new List<RENDEZ_VOUS>(AppointmentController.getAppointmentsFromDate(selectedsate));
             foreach(RENDEZ_VOUS rdv in rdvOfDay)
             {

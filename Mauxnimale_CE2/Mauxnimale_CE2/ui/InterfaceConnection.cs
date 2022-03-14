@@ -100,6 +100,22 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        private void passwordKeyPressed(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                if (login.Text != null && password.Text != null && ConnectionController.getUser(login.Text, password.Text) != null)
+                {
+                    form.Controls.Clear();
+                    form.switchInterface(new InterfaceHome(form, ConnectionController.getUser(login.Text, password.Text)));
+                }
+                else
+                {
+                    MessageBox.Show("identifiant ou mot de passe incorrecte");
+                }
+            }
+        }
+
         private void loginLeave(object sender, EventArgs e)
         {
             if (login.Text.Length == 0)

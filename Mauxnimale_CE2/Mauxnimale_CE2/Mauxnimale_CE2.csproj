@@ -169,6 +169,7 @@
     <Compile Include="ui\ExempleInterface.cs" />
     <Compile Include="ui\InterfaceAdmin.cs" />
     <Compile Include="ui\InterfaceConnection.cs" />
+    <Compile Include="ui\InterfaceGestionCompte.cs" />
     <Compile Include="ui\InterfaceGestionCongé.cs" />
     <Compile Include="ui\InterfaceHome.cs" />
     <Compile Include="ui\InterfaceInscription.cs" />

@@ -37,5 +37,13 @@ namespace Mauxnimale_CE2.api.controllers
             DbContext.get().JOURNEE_SALARIE.Find(vacationDay.IDJOURNEESALARIE).CONGE = isAVacation;
             DbContext.get().SaveChanges();
         }
+
+        public static void addDay(DateTime date)
+        {
+            JOURNEE day = new JOURNEE();
+            day.DATE = date;
+            DbContext.get().JOURNEE.Add(day);
+            DbContext.get().SaveChanges();
+        }
     }
 }

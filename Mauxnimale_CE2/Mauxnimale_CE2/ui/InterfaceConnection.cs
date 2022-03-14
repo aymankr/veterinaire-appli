@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
+using Mauxnimale_CE2.api.controllers;
 
 namespace Mauxnimale_CE2.ui
 {
@@ -103,10 +104,10 @@ namespace Mauxnimale_CE2.ui
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
-                if (login.Text != null && password.Text != null && ConnectionController.getUser(login.Text, password.Text) != null)
+                if (login.Text != null && password.Text != null && UserController.getConnection(login.Text, password.Text) != null)
                 {
-                    form.Controls.Clear();
-                    form.switchInterface(new InterfaceHome(form, ConnectionController.getUser(login.Text, password.Text)));
+                    window.Controls.Clear();
+                    window.switchInterface(new InterfaceHome(window, UserController.getConnection(login.Text, password.Text)));
                 }
                 else
                 {

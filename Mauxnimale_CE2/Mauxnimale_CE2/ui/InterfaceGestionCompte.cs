@@ -1,6 +1,6 @@
 ﻿using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.ui.components.componentsTools;
-using Mauxnimale_CE2.ui.Components;
+using Mauxnimale_CE2.ui.components;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -15,6 +15,8 @@ namespace Mauxnimale_CE2.ui
     {
         MainWindow window;
 
+        SALARIE user;
+
         Header header;
         Footer footer;
 
@@ -28,7 +30,7 @@ namespace Mauxnimale_CE2.ui
             this.window = forme;
             header = new Header(window);
             footer = new Footer(window);
-            salarie = s;
+            user = s;
         }
 
         public override void load()
@@ -70,7 +72,7 @@ namespace Mauxnimale_CE2.ui
         public void backClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceHome(window, salarie));
+            window.switchInterface(new InterfaceHome(window, user));
         }
 
         public void nameLeave(object sender, EventArgs e)
@@ -194,7 +196,7 @@ namespace Mauxnimale_CE2.ui
             logOut.Location = new System.Drawing.Point(window.Width * 4 / 6, window.Height * 675 / 1000);
             window.Controls.Add(logOut);
 
-            back = new UIRoundButton(window.Width / 20);
+            back = new UIRoundButton(window.Width / 20, "<");
             back.Location = new System.Drawing.Point(window.Width * 9 / 10, window.Height / 10);
             window.Controls.Add(back);
 

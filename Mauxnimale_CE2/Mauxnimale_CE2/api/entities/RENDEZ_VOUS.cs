@@ -44,5 +44,10 @@ namespace Mauxnimale_CE2.api.entities
         public virtual TYPE_RDV TYPE_RDV { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ANIMAL> ANIMAL { get; set; }
+
+        public override string ToString()
+        {
+            return HEUREDEBUT.ToString() + " à " + HEUREFIN.ToString();
+        }
     }
 }

@@ -58,6 +58,7 @@ namespace Mauxnimale_CE2.api.controllers
             dbContext.SALARIE.Add(newUser);
             dbContext.SaveChanges();
 
+            Console.WriteLine("New user with login: " + newUserLogin + " and password: " + tempPassword + " registered");
             return tempPassword;
         }
     }

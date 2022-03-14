@@ -1,11 +1,7 @@
-﻿using Mauxnimale_CE2.ui.Components;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Mauxnimale_CE2.ui.components;
 
 namespace Mauxnimale_CE2.ui
 {
@@ -57,7 +53,7 @@ namespace Mauxnimale_CE2.ui
         public void backClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceHome(window, salarie));
+            window.switchInterface(new InterfaceHome(window, user));
         }
 
         public override void updateSize()

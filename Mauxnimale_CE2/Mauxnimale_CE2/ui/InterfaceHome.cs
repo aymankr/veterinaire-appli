@@ -85,8 +85,7 @@ namespace Mauxnimale_CE2.ui
             manageConsultation.Location = new System.Drawing.Point(window.Width * 6 / 10, window.Height * 425 / 1000);
             window.Controls.Add(manageConsultation);
 
-            /* parti a finir lors de la création des fonctions API
-            if(admin){*/
+            if(!salarie.ASSISTANT){
                 manageCongé = new UIButton(UIColor.DARKBLUE, "Gestion des congés", window.Width / 4);
                 manageCongé.Location = new System.Drawing.Point(window.Width * 325 / 1000, window.Height * 625 / 1000);
                 window.Controls.Add(manageCongé);
@@ -94,7 +93,10 @@ namespace Mauxnimale_CE2.ui
                 stats = new UIButton(UIColor.DARKBLUE, "Statistiques", window.Width / 4);
                 stats.Location = new System.Drawing.Point(window.Width * 6 / 10, window.Height * 625 / 1000);
                 window.Controls.Add(stats);
-            //}
+
+                manageCongé.Click += new EventHandler(manageCongéClick);
+                stats.Click += new EventHandler(statsClick);
+            }
 
             compte = new Button();
             compte.FlatAppearance.BorderSize = 0;
@@ -104,12 +106,10 @@ namespace Mauxnimale_CE2.ui
 
             compte.Paint += new PaintEventHandler(comptePaint);
             compte.Click += new EventHandler(manageCompteClick);
-            manageCongé.Click += new EventHandler(manageCongéClick);
             manageStock.Click += new EventHandler(manageStockClick);
             manageMaladie.Click += new EventHandler(manageMaladieClick);
             manageVentes.Click += new EventHandler(manageVentesClick);
             manageConsultation.Click += new EventHandler(manageConsultationClick);
-            stats.Click += new EventHandler(statsClick);
         }
 
         #region eventHandler

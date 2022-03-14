@@ -20,8 +20,8 @@ namespace Mauxnimale_CE2.ui
 
         UIRoundButton back;
         UIButton confirm, passwordPage, idPage, logOut;
-        TextBox name, prénom, email, phone;
-        Label lName, lPrénom, lEmail, lPhone;
+        TextBox name, prénom, email, phone, adresse;
+        Label lName, lPrénom, lEmail, lPhone, lAdresse;
 
         public InterfaceGestionCompte(MainWindow forme, SALARIE s)
         {
@@ -80,6 +80,13 @@ namespace Mauxnimale_CE2.ui
                 name.Text = "Texte à codé";//mettre le nom de l'utilisateur connecté ici
             }
         }
+        public void adresseLeave(object sender, EventArgs e)
+        {
+            if (adresse.Text.Length == 0)
+            {
+                adresse.Text = "Texte à codé";//mettre le nom de l'utilisateur connecté ici
+            }
+        }
 
         public void prénomLeave(object sender, EventArgs e)
         {
@@ -120,6 +127,9 @@ namespace Mauxnimale_CE2.ui
             lPhone = new Label();
             lPhone.Location = new Point(window.Width / 20, window.Height * 62 / 100);
             setLabel(lPhone, "N° de téléphone");
+            lAdresse = new Label();
+            lAdresse.Location = new Point(window.Width / 20, window.Height * 77 / 100);
+            setLabel(lAdresse, "Adresse");
         }
 
         public void setLabel(Label l, string s)
@@ -152,6 +162,11 @@ namespace Mauxnimale_CE2.ui
             phone.LostFocus += new EventHandler(phoneLeave);
             phone.Location = new Point(window.Width / 8, window.Height * 67 / 100);
             setBox(phone, "Texte a codé");//mettre le numéro de l'utilisateur connecté ici
+
+            adresse = new TextBox();
+            adresse.LostFocus += new EventHandler(adresseLeave);
+            adresse.Location = new Point(window.Width / 8, window.Height * 82 / 100);
+            setBox(adresse, "Texte a codé");
         }
         public void setBox(TextBox box, String text)
         {

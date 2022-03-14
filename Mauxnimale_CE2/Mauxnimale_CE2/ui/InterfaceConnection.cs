@@ -74,6 +74,7 @@ namespace Mauxnimale_CE2
             password.GotFocus += new EventHandler(passwordEnter);
             password.Location = new Point(form.Width / 4, form.Height * 45 / 100);
             password.PasswordChar = '•';
+            password.KeyPress += new KeyPressEventHandler(passwordKeyPressed);
             setBox(password, "password");
 
         }
@@ -96,6 +97,22 @@ namespace Mauxnimale_CE2
             {
                 login.Text = "";
                 login.ForeColor = Color.Black;
+            }
+        }
+
+        private void passwordKeyPressed(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                if (login.Text != null && password.Text != null && ConnectionController.getUser(login.Text, password.Text) != null)
+                {
+                    form.Controls.Clear();
+                    form.switchInterface(new InterfaceHome(form, ConnectionController.getUser(login.Text, password.Text)));
+                }
+                else
+                {
+                    MessageBox.Show("identifiant ou mot de passe incorrecte");
+                }
             }
         }
 

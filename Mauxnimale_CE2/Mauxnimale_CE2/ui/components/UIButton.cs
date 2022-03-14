@@ -13,7 +13,7 @@ namespace Mauxnimale_CE2.ui.components
             FlatStyle = FlatStyle.Flat;
             TabStop = false;
             FlatAppearance.BorderSize = 0;
-            Font = new System.Drawing.Font("Roboto", width / 16);
+            Font = new Font("Roboto", width / 16);
             Size = new Size(width, width / 3);
         }
     }

@@ -43,10 +43,20 @@ namespace Mauxnimale_CE2.api
          */
         public static ICollection<RENDEZ_VOUS> getAppointmentsFromDate(DateTime date)
         {
-            JOURNEE day = (JOURNEE)(from d in DbContext.get().JOURNEE 
-                                    where d.DATE.Equals(date) 
-                                    select d);
-            return day.RENDEZ_VOUS;
+            JOURNEE day = (from d in DbContext.get().JOURNEE
+                       where DateTime.Equals(d.DATE, date)
+                       select d).FirstOrDefault();
+            if (day != null)
+            {
+                return day.RENDEZ_VOUS;
+            }
+            return null;
+        }
+
+        public static List<ANIMAL> getAnimalFromRDV(RENDEZ_VOUS rdv)
+        {
+
+            return rdv.ANIMAL.ToList();
         }
     }
 }

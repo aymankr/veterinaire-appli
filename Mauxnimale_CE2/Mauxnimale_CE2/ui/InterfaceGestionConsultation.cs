@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-        using Mauxnimale_CE2.ui.components.componentsTools;
+using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.ui.Components;
 using System;
 using System.Collections.Generic;
@@ -34,7 +34,7 @@ namespace Mauxnimale_CE2.ui
         List<RENDEZ_VOUS> rdvOfDay;
         RENDEZ_VOUS selected;
 
-        Label incEvent;
+        Label incEvent, animal, client, typeRDV, Raisons, maladie, soin;
         ListBox consultOfDay, infosConsult;
 
         public InterfaceGestionConsultation(MainWindow window, SALARIE s)
@@ -50,11 +50,11 @@ namespace Mauxnimale_CE2.ui
             header.load("Mauxnimale - Gestion des Consultations");
             footer.load();
             generateButton();
-            generateLabel();
+            generateLabels();
             generateListBox();
         }
 
-        public void generateLabel()
+        public void generateLabels()
         {
             incEvent = new Label();
             incEvent.Text = "Consultations à venir";
@@ -131,18 +131,28 @@ namespace Mauxnimale_CE2.ui
         #region eventHandler
         private void rdvSelection(object sender, EventArgs e)
         {
-            //selected = 
+            infosConsult.Items.Clear();
+
+            selected = (RENDEZ_VOUS)consultOfDay.SelectedItem;
+
+            infosConsult.Items.Add(consultOfDay.SelectedItem);
+            infosConsult.Items.Add(selected.CLIENT);
+            infosConsult.Items.Add(selected.ANIMAL);
+            infosConsult.Items.Add(selected.RAISON);
+            infosConsult.Items.Add(selected.TYPE_RDV);
+
         }
 
         private void dateSelection(object sender, DateRangeEventArgs e)
         {
+            consultOfDay.Items.Clear();
             DateTime selectedsate = new DateTime(e.Start.Year, e.Start.Month, e.Start.Day);
             rdvOfDay =new List<RENDEZ_VOUS>(AppointmentController.getAppointmentsFromDate(selectedsate));
             foreach(RENDEZ_VOUS rdv in rdvOfDay)
             {
+                consultOfDay.Items.Add(rdv);
                 //ListBoxItems itm = new ListBoxItems
             }
-            consultOfDay.Items.Add(rdvOfDay);
         }
 
         public void backClick(object sender, EventArgs e)

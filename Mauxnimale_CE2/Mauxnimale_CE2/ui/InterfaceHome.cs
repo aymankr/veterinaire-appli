@@ -1,13 +1,9 @@
-﻿using Mauxnimale_CE2.ui.components.componentsTools;
-using Mauxnimale_CE2.ui.Components;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Mauxnimale_CE2.ui.components.componentsTools;
+using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2.ui
@@ -29,7 +25,7 @@ namespace Mauxnimale_CE2.ui
             this.window = window;
             header = new Header(window);
             footer = new Footer(window);
-            salarie = s;
+            user = s;
 
         }
         public override void load()
@@ -167,7 +163,7 @@ namespace Mauxnimale_CE2.ui
         public void statsClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceStatsPage(window, salarie));
+            window.switchInterface(new InterfaceStatsPage(window, user));
         }
         #endregion
 

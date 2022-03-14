@@ -1,15 +1,11 @@
-﻿using Mauxnimale_CE2.ui;
-using Mauxnimale_CE2.ui.components.componentsTools;
-using Mauxnimale_CE2.ui.Components;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Mauxnimale_CE2.ui.components;
+using Mauxnimale_CE2.ui.components.componentsTools;
+using Mauxnimale_CE2.api.entities;
 
-namespace Mauxnimale_CE2
+namespace Mauxnimale_CE2.ui
 {
     class InterfaceConnection : AInterface
     {
@@ -65,32 +61,38 @@ namespace Mauxnimale_CE2
             login.LostFocus += new EventHandler(loginLeave);
             login.GotFocus += new EventHandler(loginEnter);
             login.Location = new Point(window.Width / 4, window.Height * 35 / 100);
-            setBox(login, "login");
+            setBox(login, "Identifiant");
 
             password = new TextBox();   
             password.LostFocus += new EventHandler(passwordLeave);
             password.GotFocus += new EventHandler(passwordEnter);
             password.Location = new Point(window.Width / 4, window.Height * 45 / 100);
-            password.PasswordChar = '•';
-            setBox(password, "password");
+            password.PasswordChar = (char)0;
+            setBox(password, "Mot de passe");
 
         }
 
         public void connection_click(object sender, EventArgs e)
         {
-            if (login.Text != null && password.Text != null && ConnectionController.getConnection(login.Text, password.Text) != null)
+            if (login.Text != null && password.Text != null)
             {
-                window.Controls.Clear();
-                window.switchInterface(new InterfaceHome(window, ConnectionController.getConnection(login.Text, password.Text)));
-            } else
-            {
-                MessageBox.Show("identifiant ou mot de passe incorrecte");
-            }           
+                SALARIE user = UserController.getConnection(login.Text, password.Text);
+                if (user != null)
+                {
+                    window.Controls.Clear();
+                    if (!user.PREMIERECONNEXION)
+                        window.switchInterface(new InterfaceFirstConnection(window, user));
+                    else
+                        window.switchInterface(new InterfaceHome(window, user));
+                    return;
+                }
+            }
+            MessageBox.Show("Identifiant ou mot de passe incorrecte", "Entrées non valides", MessageBoxButtons.OK);          
         }
 
         private void loginEnter(object sender, EventArgs e)
         {
-            if (login.Text == "login")
+            if (login.Text == "Identifiant")
             {
                 login.Text = "";
                 login.ForeColor = Color.Black;
@@ -101,17 +103,18 @@ namespace Mauxnimale_CE2
         {
             if (login.Text.Length == 0)
             {
-                login.Text = "login";
-                login.ForeColor = Color.Gray;
+                login.Text = "Identifiant";
+                login.ForeColor = Color.Gray;   
             }
         }
        
         private void passwordEnter(object sender, EventArgs e)
         {
-            if (password.Text == "password")
+            if (password.Text == "Mot de passe")
             {
                 password.Text = "";
                 password.ForeColor = Color.Black;
+                password.PasswordChar = '•';
             }
         }
 
@@ -119,8 +122,9 @@ namespace Mauxnimale_CE2
         {
             if (password.Text.Length == 0)
             {
-                password.Text = "password";
+                password.Text = "Mot de passe";
                 password.ForeColor = Color.Gray;
+                password.PasswordChar = (char)0;
             }
         }
 

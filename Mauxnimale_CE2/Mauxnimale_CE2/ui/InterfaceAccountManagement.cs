@@ -15,6 +15,8 @@ namespace Mauxnimale_CE2.ui
     {
         MainWindow window;
 
+        SALARIE user;
+
         Header header;
         Footer footer;
 

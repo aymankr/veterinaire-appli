@@ -4,16 +4,17 @@ using System.Windows.Forms;
 using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
+using Mauxnimale_CE2.api.controllers;
 
 namespace Mauxnimale_CE2.ui
 {
     class InterfaceConnection : AInterface
     {
-        UIButton button;
+
+        UIButton connectionButton;
 
         Header header;
-        
-        Button connection;
+
         TextBox login;
         TextBox password;
 
@@ -31,16 +32,15 @@ namespace Mauxnimale_CE2.ui
             header.load("Connection");
             generate_Button();
             generate_TextBox();
-            Console.WriteLine(this.window.Height +": Y\n"+this.window.Width+": X");   
         }
 
         public void generate_Button()
         {
-            button = new UIButton(UIColor.ORANGE, "Connection", 190);
-            button.Font = UIFont.BigButtonFont;
-            button.Location = new Point((this.window.Width / 2) - (button.Width / 2) - 25, 2 * (this.window.Height / 3));
-            window.Controls.Add(button);
-            button.Click += new EventHandler(connection_click);
+            connectionButton = new UIButton(UIColor.ORANGE, "Connection", 190);
+            connectionButton.Font = UIFont.BigButtonFont;
+            connectionButton.Location = new Point((this.window.Width / 2) - (connectionButton.Width / 2) - 25, 2 * (this.window.Height / 3));
+            window.Controls.Add(connectionButton);
+            connectionButton.Click += new EventHandler(connection_click);
         }
 
 
@@ -150,7 +150,8 @@ namespace Mauxnimale_CE2.ui
 
         public override void updateSize()
         {
-            //throw new NotImplementedException();
+            window.Controls.Clear();
+            this.load();
         }
     }
 }

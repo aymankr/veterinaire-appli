@@ -149,7 +149,7 @@ namespace Mauxnimale_CE2.ui
         {
             this.window = window;
             header = new Header(window);
-            footer = new Footer(window);
+            footer = new Footer(window, user);
             base.user = user;
         }
 

@@ -22,7 +22,7 @@ namespace Mauxnimale_CE2.ui
         {
             this.window = window;
             header = new MinimalHeader(window);
-            footer = new Footer(window);
+            footer = new Footer(window, user);
             loginTextBox = generateLoginTextBox();
         }
 

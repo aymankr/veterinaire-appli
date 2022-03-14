@@ -18,7 +18,7 @@ namespace Mauxnimale_CE2.ui
             user = s;
             this.window = forme;
             header = new Header(window);
-            footer = new Footer(window);
+            footer = new Footer(window, s);
         }
 
         public override void load()

@@ -163,6 +163,8 @@
     <Compile Include="ui\components\UIButton.Designer.cs">
       <DependentUpon>UIButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="ui\InterfaceChangeID.cs" />
+    <Compile Include="ui\InterfaceChangePassword.cs" />
     <Compile Include="ui\InterfaceFirstConnection.cs" />
     <Compile Include="ui\components\MinimalHeader.cs">
       <SubType>Component</SubType>
@@ -170,6 +172,7 @@
     <Compile Include="ui\ExempleInterface.cs" />
     <Compile Include="ui\InterfaceAdmin.cs" />
     <Compile Include="ui\InterfaceConnection.cs" />
+    <Compile Include="ui\InterfaceAccountManagement.cs" />
     <Compile Include="ui\InterfaceGestionConsultation.cs" />
     <Compile Include="ui\InterfaceGestionCompte.cs" />
     <Compile Include="ui\InterfaceGestionCongé.cs" />

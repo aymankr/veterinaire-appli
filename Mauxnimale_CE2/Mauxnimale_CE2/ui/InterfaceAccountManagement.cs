@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Mauxnimale_CE2.ui
 {
-    internal class InterfaceGestionCompte : AInterface
+    internal class InterfaceAccountManagement : AInterface
     {
         MainWindow window;
 
@@ -25,11 +25,11 @@ namespace Mauxnimale_CE2.ui
         TextBox name, prénom, email, phone, adresse;
         Label lName, lPrénom, lEmail, lPhone, lAdresse;
 
-        public InterfaceGestionCompte(MainWindow forme, SALARIE s)
+        public InterfaceAccountManagement(MainWindow forme, SALARIE s)
         {
             this.window = forme;
             header = new Header(window);
-            footer = new Footer(window);
+            footer = new Footer(window, s);
             user = s;
         }
 
@@ -60,13 +60,13 @@ namespace Mauxnimale_CE2.ui
         public void idPageClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            //window.switchInterface(new InterfaceHome(window));
+            window.switchInterface(new InterfaceChangeID(window, user));
         }
 
         public void passwordPageClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            //window.switchInterface(new InterfaceHome(window));
+            window.switchInterface(new InterfaceChangePassword(window, user));
         }
 
         public void backClick(object sender, EventArgs e)
@@ -184,7 +184,7 @@ namespace Mauxnimale_CE2.ui
             passwordPage.Location = new System.Drawing.Point(window.Width * 4 / 6, window.Height * 225 / 1000);
             window.Controls.Add(passwordPage);
 
-            idPage = new UIButton(UIColor.ORANGE, "Chnager d'identifiant", window.Width / 6);
+            idPage = new UIButton(UIColor.ORANGE, "Changer d'identifiant", window.Width / 6);
             idPage.Location = new System.Drawing.Point(window.Width * 4/ 6, window.Height * 375 / 1000);
             window.Controls.Add(idPage);
 

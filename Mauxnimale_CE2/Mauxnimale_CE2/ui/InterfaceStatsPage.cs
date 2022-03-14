@@ -19,7 +19,7 @@ namespace Mauxnimale_CE2.ui
         {
             this.window = forme;
             header = new Header(window);
-            footer = new Footer(window);
+            footer = new Footer(window, s);
             user = s;
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mauxnimale_CE2.api.entities;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -12,10 +13,12 @@ namespace Mauxnimale_CE2.ui.components
         Label mentions;
         Rectangle up;
         Rectangle down;
+        SALARIE user;
 
-        public Footer(MainWindow form)
+        public Footer(MainWindow form, SALARIE s)
         {
             this.window = form;
+            user = s;
         }
 
         public void load()
@@ -53,13 +56,13 @@ namespace Mauxnimale_CE2.ui.components
         public void adminClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceAdmin(window));
+            window.switchInterface(new InterfaceAdmin(window, user));
         }
 
         public void legalClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceLegalMentions(window));
+            window.switchInterface(new InterfaceLegalMentions(window, user));
         }
 
         public void draw_Rectangles(object sender, PaintEventArgs e)

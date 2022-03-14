@@ -11,7 +11,6 @@ namespace Mauxnimale_CE2.ui
     {
         UIButton button;
 
-        Footer footer;
         Header header;
         
         Button connection;
@@ -24,14 +23,12 @@ namespace Mauxnimale_CE2.ui
         public InterfaceConnection(MainWindow form)
         {
             this.window = form;
-            footer = new Footer(form);
             header = new Header(form);
         }
 
         public override void load()
         {
             header.load("Connection");
-            footer.load();
             generate_Button();
             generate_TextBox();
             Console.WriteLine(this.window.Height +": Y\n"+this.window.Width+": X");   
@@ -69,6 +66,7 @@ namespace Mauxnimale_CE2.ui
             password.GotFocus += new EventHandler(passwordEnter);
             password.Location = new Point(window.Width / 4, window.Height * 45 / 100);
             password.PasswordChar = (char)0;
+            password.KeyPress += new KeyPressEventHandler(passwordKeyPressed);
             setBox(password, "Mot de passe");
 
         }
@@ -104,15 +102,20 @@ namespace Mauxnimale_CE2.ui
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
-                if (login.Text != null && password.Text != null && ConnectionController.getUser(login.Text, password.Text) != null)
+                if (login.Text != null && password.Text != null)
                 {
-                    form.Controls.Clear();
-                    form.switchInterface(new InterfaceHome(form, ConnectionController.getUser(login.Text, password.Text)));
+                    SALARIE user = UserController.getConnection(login.Text, password.Text);
+                    if (user != null)
+                    {
+                        window.Controls.Clear();
+                        if (!user.PREMIERECONNEXION)
+                            window.switchInterface(new InterfaceFirstConnection(window, user));
+                        else
+                            window.switchInterface(new InterfaceHome(window, user));
+                        return;
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("identifiant ou mot de passe incorrecte");
-                }
+                MessageBox.Show("Identifiant ou mot de passe incorrecte", "Entrées non valides", MessageBoxButtons.OK);
             }
         }
 

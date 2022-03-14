@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.ui.components;
+using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2.ui
 {
@@ -26,11 +27,12 @@ namespace Mauxnimale_CE2.ui
         //valeur modifié grace a des requetes
         string daysString = "";
 
-        public InterfaceGestionCongé(MainWindow forme)
+        public InterfaceGestionCongé(MainWindow forme, SALARIE s)
         {
             this.window = forme;
             header = new Header(window);
-            footer = new Footer(window);
+            footer = new Footer(window, s);
+            user = s;
         }
 
         public override void load()
@@ -129,7 +131,7 @@ namespace Mauxnimale_CE2.ui
             remove.Click += new EventHandler(removeClick);
             window.Controls.Add(remove);
 
-            back = new UIRoundButton(window.Width / 20);
+            back = new UIRoundButton(window.Width / 20, "<");
             back.Location = new System.Drawing.Point(window.Width * 9 / 10, window.Height / 10);
             back.Click += new EventHandler(backClick);
             window.Controls.Add(back);

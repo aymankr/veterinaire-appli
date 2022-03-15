@@ -62,12 +62,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Mauxnimale_CE2\Mauxnimale_CE2.csproj">
-      <Project>{82bcc6b6-68eb-4ede-8319-8ed22e4c980a}</Project>
-      <Name>Mauxnimale_CE2</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

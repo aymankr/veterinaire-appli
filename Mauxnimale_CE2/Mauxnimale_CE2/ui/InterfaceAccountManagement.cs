@@ -54,7 +54,7 @@ namespace Mauxnimale_CE2.ui
         {
             // déconnecter l'utilisateur
             window.Controls.Clear();
-            //window.switchInterface(new InterfaceConnection(window));
+            window.switchInterface(new InterfaceConnection(window,null));
         }
 
         public void idPageClick(object sender, EventArgs e)

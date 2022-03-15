@@ -33,16 +33,17 @@ namespace Mauxnimale_CE2.ui
         MonthCalendar calendar;
 
 
-        List<RENDEZ_VOUS> rdvOfDay;
-        RENDEZ_VOUS appointment;
 
-        Label calendarLabel;
-        ListBox consultOfDay, infosConsult;
+        Label calendarLabel, clientLabel, animalLabel, appointmentTypeLabel, timeLabel, descriptionLabel;
+
+        ComboBox clientComboBox, animalComboBox, appointmentTypeComboBox;
+        TextBox descriptionTexBox;
+
 
         public InterfaceAppointmentCreation(MainWindow window, SALARIE s)
         {
             this.window = window;
-            this.user = s;
+            user = s;
             header = new Header(window);
             footer = new Footer(window, user);
 
@@ -59,43 +60,88 @@ namespace Mauxnimale_CE2.ui
         public void generateLabels()
         {
             calendarLabel = new Label();
-            calendarLabel.Text = "Consultations à venir";
+            calendarLabel.Text = "Sélectionnez une date";
             calendarLabel.TextAlign = ContentAlignment.MiddleLeft;
             calendarLabel.Font = new Font("Poppins", window.Height * 2 / 100);
             calendarLabel.ForeColor = UIColor.DARKBLUE;
             calendarLabel.Size = new Size(window.Width * 3 / 10, window.Height * 1 / 10);
             calendarLabel.Location = new Point(window.Width * 25 / 1000, window.Height / 10);
+
+            clientLabel = new Label();
+            clientLabel.Text = "Choisissez un Client";
+            clientLabel.TextAlign = ContentAlignment.MiddleLeft;
+            clientLabel.Font = new Font("Poppins", window.Height * 2 / 100);
+            clientLabel.ForeColor = UIColor.DARKBLUE;
+            clientLabel.Size = new Size(window.Width * 3 / 10, window.Height * 1 / 20);
+            clientLabel.Location = new Point(window.Width * 350 / 1000, window.Height * 5 / 40);
+
+            animalLabel = new Label();
+            animalLabel.Text = "Choisissez un Animal";
+            animalLabel.TextAlign = ContentAlignment.MiddleLeft;
+            animalLabel.Font = new Font("Poppins", window.Height * 2 / 100);
+            animalLabel.ForeColor = UIColor.DARKBLUE;
+            animalLabel.Size = new Size(window.Width * 3 / 10, window.Height * 1 / 20);
+            animalLabel.Location = new Point(window.Width * 650 / 1000, window.Height * 5 / 40);
+
+            appointmentTypeLabel = new Label();
+            appointmentTypeLabel.Text = "Choisissez le type du rendez-vous";
+            appointmentTypeLabel.TextAlign = ContentAlignment.MiddleLeft;
+            appointmentTypeLabel.Font = new Font("Poppins", window.Height * 2 / 100);
+            appointmentTypeLabel.ForeColor = UIColor.DARKBLUE;
+            appointmentTypeLabel.Size = new Size(window.Width * 3 / 10, window.Height * 1 / 20);
+            appointmentTypeLabel.Location = new Point(window.Width * 350 / 1000, window.Height * 10 / 40);
+
+            timeLabel = new Label();
+            timeLabel.Text = "Choisissez l'heure du rendez-vous";
+            timeLabel.TextAlign = ContentAlignment.MiddleLeft;
+            timeLabel.Font = new Font("Poppins", window.Height * 2 / 100);
+            timeLabel.ForeColor = UIColor.DARKBLUE;
+            timeLabel.Size = new Size(window.Width * 3 / 10, window.Height * 1 / 20);
+            timeLabel.Location = new Point(window.Width * 650 / 1000, window.Height * 10/ 40);
+
+            descriptionLabel = new Label();
+            descriptionLabel.Text = "Description :";
+            descriptionLabel.TextAlign = ContentAlignment.MiddleLeft;
+            descriptionLabel.Font = new Font("Poppins", window.Height * 2 / 100);
+            descriptionLabel.ForeColor = UIColor.DARKBLUE;
+            descriptionLabel.Size = new Size(window.Width * 3 / 10, window.Height * 1 / 10);
+            descriptionLabel.Location = new Point(window.Width * 350 / 1000, window.Height *7 / 20);
+
+
             window.Controls.Add(calendarLabel);
+            window.Controls.Add(clientLabel);
+            window.Controls.Add(animalLabel);
+            window.Controls.Add(appointmentTypeLabel);
+            window.Controls.Add(timeLabel);
+            window.Controls.Add(descriptionLabel);
         }
 
         public void generateListBox()
         {
-            consultOfDay = new ListBox();
-            consultOfDay.Text = "";
-            consultOfDay.Font = new Font("Poppins", window.Height * 1 / 100);
-            consultOfDay.ForeColor = Color.Black;
-            consultOfDay.BackColor = Color.White;
-            consultOfDay.Location = new Point(window.Width * 275 / 1000, window.Height * 2 / 10);
-            consultOfDay.Size = new Size(window.Width * 20 / 100, window.Height * 45 / 100);
-            window.Controls.Add(consultOfDay);
-            consultOfDay.SelectedIndexChanged += new EventHandler(rdvSelection);
+            clientComboBox = new ComboBox();
+            clientComboBox.Size = new Size(window.Width * 20/100, window.Height * 3 / 20);
+            clientComboBox.Location = new Point(window.Width * 350 / 1000, window.Height * 8 / 40);
 
-            infosConsult = new ListBox();
-            infosConsult.Text = "";
-            infosConsult.Font = new Font("Poppins", window.Height * 1 / 100);
-            infosConsult.ForeColor = Color.Black;
-            infosConsult.BackColor = Color.White;
-            infosConsult.Location = new Point(window.Width * 500 / 1000, window.Height * 2 / 10);
-            infosConsult.Size = new Size(window.Width * 40 / 100, window.Height * 45 / 100);
-            window.Controls.Add(infosConsult);
+            animalComboBox = new ComboBox();
+            animalComboBox.Size = new Size(window.Width * 20 / 100, window.Height * 3 / 20);
+            animalComboBox.Location = new Point(window.Width * 650 / 1000, window.Height * 8 / 40);
 
+
+            appointmentTypeComboBox = new ComboBox();
+            appointmentTypeComboBox.Size = new Size(window.Width * 20 / 100, window.Height * 6 / 20);
+            appointmentTypeComboBox.Location = new Point(window.Width * 350 / 1000, window.Height * 13 / 40);
 
 
             calendar = new MonthCalendar();
             calendar.Location = new Point(window.Width * 25 / 1000, window.Height * 2 / 10);
             calendar.Size = new Size(window.Width * 20 / 100, window.Height * 45 / 100);
             calendar.DateSelected += new DateRangeEventHandler(dateSelection);
+            
+            
             window.Controls.Add(calendar);
+            window.Controls.Add(clientComboBox);
+            window.Controls.Add(appointmentTypeComboBox);
+            window.Controls.Add(animalComboBox);
         }
 
 
@@ -131,43 +177,16 @@ namespace Mauxnimale_CE2.ui
 
 
         #region eventHandler
-        private void rdvSelection(object sender, EventArgs e)
-        {
-            infosConsult.Items.Clear();
-
-            appointment = (RENDEZ_VOUS)consultOfDay.SelectedItem;
-
-            infosConsult.Items.Add(consultOfDay.SelectedItem);
-            infosConsult.Items.Add(appointment.CLIENT);
-            foreach (ANIMAL animal in AppointmentController.getAnimalFromRDV(appointment))
-            {
-                infosConsult.Items.Add(animal);
-            }
-            infosConsult.Items.Add(appointment.RAISON);
-            infosConsult.Items.Add(appointment.TYPE_RDV.ToString());
-
-        }
-
-        private void dateSelection(object sender, DateRangeEventArgs e)
-        {
-            consultOfDay.Items.Clear();
-            DateTime selectedsate = new DateTime(e.Start.Year, e.Start.Month, e.Start.Day);
-            if (DayController.getDay(selectedsate) == null)
-            {
-                DayController.addDay(selectedsate);
-            }
-            rdvOfDay = new List<RENDEZ_VOUS>(AppointmentController.getAppointmentsFromDate(selectedsate));
-            foreach (RENDEZ_VOUS rdv in rdvOfDay)
-            {
-                consultOfDay.Items.Add(rdv);
-                //ListBoxItems itm = new ListBoxItems
-            }
-        }
+       
 
         public void backClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
             window.switchInterface(new InterfaceAppointmentManagment(window, user));
+        }
+        private void dateSelection(object sender, DateRangeEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public void modifConsultClick(object sender, EventArgs e)

@@ -45,6 +45,7 @@ namespace Mauxnimale_CE2.ui
             this.user = s;
             header = new Header(window);
             footer = new Footer(window, user);
+            selected = null;
 
         }
         public override void load()
@@ -188,13 +189,15 @@ namespace Mauxnimale_CE2.ui
 
         public void deleteConsultClick(object sender, EventArgs e)
         {
-            DialogResult mb = MessageBox.Show("Are you sure you want to Delete", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-            if (mb == DialogResult.OK)
-            {                
-                AppointmentController.deleteAppointment(selected);
-                infosConsult.Items.Clear();
-                consultOfDay.SetSelected(0, false);
-                consultOfDay.Refresh();
+            if (selected!=null)
+            {
+                DialogResult mb = MessageBox.Show("Are you sure you want to Delete", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                if (mb == DialogResult.OK)
+                {
+                    AppointmentController.deleteAppointment(selected);
+                    window.Controls.Clear();
+                    this.load();
+                }
             }
         }
 

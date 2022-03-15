@@ -141,7 +141,7 @@ namespace Mauxnimale_CE2.ui
         public void manageStockClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            //form.changerClasse(new Interface...());
+            window.switchInterface(new InterfaceStockManagement(window, user));
         }
 
         public void manageMaladieClick(object sender, EventArgs e)

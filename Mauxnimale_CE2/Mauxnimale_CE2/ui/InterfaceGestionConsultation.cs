@@ -24,7 +24,7 @@ namespace Mauxnimale_CE2.ui
     {
         MainWindow window;
 
-        SALARIE salarie;
+        SALARIE user;
 
         Header header;
         Footer footer;
@@ -43,9 +43,9 @@ namespace Mauxnimale_CE2.ui
         public InterfaceGestionConsultation(MainWindow window, SALARIE s)
         {
             this.window = window;
-            salarie = s;
+            user = s;
             header = new Header(window);
-            footer = new Footer(window);
+            footer = new Footer(window, user);
 
         }
         public override void load()
@@ -168,7 +168,7 @@ namespace Mauxnimale_CE2.ui
         public void backClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceHome(window, salarie));
+            window.switchInterface(new InterfaceHome(window, user));
         }
 
         public void modifConsultClick(object sender, EventArgs e)
@@ -189,7 +189,7 @@ namespace Mauxnimale_CE2.ui
             if (mb == DialogResult.OK)
             {
                 window.Controls.Clear();
-                window.switchInterface(new InterfaceHome(window, salarie));
+                window.switchInterface(new InterfaceHome(window, user));
             }
         }
 

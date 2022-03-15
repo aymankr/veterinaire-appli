@@ -28,13 +28,13 @@ namespace Mauxnimale_CE2.ui
         Header header;
         Footer footer;
 
-        UIButton modifConsult, createOrdonance, deleteConsult, createConsult;
+        UIButton modifConsult, newClient, deleteConsult, createConsult;
         UIRoundButton back;
         MonthCalendar calendar;
 
 
         List<RENDEZ_VOUS> rdvOfDay;
-        RENDEZ_VOUS selected;
+        RENDEZ_VOUS appointment;
 
         Label calendarLabel;
         ListBox consultOfDay, infosConsult;
@@ -105,9 +105,9 @@ namespace Mauxnimale_CE2.ui
             modifConsult.Location = new Point(window.Width * 5 / 15, window.Height * 14 / 20);
             window.Controls.Add(modifConsult);
 
-            createOrdonance = new UIButton(UIColor.DARKBLUE, "Créer ordonance", window.Width * 3 / 20);
-            createOrdonance.Location = new Point(window.Width * 8 / 15, window.Height * 14 / 20);
-            window.Controls.Add(createOrdonance);
+            newClient = new UIButton(UIColor.DARKBLUE, "Créer ordonance", window.Width * 3 / 20);
+            newClient.Location = new Point(window.Width * 8 / 15, window.Height * 14 / 20);
+            window.Controls.Add(newClient);
 
             deleteConsult = new UIButton(UIColor.DARKBLUE, "Supprimer Consultation", window.Width * 3 / 20);
             deleteConsult.Location = new Point(window.Width * 11 / 15, window.Height * 14 / 20);
@@ -124,7 +124,7 @@ namespace Mauxnimale_CE2.ui
 
 
             modifConsult.Click += new EventHandler(modifConsultClick);
-            createOrdonance.Click += new EventHandler(createOrdonanceClick);
+            newClient.Click += new EventHandler(createOrdonanceClick);
             deleteConsult.Click += new EventHandler(deleteConsultClick);
             createConsult.Click += new EventHandler(createConsultClick);
         }
@@ -135,16 +135,16 @@ namespace Mauxnimale_CE2.ui
         {
             infosConsult.Items.Clear();
 
-            selected = (RENDEZ_VOUS)consultOfDay.SelectedItem;
+            appointment = (RENDEZ_VOUS)consultOfDay.SelectedItem;
 
             infosConsult.Items.Add(consultOfDay.SelectedItem);
-            infosConsult.Items.Add(selected.CLIENT);
-            foreach (ANIMAL animal in AppointmentController.getAnimalFromRDV(selected))
+            infosConsult.Items.Add(appointment.CLIENT);
+            foreach (ANIMAL animal in AppointmentController.getAnimalFromRDV(appointment))
             {
                 infosConsult.Items.Add(animal);
             }
-            infosConsult.Items.Add(selected.RAISON);
-            infosConsult.Items.Add(selected.TYPE_RDV.ToString());
+            infosConsult.Items.Add(appointment.RAISON);
+            infosConsult.Items.Add(appointment.TYPE_RDV.ToString());
 
         }
 
@@ -167,7 +167,7 @@ namespace Mauxnimale_CE2.ui
         public void backClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceHome(window, user));
+            window.switchInterface(new InterfaceAppointmentManagment(window, user));
         }
 
         public void modifConsultClick(object sender, EventArgs e)
@@ -184,12 +184,7 @@ namespace Mauxnimale_CE2.ui
 
         public void deleteConsultClick(object sender, EventArgs e)
         {
-            DialogResult mb = MessageBox.Show("Are you sure you want to Delete", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-            if (mb == DialogResult.OK)
-            {
-                window.Controls.Clear();
-                window.switchInterface(new InterfaceHome(window, user));
-            }
+            
         }
 
         public void createConsultClick(object sender, EventArgs e)

@@ -140,6 +140,7 @@
     <Compile Include="api\entities\TYPE_RDV.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ui\InterfaceAppointmentCreation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ui\AInterface.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="ui\components\UIButton.Designer.cs">
       <DependentUpon>UIButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="ui\InterfaceAppointmentManagment.cs" />
     <Compile Include="ui\InterfaceChangeID.cs" />
     <Compile Include="ui\InterfaceChangePassword.cs" />
     <Compile Include="ui\InterfaceFirstConnection.cs" />
@@ -172,7 +174,6 @@
     <Compile Include="ui\InterfaceAdmin.cs" />
     <Compile Include="ui\InterfaceConnection.cs" />
     <Compile Include="ui\InterfaceAccountManagement.cs" />
-    <Compile Include="ui\InterfaceGestionConsultation.cs" />
     <Compile Include="ui\InterfaceGestionCongé.cs" />
     <Compile Include="ui\InterfaceHome.cs" />
     <Compile Include="ui\InterfaceInscription.cs" />

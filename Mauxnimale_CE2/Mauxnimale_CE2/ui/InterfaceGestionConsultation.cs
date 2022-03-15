@@ -42,7 +42,7 @@ namespace Mauxnimale_CE2.ui
         public InterfaceGestionConsultation(MainWindow window, SALARIE s)
         {
             this.window = window;
-            this.user = s;
+            user = s;
             header = new Header(window);
             footer = new Footer(window, user);
 

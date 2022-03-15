@@ -12,8 +12,6 @@ namespace Mauxnimale_CE2.ui
     {
         MainWindow window;
 
-        SALARIE salarie;
-
         Header header;
         Footer footer;
 
@@ -159,7 +157,7 @@ namespace Mauxnimale_CE2.ui
         public void manageConsultationClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceGestionConsultation(window, salarie));
+            window.switchInterface(new InterfaceGestionConsultation(window, user));
         }
 
         public void statsClick(object sender, EventArgs e)

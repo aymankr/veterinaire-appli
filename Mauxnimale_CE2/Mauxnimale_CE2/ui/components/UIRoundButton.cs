@@ -24,11 +24,7 @@ namespace Mauxnimale_CE2.ui.components
             Graphics g = pe.Graphics;
             g.DrawEllipse(new Pen(UIColor.DARKBLUE), 0, 0, Size.Width, Size.Height);
             g.FillEllipse(new SolidBrush(UIColor.DARKBLUE), 0, 0, Size.Width, Size.Height);
-<<<<<<< HEAD
             g.DrawString(this.character, new System.Drawing.Font("Roboto", Size.Width / 2), new SolidBrush(Color.White), Size.Width / 7, Size.Height / 7);
-=======
-            g.DrawString(this.character, new System.Drawing.Font("Roboto", Size.Width/2), new SolidBrush(Color.White), Size.Width/7, Size.Height/7);
->>>>>>> 7aeccfbf143e29fa07568773ed200e9cdfce4d80
 
             GraphicsPath path = new GraphicsPath();
             path.AddEllipse(0, 0, Size.Width, Size.Height);

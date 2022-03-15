@@ -1,9 +1,10 @@
 ﻿using Mauxnimale_CE2.api.entities;
+using System.Linq;
 using System;
 
 namespace Mauxnimale_CE2.api.controllers
 {
-    public class VacationController
+    public class DayController
     {
         /**
          * Add a day for an employee, a day working
@@ -44,6 +45,14 @@ namespace Mauxnimale_CE2.api.controllers
             day.DATE = date;
             DbContext.get().JOURNEE.Add(day);
             DbContext.get().SaveChanges();
+        }
+
+        public static JOURNEE getDay(DateTime date)
+        {
+            JOURNEE day = (from d in DbContext.get().JOURNEE
+                           where DateTime.Equals(d.DATE, date)
+                           select d).FirstOrDefault();
+            return day;
         }
     }
 }

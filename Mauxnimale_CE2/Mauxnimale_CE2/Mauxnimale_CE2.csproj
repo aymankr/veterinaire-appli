@@ -64,9 +64,8 @@
     <Compile Include="api\controllers\RegistrationController.cs" />
     <Compile Include="api\controllers\UserController.cs" />
     <Compile Include="api\controllers\utils\InputVerification.cs" />
-    <Compile Include="api\controllers\JourneeController.cs" />
     <Compile Include="api\controllers\utils\PasswordUtils.cs" />
-    <Compile Include="api\controllers\VacationController.cs" />
+    <Compile Include="api\controllers\DayController.cs" />
     <Compile Include="api\DbContext.cs" />
     <Compile Include="api\controllers\AnimalController.cs" />
     <Compile Include="api\entities\ANIMAL.cs">

@@ -152,9 +152,9 @@ namespace Mauxnimale_CE2.ui
         {
             consultOfDay.Items.Clear();
             DateTime selectedsate = new DateTime(e.Start.Year, e.Start.Month, e.Start.Day);
-            if (JourneeController.getJOURNEE(selectedsate) == null)
+            if (DayController.getDay(selectedsate) == null)
             {
-                JourneeController.addJournee(selectedsate);
+                DayController.addDay(selectedsate);
             }
             rdvOfDay =new List<RENDEZ_VOUS>(AppointmentController.getAppointmentsFromDate(selectedsate));
             foreach(RENDEZ_VOUS rdv in rdvOfDay)

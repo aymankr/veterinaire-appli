@@ -21,8 +21,9 @@ namespace Mauxnimale_CE2.ui
         MainWindow window;
         //Lister ici les différents éléments qui seront utilisés dans l'interface
 
-        public InterfaceConnection(MainWindow form)
+        public InterfaceConnection(MainWindow form,SALARIE user)
         {
+            this.user = user;
             this.window = form;
             header = new Header(form);
         }

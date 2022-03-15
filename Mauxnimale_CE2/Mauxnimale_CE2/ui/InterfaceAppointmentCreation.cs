@@ -20,7 +20,7 @@ using Mauxnimale_CE2.api.controllers;
 
 namespace Mauxnimale_CE2.ui
 {
-    internal class InterfaceGestionConsultation : AInterface
+    internal class InterfaceAppointmentCreation : AInterface
     {
         MainWindow window;
 
@@ -36,10 +36,10 @@ namespace Mauxnimale_CE2.ui
         List<RENDEZ_VOUS> rdvOfDay;
         RENDEZ_VOUS selected;
 
-        Label calendarLabel, animal, client, typeRDV, Raisons, maladie, soin;
+        Label calendarLabel;
         ListBox consultOfDay, infosConsult;
 
-        public InterfaceGestionConsultation(MainWindow window, SALARIE s)
+        public InterfaceAppointmentCreation(MainWindow window, SALARIE s)
         {
             this.window = window;
             this.user = s;
@@ -101,7 +101,7 @@ namespace Mauxnimale_CE2.ui
 
         public void generateButton()
         {
-            modifConsult = new UIButton(UIColor.DARKBLUE, "Modifier Consultation", window.Width * 3  / 20);
+            modifConsult = new UIButton(UIColor.DARKBLUE, "Modifier Consultation", window.Width * 3 / 20);
             modifConsult.Location = new Point(window.Width * 5 / 15, window.Height * 14 / 20);
             window.Controls.Add(modifConsult);
 
@@ -156,8 +156,8 @@ namespace Mauxnimale_CE2.ui
             {
                 DayController.addDay(selectedsate);
             }
-            rdvOfDay =new List<RENDEZ_VOUS>(AppointmentController.getAppointmentsFromDate(selectedsate));
-            foreach(RENDEZ_VOUS rdv in rdvOfDay)
+            rdvOfDay = new List<RENDEZ_VOUS>(AppointmentController.getAppointmentsFromDate(selectedsate));
+            foreach (RENDEZ_VOUS rdv in rdvOfDay)
             {
                 consultOfDay.Items.Add(rdv);
                 //ListBoxItems itm = new ListBoxItems
@@ -195,7 +195,7 @@ namespace Mauxnimale_CE2.ui
         public void createConsultClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceAppointmentCreation(window, user));
+            //form.changerClasse(new Interface...());
         }
 
         #endregion

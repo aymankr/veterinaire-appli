@@ -100,11 +100,11 @@ namespace Mauxnimale_CE2.ui
 
         public void changeProductClick(object sender, EventArgs e)
         {
-            if(choisi != null)
-            {
+            //if(choisi != null)
+            //{
                 window.Controls.Clear();
-                //window.switchInterface(new InterfaceHome(window, user));
-            }
+                window.switchInterface(new InterfaceChangeStock(window, user));
+            //}
         }
 
         public void typeSelectedChange(object sender, EventArgs e)
@@ -121,11 +121,11 @@ namespace Mauxnimale_CE2.ui
 
         public void updateProducts()
         {
-            foreach (PRODUIT worker in productsList)
+            foreach (PRODUIT product in productsList)
             {
                 //ajouter chaque produit dans la liste
                 //products.Items.Add(le nom du produit + " -  quantité : " + la quantité du produit);
-                products.Items.Add("Nom exemple - quantité : " + 5);
+                products.Items.Add(product.IDPRODUIT + ". " + product.NOMPRODUIT + " - Quantité : " + product.QUANTITEENSTOCK);
             }
         }
 

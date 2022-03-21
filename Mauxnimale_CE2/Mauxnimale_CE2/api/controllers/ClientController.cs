@@ -28,6 +28,22 @@ namespace Mauxnimale_CE2.api.controllers
             return client.First();
         }
 
+        public static List<CLIENT> ResearhByName(string name)
+        {
+            var client = from c in DbContext.get().CLIENT
+                         where c.NOMCLIENT.StartsWith(name)
+                         select c;
+            return client.ToList();
+        }
+
+        public static List<CLIENT> ResearhBySurname(string surname)
+        {
+            var client = from c in DbContext.get().CLIENT
+                         where c.PRENOMCLIENT.StartsWith(surname)
+                         select c;
+            return client.ToList();
+        }
+
         public static List<CLIENT> AllClient()
         {
             return DbContext.get().CLIENT.ToList();

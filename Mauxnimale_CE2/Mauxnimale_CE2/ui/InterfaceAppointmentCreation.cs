@@ -34,6 +34,11 @@ namespace Mauxnimale_CE2.ui
 
         CLIENT selectedClient;
         ANIMAL selectedAnimal;
+        DateTime selectedDate;
+        TYPE_RDV selectedType;
+        TimeSpan RDVStart;
+        TimeSpan RDVEnd;
+        String Description;
 
 
 
@@ -62,6 +67,7 @@ namespace Mauxnimale_CE2.ui
 
         public void generateLabels()
         {
+            #region calendarLabel
             calendarLabel = new Label();
             calendarLabel.Text = "Sélectionnez une date";
             calendarLabel.TextAlign = ContentAlignment.MiddleLeft;
@@ -69,7 +75,9 @@ namespace Mauxnimale_CE2.ui
             calendarLabel.ForeColor = UIColor.DARKBLUE;
             calendarLabel.Size = new Size(window.Width * 3 / 10, window.Height * 1 / 10);
             calendarLabel.Location = new Point(window.Width * 25 / 1000, window.Height / 10);
+            #endregion
 
+            #region clientLabel
             clientLabel = new Label();
             clientLabel.Text = "Choisissez un Client";
             clientLabel.TextAlign = ContentAlignment.MiddleLeft;
@@ -77,7 +85,9 @@ namespace Mauxnimale_CE2.ui
             clientLabel.ForeColor = UIColor.DARKBLUE;
             clientLabel.Size = new Size(window.Width * 3 / 10, window.Height * 1 / 20);
             clientLabel.Location = new Point(window.Width * 350 / 1000, window.Height * 5 / 40);
+            #endregion
 
+            #region animalLabel
             animalLabel = new Label();
             animalLabel.Text = "Choisissez un Animal";
             animalLabel.TextAlign = ContentAlignment.MiddleLeft;
@@ -85,7 +95,9 @@ namespace Mauxnimale_CE2.ui
             animalLabel.ForeColor = UIColor.DARKBLUE;
             animalLabel.Size = new Size(window.Width * 3 / 10, window.Height * 1 / 20);
             animalLabel.Location = new Point(window.Width * 650 / 1000, window.Height * 5 / 40);
+            #endregion
 
+            #region typeLabel
             appointmentTypeLabel = new Label();
             appointmentTypeLabel.Text = "Choisissez le type du rendez-vous";
             appointmentTypeLabel.TextAlign = ContentAlignment.MiddleLeft;
@@ -93,7 +105,9 @@ namespace Mauxnimale_CE2.ui
             appointmentTypeLabel.ForeColor = UIColor.DARKBLUE;
             appointmentTypeLabel.Size = new Size(window.Width * 3 / 10, window.Height * 1 / 20);
             appointmentTypeLabel.Location = new Point(window.Width * 350 / 1000, window.Height * 10 / 40);
+            #endregion
 
+            #region timeLabel
             timeLabel = new Label();
             timeLabel.Text = "Choisissez l'heure du rendez-vous";
             timeLabel.TextAlign = ContentAlignment.MiddleLeft;
@@ -101,7 +115,9 @@ namespace Mauxnimale_CE2.ui
             timeLabel.ForeColor = UIColor.DARKBLUE;
             timeLabel.Size = new Size(window.Width * 3 / 10, window.Height * 1 / 20);
             timeLabel.Location = new Point(window.Width * 650 / 1000, window.Height * 10/ 40);
+            #endregion
 
+            #region descriptionLabel
             descriptionLabel = new Label();
             descriptionLabel.Text = "Description :";
             descriptionLabel.TextAlign = ContentAlignment.MiddleLeft;
@@ -109,7 +125,7 @@ namespace Mauxnimale_CE2.ui
             descriptionLabel.ForeColor = UIColor.DARKBLUE;
             descriptionLabel.Size = new Size(window.Width * 3 / 10, window.Height * 1 / 10);
             descriptionLabel.Location = new Point(window.Width * 350 / 1000, window.Height * 7 / 20);
-
+            #endregion
 
             window.Controls.Add(calendarLabel);
             window.Controls.Add(clientLabel);
@@ -121,42 +137,60 @@ namespace Mauxnimale_CE2.ui
 
         public void generateBox()
         {
+            #region clientBox
             clientComboBox = new ComboBox();
             clientComboBox.Size = new Size(window.Width * 20/100, window.Height * 3 / 20);
             clientComboBox.Location = new Point(window.Width * 350 / 1000, window.Height * 8 / 40);
             clientComboBox.TextChanged += new EventHandler(ClientComboBoxSearch);
-            clientComboBox.GotFocus += new EventHandler(ClientComboBoxSearch);
+            clientComboBox.SelectedIndexChanged += new EventHandler(ClientComboBoxSearch);
+            List<CLIENT> clients = ClientController.AllClient();
+            foreach (CLIENT client in clients)
+            {
+                clientComboBox.Items.Add(client);
+            }
+            #endregion
 
+            #region animalBox
             animalComboBox = new ComboBox();
             animalComboBox.Size = new Size(window.Width * 20 / 100, window.Height * 3 / 20);
             animalComboBox.Location = new Point(window.Width * 650 / 1000, window.Height * 8 / 40);
             animalComboBox.TextChanged += new EventHandler(AnimalComboBoxSearch);
             animalComboBox.GotFocus += new EventHandler(AnimalComboBoxSearch);
+            animalComboBox.SelectedIndexChanged += new EventHandler(AnimalComboBoxSearch);
+            #endregion
 
-
+            #region typeBox
             appointmentTypeComboBox = new ComboBox();
             appointmentTypeComboBox.Size = new Size(window.Width * 20 / 100, window.Height * 6 / 20);
             appointmentTypeComboBox.Location = new Point(window.Width * 350 / 1000, window.Height * 13 / 40);
+            appointmentTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            appointmentTypeComboBox.SelectedIndexChanged += new EventHandler(AppointmentTypeComboBoxSelected);
             List<TYPE_RDV> types = AppointmentController.GetAllRDVType();
             foreach (TYPE_RDV type in types)
             {
                 appointmentTypeComboBox.Items.Add(type);
             }
+            #endregion
 
+            #region timeBox
             timeComboBox = new ComboBox();
             timeComboBox.Size = new Size(window.Width * 20 / 100, window.Height * 6 / 20);
             timeComboBox.Location = new Point(window.Width * 650 / 1000, window.Height * 13 / 40);
+            #endregion
 
+            #region descriptionBox
             descriptionTexBox = new RichTextBox();
             descriptionTexBox.Size = new Size(window.Width * 60 / 100, window.Height * 20 / 100);
             descriptionTexBox.Location = new Point(window.Width * 350 / 1000, window.Height * 18 / 40);
+            #endregion
 
+            #region calendar
             calendar = new MonthCalendar();
             calendar.Location = new Point(window.Width * 25 / 1000, window.Height * 2 / 10);
             calendar.Size = new Size(window.Width * 20 / 100, window.Height * 45 / 100);
             calendar.DateSelected += new DateRangeEventHandler(dateSelection);
-            
-            
+            #endregion
+
             window.Controls.Add(calendar);
             window.Controls.Add(clientComboBox);
             window.Controls.Add(appointmentTypeComboBox);
@@ -233,6 +267,9 @@ namespace Mauxnimale_CE2.ui
         private void ClientComboBoxSearch(object sender, EventArgs e)
         {
             selectedClient = (CLIENT)clientComboBox.SelectedItem;
+            selectedAnimal = null;
+            animalComboBox.Items.Clear();
+            animalComboBox.Text = "";
             if(selectedClient == null)
             {
                 clientComboBox.Items.Clear();
@@ -248,7 +285,7 @@ namespace Mauxnimale_CE2.ui
             }
             else
             {
-                clientComboBox.Select(clientComboBox.Text.Length,0);
+                
                 List<CLIENT> clients = ClientController.ResearhByName(clientComboBox.Text);
                 Console.WriteLine(clientComboBox.Text); 
                 foreach (CLIENT client in clients)
@@ -256,6 +293,7 @@ namespace Mauxnimale_CE2.ui
                     clientComboBox.Items.Add(client);
                 }
             }
+            clientComboBox.Select(clientComboBox.Text.Length, 0);
         }
 
         public void backClick(object sender, EventArgs e)
@@ -263,9 +301,20 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Clear();
             window.switchInterface(new InterfaceAppointmentManagment(window, user));
         }
+
+        private void AppointmentTypeComboBoxSelected(object sender, EventArgs e)
+        {
+            selectedType = (TYPE_RDV)appointmentTypeComboBox.SelectedItem;
+        }
+
         private void dateSelection(object sender, DateRangeEventArgs e)
         {
-            throw new NotImplementedException();
+            selectedDate = new DateTime(e.Start.Year, e.Start.Month, e.Start.Day);
+
+            if (DayController.getDay(selectedDate) == null)
+            {
+                DayController.addDay(selectedDate);
+            }
         }
 
         public void modifConsultClick(object sender, EventArgs e)
@@ -290,14 +339,15 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Clear();
             //form.changerClasse(new Interface...());
         }
-
-        #endregion
-
+        
         public override void updateSize()
         {
             window.Controls.Clear();
             this.load();
         }
+
+        #endregion
+
     }
 }
 

@@ -74,7 +74,7 @@ namespace Mauxnimale_CE2.api.controllers
         {
 
             var animaux = from a in DbContext.get().ANIMAL
-                         where a.CLIENT == c
+                         where a.IDCLIENT == c.IDCLIENT
                          where a.NOM.StartsWith(name)
                          select a;
             return animaux.ToList();

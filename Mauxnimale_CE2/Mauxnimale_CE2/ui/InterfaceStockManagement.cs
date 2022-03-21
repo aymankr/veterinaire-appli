@@ -20,7 +20,7 @@ namespace Mauxnimale_CE2.ui
         ComboBox type;
         PRODUIT choisi;
         UIRoundButton back;
-        UIButton newProduct, changeProduct;
+        UIButton newProduct, changeProduct, deleteProduct;
         List<TYPE_PRODUIT> productType = new List<TYPE_PRODUIT>();
         ListBox products;
         List<PRODUIT> productsList = new List<PRODUIT>();
@@ -75,6 +75,11 @@ namespace Mauxnimale_CE2.ui
             newProduct.Click += new EventHandler(newProductClick);
             window.Controls.Add(newProduct);
 
+            deleteProduct = new UIButton(UIColor.ORANGE, "Supprimer Produit", Math.Min(window.Width / 4, window.Height / 3));
+            deleteProduct.Location = new System.Drawing.Point(window.Width * 3 / 8, window.Height * 65 / 100);
+            deleteProduct.Click += new EventHandler(deleteProductClick);
+            window.Controls.Add(deleteProduct);
+
             changeProduct = new UIButton(UIColor.ORANGE, "Changer Produit", Math.Min(window.Width / 4, window.Height / 3));
             changeProduct.Location = new System.Drawing.Point(window.Width / 8, window.Height * 65 / 100);
             changeProduct.Click += new EventHandler(changeProductClick);
@@ -96,6 +101,14 @@ namespace Mauxnimale_CE2.ui
         {
             window.Controls.Clear();
             //window.switchInterface(new InterfaceHome(window, user));
+        }
+
+        public void deleteProductClick(object sender, EventArgs e)
+        {
+            //if(choisi != null)
+            //{
+                //deleteProduct
+            //}
         }
 
         public void changeProductClick(object sender, EventArgs e)

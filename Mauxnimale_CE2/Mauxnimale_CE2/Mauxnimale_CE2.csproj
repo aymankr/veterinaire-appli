@@ -168,6 +168,7 @@
     </Compile>
     <Compile Include="ui\InterfaceChangeID.cs" />
     <Compile Include="ui\InterfaceChangePassword.cs" />
+    <Compile Include="ui\InterfaceChangeStock.cs" />
     <Compile Include="ui\InterfaceFirstConnection.cs" />
     <Compile Include="ui\components\MinimalHeader.cs">
       <SubType>Component</SubType>

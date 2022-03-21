@@ -58,5 +58,12 @@ namespace Mauxnimale_CE2.api
 
             return rdv.ANIMAL.ToList();
         }
+
+        public static List<TYPE_RDV> GetAllRDVType()
+        {
+            var type = from t in DbContext.get().TYPE_RDV
+                       select t;
+            return type.ToList();
+        }
     }
 }

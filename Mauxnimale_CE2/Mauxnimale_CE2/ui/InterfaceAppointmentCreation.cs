@@ -32,12 +32,15 @@ namespace Mauxnimale_CE2.ui
         UIRoundButton back;
         MonthCalendar calendar;
 
+        CLIENT selectedClient;
+        ANIMAL selectedAnimal;
+
 
 
         Label calendarLabel, clientLabel, animalLabel, appointmentTypeLabel, timeLabel, descriptionLabel;
 
-        ComboBox clientComboBox, animalComboBox, appointmentTypeComboBox;
-        TextBox descriptionTexBox;
+        ComboBox clientComboBox, animalComboBox, appointmentTypeComboBox, timeComboBox;
+        RichTextBox descriptionTexBox;
 
 
         public InterfaceAppointmentCreation(MainWindow window, SALARIE s)
@@ -54,7 +57,7 @@ namespace Mauxnimale_CE2.ui
             footer.load();
             generateButton();
             generateLabels();
-            generateListBox();
+            generateBox();
         }
 
         public void generateLabels()
@@ -105,7 +108,7 @@ namespace Mauxnimale_CE2.ui
             descriptionLabel.Font = new Font("Poppins", window.Height * 2 / 100);
             descriptionLabel.ForeColor = UIColor.DARKBLUE;
             descriptionLabel.Size = new Size(window.Width * 3 / 10, window.Height * 1 / 10);
-            descriptionLabel.Location = new Point(window.Width * 350 / 1000, window.Height *7 / 20);
+            descriptionLabel.Location = new Point(window.Width * 350 / 1000, window.Height * 7 / 20);
 
 
             window.Controls.Add(calendarLabel);
@@ -116,21 +119,37 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(descriptionLabel);
         }
 
-        public void generateListBox()
+        public void generateBox()
         {
             clientComboBox = new ComboBox();
             clientComboBox.Size = new Size(window.Width * 20/100, window.Height * 3 / 20);
             clientComboBox.Location = new Point(window.Width * 350 / 1000, window.Height * 8 / 40);
+            clientComboBox.TextChanged += new EventHandler(ClientComboBoxSearch);
+            clientComboBox.GotFocus += new EventHandler(ClientComboBoxSearch);
 
             animalComboBox = new ComboBox();
             animalComboBox.Size = new Size(window.Width * 20 / 100, window.Height * 3 / 20);
             animalComboBox.Location = new Point(window.Width * 650 / 1000, window.Height * 8 / 40);
+            animalComboBox.TextChanged += new EventHandler(AnimalComboBoxSearch);
+            animalComboBox.GotFocus += new EventHandler(AnimalComboBoxSearch);
 
 
             appointmentTypeComboBox = new ComboBox();
             appointmentTypeComboBox.Size = new Size(window.Width * 20 / 100, window.Height * 6 / 20);
             appointmentTypeComboBox.Location = new Point(window.Width * 350 / 1000, window.Height * 13 / 40);
+            List<TYPE_RDV> types = AppointmentController.GetAllRDVType();
+            foreach (TYPE_RDV type in types)
+            {
+                appointmentTypeComboBox.Items.Add(type);
+            }
 
+            timeComboBox = new ComboBox();
+            timeComboBox.Size = new Size(window.Width * 20 / 100, window.Height * 6 / 20);
+            timeComboBox.Location = new Point(window.Width * 650 / 1000, window.Height * 13 / 40);
+
+            descriptionTexBox = new RichTextBox();
+            descriptionTexBox.Size = new Size(window.Width * 60 / 100, window.Height * 20 / 100);
+            descriptionTexBox.Location = new Point(window.Width * 350 / 1000, window.Height * 18 / 40);
 
             calendar = new MonthCalendar();
             calendar.Location = new Point(window.Width * 25 / 1000, window.Height * 2 / 10);
@@ -142,6 +161,8 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(clientComboBox);
             window.Controls.Add(appointmentTypeComboBox);
             window.Controls.Add(animalComboBox);
+            window.Controls.Add(timeComboBox);
+            window.Controls.Add(descriptionTexBox);
         }
 
 
@@ -177,7 +198,65 @@ namespace Mauxnimale_CE2.ui
 
 
         #region eventHandler
-       
+        private void AnimalComboBoxSearch(object sender, EventArgs e)
+        {
+
+            if (selectedClient != null)
+            {
+                selectedAnimal = (ANIMAL)animalComboBox.SelectedItem;
+                if (selectedAnimal == null)
+                {
+                    animalComboBox.Items.Clear();
+                }
+
+                if (animalComboBox.Text.Length == 0)
+                {
+                    List<ANIMAL> animaux = ClientController.ListOfAnimal(selectedClient);
+                    foreach (ANIMAL animal in animaux)
+                    {
+                        animalComboBox.Items.Add(animal);
+                    }
+                }
+                else
+                {
+                    animalComboBox.Select(animalComboBox.Text.Length, 0);
+                    List<ANIMAL> animaux = ClientController.ListAnimalByName(selectedClient, animalComboBox.Text);
+                    Console.WriteLine(animalComboBox.Text);
+                    foreach (ANIMAL animal in animaux)
+                    {
+                        animalComboBox.Items.Add(animal);
+                    }
+                }
+            }
+        }
+
+        private void ClientComboBoxSearch(object sender, EventArgs e)
+        {
+            selectedClient = (CLIENT)clientComboBox.SelectedItem;
+            if(selectedClient == null)
+            {
+                clientComboBox.Items.Clear();
+            }
+            
+            if (clientComboBox.Text.Length == 0)
+            {
+                List<CLIENT> clients = ClientController.AllClient();
+                foreach(CLIENT client in clients)
+                {
+                    clientComboBox.Items.Add(client);
+                }
+            }
+            else
+            {
+                clientComboBox.Select(clientComboBox.Text.Length,0);
+                List<CLIENT> clients = ClientController.ResearhByName(clientComboBox.Text);
+                Console.WriteLine(clientComboBox.Text); 
+                foreach (CLIENT client in clients)
+                {
+                    clientComboBox.Items.Add(client);
+                }
+            }
+        }
 
         public void backClick(object sender, EventArgs e)
         {

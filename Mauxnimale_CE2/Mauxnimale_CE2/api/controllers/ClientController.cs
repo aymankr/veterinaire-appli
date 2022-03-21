@@ -69,5 +69,15 @@ namespace Mauxnimale_CE2.api.controllers
         {
             return c.ANIMAL.ToList();
         }
+
+        public static List<ANIMAL> ListAnimalByName(CLIENT c, string name)
+        {
+
+            var animaux = from a in DbContext.get().ANIMAL
+                         where a.CLIENT == c
+                         where a.NOM.StartsWith(name)
+                         select a;
+            return animaux.ToList();
+        }
     }
 }

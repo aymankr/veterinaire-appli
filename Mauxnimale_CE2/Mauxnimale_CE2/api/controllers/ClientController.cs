@@ -12,8 +12,8 @@ namespace Mauxnimale_CE2.api.controllers
        public static void AddClient(string name, string surname, string phoneNumber)
         {
             CLIENT c = new CLIENT();
-            c.NOMCLIENT = surname;
-            c.PRENOMCLIENT = name;
+            c.NOMCLIENT = name;
+            c.PRENOMCLIENT = surname;
             c.TELCLIENT = phoneNumber;
             DbContext.get().CLIENT.Add(c);
             DbContext.get().SaveChanges();
@@ -22,9 +22,9 @@ namespace Mauxnimale_CE2.api.controllers
         public static CLIENT GetClient(string name, string surname)
         {
             var client = from c in DbContext.get().CLIENT
-                              where c.NOMCLIENT == surname
-                              where c.PRENOMCLIENT == name
-                              select c;
+                              where c.NOMCLIENT == name
+                              where c.PRENOMCLIENT == surname
+                         select c;
             return client.First();
         }
 
@@ -54,6 +54,14 @@ namespace Mauxnimale_CE2.api.controllers
             DbContext.get().CLIENT.Remove(c);
             DbContext.get().SaveChanges();
         }
+
+        public static void UpdateClient(CLIENT c, string newName, string newSurname, string newPhoneNumber) { 
+            c.NOMCLIENT = newName;
+            c.PRENOMCLIENT = newSurname;
+            c.TELCLIENT = newPhoneNumber;
+            DbContext.get().SaveChanges();
+        }
+
 
         public static void AddAnimal(CLIENT c, ANIMAL a)
         {

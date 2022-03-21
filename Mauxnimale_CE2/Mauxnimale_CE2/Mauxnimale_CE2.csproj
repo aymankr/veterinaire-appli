@@ -61,7 +61,11 @@
     <Compile Include="api\controllers\AppointmentController.cs" />
     <Compile Include="api\controllers\CareController.cs" />
     <Compile Include="api\controllers\ClientController.cs" />
+    <Compile Include="api\controllers\InvoiceController.cs" />
+    <Compile Include="api\controllers\PrescriptionController.cs" />
+    <Compile Include="api\controllers\ProductController.cs" />
     <Compile Include="api\controllers\RegistrationController.cs" />
+    <Compile Include="api\controllers\SaleController.cs" />
     <Compile Include="api\controllers\UserController.cs" />
     <Compile Include="api\controllers\utils\InputVerification.cs" />
     <Compile Include="api\controllers\utils\PasswordUtils.cs" />
@@ -166,6 +170,7 @@
     <Compile Include="ui\InterfaceAppointmentManagment.cs" />
     <Compile Include="ui\InterfaceChangeID.cs" />
     <Compile Include="ui\InterfaceChangePassword.cs" />
+    <Compile Include="ui\InterfaceChangeStock.cs" />
     <Compile Include="ui\InterfaceFirstConnection.cs" />
     <Compile Include="ui\components\MinimalHeader.cs">
       <SubType>Component</SubType>
@@ -179,6 +184,7 @@
     <Compile Include="ui\InterfaceInscription.cs" />
     <Compile Include="ui\InterfaceLegalMentions.cs" />
     <Compile Include="ui\InterfaceStatsPage.cs" />
+    <Compile Include="ui\InterfaceStockManagement.cs" />
     <Compile Include="ui\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>

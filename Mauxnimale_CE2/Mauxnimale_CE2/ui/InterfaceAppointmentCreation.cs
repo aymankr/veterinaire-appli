@@ -31,14 +31,15 @@ namespace Mauxnimale_CE2.ui
         UIButton modifConsult, newClient, newAnimal, createConsult;
         UIRoundButton back;
         MonthCalendar calendar;
+        DateTime selectedDate;
 
+        TYPE_RDV selectedType = null;
         CLIENT selectedClient;
         ANIMAL selectedAnimal;
-        DateTime selectedDate;
-        TYPE_RDV selectedType = null;
+        JOURNEE selectedJOURNEE;
+        String description = null;
         TimeSpan RDVStart;
         TimeSpan RDVEnd;
-        String Description;
 
 
 
@@ -235,16 +236,18 @@ namespace Mauxnimale_CE2.ui
             back.Click += new EventHandler(backClick);
 
 
-            newClient.Click += new EventHandler(createOrdonanceClick);
+            newClient.Click += new EventHandler(NewClientClick);
             newAnimal.Click += new EventHandler(NewAnimalClick);
             createConsult.Click += new EventHandler(createConsultClick);
         }
 
 
         #region eventHandler
+
+        #region Selection
         private void DescriptionTexBoxChanged(object sender, EventArgs e)
         {
-            Description = descriptionTexBox.Text;
+            description = descriptionTexBox.Text;
         }
 
         private void EndTimePickerChanged(object sender, EventArgs e)
@@ -329,11 +332,6 @@ namespace Mauxnimale_CE2.ui
             clientComboBox.Select(clientComboBox.Text.Length, 0);
         }
 
-        public void backClick(object sender, EventArgs e)
-        {
-            window.Controls.Clear();
-            window.switchInterface(new InterfaceAppointmentManagment(window, user));
-        }
 
         private void AppointmentTypeComboBoxSelected(object sender, EventArgs e)
         {
@@ -350,7 +348,17 @@ namespace Mauxnimale_CE2.ui
             if (DayController.getDay(selectedDate) == null)
             {
                 DayController.addDay(selectedDate);
+                selectedJOURNEE = DayController.getDay(selectedDate);
             }
+
+            selectedJOURNEE = DayController.getDay(selectedDate);
+        }
+
+        #endregion
+        public void backClick(object sender, EventArgs e)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceAppointmentManagment(window, user));
         }
 
         public void modifConsultClick(object sender, EventArgs e)
@@ -359,7 +367,7 @@ namespace Mauxnimale_CE2.ui
             //form.changerClasse(new Interface...());
         }
 
-        public void createOrdonanceClick(object sender, EventArgs e)
+        public void NewClientClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
             //form.changerClasse(new Interface...());
@@ -372,8 +380,21 @@ namespace Mauxnimale_CE2.ui
 
         public void createConsultClick(object sender, EventArgs e)
         {
+            
+            AppointmentController.addAppointment(selectedType, selectedClient, selectedAnimal, selectedJOURNEE, description, RDVStart, RDVEnd);
+            
+            
+            Console.WriteLine(selectedType);
+            Console.WriteLine(selectedClient);
+            Console.WriteLine(selectedAnimal);
+            Console.WriteLine(selectedJOURNEE);
+            Console.WriteLine(description);
+            Console.WriteLine(RDVStart);
+            Console.WriteLine(RDVEnd);
+            MessageBox.Show("1 ou plusieurs arguments nécessaires à la création d'un nouveau Rendez-Vous sont manquants");
+            
             window.Controls.Clear();
-            //form.changerClasse(new Interface...());
+            window.switchInterface(new InterfaceAppointmentManagment(window, user));
         }
         
         public override void updateSize()

@@ -13,15 +13,15 @@ namespace Mauxnimale_CE2.api
         /**
          * Method to add an appointment to the database and to set attributes
          */
-        public static void addAppointment(TYPE_RDV appointmentType, CLIENT costumer, ANIMAL animal, JOURNEE day, string reason, string startHour, string endHour)
+        public static void addAppointment(TYPE_RDV appointmentType, CLIENT costumer, ANIMAL animal, JOURNEE day, string reason, TimeSpan startHour, TimeSpan endHour)
         {
             RENDEZ_VOUS newAppointment = new RENDEZ_VOUS();
             newAppointment.TYPE_RDV = appointmentType;
             newAppointment.CLIENT = costumer;
             newAppointment.ANIMAL.Add(animal); // a costumer can have many animals
             newAppointment.JOURNEE = day;
-            newAppointment.HEUREDEBUT = TimeSpan.Parse(startHour);
-            newAppointment.HEUREFIN = TimeSpan.Parse(endHour);
+            newAppointment.HEUREDEBUT = startHour;
+            newAppointment.HEUREFIN = endHour;
             newAppointment.RAISON = reason;
             DbContext.get().RENDEZ_VOUS.Add(newAppointment);
             DbContext.get().SaveChanges();
@@ -64,6 +64,19 @@ namespace Mauxnimale_CE2.api
             var type = from t in DbContext.get().TYPE_RDV
                        select t;
             return type.ToList();
+        }
+
+        public static bool CorrectArguments(TYPE_RDV appointmentType, CLIENT costumer, ANIMAL animal, JOURNEE day, string reason, TimeSpan startHour, TimeSpan endHour)
+        {
+            if(appointmentType==null || costumer == null || animal == null || day == null || startHour == null ||endHour == null)
+            {
+                return false;
+            }
+            if (startHour > endHour)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

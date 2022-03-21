@@ -55,5 +55,13 @@ namespace Mauxnimale_CE2.api.controllers
             int result = DateTime.Compare((DateTime)p.DATEPEREMPTION, DateTime.Now);
             return result < 0;
         }
+
+        public static void removeProduct(PRODUIT p)
+        {
+            p.PRODUITLIES.Clear();
+            p.PRODUITVENDU.Clear();
+            DbContext.get().PRODUIT.Remove(p);
+            DbContext.get().SaveChanges();
+        }
     }
 }

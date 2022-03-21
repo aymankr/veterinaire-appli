@@ -184,6 +184,7 @@
     <Compile Include="ui\InterfaceLegalMentions.cs" />
     <Compile Include="ui\InterfaceStatsPage.cs" />
     <Compile Include="ui\InterfaceStockManagement.cs" />
+    <Compile Include="ui\InterfaceStockNewProduct.cs" />
     <Compile Include="ui\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>

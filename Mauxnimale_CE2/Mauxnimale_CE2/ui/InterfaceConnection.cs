@@ -4,46 +4,44 @@ using System.Windows.Forms;
 using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
+using Mauxnimale_CE2.api.controllers;
 
 namespace Mauxnimale_CE2.ui
 {
     class InterfaceConnection : AInterface
     {
-        UIButton button;
 
-        Footer footer;
+        UIButton connectionButton;
+
         Header header;
-        
-        Button connection;
+
         TextBox login;
         TextBox password;
 
         MainWindow window;
         //Lister ici les différents éléments qui seront utilisés dans l'interface
 
-        public InterfaceConnection(MainWindow form)
+        public InterfaceConnection(MainWindow form,SALARIE user)
         {
+            this.user = user;
             this.window = form;
-            footer = new Footer(form);
             header = new Header(form);
         }
 
         public override void load()
         {
             header.load("Connection");
-            footer.load();
             generate_Button();
             generate_TextBox();
-            Console.WriteLine(this.window.Height +": Y\n"+this.window.Width+": X");   
         }
 
         public void generate_Button()
         {
-            button = new UIButton(UIColor.ORANGE, "Connection", 190);
-            button.Font = UIFont.BigButtonFont;
-            button.Location = new Point((this.window.Width / 2) - (button.Width / 2) - 25, 2 * (this.window.Height / 3));
-            window.Controls.Add(button);
-            button.Click += new EventHandler(connection_click);
+            connectionButton = new UIButton(UIColor.ORANGE, "Connection", 190);
+            connectionButton.Font = UIFont.BigButtonFont;
+            connectionButton.Location = new Point((this.window.Width / 2) - (connectionButton.Width / 2) - 25, 2 * (this.window.Height / 3));
+            window.Controls.Add(connectionButton);
+            connectionButton.Click += new EventHandler(connection_click);
         }
 
 
@@ -69,6 +67,7 @@ namespace Mauxnimale_CE2.ui
             password.GotFocus += new EventHandler(passwordEnter);
             password.Location = new Point(window.Width / 4, window.Height * 45 / 100);
             password.PasswordChar = (char)0;
+            password.KeyPress += new KeyPressEventHandler(passwordKeyPressed);
             setBox(password, "Mot de passe");
 
         }
@@ -104,15 +103,20 @@ namespace Mauxnimale_CE2.ui
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
-                if (login.Text != null && password.Text != null && ConnectionController.getUser(login.Text, password.Text) != null)
+                if (login.Text != null && password.Text != null)
                 {
-                    form.Controls.Clear();
-                    form.switchInterface(new InterfaceHome(form, ConnectionController.getUser(login.Text, password.Text)));
+                    SALARIE user = UserController.getConnection(login.Text, password.Text);
+                    if (user != null)
+                    {
+                        window.Controls.Clear();
+                        if (!user.PREMIERECONNEXION)
+                            window.switchInterface(new InterfaceFirstConnection(window, user));
+                        else
+                            window.switchInterface(new InterfaceHome(window, user));
+                        return;
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("identifiant ou mot de passe incorrecte");
-                }
+                MessageBox.Show("Identifiant ou mot de passe incorrecte", "Entrées non valides", MessageBoxButtons.OK);
             }
         }
 
@@ -147,7 +151,8 @@ namespace Mauxnimale_CE2.ui
 
         public override void updateSize()
         {
-            //throw new NotImplementedException();
+            window.Controls.Clear();
+            this.load();
         }
     }
 }

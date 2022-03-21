@@ -10,9 +10,16 @@ namespace Mauxnimale_CE2.api
     public static class AppointmentController
     {
 
-        /**
-         * Method to add an appointment to the database and to set attributes
-         */
+        /// <summary>
+        /// Ajouter un rendez-vous avec ses informations
+        /// </summary>
+        /// <param name="appointmentType"></param>
+        /// <param name="costumer"></param>
+        /// <param name="animal"></param>
+        /// <param name="day"></param>
+        /// <param name="reason"></param>
+        /// <param name="startHour"></param>
+        /// <param name="endHour"></param>
         public static void addAppointment(TYPE_RDV appointmentType, CLIENT costumer, ANIMAL animal, JOURNEE day, string reason, string startHour, string endHour)
         {
             RENDEZ_VOUS newAppointment = new RENDEZ_VOUS();
@@ -27,9 +34,10 @@ namespace Mauxnimale_CE2.api
             DbContext.get().SaveChanges();
         }
 
-        /**
-         * Delete an appointment from the database
-         */
+        /// <summary>
+        /// Supprimer une date de la bd
+        /// </summary>
+        /// <param name="currentAppointment"></param>
         public static void deleteAppointment(RENDEZ_VOUS currentAppointment)
         {
             // current appointment is the selected item
@@ -38,15 +46,32 @@ namespace Mauxnimale_CE2.api
             DbContext.get().SaveChanges();
         }
 
-        /**
-         * Get appointments of this date
-         */
+       /// <summary>
+       /// Récupérer un rendez vous selon la date
+       /// </summary>
+       /// <param name="date"></param>
+       /// <returns></returns>
         public static ICollection<RENDEZ_VOUS> getAppointmentsFromDate(DateTime date)
         {
-            JOURNEE day = (JOURNEE)(from d in DbContext.get().JOURNEE 
-                                    where d.DATE.Equals(date) 
-                                    select d);
-            return day.RENDEZ_VOUS;
+            JOURNEE day = (from d in DbContext.get().JOURNEE
+                       where DateTime.Equals(d.DATE, date)
+                       select d).FirstOrDefault();
+            if (day != null)
+            {
+                return day.RENDEZ_VOUS;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Récupérere les animaux inclus dans le rendez-vous
+        /// </summary>
+        /// <param name="rdv"></param>
+        /// <returns></returns>
+        public static List<ANIMAL> getAnimalFromRDV(RENDEZ_VOUS rdv)
+        {
+
+            return rdv.ANIMAL.ToList();
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Mauxnimale_CE2.ui
         {
             this.window = window;
             header = new Header(window);
-            footer = new Footer(window);
+            footer = new Footer(window, s);
             user = s;
 
         }
@@ -81,7 +81,7 @@ namespace Mauxnimale_CE2.ui
             manageConsultation.Location = new System.Drawing.Point(window.Width * 6 / 10, window.Height * 425 / 1000);
             window.Controls.Add(manageConsultation);
 
-            if(!salarie.ASSISTANT){
+            if(!user.ASSISTANT){
                 manageCongé = new UIButton(UIColor.DARKBLUE, "Gestion des congés", window.Width / 4);
                 manageCongé.Location = new System.Drawing.Point(window.Width * 325 / 1000, window.Height * 625 / 1000);
                 window.Controls.Add(manageCongé);
@@ -127,19 +127,19 @@ namespace Mauxnimale_CE2.ui
         public void manageCompteClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceGestionCompte(window, salarie));
+            window.switchInterface(new InterfaceAccountManagement(window, user));
         }
 
         public void manageCongéClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceGestionCongé(window));
+            window.switchInterface(new InterfaceGestionCongé(window, user));
         }
 
         public void manageStockClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            //form.changerClasse(new Interface...());
+            window.switchInterface(new InterfaceStockManagement(window, user));
         }
 
         public void manageMaladieClick(object sender, EventArgs e)
@@ -157,7 +157,7 @@ namespace Mauxnimale_CE2.ui
         public void manageConsultationClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            //form.changerClasse(new Interface...());
+            window.switchInterface(new InterfaceGestionConsultation(window, user));
         }
 
         public void statsClick(object sender, EventArgs e)

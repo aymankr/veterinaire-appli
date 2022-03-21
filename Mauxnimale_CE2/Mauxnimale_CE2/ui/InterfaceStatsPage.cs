@@ -19,7 +19,7 @@ namespace Mauxnimale_CE2.ui
         {
             this.window = forme;
             header = new Header(window);
-            footer = new Footer(window);
+            footer = new Footer(window, s);
             user = s;
         }
 
@@ -40,7 +40,7 @@ namespace Mauxnimale_CE2.ui
             clientPage.Location = new System.Drawing.Point(window.Width / 3, window.Height * 525 / 1000);
             window.Controls.Add(clientPage);
 
-            back = new UIRoundButton(window.Width/20);
+            back = new UIRoundButton(window.Width/20, "<");
             back.Location = new System.Drawing.Point(window.Width * 9 / 10, window.Height / 10);
             window.Controls.Add(back);
 

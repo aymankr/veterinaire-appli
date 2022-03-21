@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.ui.components;
 
 namespace Mauxnimale_CE2.ui
@@ -15,11 +16,12 @@ namespace Mauxnimale_CE2.ui
         UIRoundButton back;
         //Lister ici les différents éléments qui seront utilisés dans l'interface
 
-        public InterfaceLegalMentions(MainWindow forme)
+        public InterfaceLegalMentions(MainWindow forme, SALARIE s)
         {
             this.window = forme;
             header = new Header(window);
-            footer = new Footer(window);
+            footer = new Footer(window, s);
+            user = s;
         }
 
         public void generateLabel()
@@ -44,7 +46,7 @@ namespace Mauxnimale_CE2.ui
         public void generateButton()
         {
 
-            back = new UIRoundButton(window.Width / 20);
+            back = new UIRoundButton(window.Width / 20, "«");
             back.Location = new System.Drawing.Point(window.Width * 9 / 10, window.Height / 10);
             back.Click += new EventHandler(backClick);
             window.Controls.Add(back);

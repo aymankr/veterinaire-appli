@@ -61,11 +61,15 @@
     <Compile Include="api\controllers\AppointmentController.cs" />
     <Compile Include="api\controllers\CareController.cs" />
     <Compile Include="api\controllers\ClientController.cs" />
+    <Compile Include="api\controllers\InvoiceController.cs" />
+    <Compile Include="api\controllers\PrescriptionController.cs" />
+    <Compile Include="api\controllers\ProductController.cs" />
     <Compile Include="api\controllers\RegistrationController.cs" />
+    <Compile Include="api\controllers\SaleController.cs" />
     <Compile Include="api\controllers\UserController.cs" />
     <Compile Include="api\controllers\utils\InputVerification.cs" />
     <Compile Include="api\controllers\utils\PasswordUtils.cs" />
-    <Compile Include="api\controllers\VacationController.cs" />
+    <Compile Include="api\controllers\DayController.cs" />
     <Compile Include="api\DbContext.cs" />
     <Compile Include="api\controllers\AnimalController.cs" />
     <Compile Include="api\entities\ANIMAL.cs">
@@ -163,6 +167,9 @@
     <Compile Include="ui\components\UIButton.Designer.cs">
       <DependentUpon>UIButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="ui\InterfaceChangeID.cs" />
+    <Compile Include="ui\InterfaceChangePassword.cs" />
+    <Compile Include="ui\InterfaceChangeStock.cs" />
     <Compile Include="ui\InterfaceFirstConnection.cs" />
     <Compile Include="ui\components\MinimalHeader.cs">
       <SubType>Component</SubType>
@@ -170,13 +177,15 @@
     <Compile Include="ui\ExempleInterface.cs" />
     <Compile Include="ui\InterfaceAdmin.cs" />
     <Compile Include="ui\InterfaceConnection.cs" />
-    <Compile Include="ui\InterfaceGestionCompte.cs" />
+    <Compile Include="ui\InterfaceAccountManagement.cs" />
+    <Compile Include="ui\InterfaceGestionConsultation.cs" />
     <Compile Include="ui\InterfaceGestionCongé.cs" />
     <Compile Include="ui\InterfaceHome.cs" />
     <Compile Include="ui\InterfaceInscription.cs" />
     <Compile Include="ui\InterfaceLegalMentions.cs" />
     <Compile Include="ui\InterfaceStatsPage.cs" />
     <Compile Include="ui\InterfaceUpdateClient.cs" />
+    <Compile Include="ui\InterfaceStockManagement.cs" />
     <Compile Include="ui\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>

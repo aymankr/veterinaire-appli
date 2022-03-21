@@ -28,14 +28,14 @@ namespace Mauxnimale_CE2.ui
         Header header;
         Footer footer;
 
-        UIButton modifConsult, newClient, deleteConsult, createConsult;
+        UIButton modifConsult, newClient, newAnimal, createConsult;
         UIRoundButton back;
         MonthCalendar calendar;
 
         CLIENT selectedClient;
         ANIMAL selectedAnimal;
         DateTime selectedDate;
-        TYPE_RDV selectedType;
+        TYPE_RDV selectedType = null;
         TimeSpan RDVStart;
         TimeSpan RDVEnd;
         String Description;
@@ -44,7 +44,8 @@ namespace Mauxnimale_CE2.ui
 
         Label calendarLabel, clientLabel, animalLabel, appointmentTypeLabel, timeLabel, descriptionLabel;
 
-        ComboBox clientComboBox, animalComboBox, appointmentTypeComboBox, timeComboBox;
+        ComboBox clientComboBox, animalComboBox, appointmentTypeComboBox;
+        DateTimePicker startTimePicker, endTimePicker;
         RichTextBox descriptionTexBox;
 
 
@@ -173,15 +174,29 @@ namespace Mauxnimale_CE2.ui
             #endregion
 
             #region timeBox
-            timeComboBox = new ComboBox();
-            timeComboBox.Size = new Size(window.Width * 20 / 100, window.Height * 6 / 20);
-            timeComboBox.Location = new Point(window.Width * 650 / 1000, window.Height * 13 / 40);
+
+            startTimePicker = new DateTimePicker();
+            startTimePicker.Size = new Size(window.Width * 10 / 100, window.Height * 6 / 20);
+            startTimePicker.Location = new Point(window.Width * 650 / 1000, window.Height * 13 / 40);
+            startTimePicker.Format = DateTimePickerFormat.Custom;
+            startTimePicker.CustomFormat = "HH:mm";
+            startTimePicker.ShowUpDown = true;
+            startTimePicker.ValueChanged += new EventHandler(StartTimePickerChanged);
+
+            endTimePicker = new DateTimePicker();
+            endTimePicker.Size = new Size(window.Width * 10 / 100, window.Height * 6 / 20);
+            endTimePicker.Location = new Point(window.Width * 800 / 1000, window.Height * 13 / 40);
+            endTimePicker.Format = DateTimePickerFormat.Custom;
+            endTimePicker.CustomFormat = "HH:mm";
+            endTimePicker.ShowUpDown = true;
+            endTimePicker.ValueChanged += new EventHandler(EndTimePickerChanged);
             #endregion
 
             #region descriptionBox
             descriptionTexBox = new RichTextBox();
             descriptionTexBox.Size = new Size(window.Width * 60 / 100, window.Height * 20 / 100);
             descriptionTexBox.Location = new Point(window.Width * 350 / 1000, window.Height * 18 / 40);
+            descriptionTexBox.TextChanged += new EventHandler(DescriptionTexBoxChanged);
             #endregion
 
             #region calendar
@@ -195,24 +210,20 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(clientComboBox);
             window.Controls.Add(appointmentTypeComboBox);
             window.Controls.Add(animalComboBox);
-            window.Controls.Add(timeComboBox);
+            window.Controls.Add(startTimePicker);
+            window.Controls.Add(endTimePicker);
             window.Controls.Add(descriptionTexBox);
         }
 
-
         public void generateButton()
         {
-            modifConsult = new UIButton(UIColor.DARKBLUE, "Modifier Consultation", window.Width * 3 / 20);
-            modifConsult.Location = new Point(window.Width * 5 / 15, window.Height * 14 / 20);
-            window.Controls.Add(modifConsult);
-
-            newClient = new UIButton(UIColor.DARKBLUE, "Créer ordonance", window.Width * 3 / 20);
+            newClient = new UIButton(UIColor.DARKBLUE, "Nouveau Client", window.Width * 3 / 20);
             newClient.Location = new Point(window.Width * 8 / 15, window.Height * 14 / 20);
             window.Controls.Add(newClient);
 
-            deleteConsult = new UIButton(UIColor.DARKBLUE, "Supprimer Consultation", window.Width * 3 / 20);
-            deleteConsult.Location = new Point(window.Width * 11 / 15, window.Height * 14 / 20);
-            window.Controls.Add(deleteConsult);
+            newAnimal = new UIButton(UIColor.DARKBLUE, "Nouvel Animal", window.Width * 3 / 20);
+            newAnimal.Location = new Point(window.Width * 11 / 15, window.Height * 14 / 20);
+            window.Controls.Add(newAnimal);
 
             createConsult = new UIButton(UIColor.DARKBLUE, "Créer Consultation", window.Width * 3 / 20);
             createConsult.Location = new Point(window.Width * 2 / 15, window.Height * 14 / 20);
@@ -224,14 +235,36 @@ namespace Mauxnimale_CE2.ui
             back.Click += new EventHandler(backClick);
 
 
-            modifConsult.Click += new EventHandler(modifConsultClick);
             newClient.Click += new EventHandler(createOrdonanceClick);
-            deleteConsult.Click += new EventHandler(deleteConsultClick);
+            newAnimal.Click += new EventHandler(NewAnimalClick);
             createConsult.Click += new EventHandler(createConsultClick);
         }
 
 
         #region eventHandler
+        private void DescriptionTexBoxChanged(object sender, EventArgs e)
+        {
+            Description = descriptionTexBox.Text;
+        }
+
+        private void EndTimePickerChanged(object sender, EventArgs e)
+        {
+            if(endTimePicker.Value <= startTimePicker.Value)
+            {
+                endTimePicker.Value = startTimePicker.Value;
+            }
+            
+            DateTime tmp = endTimePicker.Value;
+            RDVEnd = new TimeSpan(tmp.Hour, tmp.Minute, 00);
+            
+        }
+
+        private void StartTimePickerChanged(object sender, EventArgs e)
+        {
+            DateTime tmp = endTimePicker.Value;
+            RDVStart = new TimeSpan(tmp.Hour, tmp.Minute, 00);
+        }
+
         private void AnimalComboBoxSearch(object sender, EventArgs e)
         {
 
@@ -309,7 +342,10 @@ namespace Mauxnimale_CE2.ui
 
         private void dateSelection(object sender, DateRangeEventArgs e)
         {
-            selectedDate = new DateTime(e.Start.Year, e.Start.Month, e.Start.Day);
+            if(DateTime.Now <= e.Start)
+            {
+                selectedDate = new DateTime(e.Start.Year, e.Start.Month, e.Start.Day);
+            }
 
             if (DayController.getDay(selectedDate) == null)
             {
@@ -329,7 +365,7 @@ namespace Mauxnimale_CE2.ui
             //form.changerClasse(new Interface...());
         }
 
-        public void deleteConsultClick(object sender, EventArgs e)
+        public void NewAnimalClick(object sender, EventArgs e)
         {
             
         }

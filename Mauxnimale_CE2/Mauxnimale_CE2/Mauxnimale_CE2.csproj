@@ -61,7 +61,11 @@
     <Compile Include="api\controllers\AppointmentController.cs" />
     <Compile Include="api\controllers\CareController.cs" />
     <Compile Include="api\controllers\ClientController.cs" />
+    <Compile Include="api\controllers\InvoiceController.cs" />
+    <Compile Include="api\controllers\PrescriptionController.cs" />
+    <Compile Include="api\controllers\ProductController.cs" />
     <Compile Include="api\controllers\RegistrationController.cs" />
+    <Compile Include="api\controllers\SaleController.cs" />
     <Compile Include="api\controllers\UserController.cs" />
     <Compile Include="api\controllers\utils\InputVerification.cs" />
     <Compile Include="api\controllers\utils\PasswordUtils.cs" />

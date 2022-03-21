@@ -9,6 +9,11 @@ namespace Mauxnimale_CE2.api.controllers
 {
     public static class SaleController
     {
+        /// <summary>
+        /// Ajout de produits vendus à un client
+        /// </summary>
+        /// <param name="productsWithQuantities"></param>
+        /// <param name="customer"></param>
         public static void addSoldProducts(Dictionary<PRODUIT, int> productsWithQuantities, CLIENT customer)
         {
             decimal price = 0;

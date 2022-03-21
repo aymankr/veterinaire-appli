@@ -1,10 +1,13 @@
 ﻿using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.ui.components;
+using Mauxnimale_CE2.ui.components.componentsTools;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Mauxnimale_CE2.ui
 {
@@ -12,10 +15,13 @@ namespace Mauxnimale_CE2.ui
     {
         MainWindow window;
 
+        PRODUIT choosed;
         Header header;
+        UIButton applyQuantity;
+        Label productName;
         Footer footer;
         UIRoundButton back, home;
-        //Lister ici les différents éléments qui seront utilisés dans l'interface
+        NumericUpDown quantity;
 
         public InterfaceChangeStock(MainWindow forme, SALARIE s)
         {
@@ -30,6 +36,8 @@ namespace Mauxnimale_CE2.ui
             header.load("Plannimaux - Changer Produit");
             footer.load();
             generateButton();
+            generateNumericUpDown();
+            generateLabel();
         }
 
         public override void updateSize()
@@ -38,6 +46,18 @@ namespace Mauxnimale_CE2.ui
             this.load();
         }
 
+        private void generateNumericUpDown()
+        {
+
+            quantity = new NumericUpDown();
+            quantity.Size = new System.Drawing.Size(window.Width / 13, window.Height / 10);
+            quantity.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 100);
+            quantity.ForeColor = Color.Black;
+            //quantity.Minimum = -choosed.QUANTITEENSTOCK;
+
+            quantity.Location = new Point(window.Width  * 5 / 13, window.Height / 2);
+            window.Controls.Add(quantity);
+        }
         private void generateButton()
         {
             back = new UIRoundButton(window.Width / 20, "<");
@@ -48,8 +68,29 @@ namespace Mauxnimale_CE2.ui
             home.Location = new System.Drawing.Point(window.Width * 8 / 10, window.Height / 10);
             window.Controls.Add(home);
 
+            applyQuantity = new UIButton(UIColor.ORANGE, "Appliquer modification", Math.Min(window.Width / 3, window.Height / 3));
+            applyQuantity.Location = new System.Drawing.Point(window.Width / 3, window.Height * 65 / 100);
+            applyQuantity.Click += new EventHandler(applyClick);
+            window.Controls.Add(applyQuantity);
+
             home.Click += new EventHandler(homeClick);
             back.Click += new EventHandler(backClick);
+        }
+
+        private void generateLabel()
+        {
+            productName = new Label();
+            productName.Text = "Congé restant";// choosed.NOMPRODUIT;
+            productName.Font = new System.Drawing.Font("Poppins", Math.Min(window.Width * 10 / 100, window.Height * 6 / 100));
+            productName.ForeColor = UIColor.LIGHTBLUE;
+            productName.Size = new System.Drawing.Size(window.Width, window.Height * 1 / 10);
+            productName.Location = new Point(window.Width / 3, window.Height * 3 / 10);
+            window.Controls.Add(productName);
+        }
+
+        public void applyClick(object sender, EventArgs e)
+        {
+            //appliquer la modification au produit
         }
 
         public void homeClick(object sender, EventArgs e)

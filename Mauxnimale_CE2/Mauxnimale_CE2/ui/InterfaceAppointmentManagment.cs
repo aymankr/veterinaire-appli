@@ -127,15 +127,17 @@ namespace Mauxnimale_CE2.ui
             infosConsult.Items.Clear();
 
             selected = (RENDEZ_VOUS)consultOfDay.SelectedItem;
-
-            infosConsult.Items.Add(consultOfDay.SelectedItem);
-            infosConsult.Items.Add(selected.CLIENT);
-            foreach (ANIMAL animal in AppointmentController.getAnimalFromRDV(selected))
+            if(selected != null)
             {
-                infosConsult.Items.Add(animal);
+                infosConsult.Items.Add(selected);
+                infosConsult.Items.Add(selected.CLIENT);
+                foreach (ANIMAL animal in AppointmentController.getAnimalFromRDV(selected))
+                {
+                    infosConsult.Items.Add(animal);
+                }
+                infosConsult.Items.Add(selected.RAISON);
+                infosConsult.Items.Add(selected.TYPE_RDV.ToString());
             }
-            infosConsult.Items.Add(selected.RAISON);
-            infosConsult.Items.Add(selected.TYPE_RDV.ToString());
 
         }
 

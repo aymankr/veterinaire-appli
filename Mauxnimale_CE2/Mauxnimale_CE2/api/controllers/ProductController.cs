@@ -36,6 +36,12 @@ namespace Mauxnimale_CE2.api.controllers
         public static void setProductQuantity(PRODUIT p, int quantity)
         {
             p.QUANTITEENSTOCK += quantity;
+            if (p.TYPE_PRODUIT.NOMTYPE.Equals("Nourriture"))
+            {
+                DateTime date = DateTime.Now; // expire date
+                date = date.AddMonths(3);
+                p.DATEPEREMPTION = date;
+            }
         }
 
         public static ICollection<PRODUIT> getProducts()

@@ -23,9 +23,9 @@ namespace Mauxnimale_CE2.ui
         public InterfaceNewClient(MainWindow window, SALARIE s)
         {
             this.window = window;
-            header = new Header(window);
-            footer = new Footer(window);
             user = s;
+            header = new Header(window);
+            footer = new Footer(window, user);
         }
 
         /// <summary>

@@ -29,9 +29,9 @@ namespace Mauxnimale_CE2.ui
         public InterfaceClient(MainWindow window, SALARIE s)
         {
             this.window = window;
-            header = new Header(window);
-            footer = new Footer(window);
             user = s;
+            header = new Header(window);
+            footer = new Footer(window, user);
         }
 
         public override void load()

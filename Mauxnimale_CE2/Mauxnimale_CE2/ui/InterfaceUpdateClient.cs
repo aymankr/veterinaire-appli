@@ -25,9 +25,9 @@ namespace Mauxnimale_CE2.ui
         public InterfaceUpdateClient(MainWindow window, SALARIE s, CLIENT c)
         {
             this.window = window;
-            header = new Header(window);
-            footer = new Footer(window);
             user = s;
+            header = new Header(window);
+            footer = new Footer(window, user);
             selectedClient = c;
         }
 

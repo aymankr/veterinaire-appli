@@ -36,6 +36,12 @@ namespace Mauxnimale_CE2.api.controllers
         public static void setProductQuantity(PRODUIT p, int quantity)
         {
             p.QUANTITEENSTOCK += quantity;
+            if (p.TYPE_PRODUIT.NOMTYPE.Equals("Nourriture"))
+            {
+                DateTime date = DateTime.Now; // expire date
+                date = date.AddMonths(3);
+                p.DATEPEREMPTION = date;
+            }
         }
 
         public static ICollection<PRODUIT> getProducts()
@@ -54,6 +60,14 @@ namespace Mauxnimale_CE2.api.controllers
         {
             int result = DateTime.Compare((DateTime)p.DATEPEREMPTION, DateTime.Now);
             return result < 0;
+        }
+
+        public static void removeProduct(PRODUIT p)
+        {
+            p.PRODUITLIES.Clear();
+            p.PRODUITVENDU.Clear();
+            DbContext.get().PRODUIT.Remove(p);
+            DbContext.get().SaveChanges();
         }
     }
 }

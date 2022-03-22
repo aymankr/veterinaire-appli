@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2.api.controllers

@@ -168,6 +168,7 @@
       <DependentUpon>UIButton.cs</DependentUpon>
     </Compile>
     <Compile Include="ui\InterfaceAppointmentManagment.cs" />
+    <Compile Include="ui\InterfaceAppointmentModification.cs" />
     <Compile Include="ui\InterfaceChangeID.cs" />
     <Compile Include="ui\InterfaceChangePassword.cs" />
     <Compile Include="ui\InterfaceChangeStock.cs" />

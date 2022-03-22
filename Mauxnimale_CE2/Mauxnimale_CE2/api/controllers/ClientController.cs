@@ -40,6 +40,22 @@ namespace Mauxnimale_CE2.api.controllers
             return client.First();
         }
 
+        public static List<CLIENT> ResearhByName(string name)
+        {
+            var client = from c in DbContext.get().CLIENT
+                         where c.NOMCLIENT.StartsWith(name)
+                         select c;
+            return client.ToList();
+        }
+
+        public static List<CLIENT> ResearhBySurname(string surname)
+        {
+            var client = from c in DbContext.get().CLIENT
+                         where c.PRENOMCLIENT.StartsWith(surname)
+                         select c;
+            return client.ToList();
+        }
+
         /// <summary>
         /// Récupérer tous les clients
         /// </summary>
@@ -87,6 +103,16 @@ namespace Mauxnimale_CE2.api.controllers
         public static List<ANIMAL> ListOfAnimal(CLIENT c)
         {
             return c.ANIMAL.ToList();
+        }
+
+        public static List<ANIMAL> ListAnimalByName(CLIENT c, string name)
+        {
+
+            var animaux = from a in DbContext.get().ANIMAL
+                         where a.IDCLIENT == c.IDCLIENT
+                         where a.NOM.StartsWith(name)
+                         select a;
+            return animaux.ToList();
         }
     }
 }

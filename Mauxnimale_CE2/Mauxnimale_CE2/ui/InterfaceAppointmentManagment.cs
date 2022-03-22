@@ -174,6 +174,7 @@ namespace Mauxnimale_CE2.ui
         {
             infosConsult.Items.Clear();
             consultOfDay.Items.Clear();
+            selected = null;
 
             selectedDate = new DateTime(e.Start.Year, e.Start.Month, e.Start.Day);
 

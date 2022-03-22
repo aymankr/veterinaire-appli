@@ -58,6 +58,7 @@ namespace Mauxnimale_CE2.ui
             footer = new Footer(window, user);
 
         }
+
         public override void load()
         {
             header.load("Mauxnimale - Gestion des Consultations");
@@ -67,6 +68,7 @@ namespace Mauxnimale_CE2.ui
             generateBox();
         }
 
+        #region Generation
         public void generateLabels()
         {
             #region calendarLabel
@@ -247,6 +249,7 @@ namespace Mauxnimale_CE2.ui
             createConsult.Click += new EventHandler(createConsultClick);
         }
 
+        #endregion
 
         #region eventHandler
 
@@ -377,16 +380,12 @@ namespace Mauxnimale_CE2.ui
 
 
         #endregion
+
+        #region Buttons
         public void backClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
             window.switchInterface(new InterfaceAppointmentManagment(window, user));
-        }
-
-        public void modifConsultClick(object sender, EventArgs e)
-        {
-            window.Controls.Clear();
-            //form.changerClasse(new Interface...());
         }
 
         public void NewClientClick(object sender, EventArgs e)
@@ -397,34 +396,28 @@ namespace Mauxnimale_CE2.ui
 
         public void NewAnimalClick(object sender, EventArgs e)
         {
-            
+            window.Controls.Clear();
+            //form.changerClasse(new Interface...());
         }
 
         public void createConsultClick(object sender, EventArgs e)
         {
-            
-            
-            
-            Console.WriteLine(selectedType);
-            Console.WriteLine(selectedClient);
-            Console.WriteLine(selectedAnimal);
-            Console.WriteLine(selectedJOURNEE);
-            Console.WriteLine(description);
-            Console.WriteLine(RDVStart);
-            Console.WriteLine(RDVEnd);
-            
             AppointmentController.addAppointment(selectedType, selectedClient, selectedAnimal, selectedJOURNEE, description, RDVStart, RDVEnd);
             window.Controls.Clear();
             window.switchInterface(new InterfaceAppointmentManagment(window, user));
         }
-        
-        public override void updateSize()
-        {
-            window.Controls.Clear();
-            this.load();
-        }
+        #endregion
+
 
         #endregion
+        public override void updateSize()
+        {
+            if( window.WindowState != FormWindowState.Minimized )
+            {
+                window.Controls.Clear();
+                this.load();
+            }
+        }
 
     }
 }

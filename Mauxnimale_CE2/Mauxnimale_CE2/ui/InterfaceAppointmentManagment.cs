@@ -22,7 +22,7 @@ namespace Mauxnimale_CE2.ui
         UIRoundButton back;
         MonthCalendar calendar;
 
-
+        DateTime selectedDate;
         List<RENDEZ_VOUS> rdvOfDay;
         RENDEZ_VOUS selected;
 
@@ -61,6 +61,8 @@ namespace Mauxnimale_CE2.ui
 
         public void generateListBox()
         {
+
+            #region ConsultOfDayBox
             consultOfDay = new ListBox();
             consultOfDay.Text = "";
             consultOfDay.Font = new Font("Poppins", window.Height * 1 / 100);
@@ -68,8 +70,10 @@ namespace Mauxnimale_CE2.ui
             consultOfDay.BackColor = Color.White;
             consultOfDay.Location = new Point(window.Width * 275 / 1000, window.Height * 2 / 10);
             consultOfDay.Size = new Size(window.Width * 20 / 100, window.Height * 45 / 100);
-            window.Controls.Add(consultOfDay);
             consultOfDay.SelectedIndexChanged += new EventHandler(rdvSelection);
+            #endregion
+
+            #region InfosConsult
 
             infosConsult = new ListBox();
             infosConsult.Text = "";
@@ -78,50 +82,65 @@ namespace Mauxnimale_CE2.ui
             infosConsult.BackColor = Color.White;
             infosConsult.Location = new Point(window.Width * 500 / 1000, window.Height * 2 / 10);
             infosConsult.Size = new Size(window.Width * 40 / 100, window.Height * 45 / 100);
-            window.Controls.Add(infosConsult);
+            #endregion
 
-
-
+            #region calendar
             calendar = new MonthCalendar();
             calendar.Location = new Point(window.Width * 25 / 1000, window.Height * 2 / 10);
             calendar.Size = new Size(window.Width * 20 / 100, window.Height * 45 / 100);
             calendar.DateSelected += new DateRangeEventHandler(dateSelection);
+            selectedDate = DateTime.Now;
+            #endregion
+
+            window.Controls.Add(consultOfDay);
+            window.Controls.Add(infosConsult);
             window.Controls.Add(calendar);
         }
 
 
         public void generateButton()
         {
+            #region Modif Button
             modifConsult = new UIButton(UIColor.DARKBLUE, "Modifier Consultation", window.Width * 3 / 20);
             modifConsult.Location = new Point(window.Width * 5 / 15, window.Height * 14 / 20);
-            window.Controls.Add(modifConsult);
+            modifConsult.Click += new EventHandler(modifConsultClick);
+            #endregion
 
+            #region CreateOrdoButton
             createOrdonance = new UIButton(UIColor.DARKBLUE, "Créer ordonance", window.Width * 3 / 20);
             createOrdonance.Location = new Point(window.Width * 8 / 15, window.Height * 14 / 20);
-            window.Controls.Add(createOrdonance);
+            createOrdonance.Click += new EventHandler(createOrdonanceClick);
+            #endregion
 
+            #region delete Button
             deleteConsult = new UIButton(UIColor.DARKBLUE, "Supprimer Consultation", window.Width * 3 / 20);
             deleteConsult.Location = new Point(window.Width * 11 / 15, window.Height * 14 / 20);
-            window.Controls.Add(deleteConsult);
+            deleteConsult.Click += new EventHandler(deleteConsultClick);
+            #endregion
 
+            #region createButton
             createConsult = new UIButton(UIColor.DARKBLUE, "Créer Consultation", window.Width * 3 / 20);
             createConsult.Location = new Point(window.Width * 2 / 15, window.Height * 14 / 20);
-            window.Controls.Add(createConsult);
+            createConsult.Click += new EventHandler(createConsultClick);
+            #endregion
 
+            #region Back Button
             back = new UIRoundButton(window.Width / 20, "<");
             back.Location = new Point(window.Width * 9 / 10, window.Height / 10);
-            window.Controls.Add(back);
             back.Click += new EventHandler(backClick);
+            #endregion
 
-
-            modifConsult.Click += new EventHandler(modifConsultClick);
-            createOrdonance.Click += new EventHandler(createOrdonanceClick);
-            deleteConsult.Click += new EventHandler(deleteConsultClick);
-            createConsult.Click += new EventHandler(createConsultClick);
+            window.Controls.Add(modifConsult);
+            window.Controls.Add(createOrdonance);
+            window.Controls.Add(deleteConsult);
+            window.Controls.Add(createConsult);
+            window.Controls.Add(back);
         }
 
 
         #region eventHandler
+
+        #region Selection
         private void rdvSelection(object sender, EventArgs e)
         {
             infosConsult.Items.Clear();
@@ -146,7 +165,7 @@ namespace Mauxnimale_CE2.ui
             infosConsult.Items.Clear();
             consultOfDay.Items.Clear();
 
-            DateTime selectedDate = new DateTime(e.Start.Year, e.Start.Month, e.Start.Day);
+            selectedDate = new DateTime(e.Start.Year, e.Start.Month, e.Start.Day);
 
             if (DayController.getDay(selectedDate) == null)
             {
@@ -160,6 +179,7 @@ namespace Mauxnimale_CE2.ui
                 consultOfDay.Items.Add(rdv);
             }
         }
+        #endregion
 
         public void backClick(object sender, EventArgs e)
         {
@@ -203,8 +223,11 @@ namespace Mauxnimale_CE2.ui
 
         public override void updateSize()
         {
-            window.Controls.Clear();
-            this.load();
+            if (window.WindowState != FormWindowState.Minimized)
+            {
+                window.Controls.Clear();
+                this.load();
+            }
         }
     }
 }

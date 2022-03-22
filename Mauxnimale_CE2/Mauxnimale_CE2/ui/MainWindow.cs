@@ -15,7 +15,7 @@ namespace Mauxnimale_CE2
             InitializeComponent();
             Resize += new EventHandler(windowResize);
 
-            interfac = new InterfaceAppointmentCreation(this,null);
+            interfac = new InterfaceConnection(this,null);
             interfac.load();
 
             Refresh();

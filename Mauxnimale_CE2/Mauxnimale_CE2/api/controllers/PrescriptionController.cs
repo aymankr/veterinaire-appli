@@ -9,10 +9,11 @@ namespace Mauxnimale_CE2.api.controllers
 {
     public static class PrescriptionController
     {
-        /**
-         * Add a prescription given an animal and a map of products and quantities
-         * 
-         */
+        /// <summary>
+        /// Créer une ordonnance avec ses informations
+        /// </summary>
+        /// <param name="animal"></param>
+        /// <param name="productsWithQuantities"></param>
         public static void addAPrescription(ANIMAL animal, Dictionary<PRODUIT, int> productsWithQuantities)
         {
             ORDONNANCE prescription = new ORDONNANCE();

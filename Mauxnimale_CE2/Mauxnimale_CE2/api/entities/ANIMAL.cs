@@ -42,7 +42,7 @@ namespace Mauxnimale_CE2.api.entities
 
         public override string ToString()
         {
-            return this.NOM.ToString();
+            return this.NOM.ToString() + " (" + this.RACE.NOMRACE +  ", " + this.RACE.ESPECE.NOMESPECE + ")";
         }
     }
 }

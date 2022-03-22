@@ -9,9 +9,10 @@ namespace Mauxnimale_CE2.api.controllers
 {
     public static class CareController
     {
-        /**
-         * Method to add a care
-         */
+        /// <summary>
+        /// Méthode pour ajouter un soin dans la base de données, avec une raison
+        /// </summary>
+        /// <param name="reason"></param>
         public static void addCare(string reason)
         {
             SOIN newCare = new SOIN();
@@ -20,9 +21,10 @@ namespace Mauxnimale_CE2.api.controllers
             DbContext.get().SaveChanges();
         }
 
-        /**
-         * Delete a care from the database
-         */
+        /// <summary>
+        /// Supprimer un soin de la bd
+        /// </summary>
+        /// <param name="currentCare"></param>
         public static void removeCare(SOIN currentCare)
         {
             currentCare.MALADIE.Clear();

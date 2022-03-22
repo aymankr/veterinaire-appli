@@ -35,7 +35,7 @@ namespace Mauxnimale_CE2.ui
 
         TYPE_RDV selectedType;
         CLIENT selectedClient;
-        HashSet<ANIMAL> selectedAnimal;
+        HashSet<ANIMAL> animalsInRDV;
         JOURNEE selectedJOURNEE;
         String description = "";
         TimeSpan RDVStart;
@@ -43,7 +43,7 @@ namespace Mauxnimale_CE2.ui
 
 
 
-        Label calendarLabel, clientLabel, animalLabel, appointmentTypeLabel, timeLabel, descriptionLabel;
+        Label calendarLabel, clientLabel, animalLabel, appointmentTypeLabel, timeLabel, descriptionLabel, selectedAnimalsLabel;
 
         ComboBox clientComboBox, animalComboBox, appointmentTypeComboBox, selectedAnimals;
         DateTimePicker startTimePicker, endTimePicker;
@@ -61,7 +61,7 @@ namespace Mauxnimale_CE2.ui
 
         public override void load()
         {
-            header.load("Mauxnimale - Gestion des Consultations");
+            header.load("Mauxnimale - Création d'une consultations");
             footer.load();
             generateButton();
             generateLabels();
@@ -111,6 +111,16 @@ namespace Mauxnimale_CE2.ui
             appointmentTypeLabel.Location = new Point(window.Width * 250 / 1000, window.Height * 10 / 40);
             #endregion
 
+            #region Selected Animals Label
+            selectedAnimalsLabel = new Label();
+            selectedAnimalsLabel.Text = "Annimaux au RDV";
+            selectedAnimalsLabel.TextAlign = ContentAlignment.MiddleLeft;
+            selectedAnimalsLabel.Font = new Font("Poppins", window.Height * 2 / 100);
+            selectedAnimalsLabel.ForeColor = UIColor.DARKBLUE;
+            selectedAnimalsLabel.Size = new Size(window.Width * 2 / 10, window.Height * 1 / 20);
+            selectedAnimalsLabel.Location = new Point(window.Width * 750 / 1000, window.Height * 8 / 40);
+            #endregion
+
             #region timeLabel
             timeLabel = new Label();
             timeLabel.Text = "Heure du rendez-vous";
@@ -131,6 +141,7 @@ namespace Mauxnimale_CE2.ui
             descriptionLabel.Location = new Point(window.Width * 350 / 1000, window.Height * 7 / 20);
             #endregion
 
+            window.Controls.Add(selectedAnimalsLabel);
             window.Controls.Add(calendarLabel);
             window.Controls.Add(clientLabel);
             window.Controls.Add(animalLabel);
@@ -159,8 +170,18 @@ namespace Mauxnimale_CE2.ui
             animalComboBox.Size = new Size(window.Width * 20 / 100, window.Height * 3 / 20);
             animalComboBox.Location = new Point(window.Width * 500 / 1000, window.Height * 8 / 40);
             animalComboBox.TextChanged += new EventHandler(AnimalComboBoxSearch);
-            animalComboBox.GotFocus += new EventHandler(AnimalComboBoxSearch);
+            animalComboBox.GotFocus += new EventHandler(AnimalComboBoxFocus);
             animalComboBox.SelectedIndexChanged += new EventHandler(AnimalComboBoxSearch);
+            #endregion
+
+            #region selectedAnimals
+            selectedAnimals= new ComboBox();
+            selectedAnimals.Size = new Size(window.Width * 20 / 100, window.Height * 6 / 20);
+            selectedAnimals.Location = new Point(window.Width * 750 / 1000, window.Height * 10 / 40);
+            selectedAnimals.TextChanged += new EventHandler(SelectedAnimalsSearch);
+            selectedAnimals.GotFocus += new EventHandler(SelectedAnimalsSearch);
+            selectedAnimals.SelectedIndexChanged += new EventHandler(SelectedAnimalsSearch);
+
             #endregion
 
             #region typeBox
@@ -180,7 +201,7 @@ namespace Mauxnimale_CE2.ui
 
             startTimePicker = new DateTimePicker();
             startTimePicker.Size = new Size(window.Width * 10 / 100, window.Height * 6 / 20);
-            startTimePicker.Location = new Point(window.Width * 650 / 1000, window.Height * 13 / 40);
+            startTimePicker.Location = new Point(window.Width * 500 / 1000, window.Height * 13 / 40);
             startTimePicker.Format = DateTimePickerFormat.Custom;
             startTimePicker.CustomFormat = "HH:mm";
             startTimePicker.ShowUpDown = true;
@@ -190,7 +211,7 @@ namespace Mauxnimale_CE2.ui
 
             endTimePicker = new DateTimePicker();
             endTimePicker.Size = new Size(window.Width * 10 / 100, window.Height * 6 / 20);
-            endTimePicker.Location = new Point(window.Width * 800 / 1000, window.Height * 13 / 40);
+            endTimePicker.Location = new Point(window.Width * 625 / 1000, window.Height * 13 / 40);
             endTimePicker.Format = DateTimePickerFormat.Custom;
             endTimePicker.CustomFormat = "HH:mm";
             endTimePicker.ShowUpDown = true;
@@ -217,11 +238,13 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(calendar);
             window.Controls.Add(clientComboBox);
             window.Controls.Add(appointmentTypeComboBox);
+            window.Controls.Add(selectedAnimals);
             window.Controls.Add(animalComboBox);
             window.Controls.Add(startTimePicker);
             window.Controls.Add(endTimePicker);
             window.Controls.Add(descriptionTexBox);
         }
+
 
         public void generateButton()
         {
@@ -279,34 +302,91 @@ namespace Mauxnimale_CE2.ui
             addButtons();
         }
 
+        private void SelectedAnimalsSearch(object sender, EventArgs e)
+        {
+            
+            ANIMAL selectedAnimal = (ANIMAL)selectedAnimals.SelectedItem;
+
+            if (selectedAnimal == null)
+            {
+                selectedAnimals.Items.Clear();
+            }
+            else if (animalsInRDV.Contains(selectedAnimal))
+            {
+                Console.WriteLine("wesh");
+                animalsInRDV.Remove(selectedAnimal);
+            }
+            
+            selectedAnimals.Items.Clear();
+
+
+
+            if (selectedAnimals.Text.Length == 0)
+            {
+                List<ANIMAL> animaux = ClientController.ListOfAnimal(selectedClient);
+                foreach (ANIMAL animal in animalsInRDV)
+                {
+                    selectedAnimals.Items.Add(animal);
+                    Console.WriteLine(animal);
+                }
+
+            }else
+            {
+                selectedAnimals.Select(selectedAnimals.Text.Length, 0);
+                foreach (ANIMAL animal in animalsInRDV)
+                {
+
+                    selectedAnimals.Items.Add(animal);
+                    Console.WriteLine(animal);
+                }
+            }
+            
+        }
+
+        private void AnimalComboBoxFocus(object sender, EventArgs e)
+        {
+            if (animalComboBox.Text.Length == 0)
+            {
+                List<ANIMAL> animaux = ClientController.ListOfAnimal(selectedClient);
+                foreach (ANIMAL animal in animaux)
+                {
+                    animalComboBox.Items.Add(animal);
+                }
+            }
+            else
+            {
+                animalComboBox.Select(animalComboBox.Text.Length, 0);
+                List<ANIMAL> animaux = ClientController.ListAnimalByName(selectedClient, animalComboBox.Text);
+                foreach (ANIMAL animal in animaux)
+                {
+                    animalComboBox.Items.Add(animal);
+                }
+            }
+        }
+        
         private void AnimalComboBoxSearch(object sender, EventArgs e)
         {
 
             if (selectedClient != null)
             {
-                selectedAnimal.Add((ANIMAL)animalComboBox.SelectedItem);
+                ANIMAL selectedAnimal = (ANIMAL)animalComboBox.SelectedItem;
+
                 if (selectedAnimal == null)
                 {
                     animalComboBox.Items.Clear();
                 }
+                else if (!animalsInRDV.Contains(selectedAnimal))
+                {
+                    animalsInRDV.Add(selectedAnimal);
+                }
+                selectedAnimals.Items.Clear();
+                foreach (ANIMAL animal in animalsInRDV)
+                {
+                    Console.WriteLine(animal);
+                    selectedAnimals.Items.Add(animal);
+                }
 
-                if (animalComboBox.Text.Length == 0)
-                {
-                    List<ANIMAL> animaux = ClientController.ListOfAnimal(selectedClient);
-                    foreach (ANIMAL animal in animaux)
-                    {
-                        animalComboBox.Items.Add(animal);
-                    }
-                }
-                else
-                {
-                    animalComboBox.Select(animalComboBox.Text.Length, 0);
-                    List<ANIMAL> animaux = ClientController.ListAnimalByName(selectedClient, animalComboBox.Text);
-                    foreach (ANIMAL animal in animaux)
-                    {
-                        animalComboBox.Items.Add(animal);
-                    }
-                }
+                AnimalComboBoxFocus(sender, e);
             }
             addButtons();
         }
@@ -314,7 +394,7 @@ namespace Mauxnimale_CE2.ui
         private void ClientComboBoxSearch(object sender, EventArgs e)
         {
             selectedClient = (CLIENT)clientComboBox.SelectedItem;
-            selectedAnimal = new HashSet<ANIMAL>();
+            animalsInRDV = new HashSet<ANIMAL>();
             animalComboBox.Items.Clear();
             animalComboBox.Text = "";
             if(selectedClient == null)
@@ -342,7 +422,6 @@ namespace Mauxnimale_CE2.ui
             addButtons();
         }
 
-
         private void AppointmentTypeComboBoxSelected(object sender, EventArgs e)
         {
             selectedType = (TYPE_RDV)appointmentTypeComboBox.SelectedItem;
@@ -367,7 +446,7 @@ namespace Mauxnimale_CE2.ui
 
         private void addButtons()
         {
-            if (selectedType != null && selectedClient != null && selectedAnimal != null && selectedJOURNEE != null && RDVStart != null && RDVEnd != null)
+            if (selectedType != null && selectedClient != null && animalsInRDV != null && selectedJOURNEE != null && RDVStart != null && RDVEnd != null)
             {
                 createConsult.Enabled = true;
             }
@@ -402,7 +481,7 @@ namespace Mauxnimale_CE2.ui
 
         public void createConsultClick(object sender, EventArgs e)
         {
-            AppointmentController.addAppointment(selectedType, selectedClient, selectedAnimal, selectedJOURNEE, description, RDVStart, RDVEnd);
+            AppointmentController.addAppointment(selectedType, selectedClient, animalsInRDV, selectedJOURNEE, description, RDVStart, RDVEnd);
             window.Controls.Clear();
             window.switchInterface(new InterfaceAppointmentManagment(window, user));
         }

@@ -18,7 +18,6 @@ namespace Mauxnimale_CE2.ui
         Header header;
         Footer footer;
         ComboBox type;
-        PRODUIT choisi;
         UIRoundButton back;
         UIButton newProduct, changeProduct, deleteProduct;
         List<TYPE_PRODUIT> productType = new List<TYPE_PRODUIT>();
@@ -100,7 +99,7 @@ namespace Mauxnimale_CE2.ui
         public void newProductClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            //window.switchInterface(new InterfaceHome(window, user));
+            window.switchInterface(new InterfaceStockNewProduct(window, user));
         }
 
         public void deleteProductClick(object sender, EventArgs e)

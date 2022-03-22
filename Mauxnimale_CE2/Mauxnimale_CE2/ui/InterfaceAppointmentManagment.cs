@@ -104,18 +104,21 @@ namespace Mauxnimale_CE2.ui
             modifConsult = new UIButton(UIColor.DARKBLUE, "Modifier Consultation", window.Width * 3 / 20);
             modifConsult.Location = new Point(window.Width * 5 / 15, window.Height * 14 / 20);
             modifConsult.Click += new EventHandler(modifConsultClick);
+            modifConsult.Enabled = false;
             #endregion
 
             #region CreateOrdoButton
             createOrdonance = new UIButton(UIColor.DARKBLUE, "Créer ordonance", window.Width * 3 / 20);
             createOrdonance.Location = new Point(window.Width * 8 / 15, window.Height * 14 / 20);
             createOrdonance.Click += new EventHandler(createOrdonanceClick);
+            createOrdonance.Enabled = false;    
             #endregion
 
             #region delete Button
             deleteConsult = new UIButton(UIColor.DARKBLUE, "Supprimer Consultation", window.Width * 3 / 20);
             deleteConsult.Location = new Point(window.Width * 11 / 15, window.Height * 14 / 20);
             deleteConsult.Click += new EventHandler(deleteConsultClick);
+            deleteConsult.Enabled = false;
             #endregion
 
             #region createButton
@@ -146,17 +149,24 @@ namespace Mauxnimale_CE2.ui
             infosConsult.Items.Clear();
 
             selected = (RENDEZ_VOUS)consultOfDay.SelectedItem;
+
             if(selected != null)
             {
-                infosConsult.Items.Add(selected);
-                infosConsult.Items.Add(selected.CLIENT);
+                infosConsult.Items.Add("HORRAIRE : " + selected);
+                infosConsult.Items.Add("CLIENT : " + selected.CLIENT);
+                infosConsult.Items.Add("TYPE DE RDV : " + selected.TYPE_RDV.ToString());
+                infosConsult.Items.Add("Annimaux :");
+
                 foreach (ANIMAL animal in AppointmentController.getAnimalFromRDV(selected))
                 {
-                    infosConsult.Items.Add(animal);
+                    infosConsult.Items.Add("    " + animal);
                 }
+
+
+                infosConsult.Items.Add("DESCRIPTION : ");
                 infosConsult.Items.Add(selected.RAISON);
-                infosConsult.Items.Add(selected.TYPE_RDV.ToString());
             }
+            EnableButtons();
 
         }
 
@@ -164,6 +174,7 @@ namespace Mauxnimale_CE2.ui
         {
             infosConsult.Items.Clear();
             consultOfDay.Items.Clear();
+            selected = null;
 
             selectedDate = new DateTime(e.Start.Year, e.Start.Month, e.Start.Day);
 
@@ -178,6 +189,23 @@ namespace Mauxnimale_CE2.ui
             {
                 consultOfDay.Items.Add(rdv);
             }
+            EnableButtons();
+        }
+
+        public void EnableButtons()
+        {
+            if(selected != null)
+            {
+                deleteConsult.Enabled = true;
+                modifConsult.Enabled = true;
+                createOrdonance.Enabled = true;
+            }
+            else
+            {
+                createOrdonance.Enabled = false;
+                deleteConsult.Enabled = false;
+                modifConsult.Enabled = false;
+            }
         }
         #endregion
 
@@ -190,7 +218,7 @@ namespace Mauxnimale_CE2.ui
         public void modifConsultClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            //form.changerClasse(new Interface...());
+            window.switchInterface(new InterfaceAppointmentModification(window, user, selected));
         }
 
         public void createOrdonanceClick(object sender, EventArgs e)

@@ -31,12 +31,20 @@ namespace Mauxnimale_CE2.api.controllers
         /// <param name="name"></param>
         /// <param name="surname"></param>
         /// <returns></returns>
-        public static CLIENT GetClient(string name, string surname)
+        public static CLIENT GetClientFromNameAndSurname(string name, string surname)
         {
             var client = from c in DbContext.get().CLIENT
                               where c.NOMCLIENT == surname
                               where c.PRENOMCLIENT == name
                               select c;
+            return client.First();
+        }
+
+        public static CLIENT GetClientFromID(int id)
+        {
+            var client = from c in DbContext.get().CLIENT
+                         where c.IDCLIENT == id
+                         select c;
             return client.First();
         }
 

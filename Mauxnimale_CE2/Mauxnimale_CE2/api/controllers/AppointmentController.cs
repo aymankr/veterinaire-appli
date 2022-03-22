@@ -13,12 +13,15 @@ namespace Mauxnimale_CE2.api
         /**
          * Method to add an appointment to the database and to set attributes
          */
-        public static void addAppointment(TYPE_RDV appointmentType, CLIENT costumer, ANIMAL animal, JOURNEE day, string reason, TimeSpan startHour, TimeSpan endHour)
+        public static void addAppointment(TYPE_RDV appointmentType, CLIENT costumer, HashSet<ANIMAL> animals, JOURNEE day, string reason, TimeSpan startHour, TimeSpan endHour)
         {
             RENDEZ_VOUS newAppointment = new RENDEZ_VOUS();
             newAppointment.TYPE_RDV = appointmentType;
             newAppointment.CLIENT = costumer;
-            newAppointment.ANIMAL.Add(animal); // a costumer can have many animals
+            foreach(ANIMAL animal in animals)
+            {
+                newAppointment.ANIMAL.Add(animal); // a costumer can have many animals
+            }
             newAppointment.JOURNEE = day;
             newAppointment.HEUREDEBUT = startHour;
             newAppointment.HEUREFIN = endHour;
@@ -74,17 +77,19 @@ namespace Mauxnimale_CE2.api
             return type.ToList();
         }
 
-        public static bool CorrectArguments(TYPE_RDV appointmentType, CLIENT costumer, ANIMAL animal, JOURNEE day, string reason, TimeSpan startHour, TimeSpan endHour)
+        public static void UpdateAppointment(RENDEZ_VOUS rdv,TYPE_RDV appointmentType, CLIENT costumer, HashSet<ANIMAL> animals, JOURNEE day, string reason, TimeSpan startHour, TimeSpan endHour)
         {
-            if(appointmentType==null || costumer == null || animal == null || day == null || startHour == null ||endHour == null)
+            rdv.TYPE_RDV = appointmentType;
+            rdv.CLIENT = costumer; 
+            foreach (ANIMAL animal in animals)
             {
-                return false;
+                rdv.ANIMAL.Add(animal); // a costumer can have many animals
             }
-            if (startHour > endHour)
-            {
-                return false;
-            }
-            return true;
+            rdv.JOURNEE = day;
+            rdv.HEUREDEBUT = startHour;
+            rdv.HEUREFIN = endHour;
+            rdv.RAISON = reason;
+            DbContext.get().SaveChanges();
         }
     }
 }

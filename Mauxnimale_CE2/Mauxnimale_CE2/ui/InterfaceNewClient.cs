@@ -18,7 +18,8 @@ namespace Mauxnimale_CE2.ui
         readonly Footer footer;
         // Les différents éléments de la fenêtre
         TextBox nameBox, surnameBox, numberBox;
-        UIButton validate, backButton;
+        UIButton validate;
+        UIRoundButton backButton;
 
         public InterfaceNewClient(MainWindow window, SALARIE s)
         {
@@ -97,9 +98,8 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(validate);
             validate.Click += new EventHandler(Validate);
 
-            backButton = new UIButton(UIColor.ORANGE, "Retour", window.Width * 15 / 100);
-            backButton.Height = window.Height / 30;
-            backButton.Location = new Point(window.Width * 20 / 50, window.Height * 12 / 20);
+            backButton = new UIRoundButton(window.Width / 20, "<");
+            backButton.Location = new Point(window.Width * 9 / 10, window.Height / 10);
             window.Controls.Add(backButton);
             backButton.Click += new EventHandler(BackPage);
         }
@@ -175,7 +175,7 @@ namespace Mauxnimale_CE2.ui
         {
             char[] surnameLetter = surnameBox.Text.ToCharArray();
             string surnameWithCapital = "";
-            string letter = "";
+            string letter;
             bool firstLetter = true;
             foreach (char c in surnameLetter)
             {
@@ -249,8 +249,11 @@ namespace Mauxnimale_CE2.ui
         /// </summary>
         public override void updateSize()
         {
-            window.Controls.Clear();
-            this.load();
+            if (window.WindowState != FormWindowState.Minimized)
+            {
+                window.Controls.Clear();
+                this.load();
+            }
         }
 
 

@@ -38,6 +38,7 @@ namespace Mauxnimale_CE2.ui
         {
             header.load("Mauxnimale - Page de gestion des clients");
             footer.load();
+
             GenerateLists();
             GenerateTextBox();
             GenerateButtons();
@@ -47,8 +48,11 @@ namespace Mauxnimale_CE2.ui
 
         public override void updateSize()
         {
-            window.Controls.Clear();
-            this.load();
+            if (window.WindowState != FormWindowState.Minimized)
+            {
+                window.Controls.Clear();
+                this.load();
+            }
         }
 
         public void GenerateLists()
@@ -78,7 +82,7 @@ namespace Mauxnimale_CE2.ui
             listAnimal.ForeColor = Color.Black;
             listAnimal.BackColor = Color.White;
             listAnimal.Location = new Point(window.Width * 520 / 1000, window.Height * 2 / 14);
-            listAnimal.Size = new Size(window.Width * 40 / 100, window.Height * 50 / 100);
+            listAnimal.Size = new Size(window.Width * 37 / 100, window.Height * 50 / 100);
             window.Controls.Add(listAnimal);
             listAnimal.SelectedIndexChanged += new EventHandler(AnimalSelection);
 
@@ -88,7 +92,7 @@ namespace Mauxnimale_CE2.ui
             listInfoAnimal.ForeColor = Color.Black;
             listInfoAnimal.BackColor = Color.White;
             listInfoAnimal.Location = new Point(window.Width * 520 / 1000, window.Height * 9 / 14);
-            listInfoAnimal.Size = new Size(window.Width * 40 / 100, window.Height * 16 / 100);
+            listInfoAnimal.Size = new Size(window.Width * 37 / 100, window.Height * 16 / 100);
             window.Controls.Add(listInfoAnimal);
         }
 
@@ -112,7 +116,7 @@ namespace Mauxnimale_CE2.ui
             newClient.Click += new EventHandler(OpenNewClientInterface);
             window.Controls.Add(newClient);
 
-            deleteClient = new UIButton(UIColor.ORANGE, "Delete", window.Width / 8);
+            deleteClient = new UIButton(UIColor.ORANGE, "Supprimer", window.Width / 8);
             deleteClient.Height = window.Height / 25;
             deleteClient.Location = new Point(window.Width * 295 / 1000, window.Height * 12 / 15);
             deleteClient.Click += new EventHandler(DeleteClient);
@@ -122,20 +126,20 @@ namespace Mauxnimale_CE2.ui
             updateClient.Location = new Point(window.Width * 157 / 1000, window.Height * 12 / 15);
             updateClient.Click += new EventHandler(OpenUpdateClientInterface);
 
-            newAnimal = new UIButton(UIColor.ORANGE, "Nouveau", window.Width / 8);
+            newAnimal = new UIButton(UIColor.ORANGE, "Nouveau", window.Width / 10);
             newAnimal.Height = window.Height / 25;
             newAnimal.Location = new Point(window.Width * 520 / 1000, window.Height * 12 / 15);
-            newAnimal.Click += new EventHandler(OpenNewClientInterface);
+            newAnimal.Click += new EventHandler(OpenNewAnimalInterface);
             window.Controls.Add(newAnimal);
 
-            deleteAnimal = new UIButton(UIColor.ORANGE, "Delete", window.Width / 8);
+            deleteAnimal = new UIButton(UIColor.ORANGE, "Supprimer", window.Width / 10);
             deleteAnimal.Height = window.Height / 25;
-            deleteAnimal.Location = new Point(window.Width * 796 / 1000, window.Height * 12 / 15);
+            deleteAnimal.Location = new Point(window.Width * 789 / 1000, window.Height * 12 / 15);
             deleteAnimal.Click += new EventHandler(DeleteAnimal);
 
-            updateAnimal = new UIButton(UIColor.ORANGE, "Modifier", window.Width / 8);
+            updateAnimal = new UIButton(UIColor.ORANGE, "Modifier", window.Width / 10);
             updateAnimal.Height = window.Height / 25;
-            updateAnimal.Location = new Point(window.Width * 657 / 1000, window.Height * 12 / 15);
+            updateAnimal.Location = new Point(window.Width * 655 / 1000, window.Height * 12 / 15);
             updateAnimal.Click += new EventHandler(OpenUpdateAnimalInterface);
 
             byName = new UIButton(UIColor.ORANGE, "Par nom", window.Width / 12);
@@ -149,6 +153,23 @@ namespace Mauxnimale_CE2.ui
             bySurname.Location = new Point(window.Width * 335 / 1000, window.Height / 11);
             window.Controls.Add(bySurname);
             bySurname.Click += new EventHandler(ChangeMode);
+
+            backButton = new UIRoundButton(window.Width / 20, "<");
+            backButton.Location = new Point(window.Width * 9 / 10, window.Height / 10);
+            window.Controls.Add(backButton);
+            backButton.Click += new EventHandler(ReturnHomePage);
+        }
+
+        private void OpenNewAnimalInterface(object sender, EventArgs e)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceNewAnimal(window, user));
+        }
+
+        private void ReturnHomePage(object sender, EventArgs e)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceHome(window, user));
         }
 
         #region Delete something

@@ -157,7 +157,7 @@ namespace Mauxnimale_CE2.ui
         public void manageConsultationClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceGestionConsultation(window, user));
+            window.switchInterface(new InterfaceAppointmentManagment(window, user));
         }
 
         public void statsClick(object sender, EventArgs e)

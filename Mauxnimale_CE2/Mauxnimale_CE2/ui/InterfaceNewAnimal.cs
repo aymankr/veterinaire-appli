@@ -14,7 +14,7 @@ namespace Mauxnimale_CE2.ui
 
         Header header;
         Footer footer;
-
+        Label animalLabel, breedLabel, speciesLabel;
         #region Animal form elements and attribute
         TextBox animalNameBox, birthYearBox, sizeBox, weightBox;
         ComboBox isMaleCB, speciesAnimalFormCB, breedCB, clientCB;
@@ -53,6 +53,7 @@ namespace Mauxnimale_CE2.ui
             header.load("Mauxnimale - Page de gestion des clients");
             footer.load();
             // Génération des éléments du formulaire liés à l'ajout d'un animal
+            GenerateLabel();
             CreateBackButton();
             FormAnimalGenerateButton();
             FormAnimalGenerateTextBox();
@@ -94,8 +95,39 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
-        #region ANIMAL FORM
+        #region Label
+        private void GenerateLabel()
+        {
+            animalLabel = new Label();
+            animalLabel.Text = "Formulaire ajout d'un animal";
+            animalLabel.TextAlign = ContentAlignment.MiddleLeft;
+            animalLabel.Font = new Font("Poppins", window.Height * 2 / 100);
+            animalLabel.ForeColor = UIColor.DARKBLUE;
+            animalLabel.Size = new Size(window.Width * 3 / 10, window.Height * 1 / 10);
+            animalLabel.Location = new Point(window.Width * 5 / 50, window.Height / 10);
+            window.Controls.Add(animalLabel);
 
+            speciesLabel = new Label();
+            speciesLabel.Text = "Formulaire ajout d'une espèce";
+            speciesLabel.TextAlign = ContentAlignment.MiddleLeft;
+            speciesLabel.Font = new Font("Poppins", window.Height * 2 / 100);
+            speciesLabel.ForeColor = UIColor.DARKBLUE;
+            speciesLabel.Size = new Size(window.Width * 3 / 10, window.Height * 1 / 10);
+            speciesLabel.Location = new Point(window.Width * 22 / 50, window.Height / 10);
+            window.Controls.Add(speciesLabel);
+
+            breedLabel = new Label();
+            breedLabel.Text = "Formulaire ajout d'une race";
+            breedLabel.TextAlign = ContentAlignment.MiddleLeft;
+            breedLabel.Font = new Font("Poppins", window.Height * 2 / 100);
+            breedLabel.ForeColor = UIColor.DARKBLUE;
+            breedLabel.Size = new Size(window.Width * 3 / 10, window.Height * 1 / 10);
+            breedLabel.Location = new Point(window.Width * 22 / 50, window.Height * 6 / 20);
+            window.Controls.Add(breedLabel);
+        }
+        #endregion
+
+        #region ANIMAL FORM
         #region Generation of ComboBoxes of form animal
         /// <summary>
         /// Méthode permettant de générer les ComboBox liés au formulaire lié à l'ajout d'un animal
@@ -104,7 +136,7 @@ namespace Mauxnimale_CE2.ui
         {
             isMaleCB = new ComboBox
             {
-                Location = new Point(window.Width * 12 / 50, window.Height * 7 / 20),
+                Location = new Point(window.Width * 7 / 50, window.Height * 8 / 20),
                 Size = new Size(window.Width * 15 / 100, window.Height * 5 / 100),
                 TabIndex = 4,
                 ForeColor = Color.Black,
@@ -114,7 +146,7 @@ namespace Mauxnimale_CE2.ui
 
             speciesAnimalFormCB = new ComboBox
             {
-                Location = new Point(window.Width * 12 / 50, window.Height * 8 / 20),
+                Location = new Point(window.Width * 7 / 50, window.Height * 9 / 20),
                 Size = new Size(window.Width * 15 / 100, window.Height * 5 / 100),
                 TabIndex = 5,
                 ForeColor = Color.Black,
@@ -125,7 +157,7 @@ namespace Mauxnimale_CE2.ui
 
             breedCB = new ComboBox
             {
-                Location = new Point(window.Width * 12 / 50, window.Height * 9 / 20),
+                Location = new Point(window.Width * 7 / 50, window.Height * 10 / 20),
                 Size = new Size(window.Width * 15 / 100, window.Height * 5 / 100),
                 TabIndex = 6
             };
@@ -135,7 +167,7 @@ namespace Mauxnimale_CE2.ui
 
             clientCB = new ComboBox
             {
-                Location = new Point(window.Width * 12 / 50, window.Height * 10 / 20),
+                Location = new Point(window.Width * 7 / 50, window.Height * 11 / 20),
                 Size = new Size(window.Width * 15 / 100, window.Height * 5 / 100),
                 TabIndex = 7
             };
@@ -155,7 +187,7 @@ namespace Mauxnimale_CE2.ui
             {
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 Height = window.Height / 25,
-                Location = new Point(window.Width * 12 / 50, window.Height * 11 / 20),
+                Location = new Point(window.Width * 7 / 50, window.Height * 12 / 20),
                 TabIndex = 8
             };
             window.Controls.Add(validateAnimalForm);
@@ -176,7 +208,7 @@ namespace Mauxnimale_CE2.ui
                 Text = "Nom",
                 ForeColor = Color.Gray,
                 BackColor = Color.White,
-                Location = new Point(window.Width * 12 / 50, window.Height * 3 / 20),
+                Location = new Point(window.Width * 7 / 50, window.Height * 4 / 20),
                 Size = new Size(window.Width * 15 / 100, window.Height * 5 / 100),
                 MaxLength = 128,
                 TabIndex = 0
@@ -191,7 +223,7 @@ namespace Mauxnimale_CE2.ui
                 Text = "Année de naissance",
                 ForeColor = Color.Gray,
                 BackColor = Color.White,
-                Location = new Point(window.Width * 12 / 50, window.Height * 4 / 20),
+                Location = new Point(window.Width * 7 / 50, window.Height * 5 / 20),
                 Size = new Size(window.Width * 15 / 100, window.Height * 5 / 100),
                 MaxLength = 4,
                 TabIndex = 1
@@ -208,7 +240,7 @@ namespace Mauxnimale_CE2.ui
                 Text = "Taille",
                 ForeColor = Color.Gray,
                 BackColor = Color.White,
-                Location = new Point(window.Width * 12 / 50, window.Height * 5 / 20),
+                Location = new Point(window.Width * 7 / 50, window.Height * 6 / 20),
                 Size = new Size(window.Width * 15 / 100, window.Height * 5 / 100),
                 MaxLength = 4,
                 TabIndex = 2
@@ -225,7 +257,7 @@ namespace Mauxnimale_CE2.ui
                 Text = "Poids",
                 ForeColor = Color.Gray,
                 BackColor = Color.White,
-                Location = new Point(window.Width * 12 / 50, window.Height * 6 / 20),
+                Location = new Point(window.Width * 7 / 50, window.Height * 7 / 20),
                 Size = new Size(window.Width * 15 / 100, window.Height * 5 / 100),
                 MaxLength = 4,
                 TabIndex = 3
@@ -361,7 +393,7 @@ namespace Mauxnimale_CE2.ui
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 Text = "Nom de l'espèce",
                 ForeColor = Color.Gray,
-                Location = new Point(window.Width * 24 / 50, window.Height * 3 / 20),
+                Location = new Point(window.Width * 24 / 50, window.Height * 4 / 20),
                 Size = new Size(window.Width * 15 / 100, window.Height * 5 / 100),
                 MaxLength = 128
             };
@@ -373,7 +405,7 @@ namespace Mauxnimale_CE2.ui
             {
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 Height = window.Height / 25,
-                Location = new Point(window.Width * 24 / 50, window.Height * 4 / 20),
+                Location = new Point(window.Width * 24 / 50, window.Height * 5 / 20),
                 TabIndex = 8
             };
             window.Controls.Add(validateSpeciesForm);
@@ -403,7 +435,7 @@ namespace Mauxnimale_CE2.ui
         {
             speciesBreedFormCB = new ComboBox
             {
-                Location = new Point(window.Width * 24 / 50, window.Height * 6 / 20),
+                Location = new Point(window.Width * 24 / 50, window.Height * 8 / 20),
                 Size = new Size(window.Width * 15 / 100, window.Height * 5 / 100),
                 ForeColor = Color.Black,
                 Text = "Espèce"
@@ -416,7 +448,7 @@ namespace Mauxnimale_CE2.ui
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 Text = "Nom de la race",
                 ForeColor = Color.Gray,
-                Location = new Point(window.Width * 24 / 50, window.Height * 7 / 20),
+                Location = new Point(window.Width * 24 / 50, window.Height * 9 / 20),
                 Size = new Size(window.Width * 15 / 100, window.Height * 5 / 100),
                 MaxLength = 128
             };
@@ -428,7 +460,7 @@ namespace Mauxnimale_CE2.ui
             {
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 Height = window.Height / 25,
-                Location = new Point(window.Width * 24 / 50, window.Height * 8 / 20)
+                Location = new Point(window.Width * 24 / 50, window.Height * 10 / 20)
             };
             window.Controls.Add(validateBreedForm);
             validateBreedForm.Click += new EventHandler(SubmitBreedForm);

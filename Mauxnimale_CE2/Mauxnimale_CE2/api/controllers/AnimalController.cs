@@ -78,8 +78,46 @@ namespace Mauxnimale_CE2.api.controllers
             return !isAlreadyRegistered;
         }
 
-        public static void removeAnimal(ANIMAL animalToRemove)
+        /// <summary>
+        /// Permet de supprimer un animal de la base de données
+        /// </summary>
+        /// <param name="animalToRemove"></param>
+        public static void RemoveAnimal(ANIMAL animalToRemove)
         {
+            // Supprime les lien entre l'animal et les maladies
+            if (animalToRemove.LIEN_MALADIE.Any())
+            {
+                var links = from l in DbContext.get().LIEN_MALADIE
+                           where l.ANIMAL == animalToRemove
+                           select l;
+                foreach(LIEN_MALADIE lm in links.ToList())
+                {
+                    DbContext.get().LIEN_MALADIE.Remove(lm);
+                }
+            }
+            // Supprime les rendez-vous de cet animal
+            if (animalToRemove.RENDEZ_VOUS.Any())
+            {
+                var rdvs = from r in DbContext.get().RENDEZ_VOUS
+                           where r.ANIMAL == animalToRemove
+                           select r;
+                foreach (RENDEZ_VOUS r in rdvs.ToList())
+                {
+                    DbContext.get().RENDEZ_VOUS.Remove(r);
+                }
+            }
+            // Supprime les ordonnance lié à cet animal
+            if (animalToRemove.ORDONNANCE.Any())
+            {
+                var prescriptions = from p in DbContext.get().ORDONNANCE
+                                    where p.ANIMAL == animalToRemove
+                                    select p;
+                foreach (ORDONNANCE r in prescriptions.ToList())
+                {
+                    DbContext.get().ORDONNANCE.Remove(r);
+                }
+            }
+            // On supprime l'animal
             animalToRemove.RENDEZ_VOUS.Clear();
             PT4_S4P2C_E2Entities dbContext = DbContext.get();
             dbContext.ANIMAL.Remove(animalToRemove);
@@ -111,7 +149,7 @@ namespace Mauxnimale_CE2.api.controllers
         }
 
         /// <summary>
-        /// Méthode permettant d'ajouter une espèce à la base de donnée
+        /// Méthode permettant d'ajouter une espèce à la base de données.
         /// </summary>
         /// <param name="specieName">Nom de l'espèce à ajouter</param>
         /// <returns>Vrai si l'ajout s'est bien passé, faux sinon</returns>
@@ -133,7 +171,7 @@ namespace Mauxnimale_CE2.api.controllers
         } 
 
         /// <summary>
-        /// Méthode permettant de savoir si une espèce existe déjà dans la base de donnée
+        /// Méthode permettant de savoir si une espèce existe déjà dans la base de donnée.
         /// </summary>
         /// <param name="specieName">Nom de l'espèce</param>
         /// <returns>Vrai si l'espèce existe déjà, faux sion</returns>
@@ -146,6 +184,12 @@ namespace Mauxnimale_CE2.api.controllers
             return isAlready;
         }
 
+        /// <summary>
+        /// Méthode permettant d'ajouter une race à la base de donnée
+        /// </summary>
+        /// <param name="specie">Nom de l'espèce de la race</param>
+        /// <param name="breedName">Nom de la race</param>
+        /// <returns>Vrai si la race à été ajoutée, faux sinon</returns>
         internal static bool AddBreed(ESPECE specie, string breedName)
         {
             if (!BreedIsAlreadyRegistered(specie.NOMESPECE, breedName))

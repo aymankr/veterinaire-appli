@@ -27,7 +27,8 @@ namespace Mauxnimale_CE2.ui
         RENDEZ_VOUS selected;
 
         Label calendarLabel;
-        ListBox consultOfDay, infosConsult;
+        ListBox consultOfDay;
+        TextBox infosConsult;
 
         public InterfaceAppointmentManagment(MainWindow window, SALARIE s)
         {
@@ -75,11 +76,13 @@ namespace Mauxnimale_CE2.ui
 
             #region InfosConsult
 
-            infosConsult = new ListBox();
+            infosConsult = new TextBox();
+            infosConsult.ReadOnly = true;   
             infosConsult.Text = "";
             infosConsult.Font = new Font("Poppins", window.Height * 1 / 100);
             infosConsult.ForeColor = Color.Black;
             infosConsult.BackColor = Color.White;
+            infosConsult.Multiline = true;
             infosConsult.Location = new Point(window.Width * 500 / 1000, window.Height * 2 / 10);
             infosConsult.Size = new Size(window.Width * 40 / 100, window.Height * 45 / 100);
             #endregion
@@ -146,25 +149,25 @@ namespace Mauxnimale_CE2.ui
         #region Selection
         private void rdvSelection(object sender, EventArgs e)
         {
-            infosConsult.Items.Clear();
+            infosConsult.Clear();
 
             selected = (RENDEZ_VOUS)consultOfDay.SelectedItem;
 
             if(selected != null)
             {
-                infosConsult.Items.Add("HORRAIRE : " + selected);
-                infosConsult.Items.Add("CLIENT : " + selected.CLIENT);
-                infosConsult.Items.Add("TYPE DE RDV : " + selected.TYPE_RDV.ToString());
-                infosConsult.Items.Add("Annimaux :");
+                infosConsult.AppendText("HORRAIRE : " + selected + Environment.NewLine);
+                infosConsult.AppendText("CLIENT : " + selected.CLIENT + Environment.NewLine);
+                infosConsult.AppendText("TYPE DE RDV : " + selected.TYPE_RDV.ToString() + Environment.NewLine);
+                infosConsult.AppendText("ANNIMAUX :" + Environment.NewLine);
 
                 foreach (ANIMAL animal in AppointmentController.getAnimalFromRDV(selected))
                 {
-                    infosConsult.Items.Add("    " + animal);
+                    infosConsult.AppendText("    " + animal + Environment.NewLine);
                 }
 
 
-                infosConsult.Items.Add("DESCRIPTION : ");
-                infosConsult.Items.Add(selected.RAISON);
+                infosConsult.AppendText("DESCRIPTION : " + Environment.NewLine);
+                infosConsult.AppendText(selected.RAISON + Environment.NewLine);
             }
             EnableButtons();
 
@@ -172,7 +175,7 @@ namespace Mauxnimale_CE2.ui
 
         private void dateSelection(object sender, DateRangeEventArgs e)
         {
-            infosConsult.Items.Clear();
+            infosConsult.Clear();
             consultOfDay.Items.Clear();
             selected = null;
 

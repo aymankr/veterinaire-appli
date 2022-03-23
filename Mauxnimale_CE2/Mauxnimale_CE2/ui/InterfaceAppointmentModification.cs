@@ -208,6 +208,7 @@ namespace Mauxnimale_CE2.ui
             startTimePicker.CustomFormat = "HH:mm";
             startTimePicker.ShowUpDown = true;
             startTimePicker.MinDate = new DateTime();
+            startTimePicker.Text = rdv.HEUREDEBUT.ToString();
             DateTime tmp = startTimePicker.Value;
             RDVStart = rdv.HEUREDEBUT;
 
@@ -217,7 +218,8 @@ namespace Mauxnimale_CE2.ui
             endTimePicker.Format = DateTimePickerFormat.Custom;
             endTimePicker.CustomFormat = "HH:mm";
             endTimePicker.ShowUpDown = true;
-            startTimePicker.MinDate = new DateTime();
+            endTimePicker.MinDate = new DateTime();
+            endTimePicker.Text = rdv.HEUREFIN.ToString();
             tmp = endTimePicker.Value;
             RDVEnd = rdv.HEUREFIN;
             #endregion
@@ -254,7 +256,6 @@ namespace Mauxnimale_CE2.ui
             descriptionTexBox.TextChanged += new EventHandler(DescriptionTexBoxChanged);
             calendar.DateSelected += new DateRangeEventHandler(dateSelection);
             #endregion
-
 
             window.Controls.Add(calendar);
             window.Controls.Add(clientComboBox);
@@ -490,6 +491,7 @@ namespace Mauxnimale_CE2.ui
 
 
         #endregion
+
         public override void updateSize()
         {
             if (window.WindowState != FormWindowState.Minimized)

@@ -232,6 +232,7 @@ namespace Mauxnimale_CE2.ui
             calendar.Location = new Point(window.Width * 25 / 1000, window.Height * 2 / 10);
             calendar.Size = new Size(window.Width * 20 / 100, window.Height * 45 / 100);
             calendar.DateSelected += new DateRangeEventHandler(dateSelection);
+            selectedDate = calendar.SelectionStart;
             selectedJOURNEE = DayController.getDay(selectedDate);
             #endregion
 
@@ -500,6 +501,3 @@ namespace Mauxnimale_CE2.ui
 
     }
 }
-
-
-

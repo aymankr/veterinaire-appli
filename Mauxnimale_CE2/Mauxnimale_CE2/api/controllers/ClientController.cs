@@ -40,6 +40,11 @@ namespace Mauxnimale_CE2.api.controllers
             return client.First();
         }
 
+        /// <summary>
+        /// Méthode permettant de récupérer un client depuis son id
+        /// </summary>
+        /// <param name="id">Id du client à récupérer</param>
+        /// <returns>Le client qui possède cette id</returns>
         public static CLIENT GetClientFromID(int id)
         {
             var client = from c in DbContext.get().CLIENT
@@ -48,6 +53,11 @@ namespace Mauxnimale_CE2.api.controllers
             return client.First();
         }
 
+        /// <summary>
+        /// Permet de rechercher des clients depuis leur nom
+        /// </summary>
+        /// <param name="name">Nom recherché</param>
+        /// <returns>La liste des client ont leur nom commence par ce nom</returns>
         public static List<CLIENT> ResearhByName(string name)
         {
             var client = from c in DbContext.get().CLIENT
@@ -56,6 +66,11 @@ namespace Mauxnimale_CE2.api.controllers
             return client.ToList();
         }
 
+        /// <summary>
+        /// Permet de rechercher des clients depuis leur prénom
+        /// </summary>
+        /// <param name="name">Nom recherché</param>
+        /// <returns>La liste des client ou leur prénom commence par ce prénom</returns>
         public static List<CLIENT> ResearhBySurname(string surname)
         {
             var client = from c in DbContext.get().CLIENT
@@ -79,6 +94,33 @@ namespace Mauxnimale_CE2.api.controllers
         /// <param name="c"></param>
         public static void DeleteClient(CLIENT c)
         {
+            if (c.RENDEZ_VOUS.Any())
+            {
+                List<RENDEZ_VOUS> appointments = c.RENDEZ_VOUS.ToList();
+                foreach (RENDEZ_VOUS appointment in appointments)
+                {
+                    AppointmentController.deleteAppointment(appointment);
+                }
+            }
+            if (c.FACTURE_PRODUIT.Any())
+            {
+                var bills = from b in DbContext.get().FACTURE_PRODUIT
+                                   where b.CLIENT == c
+                                   select b;
+                foreach (FACTURE_PRODUIT bill in bills.ToList())
+                {
+                    DbContext.get().FACTURE_PRODUIT.Remove(bill);
+                }
+            }
+            if (c.ANIMAL.Any())
+            {
+                List<ANIMAL> animals = c.ANIMAL.ToList();
+                foreach(ANIMAL a in animals)
+                {
+                    AnimalController.RemoveAnimal(a);
+                }
+            }
+                    
             DbContext.get().CLIENT.Remove(c);
             DbContext.get().SaveChanges();
         }

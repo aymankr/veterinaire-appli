@@ -163,7 +163,7 @@ namespace Mauxnimale_CE2.ui
         private void OpenNewAnimalInterface(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceNewAnimal(window, user));
+            window.switchInterface(new InterfaceNewsRelatedToAnimals(window, user));
         }
 
         private void ReturnHomePage(object sender, EventArgs e)

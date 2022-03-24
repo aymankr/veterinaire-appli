@@ -98,12 +98,10 @@ namespace Mauxnimale_CE2.api.controllers
             // Supprime les rendez-vous de cet animal
             if (animalToRemove.RENDEZ_VOUS.Any())
             {
-                var rdvs = from r in DbContext.get().RENDEZ_VOUS
-                           where r.ANIMAL == animalToRemove
-                           select r;
-                foreach (RENDEZ_VOUS r in rdvs.ToList())
+                List<RENDEZ_VOUS> appointments = animalToRemove.RENDEZ_VOUS.ToList();
+                foreach(RENDEZ_VOUS appointment in appointments)
                 {
-                    DbContext.get().RENDEZ_VOUS.Remove(r);
+                    AppointmentController.deleteAppointment(appointment);
                 }
             }
             // Supprime les ordonnance lié à cet animal

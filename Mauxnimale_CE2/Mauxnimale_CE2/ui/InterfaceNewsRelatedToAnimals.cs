@@ -8,13 +8,14 @@ using Mauxnimale_CE2.api.controllers;
 
 namespace Mauxnimale_CE2.ui
 {
-    internal class InterfaceNewAnimal : AInterface
+    internal class InterfaceNewsRelatedToAnimals : AInterface
     {
         MainWindow window;
 
         Header header;
         Footer footer;
         Label animalLabel, breedLabel, speciesLabel;
+
         #region Animal form elements and attribute
         TextBox animalNameBox, birthYearBox, sizeBox, weightBox;
         ComboBox isMaleCB, speciesAnimalFormCB, breedCB, clientCB;
@@ -36,7 +37,7 @@ namespace Mauxnimale_CE2.ui
 
         UIRoundButton backButton;
 
-        public InterfaceNewAnimal(MainWindow window, SALARIE s)
+        public InterfaceNewsRelatedToAnimals(MainWindow window, SALARIE s)
         {
             this.window = window;
             user = s;
@@ -309,7 +310,7 @@ namespace Mauxnimale_CE2.ui
                 breedCB.SelectedItem != null && breedCB.Text != "Race" &&
                 clientCB.SelectedItem != null && clientCB.Text != "Propriétaire" &&
                 animalNameBox.Text != null && animalNameBox.Text != "Nom" &&
-                birthYearBox.Text != null && birthYearBox.Text != "Année de naissance" &&
+                birthYearBox.Text != null && birthYearBox.Text != "Année de naissance" && birthYearBox.Text.Length != 4 &&
                 sizeBox.Text != null && animalNameBox.Text != "Taille" &&
                 weightBox.Text != null && weightBox.Text != "Poids")
             {
@@ -318,12 +319,23 @@ namespace Mauxnimale_CE2.ui
                 bool isMale = isMaleCB.Text == "M";
                 if (AnimalController.registerAnimal(breed, owner, NormalizeName(animalNameBox.Text), birthYearBox.Text, Int32.Parse(sizeBox.Text), Int32.Parse(weightBox.Text), isMale))
                 {
+                    // On vide tous les champs du formulaire
+                    isMaleCB.Text = "";
+                    breedCB.Text = "";
+                    clientCB.Text = "";
+                    animalNameBox.Text = "";
+                    birthYearBox.Text = "";
+                    sizeBox.Text = "";
+                    weightBox.Text = "";
                     MessageBox.Show("L'animal à bien été ajouté à la base.", "Comfirmation d'ajout à la base", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
                     MessageBox.Show("Cet animal existe déjà", "Problème d'insertion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
+            } else
+            {
+                MessageBox.Show("Des champs ne sont pas remplis ou mal remplis", "Problème de formulaire", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         #endregion

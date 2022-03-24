@@ -11,6 +11,7 @@ namespace Mauxnimale_CE2.ui
     internal class InterfaceUpdateRelatedToAnimals : AInterface
     {
         MainWindow window;
+        AInterface interfaceWhoLaunchThisWindow;
 
         readonly RACE breed;
         readonly ANIMAL animal;
@@ -41,10 +42,11 @@ namespace Mauxnimale_CE2.ui
 
         UIRoundButton backButton;
 
-        public InterfaceUpdateRelatedToAnimals(MainWindow window, SALARIE s, object o)
+        public InterfaceUpdateRelatedToAnimals(MainWindow window, SALARIE s, object o, AInterface interfaceWhoLaunchThisWindow)
         {
             this.window = window;
             user = s;
+            this.interfaceWhoLaunchThisWindow = interfaceWhoLaunchThisWindow;
             header = new Header(window);
             footer = new Footer(window, user);
             if (o.GetType().ToString().Contains("ANIMAL"))
@@ -71,14 +73,16 @@ namespace Mauxnimale_CE2.ui
             footer.load();
             // Génération des éléments du formulaire liés à l'ajout d'un animal
             //GenerateLabel();
-           
+            CreateBackButton();
             if (animal != null)
             {
-                CreateBackButton();
                 FormAnimalGenerateButton();
                 FormAnimalGenerateTextBox();
                 FormAnimalGenerateComboBox();
-            } else if (breed != null)
+                AddIntoGenderCB();
+                AddIntoPossibleOwnerCB();
+            }
+            else if (breed != null)
             {            
                 //Génération des éléments du formulaire liés à l'ajout d'une espèce
                 FormBreed();
@@ -88,14 +92,23 @@ namespace Mauxnimale_CE2.ui
                 FormSpecies();
             }
             // Ajout des données dans les éléments
-            AddIntoGenderCB();
             AddIntoSpeciesCB();
-            AddIntoPossibleOwnerCB();
         }
 
         #region Back button
         private void BackPage(object sender, EventArgs e)
-        {
+        {   
+            // TODO
+            /**
+            if(interfaceWhoLaunchThisWindow.GetType().ToString().Contains("InterfaceClient"))
+            {
+                window.Controls.Clear();
+                window.switchInterface(new InterfaceClient(window, user));
+            } else if (interfaceWhoLaunchThisWindow.GetType().ToString().Contains("InterfaceNewsRelatedToAnimals"))
+            {
+                window.Controls.Clear();
+                window.switchInterface(new InterfaceNewsRelatedToAnimals(window, user, new InterfaceClient(window, user)));
+            }*/
             window.Controls.Clear();
             window.switchInterface(new InterfaceClient(window, user));
         }
@@ -369,10 +382,10 @@ namespace Mauxnimale_CE2.ui
         #region Register a new animal (click on validate button)
         private void SubmitAnimalForm(object sender, EventArgs e)
         {
-            if (animalNameBox.Text != " " && animalNameBox.Text != "Nom" &&
-                birthYearBox.Text != " " && birthYearBox.Text != "Année de naissance" && birthYearBox.Text.Length != 4 &&
-                sizeBox.Text != " " && animalNameBox.Text != "Taille" &&
-                weightBox.Text != " " && weightBox.Text != "Poids")
+            if (animalNameBox.Text.Trim().Length != 0 &&
+                birthYearBox.Text.Trim().Length != 0 && birthYearBox.Text.Length == 4 &&
+                sizeBox.Text.Trim().Length != 0 &&
+                weightBox.Text.Trim().Length != 0)
             {
                 bool isMale;
                 RACE newBreed;
@@ -391,24 +404,18 @@ namespace Mauxnimale_CE2.ui
                 {
                     newBreed = (RACE)breedCB.SelectedItem;
                 }
-                if (possibleOwnerCB.Text != "Propriétaire")
+                if (possibleOwnerCB.Text == "Propriétaire")
                 {
                     newOwner = animal.CLIENT;
                 } else
                 {
                     newOwner = (CLIENT)possibleOwnerCB.SelectedItem;
                 }
-                if (AnimalController.updateAnimal(animal, newBreed, newOwner, NormalizeName(animalNameBox.Text), birthYearBox.Text, Int32.Parse(sizeBox.Text), Int32.Parse(weightBox.Text), isMale))
+                if (AnimalController.UpdateAnimal(animal, newBreed, newOwner, NormalizeName(animalNameBox.Text), birthYearBox.Text, Int32.Parse(sizeBox.Text), Int32.Parse(weightBox.Text), isMale))
                 {
-                    // On vide tous les champs du formulaire
-                    genderCB.Text = "Genre";
-                    breedCB.Text = "Race";
-                    possibleOwnerCB.Text = "Propriétaire";
-                    animalNameBox.Text = "";
-                    birthYearBox.Text = "";
-                    sizeBox.Text = "";
-                    weightBox.Text = "";
-                    MessageBox.Show("L'animal à bien été ajouté à la base.", "Comfirmation d'ajout à la base", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Les informations liées à cet animal ont été modifiées.", "Comfirmation de modification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    window.Controls.Clear();
+                    load();
                 } else
                 {
                     MessageBox.Show("Cet animal existe déjà", "Problème d'insertion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -433,7 +440,7 @@ namespace Mauxnimale_CE2.ui
                 if(animal != null)
                 {
                     speciesAnimalFormCB.Items.Add(species);
-                } else
+                } else if(breed != null)
                 {
                     speciesBreedFormCB.Items.Add(species);
                 }
@@ -445,8 +452,8 @@ namespace Mauxnimale_CE2.ui
         /// </summary>
         private void AddIntoGenderCB()
         {
-            genderCB.Items.Add("M");
-            genderCB.Items.Add("F");
+            genderCB.Items.Add("Male");
+            genderCB.Items.Add("Femelle");
         }
 
         /// <summary>
@@ -488,8 +495,8 @@ namespace Mauxnimale_CE2.ui
             specieNameBox = new TextBox
             {
                 Font = new Font("Poppins", window.Height * 1 / 100),
-                Text = "Nom de l'espèce",
-                ForeColor = Color.Gray,
+                Text = specie.NOMESPECE,
+                ForeColor = Color.Black,
                 Location = new Point(window.Width * 24 / 50, window.Height * 4 / 20),
                 Size = new Size(window.Width * 15 / 100, window.Height * 5 / 100),
                 MaxLength = 128
@@ -511,9 +518,9 @@ namespace Mauxnimale_CE2.ui
 
         private void SubmitSpecieForm(object sender, EventArgs e)
         {
-            if (specieNameBox.Text.Trim() != null && specieNameBox.Text != "Nom de l'espèce")
+            if (specieNameBox.Text.Trim().Length != 0 && specieNameBox.Text != "Nom de l'espèce")
             {
-                if (AnimalController.AddSpecie(NormalizeName(specieNameBox.Text.Trim())))
+                if (AnimalController.UpdateSpecie(specie, NormalizeName(specieNameBox.Text)))
                 {
                     MessageBox.Show("L'espèce a été ajoutée à la base de données avec succès", "Comfirmation d'ajout à la base de donnée", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

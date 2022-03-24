@@ -10,6 +10,8 @@ namespace Mauxnimale_CE2.api.controllers
     /// </summary>
     internal static class AnimalController
     {
+        private static object retun;
+
         /// <summary>
         /// Verify wether the given animal is already registered in the database or not.
         /// </summary>
@@ -223,10 +225,10 @@ namespace Mauxnimale_CE2.api.controllers
             return isAlready;
         }
 
-        internal static bool updateAnimal(ANIMAL animal, RACE newBreed, CLIENT newOwner, string name, string birthYear, int size, int weight, bool isMale)
+        internal static bool UpdateAnimal(ANIMAL animal, RACE newBreed, CLIENT newOwner, string name, string birthYear, int size, int weight, bool isMale)
         {
-            try
-            {
+            //try
+            //{
                 animal.RACE = newBreed;
                 animal.CLIENT = newOwner;
                 animal.NOM = name;
@@ -236,12 +238,38 @@ namespace Mauxnimale_CE2.api.controllers
                 animal.ESTMALE = isMale;
                 DbContext.get().SaveChanges();
                 return true;
-            } catch (Exception ex)
+            //} catch (Exception ex)
+            //{
+                //return false;
+            //}
+           
+        }
+
+        /// <summary>
+        /// Méthode permettant de rechercher des espèse par leur nom
+        /// </summary>
+        /// <param name="specieName">Le nom de l'espèce recherchée</param>
+        /// <returns>La liste des espèce comportant ce nom dans leur nom</returns>
+        internal static ICollection<ESPECE> ResearchSpeciesByName(string specieName)
+        {
+            var species = from s in DbContext.get().ESPECE
+                         where s.NOMESPECE.Contains(specieName)
+                          select s;
+            return species.ToList();
+        }
+
+        internal static bool UpdateSpecie(ESPECE specie, string name)
+        {
+            if (!SpecieIsAlreadyRegistered(specie.NOMESPECE))
             {
-                Console.WriteLine(ex.Message);
+                specie.NOMESPECE = name;
+                DbContext.get().SaveChanges();
+                return true;
+            } else
+            {
                 return false;
             }
-           
+            
         }
     }
 }

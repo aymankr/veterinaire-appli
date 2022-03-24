@@ -185,9 +185,13 @@ namespace Mauxnimale_CE2.ui
                 ClientInfo();
             }
         }
+
         private void DeleteAnimal(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            AnimalController.RemoveAnimal(selectedAnimal);
+            selectedAnimal = null;
+            AddListOfAnimal();
+            AnimalInfo();
         }
         #endregion
 
@@ -207,7 +211,7 @@ namespace Mauxnimale_CE2.ui
         private void OpenUpdateAnimalInterface(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceUpdateRelatedToAnimals(window, user, selectedAnimal));
+            window.switchInterface(new InterfaceUpdateRelatedToAnimals(window, user, selectedAnimal, this));
         }
         #endregion
 

@@ -222,5 +222,26 @@ namespace Mauxnimale_CE2.api.controllers
             bool isAlready = breeds.Count() != 0;
             return isAlready;
         }
+
+        internal static bool updateAnimal(ANIMAL animal, RACE newBreed, CLIENT newOwner, string name, string birthYear, int size, int weight, bool isMale)
+        {
+            try
+            {
+                animal.RACE = newBreed;
+                animal.CLIENT = newOwner;
+                animal.NOM = name;
+                animal.ANNEENAISSANCE = birthYear;
+                animal.TAILLE = size;
+                animal.POIDS = weight;
+                animal.ESTMALE = isMale;
+                DbContext.get().SaveChanges();
+                return true;
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+           
+        }
     }
 }

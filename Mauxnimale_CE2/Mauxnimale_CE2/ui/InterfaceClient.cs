@@ -163,7 +163,7 @@ namespace Mauxnimale_CE2.ui
         private void OpenNewAnimalInterface(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceNewsRelatedToAnimals(window, user));
+            window.switchInterface(new InterfaceNewsRelatedToAnimals(window, user, this));
         }
 
         private void ReturnHomePage(object sender, EventArgs e)
@@ -206,7 +206,8 @@ namespace Mauxnimale_CE2.ui
 
         private void OpenUpdateAnimalInterface(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceUpdateRelatedToAnimals(window, user, selectedAnimal));
         }
         #endregion
 

@@ -34,7 +34,7 @@ namespace Mauxnimale_CE2.ui
         #endregion
 
         #region Breed form elements
-        TextBox breedNameBox;
+        TextBox breedNameBox, currentSpecieBreedForm;
         ComboBox speciesBreedFormCB;
         UIButton validateBreedForm;
         ESPECE selectedSpeciesBreedForm;
@@ -538,6 +538,18 @@ namespace Mauxnimale_CE2.ui
         /// </summary>
         private void FormBreed()
         {
+
+            currentSpecieBreedForm = new TextBox
+            {
+                Font = new Font("Poppins", window.Height * 1 / 100),
+                Text = breed.ESPECE.NOMESPECE,
+                ForeColor = Color.Black,
+                Location = new Point(window.Width * 15 / 50, window.Height * 8 / 20),
+                Size = new Size(window.Width * 15 / 100, window.Height * 5 / 100),
+                Enabled = false,
+            };
+            window.Controls.Add(currentSpecieBreedForm);
+
             speciesBreedFormCB = new ComboBox
             {
                 Location = new Point(window.Width * 24 / 50, window.Height * 8 / 20),
@@ -551,8 +563,8 @@ namespace Mauxnimale_CE2.ui
             breedNameBox = new TextBox
             {
                 Font = new Font("Poppins", window.Height * 1 / 100),
-                Text = "Nom de la race",
-                ForeColor = Color.Gray,
+                Text = breed.NOMRACE,
+                ForeColor = Color.Black,
                 Location = new Point(window.Width * 24 / 50, window.Height * 9 / 20),
                 Size = new Size(window.Width * 15 / 100, window.Height * 5 / 100),
                 MaxLength = 128
@@ -561,7 +573,7 @@ namespace Mauxnimale_CE2.ui
             breedNameBox.GotFocus += new EventHandler(GetFocus);
             breedNameBox.LostFocus += new EventHandler(LostFocus);
 
-            validateBreedForm = new UIButton(UIColor.ORANGE, "Ajouter", window.Width * 15 / 100)
+            validateBreedForm = new UIButton(UIColor.ORANGE, "Modifier", window.Width * 15 / 100)
             {
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 Height = window.Height / 25,
@@ -579,22 +591,34 @@ namespace Mauxnimale_CE2.ui
         private void BreedFormSelectedSpecies(object sender, EventArgs e)
         {
             selectedSpeciesBreedForm = speciesBreedFormCB.SelectedItem == " " ? null : (ESPECE)speciesBreedFormCB.SelectedItem;
-            AddToBreedCB();
+            if(animal != null)
+            {
+                AddToBreedCB();
+            }
         }
 
         private void SubmitBreedForm(object sender, EventArgs e)
         {
-            if (selectedSpeciesBreedForm != null && breedNameBox.Text.Length != 0)
+            if (selectedSpeciesBreedForm == null && breedNameBox.Text.Length != 0)
             {
-                if (AnimalController.AddBreed(selectedSpeciesBreedForm, NormalizeName(breedNameBox.Text)))
+                if (AnimalController.UpdateBreed(breed, breed.ESPECE,NormalizeName(breedNameBox.Text)))
                 {
-                    MessageBox.Show("La race à bien été ajoutée à la base avec succés", "Comfirmation d'ajout à la base de donnée", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("La race à bien été modifiée avec succés", "Comfirmation de modification", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show("La race existe déjà", "Problème d'insertion à la base de donnée", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("La race existe déjà", "Problème de modification", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
+            }else if (selectedSpeciesBreedForm != null && breedNameBox.Text.Length != 0)
+            {
+                if (AnimalController.UpdateBreed(breed, selectedSpeciesBreedForm, NormalizeName(breedNameBox.Text)))
+                {
+                    MessageBox.Show("La race à bien été modifiée avec succés", "Comfirmation de modification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("La race existe déjà", "Problème de modification", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
         #endregion

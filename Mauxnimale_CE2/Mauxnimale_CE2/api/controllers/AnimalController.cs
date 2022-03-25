@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Mauxnimale_CE2.api.entities;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace Mauxnimale_CE2.api.controllers
 {
@@ -227,8 +228,8 @@ namespace Mauxnimale_CE2.api.controllers
 
         internal static bool UpdateAnimal(ANIMAL animal, RACE newBreed, CLIENT newOwner, string name, string birthYear, int size, int weight, bool isMale)
         {
-            //try
-            //{
+            try
+            {
                 animal.RACE = newBreed;
                 animal.CLIENT = newOwner;
                 animal.NOM = name;
@@ -238,11 +239,10 @@ namespace Mauxnimale_CE2.api.controllers
                 animal.ESTMALE = isMale;
                 DbContext.get().SaveChanges();
                 return true;
-            //} catch (Exception ex)
-            //{
-                //return false;
-            //}
-           
+            } catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -270,6 +270,46 @@ namespace Mauxnimale_CE2.api.controllers
                 return false;
             }
             
+        }
+
+        internal static ICollection<RACE> ResearchBreedByName(ESPECE specie , string breedName)
+        {
+            if (specie != null)
+            {
+                var breeds = from b in DbContext.get().RACE
+                             where b.ESPECE.NOMESPECE == specie.NOMESPECE
+                             where b.NOMRACE.Contains(breedName)
+                             select b;
+                return breeds.ToList();
+            }
+            else {
+                var breeds = from b in DbContext.get().RACE
+                             where b.NOMRACE.Contains(breedName)
+                             select b;
+                return breeds.ToList();
+            }
+            
+        }
+
+        internal static ICollection<RACE> AllBreeds()
+        {
+            var breeds = from b in DbContext.get().RACE
+                         select b;
+            return breeds.ToList();
+        }
+
+        internal static bool UpdateBreed(RACE breed, ESPECE specie, string nameBreed)
+        {
+            if(!BreedIsAlreadyRegistered(specie.NOMESPECE, nameBreed))
+            {
+                breed.ESPECE = specie;
+                breed.NOMRACE = nameBreed;
+                DbContext.get().SaveChanges();
+                return true;
+            } else
+            {
+                return false;
+            }
         }
     }
 }

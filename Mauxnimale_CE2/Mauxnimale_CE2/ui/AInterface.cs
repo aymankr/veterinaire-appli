@@ -1,4 +1,5 @@
-﻿using Mauxnimale_CE2.api.entities;
+﻿using System.Windows.Forms;
+using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2
 {
@@ -16,8 +17,11 @@ namespace Mauxnimale_CE2
         public abstract void load();
         public void updateSize()
         {
-            window.Controls.Clear();
-            load();
+            if (window.WindowState != FormWindowState.Minimized)
+            {
+                window.Controls.Clear();
+                load();
+            }
         }
     }
 }

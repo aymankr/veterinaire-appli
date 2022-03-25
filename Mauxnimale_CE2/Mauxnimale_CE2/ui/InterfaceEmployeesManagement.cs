@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Data;
 using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
@@ -12,6 +13,8 @@ namespace Mauxnimale_CE2.ui
         private Header _header;
         private Footer _footer;
 
+        private SALARIE _selectedEmployee;
+
         private ComboBox _employeesList;
         private TextBox _lastName, _firstName, _salary;
         private DateTimePicker _internshipStart, _internshipEnd;
@@ -21,25 +24,50 @@ namespace Mauxnimale_CE2.ui
         public InterfaceEmployeesManagement(MainWindow window, SALARIE user) : base(window, user) 
         {
             _header = new Header(window);
-            _footer = new Footer(window);
+            _footer = new Footer(window, user);
+            _selectedEmployee = null;
+
             generateComboBox();
             generateVacationButton();
             generateForm();
             generateModifyInfosButton();
+            setFormEnabled(false);
         }
 
         #region Components generation
 
         private void generateComboBox()
         {
+            // Style
             _employeesList = new ComboBox();
             _employeesList.Name = "EmployeesList";
             _employeesList.Size = new Size(window.Width / 3, 100);
             _employeesList.Location = new Point(50, 200);
             _employeesList.DropDownStyle = ComboBoxStyle.DropDownList;
-            _employeesList.Items.Add("-- Veuillez choisir un salarié --");
-            _employeesList.Items.AddRange(UserController.getAllEmployees().ToArray());
-            _employeesList.SelectedIndex = 0;
+
+            // Values
+            DataTable employees = new DataTable();
+            employees.Columns.Add("id", typeof(int));
+            employees.Columns.Add("name", typeof(string));
+            employees.Columns.Add("salary", typeof(decimal));
+            employees.Columns.Add("internshipStart", typeof(DateTime));
+            employees.Columns.Add("internshipEnd", typeof(DateTime));
+
+            foreach (SALARIE employee in UserController.getAllEmployees())
+            {
+                employees.Rows.Add(employee.IDCOMPTE, employee.ToString(), employee.SALAIRE, employee.DATEDEBUTSTAGE, employee.DATEFINSTAGE);
+            }
+
+            DataRow emptyRow = employees.NewRow();
+            emptyRow["id"] = -1;
+            emptyRow["name"] = "-- Veuillez choisir un salarié--";
+            employees.Rows.InsertAt(emptyRow, 0);
+
+            _employeesList.ValueMember = "id";
+            _employeesList.DisplayMember = "name";
+            _employeesList.DataSource = employees;
+
+            // Events
             _employeesList.SelectedValueChanged += onEmployeeChosen;
         }
 
@@ -101,12 +129,158 @@ namespace Mauxnimale_CE2.ui
 
         private void onEmployeeChosen(object sender, EventArgs e)
         {
+            int employeeId = (int)_employeesList.SelectedValue;
+            if (employeeId == -1)   // Case "veuillez choisir un salarié selectionnée"
+            {
+                clearForm();
+                setFormEnabled(false);
+                return;
+            }
 
+            _selectedEmployee = UserController.getEmployeeWithId(employeeId);
+            setFormEnabled(true);
+            fillForm();
         }
 
+        /// <summary>
+        /// Modifie les informations changées concernant l'employé s'il y en a.
+        /// Suppose qu'un employé est actuellement sélectionné.
+        /// </summary>
         private void onModifyInfosClick(object sender, EventArgs e)
         {
-            _salary.Focus();
+            // Vérification des entrées
+            if (!anyInfoChanged())
+            {
+                MessageBox.Show("Aucune information n'a été modifiée.", "Echec de l'opération", MessageBoxButtons.OK);
+                return;
+            }
+            if (!isSalaryValid())
+            {
+                MessageBox.Show("Le salaire entré n'est pas valide. Pensez à utiliser un point à la place de la virgule", "Entrée non valide.", MessageBoxButtons.OK);
+                return;
+            }
+            if (!areInternshipDatesValid())
+            {
+                MessageBox.Show("Les dates de stage entrées ne sont pas valides. La date de début de stage doit être antérieur à la date de fin de stage.", 
+                                "Entrée non valide.", MessageBoxButtons.OK);
+                return;
+            }
+
+            // Demander confirmation
+            DialogResult confirmed = MessageBox.Show("Confirmer les modifications ?", "Demande de confirmation", MessageBoxButtons.YesNo);
+            if (confirmed == DialogResult.Yes)
+            {
+                // Mise à jour des informations modifiées
+                if (!_salary.Text.Equals(_selectedEmployee.SALAIRE.ToString()))
+                    UserController.updateSalary(_selectedEmployee, decimal.Parse(_salary.Text));
+
+                if (_internshipStart.Value != _internshipStart.MinDate &&
+                    (!_internshipStart.Value.Equals(_selectedEmployee.DATEDEBUTSTAGE) ||
+                    !_internshipEnd.Value.Equals(_selectedEmployee.DATEFINSTAGE)))
+                    UserController.updateInternshipDates(_selectedEmployee, _internshipStart.Value, _internshipEnd.Value);
+            }
+        }
+
+        #endregion
+
+        #region Form management
+
+        /// <summary>
+        /// Autorise ou interdit l'utilisateur du logiciel à modifier les champs du formulaires (excépté nom et prénom).
+        /// </summary>
+        /// <param name="enabled">true pour autoriser, false pour interdire.</param>
+        private void setFormEnabled(bool enabled)
+        {
+            _salary.Enabled = enabled;
+            _internshipStart.Enabled = enabled;
+            _internshipEnd.Enabled = enabled;
+            _modifyInfosButton.Enabled = enabled;
+        }
+
+        /// <summary>
+        /// Rempli les informations du formulaire avec ceux de l'employé actuellement sélectionné.
+        /// Suppose qu'un employé est sélectionné.
+        /// </summary>
+        private void fillForm()
+        {
+            _firstName.Text = _selectedEmployee.PRENOM;
+            _lastName.Text = _selectedEmployee.NOM;
+            _salary.Text = _selectedEmployee.SALAIRE.ToString();
+
+            if (_selectedEmployee.DATEDEBUTSTAGE != null && _selectedEmployee.DATEFINSTAGE != null)
+            {
+                _internshipStart.Value = (DateTime)_selectedEmployee.DATEDEBUTSTAGE;
+                _internshipEnd.Value = (DateTime)_selectedEmployee.DATEFINSTAGE;
+            }
+            else
+            {
+                _internshipStart.Value = _internshipStart.MinDate;
+                _internshipEnd.Value = _internshipEnd.MinDate;
+            }
+        }
+
+        /// <summary>
+        /// Efface tous les champs du formulaire (met les dates à aujourd'hui).
+        /// </summary>
+        private void clearForm()
+        {
+            _firstName.Text = "";
+            _lastName.Text = "";
+            _salary.Text = "";
+            _internshipStart.Value = _internshipStart.MinDate;
+            _internshipEnd.Value = _internshipEnd.MinDate;
+        }
+
+        #endregion
+
+        #region Form input verification
+
+        /// <summary>
+        /// Détermine si au moins une information  a été modifiée dans le formulaire.
+        /// </summary>
+        /// <returns>true si au moins une information a été modifiée, false sinon.</returns>
+        private bool anyInfoChanged()
+        {
+            if (_selectedEmployee == null)   // Si aucun employé n'a été sélectionné, pas besoin de vérifier
+                return false;
+
+            if (!_salary.Text.Equals(_selectedEmployee.SALAIRE.ToString()))
+                return true;
+            if (_internshipStart.Value != _internshipStart.MinDate &&
+                !_internshipStart.Value.Equals(_selectedEmployee.DATEDEBUTSTAGE))
+                return true;
+            if (_internshipEnd.Value != _internshipStart.MinDate &&
+                !_internshipEnd.Value.Equals(_selectedEmployee.DATEFINSTAGE))
+                return true;
+
+            return false;
+        }
+
+        /// <summary>
+        /// Détermine si la valeur rentrée pour le salaire est valide.
+        /// </summary>
+        /// <returns>true si la valeur rentrée pour le salaire est valide, false sinon.</returns>
+        private bool isSalaryValid()
+        {
+            decimal enteredSalary;
+            if (decimal.TryParse(_salary.Text, out enteredSalary))
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Détermine si les dates de stages entrées sont valides. 
+        /// Début de stage < fin de stage
+        /// </summary>
+        /// <returns>true si les dates de stages entrés sont valides.</returns>
+        private bool areInternshipDatesValid()
+        {
+            if (_internshipStart.Value == _internshipStart.MinDate ||
+                _internshipStart.Value.CompareTo(_internshipEnd.Value) < 0)
+                return true;
+
+            return false;
         }
 
         #endregion

@@ -1,13 +1,9 @@
-﻿using Mauxnimale_CE2.api.entities;
-using Mauxnimale_CE2.ui.components.componentsTools;
-using Mauxnimale_CE2.ui.components;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.ui.components;
+using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2.ui
 {
@@ -21,11 +17,10 @@ namespace Mauxnimale_CE2.ui
         TextBox name, prénom, email, phone, adresse;
         Label lName, lPrénom, lEmail, lPhone, lAdresse;
 
-        public InterfaceAccountManagement(MainWindow forme, SALARIE s)
+        public InterfaceAccountManagement(MainWindow window, SALARIE user) : base(window, user)
         {
             header = new Header(window);
-            footer = new Footer(window, s);
-            user = s;
+            footer = new Footer(window, user);
         }
 
         public override void load()

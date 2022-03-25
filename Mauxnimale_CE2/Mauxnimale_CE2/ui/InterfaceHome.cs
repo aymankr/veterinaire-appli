@@ -2,8 +2,8 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.ui.components;
+using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2.ui
@@ -21,8 +21,7 @@ namespace Mauxnimale_CE2.ui
         public InterfaceHome(MainWindow window, SALARIE user) : base(window, user)
         {
             header = new Header(window);
-            footer = new Footer(window, s);
-            user = s;
+            footer = new Footer(window, user);
 
         }
         public override void load()
@@ -124,11 +123,7 @@ namespace Mauxnimale_CE2.ui
         public void manageCompteClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-<<<<<<< HEAD
             window.switchInterface(new InterfaceAccountManagement(window, user));
-=======
-            window.switchInterface(new InterfaceGestionCompte(window, user));
->>>>>>> 2093695 (employees management ihm started)
         }
 
         public void manageCongéClick(object sender, EventArgs e)

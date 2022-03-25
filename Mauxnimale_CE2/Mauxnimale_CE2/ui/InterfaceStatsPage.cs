@@ -15,10 +15,8 @@ namespace Mauxnimale_CE2.ui
 
         public InterfaceStatsPage(MainWindow window, SALARIE user) : base(window, user)
         {
-            this.window = forme;
             header = new Header(window);
-            footer = new Footer(window, s);
-            user = s;
+            footer = new Footer(window, user);
         }
 
         public override void load()

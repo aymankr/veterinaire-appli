@@ -14,12 +14,10 @@ namespace Mauxnimale_CE2.ui
         UIRoundButton back;
         //Lister ici les différents éléments qui seront utilisés dans l'interface
 
-        public InterfaceLegalMentions(MainWindow forme, SALARIE s)
+        public InterfaceLegalMentions(MainWindow window, SALARIE user) : base(window, user)
         {
-            this.window = forme;
             header = new Header(window);
-            footer = new Footer(window, s);
-            user = s;
+            footer = new Footer(window, user);
         }
 
         public void generateLabel()

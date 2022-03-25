@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
-using Mauxnimale_CE2.api.controllers;
 using Mauxnimale_CE2.api.controllers.utils;
 
 namespace Mauxnimale_CE2.ui
@@ -147,7 +146,6 @@ namespace Mauxnimale_CE2.ui
         {
             header = new Header(window);
             footer = new Footer(window, user);
-            base.user = user;
         }
 
 

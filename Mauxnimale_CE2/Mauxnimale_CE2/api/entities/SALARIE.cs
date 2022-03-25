@@ -39,7 +39,7 @@ namespace Mauxnimale_CE2.api.entities
 
         public override string ToString()
         {
-            return LOGIN;
+            return NOM + " " + PRENOM + " (" + LOGIN + ")";
         }
     }
 }

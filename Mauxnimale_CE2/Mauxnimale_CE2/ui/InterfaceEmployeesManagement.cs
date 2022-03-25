@@ -55,7 +55,8 @@ namespace Mauxnimale_CE2.ui
 
             foreach (SALARIE employee in UserController.getAllEmployees())
             {
-                employees.Rows.Add(employee.IDCOMPTE, employee.ToString(), employee.SALAIRE, employee.DATEDEBUTSTAGE, employee.DATEFINSTAGE);
+                if (employee.PREMIERECONNEXION)
+                    employees.Rows.Add(employee.IDCOMPTE, employee.ToString(), employee.SALAIRE, employee.DATEDEBUTSTAGE, employee.DATEFINSTAGE);
             }
 
             DataRow emptyRow = employees.NewRow();

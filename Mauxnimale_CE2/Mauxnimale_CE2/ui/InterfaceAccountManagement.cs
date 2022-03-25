@@ -4,17 +4,15 @@ using Mauxnimale_CE2.ui.components;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Mauxnimale_CE2.api.entities;
+using Mauxnimale_CE2.ui.components.componentsTools;
+using Mauxnimale_CE2.ui.components;
 
 namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceAccountManagement : AInterface
     {
-        MainWindow window;
-
         Header header;
         Footer footer;
 
@@ -25,7 +23,6 @@ namespace Mauxnimale_CE2.ui
 
         public InterfaceAccountManagement(MainWindow forme, SALARIE s)
         {
-            this.window = forme;
             header = new Header(window);
             footer = new Footer(window, s);
             user = s;
@@ -203,12 +200,6 @@ namespace Mauxnimale_CE2.ui
             confirm.Click += new EventHandler(confirmClick);
             logOut.Click += new EventHandler(logOutClick);
             back.Click += new EventHandler(backClick);
-        }
-
-        public override void updateSize()
-        {
-            window.Controls.Clear();
-            this.load();
         }
     }
 }

@@ -11,8 +11,6 @@ namespace Mauxnimale_CE2.ui
 {
     class InterfaceFirstConnection : AInterface
     {
-        MainWindow window;
-
         Header header;
         Footer footer;
 
@@ -145,9 +143,8 @@ namespace Mauxnimale_CE2.ui
         }
         #endregion 
 
-        public InterfaceFirstConnection(MainWindow window, SALARIE user)
+        public InterfaceFirstConnection(MainWindow window, SALARIE user) : base(window, user)
         {
-            this.window = window;
             header = new Header(window);
             footer = new Footer(window, user);
             base.user = user;
@@ -301,11 +298,6 @@ namespace Mauxnimale_CE2.ui
                 return false;
             }
             return true;
-        }
-
-        public override void updateSize()
-        {
-            //throw new NotImplementedException();
         }
     }
 }

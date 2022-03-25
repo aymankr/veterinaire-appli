@@ -4,8 +4,20 @@ namespace Mauxnimale_CE2
 {
     public abstract class AInterface
     {
-        public SALARIE user;
+        protected MainWindow window;
+        protected SALARIE user;
+
+        public AInterface(MainWindow window, SALARIE user)
+        {
+            this.user = user;
+            this.window = window;
+        }
+
         public abstract void load();
-        public abstract void updateSize();
+        public void updateSize()
+        {
+            window.Controls.Clear();
+            load();
+        }
     }
 }

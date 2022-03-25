@@ -8,8 +8,6 @@ namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceAdmin : AInterface
     {
-        MainWindow window;
-
         Header header;
         Footer footer;
         Label text;
@@ -18,7 +16,6 @@ namespace Mauxnimale_CE2.ui
 
         public InterfaceAdmin(MainWindow forme, SALARIE s)
         {
-            this.window = forme;
             header = new Header(window);
             footer = new Footer(window, s);
             user = s;
@@ -56,12 +53,6 @@ namespace Mauxnimale_CE2.ui
         {
             window.Controls.Clear();
             window.switchInterface(new InterfaceHome(window, user));
-        }
-
-        public override void updateSize()
-        {
-            window.Controls.Clear();
-            this.load();
         }
     }
 }

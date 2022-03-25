@@ -10,8 +10,6 @@ namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceHome : AInterface
     {
-        MainWindow window;
-
         Header header;
         Footer footer;
 
@@ -20,9 +18,8 @@ namespace Mauxnimale_CE2.ui
         Label incEvent;
         TextBox events;
 
-        public InterfaceHome(MainWindow window, SALARIE s)
+        public InterfaceHome(MainWindow window, SALARIE user) : base(window, user)
         {
-            this.window = window;
             header = new Header(window);
             footer = new Footer(window, s);
             user = s;
@@ -127,7 +124,11 @@ namespace Mauxnimale_CE2.ui
         public void manageCompteClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
+<<<<<<< HEAD
             window.switchInterface(new InterfaceAccountManagement(window, user));
+=======
+            window.switchInterface(new InterfaceGestionCompte(window, user));
+>>>>>>> 2093695 (employees management ihm started)
         }
 
         public void manageCongéClick(object sender, EventArgs e)
@@ -166,11 +167,5 @@ namespace Mauxnimale_CE2.ui
             window.switchInterface(new InterfaceStatsPage(window, user));
         }
         #endregion
-
-        public override void updateSize()
-        {
-            window.Controls.Clear();
-            this.load();
-        }
     }
 }

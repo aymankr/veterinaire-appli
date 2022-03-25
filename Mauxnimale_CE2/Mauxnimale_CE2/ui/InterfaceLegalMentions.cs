@@ -8,8 +8,6 @@ namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceLegalMentions : AInterface
     {
-        MainWindow window;
-
         Header header;
         Footer footer;
         Label text;
@@ -56,12 +54,6 @@ namespace Mauxnimale_CE2.ui
         {
             window.Controls.Clear();
             window.switchInterface(new InterfaceHome(window, user));
-        }
-
-        public override void updateSize()
-        {
-            window.Controls.Clear();
-            this.load();
         }
     }
 }

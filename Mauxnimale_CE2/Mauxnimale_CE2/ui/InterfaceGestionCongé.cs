@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.api.entities;
 
@@ -10,8 +9,6 @@ namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceGestionCongé : AInterface
     {
-        MainWindow window;
-
         Header header;
         Footer footer;
 
@@ -177,12 +174,6 @@ namespace Mauxnimale_CE2.ui
         public void removeClick(object sender, EventArgs e)
         {
             //supprimez le rendez vous selectionnez
-        }
-
-        public override void updateSize()
-        {
-            window.Controls.Clear();
-            this.load();
         }
 
         private void workersSelectedIndexChanged(object sender, System.EventArgs e)

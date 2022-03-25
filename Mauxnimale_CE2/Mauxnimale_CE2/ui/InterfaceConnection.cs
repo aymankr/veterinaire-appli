@@ -14,11 +14,8 @@ namespace Mauxnimale_CE2.ui
         UIButton connectionButton;
 
         Header header;
-
         TextBox login;
         TextBox password;
-
-        MainWindow window;
         //Lister ici les différents éléments qui seront utilisés dans l'interface
 
         public InterfaceConnection(MainWindow form,SALARIE user)

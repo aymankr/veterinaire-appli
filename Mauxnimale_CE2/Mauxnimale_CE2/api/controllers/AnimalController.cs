@@ -11,14 +11,12 @@ namespace Mauxnimale_CE2.api.controllers
     /// </summary>
     internal static class AnimalController
     {
-        private static object retun;
-
         /// <summary>
-        /// Verify wether the given animal is already registered in the database or not.
+        /// Vérifie si l'animal donné est déjà enregistré dans la base.
         /// </summary>
-        /// <param name="animalToVerify">The animal to verify</param>
-        /// <returns>true if an animal with the same owner and name as the one given exists, false otherwise.</returns>
-        public static bool isAlreadyRegistered(ANIMAL animalToVerify)
+        /// <param name="animalToVerify">L'animal testé</param>
+        /// <returns>Vrai si l'animal est déjà enregistré, faux sinon</returns>
+        public static bool IsAlreadyRegistered(ANIMAL animalToVerify)
         {
             PT4_S4P2C_E2Entities dbContext = DbContext.get();
 
@@ -28,57 +26,45 @@ namespace Mauxnimale_CE2.api.controllers
                     registeredAnimal.NOM == animalToVerify.NOM)
                     return true;
             }
-
             return false;
         }
 
         /// <summary>
-        /// Try to register (add to the database) a new animal with the given informations.
+        /// Méthode permettant d'ajouter à la base de données un animal.
         /// </summary>
-        /// <param name="race">the animal's race</param>
-        /// <param name="owner">the animal's owner who is a registered client</param>
-        /// <param name="name">the animal's name</param>
-        /// <param name="birthYear">the animal's year of birth</param>
-        /// <param name="height">the animal's height</param>
-        /// <param name="weight">the animal's weight</param>
-        /// <param name="isMale">true to set the new animal as a male, false as a female</param>
-        /// <returns>true if the animal has been registered (added to the database) successfully, false otherwise.</returns>
-        public static bool registerAnimal(RACE race, CLIENT owner, string name, string birthYear, int height, int weight, bool isMale)
+        /// <param name="breed">La race de l'animal</param>
+        /// <param name="owner">Le propriétaire de l'animal</param>
+        /// <param name="name">Le nom de l'animalS</param>
+        /// <param name="birthYear">L'année de naissance de l'animal</param>
+        /// <param name="height">La taille de l'animal</param>
+        /// <param name="weight">Le poids de l'animal</param>
+        /// <param name="isMale">Le genre de l'animal, vrai un male et faux une femelle</param>
+        /// <returns>Vrai si l'animal à bien était ajouté à la base de données, faux sinon</returns>
+        public static bool RegisterAnimal(RACE breed, CLIENT owner, string name, string birthYear, int height, int weight, bool isMale)
         {
-            int birthYearNumber = 0;
-            if (birthYear.Length != 4 || !int.TryParse(birthYear, out birthYearNumber))
+            ANIMAL animalToRegister = new ANIMAL
             {
-                Console.WriteLine("Birth year: " + birthYear + " is not correct. Length has to be 4 and it has to be a number (a year).");
-                return false;
-            }
+                RACE = breed,
+                IDRACE = breed.IDRACE,
+                CLIENT = owner,
+                IDCLIENT = owner.IDCLIENT,
+                NOM = name,
+                ANNEENAISSANCE = birthYear,
+                TAILLE = height,
+                POIDS = weight,
+                ESTMALE = isMale
+            };
 
-            ANIMAL animalToRegister = new ANIMAL();
-            animalToRegister.RACE = race;
-            animalToRegister.IDRACE = race.IDRACE;
-            animalToRegister.CLIENT = owner;
-            animalToRegister.IDCLIENT = owner.IDCLIENT;
-            animalToRegister.NOM = name;
-            animalToRegister.ANNEENAISSANCE = birthYear;
-            animalToRegister.TAILLE = height;
-            animalToRegister.POIDS = weight;
-            animalToRegister.ESTMALE = isMale;
-            
-            bool isAlreadyRegistered = AnimalController.isAlreadyRegistered(animalToRegister);
-
-            if (!isAlreadyRegistered)
+            if (!IsAlreadyRegistered(animalToRegister))
             {
-                Console.WriteLine("Animal doest not exists in database, we add it.");
-
-                PT4_S4P2C_E2Entities dbContext = DbContext.get();
-                dbContext.ANIMAL.Add(animalToRegister);
-                dbContext.SaveChanges();
+                DbContext.get().ANIMAL.Add(animalToRegister);
+                DbContext.get().SaveChanges();
+                return true;
             }
             else
             {
-                Console.WriteLine("Animal already exists in database, can't add it.");
+                return false;
             }
-
-            return !isAlreadyRegistered;
         }
 
         /// <summary>
@@ -131,9 +117,7 @@ namespace Mauxnimale_CE2.api.controllers
         /// <returns>Une collection contenant toute les espèces</returns>
         public static ICollection<ESPECE> AllSpecies()
         {
-            var species = from s in DbContext.get().ESPECE
-                         select s;
-            return species.ToList();
+            return DbContext.get().ESPECE.ToList();
         }
 
         /// <summary>
@@ -291,13 +275,23 @@ namespace Mauxnimale_CE2.api.controllers
             
         }
 
+
+        /// <summary>
+        /// Méthode permettant de récupérer toutes les races de la base de données
+        /// </summary>
+        /// <returns>Une collection contenant toutes les races</returns>
         internal static ICollection<RACE> AllBreeds()
         {
-            var breeds = from b in DbContext.get().RACE
-                         select b;
-            return breeds.ToList();
+            return DbContext.get().RACE.ToList();
         }
 
+        /// <summary>
+        /// Méthode permettant de modifier une race.
+        /// </summary>
+        /// <param name="breed">Race a modifier</param>
+        /// <param name="specie">Nouvelle espèce de la race</param>
+        /// <param name="nameBreed">Nouveau nom de la race</param>
+        /// <returns>Vrai si la race a bien été modifiée, faux sinon</returns>
         internal static bool UpdateBreed(RACE breed, ESPECE specie, string nameBreed)
         {
             if(!BreedIsAlreadyRegistered(specie.NOMESPECE, nameBreed))
@@ -307,6 +301,58 @@ namespace Mauxnimale_CE2.api.controllers
                 DbContext.get().SaveChanges();
                 return true;
             } else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Méthode permettant de supprimer une espèce et toutes les races qui lui sont liées.
+        /// </summary>
+        /// <param name="specieToBeDeleted">L'espèce a supprimer</param>
+        /// <returns>Vrai si l'espèce a été supprimée avec succès, faux sinon</returns>
+        internal static bool DeleteSpecie(ESPECE specieToBeDeleted)
+        {
+            try
+            {
+                if (specieToBeDeleted.RACE.Any())
+                {
+                    List<RACE> breeds = specieToBeDeleted.RACE.ToList();
+                    foreach(RACE breed in breeds)
+                    {
+                        DeleteBreed(breed);
+                    }
+                }
+                DbContext.get().ESPECE.Remove(specieToBeDeleted);
+                DbContext.get().SaveChanges();
+                return true;
+            }catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Méthode permettant de supprimer une race et tout les animaux qui lui sont liés.
+        /// </summary>
+        /// <param name="breedToBeDeleted">Race a supprimer</param>
+        /// <returns>Vrai si la  race a été supprimée avec succès, faux sinon</returns>
+        public static bool DeleteBreed(RACE breedToBeDeleted)
+        {
+            try
+            {
+                if (breedToBeDeleted.ANIMAL.Any())
+                {
+                    List<ANIMAL> animals = breedToBeDeleted.ANIMAL.ToList();
+                    foreach(ANIMAL animal in animals)
+                    {
+                        RemoveAnimal(animal);
+                    }
+                }
+                DbContext.get().RACE.Remove(breedToBeDeleted);
+                DbContext.get().SaveChanges();
+                return true;
+            }catch (Exception)
             {
                 return false;
             }

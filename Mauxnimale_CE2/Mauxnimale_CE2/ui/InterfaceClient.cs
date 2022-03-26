@@ -57,42 +57,51 @@ namespace Mauxnimale_CE2.ui
 
         public void GenerateLists()
         {
-           listClient = new ListBox();
-            listClient.Text = "";
-            listClient.Font = new Font("Poppins", window.Height / 100);
-            listClient.ForeColor = Color.Black;
-            listClient.BackColor = Color.White;
-            listClient.Location = new Point(window.Width * 20 / 1000, window.Height * 2/ 14); ;
+            listClient = new ListBox
+            {
+                Text = "",
+                Font = new Font("Poppins", window.Height / 100),
+                ForeColor = Color.Black,
+                BackColor = Color.White,
+                Location = new Point(window.Width * 20 / 1000, window.Height * 2 / 14)
+            };
+            ;
             listClient.Size = new Size(window.Width * 40 / 100, window.Height * 50 / 100);
             window.Controls.Add(listClient);
             listClient.SelectedIndexChanged += new EventHandler(ClientSelection);
 
-            listInfoClient = new ListBox();
-            listInfoClient.Text = "";
-            listInfoClient.Font = new Font("Poppins", window.Height * 1 / 100);
-            listInfoClient.ForeColor = Color.Black;
-            listInfoClient.BackColor = Color.White;
-            listInfoClient.Location = new Point(window.Width * 20 / 1000, window.Height * 9 / 14);
-            listInfoClient.Size = new Size(window.Width * 40 / 100, window.Height * 16 / 100);
+            listInfoClient = new ListBox
+            {
+                Text = "",
+                Font = new Font("Poppins", window.Height * 1 / 100),
+                ForeColor = Color.Black,
+                BackColor = Color.White,
+                Location = new Point(window.Width * 20 / 1000, window.Height * 9 / 14),
+                Size = new Size(window.Width * 40 / 100, window.Height * 16 / 100)
+            };
             window.Controls.Add(listInfoClient);
 
-            listAnimal = new ListBox();
-            listAnimal.Text = "";
-            listAnimal.Font = new Font("Poppins", window.Height * 1 / 100);
-            listAnimal.ForeColor = Color.Black;
-            listAnimal.BackColor = Color.White;
-            listAnimal.Location = new Point(window.Width * 520 / 1000, window.Height * 2 / 14);
-            listAnimal.Size = new Size(window.Width * 37 / 100, window.Height * 50 / 100);
+            listAnimal = new ListBox
+            {
+                Text = "",
+                Font = new Font("Poppins", window.Height * 1 / 100),
+                ForeColor = Color.Black,
+                BackColor = Color.White,
+                Location = new Point(window.Width * 520 / 1000, window.Height * 2 / 14),
+                Size = new Size(window.Width * 37 / 100, window.Height * 50 / 100)
+            };
             window.Controls.Add(listAnimal);
             listAnimal.SelectedIndexChanged += new EventHandler(AnimalSelection);
 
-            listInfoAnimal = new ListBox();
-            listInfoAnimal.Text = "";
-            listInfoAnimal.Font = new Font("Poppins", window.Height * 1 / 100);
-            listInfoAnimal.ForeColor = Color.Black;
-            listInfoAnimal.BackColor = Color.White;
-            listInfoAnimal.Location = new Point(window.Width * 520 / 1000, window.Height * 9 / 14);
-            listInfoAnimal.Size = new Size(window.Width * 37 / 100, window.Height * 16 / 100);
+            listInfoAnimal = new ListBox
+            {
+                Text = "",
+                Font = new Font("Poppins", window.Height * 1 / 100),
+                ForeColor = Color.Black,
+                BackColor = Color.White,
+                Location = new Point(window.Width * 520 / 1000, window.Height * 9 / 14),
+                Size = new Size(window.Width * 37 / 100, window.Height * 16 / 100)
+            };
             window.Controls.Add(listInfoAnimal);
         }
 
@@ -202,12 +211,22 @@ namespace Mauxnimale_CE2.ui
             window.switchInterface(new InterfaceUpdateClient(window, user, selectedClient));
         }
 
+        /// <summary>
+        /// Permet de changer d'interface vers l'interface de modification d'un animal
+        /// </summary>
+        /// <param name="sender">Nouveau client</param>
+        /// <param name="e">clic</param>
         private void OpenNewClientInterface(object sender, EventArgs e)
         {
             window.Controls.Clear();
             window.switchInterface(new InterfaceNewClient(window, user));
         }
 
+        /// <summary>
+        /// Permet de changer d'interface vers l'interface de modification d'un animal
+        /// </summary>
+        /// <param name="sender">Bouton modifier animal</param>
+        /// <param name="e">clic</param>
         private void OpenUpdateAnimalInterface(object sender, EventArgs e)
         {
             window.Controls.Clear();
@@ -215,6 +234,12 @@ namespace Mauxnimale_CE2.ui
         }
         #endregion
 
+        /// <summary>
+        /// Permet de changer le mode de recherche de client.
+        /// Soit on recherche par le nom soit par le prénom.
+        /// </summary>
+        /// <param name="sender">Le bouton par nom ou le bouton par prénom</param>
+        /// <param name="e">Le clic</param>
         private void ChangeMode(object sender, EventArgs e)
         {
             if (sender.Equals(byName))
@@ -262,6 +287,11 @@ namespace Mauxnimale_CE2.ui
         #endregion
 
         #region Selected items
+        /// <summary>
+        /// Permet d'ajouter ou d'enlever les boutons de modification et de suppression d'un client.
+        /// </summary>
+        /// <param name="sender">La liste contenant les clients</param>
+        /// <param name="e">Sélection d'un client</param>
         public void ClientSelection(object sender, EventArgs e)
         {
             if (listClient.SelectedItem != null && listClient.SelectedItem != " ")
@@ -288,6 +318,11 @@ namespace Mauxnimale_CE2.ui
             window.Refresh();
         }
 
+        /// <summary>
+        /// Permet de d'afficher ou d'enlever les boutons liés à la modification et à la suppression d'un animal
+        /// </summary>
+        /// <param name="sender">La liste contenant les animaux</param>
+        /// <param name="e">Sélection d'un animal</param>
         private void AnimalSelection(object sender, EventArgs e)
         {
             if (listAnimal.SelectedItem != null && listAnimal.SelectedItem != " ")
@@ -310,6 +345,9 @@ namespace Mauxnimale_CE2.ui
         }
         #endregion
 
+        /// <summary>
+        /// Permet d'afficher les informations liées au client sélectionné. 
+        /// </summary>
         public void ClientInfo()
         {
             listInfoClient.Items.Clear();
@@ -321,6 +359,9 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        /// <summary>
+        /// Permet d'afficher les informations liées à l'animal sélectionné.
+        /// </summary>
         public void AnimalInfo()
         {
             listInfoAnimal.Items.Clear();
@@ -331,9 +372,17 @@ namespace Mauxnimale_CE2.ui
                 listInfoAnimal.Items.Add("Espèce : " + selectedAnimal.RACE.ESPECE);
                 listInfoAnimal.Items.Add("Taille : " + selectedAnimal.TAILLE);
                 listInfoAnimal.Items.Add("Poids : " + selectedAnimal.POIDS);
+                string genre = (selectedAnimal.ESTMALE == true) ? "Male" : "Femelle";
+                listInfoAnimal.Items.Add("Genre : " + genre);
             }
         }
 
+        /// <summary>
+        /// Permet de rechercher un client des que l'utilisateur utilise la barre de recherche.
+        /// Permet selon le mode choisi, soit de rechercher par nom soit par prénom
+        /// </summary>
+        /// <param name="sender">La barre de recherche ce client</param>
+        /// <param name="e">Changement du text</param>
         public void Research(object sender, EventArgs e)
         {
             if (researchBar.Text.Length != 0 && byName.BackColor == UIColor.ORANGE)
@@ -347,6 +396,10 @@ namespace Mauxnimale_CE2.ui
             }
                     
         }
+
+        /// <summary>
+        /// Permet de recherche un client par son prénom
+        /// </summary>
         private void ResultResearhBySurname()
         {
             listClient.Items.Clear();
@@ -357,6 +410,9 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        /// <summary>
+        /// Permet de rechercher un client par son prénom
+        /// </summary>
         private void ResultResearhByName()
         {
             listClient.Items.Clear();

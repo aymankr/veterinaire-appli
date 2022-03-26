@@ -19,25 +19,24 @@ namespace Mauxnimale_CE2.ui
 
         #region Animal form elements and attribute
         TextBox animalFormNameBox, animalFormBirthYearBox, animalFormSizeBox, animalFormWeightBox;
-        ComboBox genderCB, animalFormSpeciesCB, animalFormPossibleBreed, animalFormPossibleOwner;
+        ComboBox animalFormGenderCB, animalFormSpeciesCB, animalFormPossibleBreed, animalFormPossibleOwner;
         UIButton animalFormValidate;
         ESPECE animalFormSelectedSpecie;
         #endregion
 
         #region Species form elements
-        TextBox specieFormNameBox;
-        UIButton SpecieFormValidate, SpecieFormUpdate, SpeciFormDelete;
+        TextBox specieFormNameBox, specieFormResearchBar;
+        UIButton specieFormValidate, specieFormUpdate, specieFormDelete;
         ListBox specieFormAllSpecieLB;
-        TextBox researchSpecies;
         #endregion
 
         #region Breed form elements
-        TextBox breedNameBox, researchBreeds;
-        ListBox breedForUpdate;
-        ComboBox speciesBreedFormCB;
-        UIButton validateBreedForm, updateBreed, deleteBreed;
-        ESPECE selectedSpeciesBreedForm;
-        RACE selectBreedForUpdate;
+        TextBox breedFormNameBox, breedFormResearchBar;
+        ListBox breedFromBreedLB;
+        ComboBox breedFormSpeciesCB;
+        UIButton breedFormValidate, breedFormUpdate, breedFormDelete;
+        ESPECE breedFormSelectedSpecie;
+        RACE breedFormSelectedBreed;
         #endregion
 
         UIRoundButton backButton;
@@ -84,8 +83,6 @@ namespace Mauxnimale_CE2.ui
                 window.Controls.Clear();
                 window.switchInterface(new InterfaceClient(window, user));
             }
-            window.Controls.Clear();
-            window.switchInterface(new InterfaceClient(window, user));
         }
 
         private void CreateBackButton()
@@ -109,6 +106,9 @@ namespace Mauxnimale_CE2.ui
         }
 
         #region Label
+        /// <summary>
+        /// Permet de générer les labels des différents formulaire de la fenêtre
+        /// </summary>
         private void GenerateLabel()
         {
             animalLabel = new Label
@@ -153,7 +153,7 @@ namespace Mauxnimale_CE2.ui
         /// </summary>
         private void FormAnimalGenerateComboBox()
         {
-            genderCB = new ComboBox
+            animalFormGenderCB = new ComboBox
             {
                 Location = new Point(window.Width * 7 / 50, window.Height * 8 / 20),
                 Size = new Size(window.Width * 15 / 100, window.Height * 5 / 100),
@@ -161,7 +161,7 @@ namespace Mauxnimale_CE2.ui
                 ForeColor = Color.Black,
                 Text = "Sexe"
             };
-            window.Controls.Add(genderCB);
+            window.Controls.Add(animalFormGenderCB);
 
             animalFormSpeciesCB = new ComboBox
             {
@@ -180,7 +180,7 @@ namespace Mauxnimale_CE2.ui
                 Size = new Size(window.Width * 15 / 100, window.Height * 5 / 100),
                 TabIndex = 6
             };
-            genderCB.ForeColor = Color.Black;
+            animalFormGenderCB.ForeColor = Color.Black;
             animalFormPossibleBreed.Text = "Race";
             window.Controls.Add(animalFormPossibleBreed);
 
@@ -190,7 +190,7 @@ namespace Mauxnimale_CE2.ui
                 Size = new Size(window.Width * 15 / 100, window.Height * 5 / 100),
                 TabIndex = 7
             };
-            genderCB.ForeColor = Color.Black;
+            animalFormGenderCB.ForeColor = Color.Black;
             animalFormPossibleOwner.Text = "Propriétaire";
             window.Controls.Add(animalFormPossibleOwner);
         }
@@ -324,7 +324,7 @@ namespace Mauxnimale_CE2.ui
         #region Register a new animal (click on validate button)
         private void SubmitAnimalForm(object sender, EventArgs e)
         {
-            if (genderCB.Text != "Genre" &&
+            if (animalFormGenderCB.Text != "Genre" &&
                 animalFormPossibleBreed.Text != "Race" &&
                 animalFormPossibleOwner.Text != "Propriétaire" &&
                 animalFormNameBox.Text.Trim().Length != 0 &&
@@ -334,11 +334,11 @@ namespace Mauxnimale_CE2.ui
             {
                 RACE breed = (RACE)animalFormPossibleBreed.SelectedItem;
                 CLIENT owner = (CLIENT)animalFormPossibleOwner.SelectedItem;
-                bool isMale = genderCB.Text == "Male";
-                if (AnimalController.registerAnimal(breed, owner, NormalizeName(animalFormNameBox.Text), animalFormBirthYearBox.Text, Int32.Parse(animalFormSizeBox.Text), Int32.Parse(animalFormWeightBox.Text), isMale))
+                bool isMale = animalFormGenderCB.Text == "Male";
+                if (AnimalController.RegisterAnimal(breed, owner, NormalizeName(animalFormNameBox.Text), animalFormBirthYearBox.Text, Int32.Parse(animalFormSizeBox.Text), Int32.Parse(animalFormWeightBox.Text), isMale))
                 {
                     // On vide tous les champs du formulaire
-                    genderCB.Text = "Genre";
+                    animalFormGenderCB.Text = "Genre";
                     animalFormPossibleBreed.Text = "Race";
                     animalFormPossibleOwner.Text = "Propriétaire";
                     animalFormNameBox.Text = "Nom";
@@ -369,13 +369,13 @@ namespace Mauxnimale_CE2.ui
             foreach (ESPECE species in AnimalController.AllSpecies())
             {
                 animalFormSpeciesCB.Items.Add(species);
-                speciesBreedFormCB.Items.Add(species);
+                breedFormSpeciesCB.Items.Add(species);
                 specieFormAllSpecieLB.Items.Add(species);
             }
-            breedForUpdate.Items.Add(" ");
+            breedFromBreedLB.Items.Add(" ");
             foreach (RACE breed in AnimalController.AllBreeds())
             {
-                breedForUpdate.Items.Add(breed);
+                breedFromBreedLB.Items.Add(breed);
             }
         }
 
@@ -384,8 +384,8 @@ namespace Mauxnimale_CE2.ui
         /// </summary>
         private void AddToIsMaleCB()
         {
-            genderCB.Items.Add("Male");
-            genderCB.Items.Add("Femelle");
+            animalFormGenderCB.Items.Add("Male");
+            animalFormGenderCB.Items.Add("Femelle");
         }
 
         /// <summary>
@@ -438,16 +438,16 @@ namespace Mauxnimale_CE2.ui
             specieFormNameBox.GotFocus += new EventHandler(GetFocus);
             specieFormNameBox.LostFocus += new EventHandler(LostFocus);
 
-            SpecieFormValidate = new UIButton(UIColor.ORANGE, "Ajouter", window.Width * 8 / 100)
+            specieFormValidate = new UIButton(UIColor.ORANGE, "Ajouter", window.Width * 8 / 100)
             {
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 Height = window.Height / 25,
                 Location = new Point(window.Width * 24 / 50, window.Height * 7 / 20),
                 Size = new Size(window.Width * 15 / 100, window.Height * 5 / 100),
             };
-            window.Controls.Add(SpecieFormValidate);
-            SpecieFormValidate.BringToFront();
-            SpecieFormValidate.Click += new EventHandler(SubmitSpecieForm);
+            window.Controls.Add(specieFormValidate);
+            specieFormValidate.BringToFront();
+            specieFormValidate.Click += new EventHandler(SubmitSpecieForm);
 
             specieFormAllSpecieLB = new ListBox()
             {
@@ -459,7 +459,7 @@ namespace Mauxnimale_CE2.ui
             specieFormAllSpecieLB.BringToFront();
             specieFormAllSpecieLB.SelectedIndexChanged += new EventHandler(SelectedSpeciesForUpdate);
 
-            researchSpecies = new TextBox()
+            specieFormResearchBar = new TextBox()
             {
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 Text = "Recherche",
@@ -467,37 +467,44 @@ namespace Mauxnimale_CE2.ui
                 Location = new Point(window.Width * 35 / 50, window.Height * 5 / 20),
                 Size = new Size(window.Width * 10 / 50, window.Height * 3 / 20),
             };
-            window.Controls.Add(researchSpecies);
-            researchSpecies.GotFocus += new EventHandler(ResearchGotFocus);
-            researchSpecies.TextChanged += new EventHandler(ResearchByName);
+            window.Controls.Add(specieFormResearchBar);
+            specieFormResearchBar.GotFocus += new EventHandler(ResearchGotFocus);
+            specieFormResearchBar.TextChanged += new EventHandler(ResearchByName);
 
-            SpecieFormUpdate = new UIButton(UIColor.ORANGE, "Modifier", window.Width * 8 / 100)
+            specieFormUpdate = new UIButton(UIColor.ORANGE, "Modifier", window.Width * 8 / 100)
             {
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 Height = window.Height / 25,
                 Location = new Point(window.Width * 35 / 50, window.Height * 9 / 20),
-                Size = new Size(window.Width * 10 / 50, window.Height * 5 / 100),
+                Size = new Size(window.Width * 4 / 50, window.Height * 5 / 100),
             };
-            SpecieFormUpdate.BringToFront();
-            SpecieFormUpdate.Click += new EventHandler(UpdateSpecie);
+            specieFormUpdate.Click += new EventHandler(UpdateSpecie);
 
-            SpeciFormDelete = new UIButton(UIColor.ORANGE, "Modifier", window.Width * 8 / 100)
+            specieFormDelete = new UIButton(UIColor.ORANGE, "Supprimer", window.Width * 8 / 100)
             {
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 Height = window.Height / 25,
-                Location = new Point(window.Width * 35 / 50, window.Height * 9 / 20),
-                Size = new Size(window.Width * 10 / 50, window.Height * 5 / 100),
+                Location = new Point(window.Width * 41 / 50, window.Height * 9 / 20),
+                Size = new Size(window.Width * 4 / 50, window.Height * 5 / 100),
             };
-            SpeciFormDelete.BringToFront();
-            SpeciFormDelete.Click += new EventHandler(DeleteSpecie);
+            specieFormDelete.Click += new EventHandler(DeleteSpecie);
         }
 
         private void DeleteSpecie(object sender, EventArgs e)
         {
-            AnimalController.DeleteSpecie(select);
+            var result = MessageBox.Show("Toutes les races liées à cette espèce et tout les animaux liés à ces races seront supprimé et IRRÉCUPÉRABLE.", "Demande de confirmation", MessageBoxButtons.OKCancel);
+            if(result == DialogResult.OK)
+            {
+                if (AnimalController.DeleteSpecie((ESPECE)specieFormAllSpecieLB.SelectedItem))
+                {
+                    MessageBox.Show("L'espèce à bien été supprimée.", "Confirmation de suppression", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("L'espèce n'a pas pu être supprimée.", "Problème de suppression", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
-
-
 
         /// <summary>
         /// Méthode répondant à l'évenement de la sélection d'un objet dans la liste des espèces.
@@ -509,10 +516,14 @@ namespace Mauxnimale_CE2.ui
         {
             if(specieFormAllSpecieLB.SelectedItem != null && specieFormAllSpecieLB.SelectedItem != " ")
             {
-                window.Controls.Add(SpecieFormUpdate);
+                window.Controls.Add(specieFormUpdate);
+                window.Controls.Add(specieFormDelete);
+                specieFormDelete.BringToFront();
+                specieFormUpdate.BringToFront();
             } else
             {
-                window.Controls.Remove(SpecieFormUpdate);
+                window.Controls.Remove(specieFormUpdate);
+                window.Controls.Remove(specieFormDelete);
             }
             window.Refresh();
         }
@@ -556,18 +567,18 @@ namespace Mauxnimale_CE2.ui
         /// </summary>
         private void FormBreed()
         {
-            speciesBreedFormCB = new ComboBox
+            breedFormSpeciesCB = new ComboBox
             {
                 Location = new Point(window.Width * 24 / 50, window.Height * 11 / 20),
                 Size = new Size(window.Width * 15 / 100, window.Height * 5 / 100),
                 ForeColor = Color.Black,
                 Text = "Espèce"
             };
-            window.Controls.Add(speciesBreedFormCB);
-            speciesBreedFormCB.BringToFront();
-            speciesBreedFormCB.SelectedValueChanged += new EventHandler(BreedFormSelectedSpecies);
+            window.Controls.Add(breedFormSpeciesCB);
+            breedFormSpeciesCB.BringToFront();
+            breedFormSpeciesCB.SelectedValueChanged += new EventHandler(BreedFormSelectedSpecies);
 
-            breedNameBox = new TextBox
+            breedFormNameBox = new TextBox
             {
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 Text = "Nom de la race",
@@ -576,20 +587,20 @@ namespace Mauxnimale_CE2.ui
                 Size = new Size(window.Width * 15 / 100, window.Height * 5 / 100),
                 MaxLength = 128
             };
-            window.Controls.Add(breedNameBox);
-            breedNameBox.GotFocus += new EventHandler(GetFocus);
-            breedNameBox.LostFocus += new EventHandler(LostFocus);
+            window.Controls.Add(breedFormNameBox);
+            breedFormNameBox.GotFocus += new EventHandler(GetFocus);
+            breedFormNameBox.LostFocus += new EventHandler(LostFocus);
 
-            validateBreedForm = new UIButton(UIColor.ORANGE, "Ajouter", window.Width * 15 / 100)
+            breedFormValidate = new UIButton(UIColor.ORANGE, "Ajouter", window.Width * 15 / 100)
             {
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 Height = window.Height / 25,
                 Location = new Point(window.Width * 24 / 50, window.Height * 13 / 20)
             };
-            window.Controls.Add(validateBreedForm);
-            validateBreedForm.Click += new EventHandler(SubmitBreedForm);
+            window.Controls.Add(breedFormValidate);
+            breedFormValidate.Click += new EventHandler(SubmitBreedForm);
 
-            researchBreeds = new TextBox()
+            breedFormResearchBar = new TextBox()
             {
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 Text = "Recherche",
@@ -597,29 +608,58 @@ namespace Mauxnimale_CE2.ui
                 Location = new Point(window.Width * 35 / 50, window.Height * 11 / 20),
                 Size = new Size(window.Width * 10 / 50, window.Height * 3 / 20),
             };
-            window.Controls.Add(researchBreeds);
-            researchBreeds.GotFocus += new EventHandler(ResearchGotFocus);
-            researchBreeds.TextChanged += new EventHandler(ResearchByName);
+            window.Controls.Add(breedFormResearchBar);
+            breedFormResearchBar.GotFocus += new EventHandler(ResearchGotFocus);
+            breedFormResearchBar.TextChanged += new EventHandler(ResearchByName);
 
-            breedForUpdate = new ListBox()
+            breedFromBreedLB = new ListBox()
             {
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 Location = new Point(window.Width * 35 / 50, window.Height * 12 / 20),
                 Size = new Size(window.Width * 10 / 50, window.Height * 3 / 20),
             };
-            window.Controls.Add(breedForUpdate);
-            breedForUpdate.BringToFront();
-            breedForUpdate.SelectedIndexChanged += new EventHandler(SelectedBreedForUpdate);
+            window.Controls.Add(breedFromBreedLB);
+            breedFromBreedLB.BringToFront();
+            breedFromBreedLB.SelectedIndexChanged += new EventHandler(SelectedBreedForUpdate);
 
-            updateBreed = new UIButton(UIColor.ORANGE, "Modifier", window.Width * 8 / 100)
+            breedFormUpdate = new UIButton(UIColor.ORANGE, "Modifier", window.Width * 8 / 100)
             {
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 Height = window.Height / 25,
                 Location = new Point(window.Width * 35 / 50, window.Height * 15 / 20),
-                Size = new Size(window.Width * 10 / 50, window.Height * 5 / 100),
+                Size = new Size(window.Width * 4 / 50, window.Height * 5 / 100),
             };
-            updateBreed.BringToFront();
-            updateBreed.Click += new EventHandler(UpdateBreed);
+            breedFormUpdate.Click += new EventHandler(UpdateBreed);
+
+            breedFormDelete = new UIButton(UIColor.ORANGE, "Supprimer", window.Width * 8 / 100)
+            {
+                Font = new Font("Poppins", window.Height * 1 / 100),
+                Height = window.Height / 25,
+                Location = new Point(window.Width * 41 / 50, window.Height * 15 / 20),
+                Size = new Size(window.Width * 4 / 50, window.Height * 5 / 100),
+            };
+            breedFormDelete.Click += new EventHandler(DeleteBreed);
+        }
+
+        /// <summary>
+        /// Méthode répondant à l'évenement du clic sur le bouton supprimer du formulaire lié aux races.
+        /// Méthode permettant de supprimer une race.
+        /// </summary>
+        /// <param name="sender">Bouton de suppréssion</param>
+        /// <param name="e">Le clic</param>
+        private void DeleteBreed(object sender, EventArgs e)
+        {
+            // Demande de confirmation
+            var result = MessageBox.Show("Tous les animaux liés à cette race seront supprimés et IRRÉCUPÉRABLE en plus de la race sélectionnée.", "Demande de confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            if(result == DialogResult.OK)
+            {
+                if (AnimalController.DeleteBreed(breedFormSelectedBreed)){
+                    MessageBox.Show("La race a bien été supprimée.", "Validation de suppression", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }else
+                {
+                    MessageBox.Show("La race n'a pas pu être supprimée.", "Problème de suppression", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         /// <summary>
@@ -631,7 +671,7 @@ namespace Mauxnimale_CE2.ui
         private void UpdateBreed(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceUpdateRelatedToAnimals(window, user, selectBreedForUpdate, this));
+            window.switchInterface(new InterfaceUpdateRelatedToAnimals(window, user, breedFormSelectedBreed, this));
         }
 
         /// <summary>
@@ -642,13 +682,15 @@ namespace Mauxnimale_CE2.ui
         /// <param name="e">Sélection un objet dans la liste</param>
         private void SelectedBreedForUpdate(object sender, EventArgs e)
         {
-            selectBreedForUpdate = (breedForUpdate.SelectedItem == " ") ? null : (RACE)breedForUpdate.SelectedItem;
-            if (selectBreedForUpdate != null)
+            breedFormSelectedBreed = (breedFromBreedLB.SelectedItem == " ") ? null : (RACE)breedFromBreedLB.SelectedItem;
+            if (breedFormSelectedBreed != null)
             {
-                window.Controls.Add(updateBreed);
+                window.Controls.Add(breedFormUpdate);
+                window.Controls.Add(breedFormDelete);
             } else
             {
-                window.Controls.Remove(updateBreed);
+                window.Controls.Remove(breedFormUpdate);
+                window.Controls.Remove(breedFormDelete);
             }
             window.Refresh();
         }
@@ -660,7 +702,7 @@ namespace Mauxnimale_CE2.ui
         /// <param name="e">Le clic</param>
         private void BreedFormSelectedSpecies(object sender, EventArgs e)
         {
-            selectedSpeciesBreedForm = speciesBreedFormCB.SelectedItem == " " ? null : (ESPECE)speciesBreedFormCB.SelectedItem;
+            breedFormSelectedSpecie = breedFormSpeciesCB.SelectedItem == " " ? null : (ESPECE)breedFormSpeciesCB.SelectedItem;
             UpdateBreedsList();
         }
 
@@ -671,21 +713,21 @@ namespace Mauxnimale_CE2.ui
         /// </summary>
         private void UpdateBreedsList()
         {
-            breedForUpdate.Items.Clear();
-            breedForUpdate.Items.Add(" ");
-            if(selectedSpeciesBreedForm != null)
+            breedFromBreedLB.Items.Clear();
+            breedFromBreedLB.Items.Add(" ");
+            if(breedFormSelectedSpecie != null)
             {
                 // Rempli la liste avec un trie par espèce
-                foreach (RACE breed in AnimalController.BreedsWithSpecie(selectedSpeciesBreedForm))
+                foreach (RACE breed in AnimalController.BreedsWithSpecie(breedFormSelectedSpecie))
                 {
-                    breedForUpdate.Items.Add(breed);
+                    breedFromBreedLB.Items.Add(breed);
                 }
             } else
             {
                 // Remplie la liste avec toutes les races 
                 foreach (RACE breed in AnimalController.AllBreeds())
                 {
-                    breedForUpdate.Items.Add(breed);
+                    breedFromBreedLB.Items.Add(breed);
                 }
             }
         }
@@ -698,9 +740,9 @@ namespace Mauxnimale_CE2.ui
         /// <param name="e">Le clic</param>
         private void SubmitBreedForm(object sender, EventArgs e)
         {
-            if (selectedSpeciesBreedForm != null && breedNameBox.Text.Length != 0)
+            if (breedFormSelectedSpecie != null && breedFormNameBox.Text.Length != 0)
             {
-                if(AnimalController.AddBreed(selectedSpeciesBreedForm, NormalizeName(breedNameBox.Text)))
+                if(AnimalController.AddBreed(breedFormSelectedSpecie, NormalizeName(breedFormNameBox.Text)))
                 {
                     MessageBox.Show("La race à bien été ajoutée à la base avec succés", "Comfirmation d'ajout à la base de donnée", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }else
@@ -745,10 +787,10 @@ namespace Mauxnimale_CE2.ui
                 specieFormNameBox.Text = "Nom de l'espèce";
                 specieFormNameBox.ForeColor = Color.Gray;
             }
-            if (sender.Equals(breedNameBox) && breedNameBox.Text.Length == 0)
+            if (sender.Equals(breedFormNameBox) && breedFormNameBox.Text.Length == 0)
             {
-                breedNameBox.Text = "Nom de la race";
-                breedNameBox.ForeColor = Color.Gray;
+                breedFormNameBox.Text = "Nom de la race";
+                breedFormNameBox.ForeColor = Color.Gray;
             }
         }
 
@@ -784,10 +826,10 @@ namespace Mauxnimale_CE2.ui
                 specieFormNameBox.Text = "";
                 specieFormNameBox.ForeColor = Color.Black;
             }
-            if (sender.Equals(breedNameBox) && breedNameBox.Text == "Nom de la race")
+            if (sender.Equals(breedFormNameBox) && breedFormNameBox.Text == "Nom de la race")
             {
-                breedNameBox.Text = "";
-                breedNameBox.ForeColor = Color.Black;
+                breedFormNameBox.Text = "";
+                breedFormNameBox.ForeColor = Color.Black;
             }
         }
 
@@ -799,15 +841,15 @@ namespace Mauxnimale_CE2.ui
         /// <param name="e">La prise de focus</param>
         private void ResearchGotFocus(object sender, EventArgs e)
         {
-            if (sender.Equals(researchSpecies) && researchSpecies.Text == "Recherche")
+            if (sender.Equals(specieFormResearchBar) && specieFormResearchBar.Text == "Recherche")
             {
-                researchSpecies.Text = "";
-                researchSpecies.ForeColor = Color.Black;
+                specieFormResearchBar.Text = "";
+                specieFormResearchBar.ForeColor = Color.Black;
             }
-            if (sender.Equals(researchBreeds) && researchBreeds.Text == "Recherche")
+            if (sender.Equals(breedFormResearchBar) && breedFormResearchBar.Text == "Recherche")
             {
-                researchBreeds.Text = "";
-                researchBreeds.ForeColor = Color.Black;
+                breedFormResearchBar.Text = "";
+                breedFormResearchBar.ForeColor = Color.Black;
             }
         }
         #endregion
@@ -819,22 +861,22 @@ namespace Mauxnimale_CE2.ui
         /// <param name="e">Changement du text d'une TextBox de recherche</param>
         private void ResearchByName(object sender, EventArgs e)
         {
-            if (sender.Equals(researchSpecies))
+            if (sender.Equals(specieFormResearchBar))
             {
                 specieFormAllSpecieLB.Items.Clear();
                 specieFormAllSpecieLB.Items.Add(" ");
-                foreach (ESPECE s in AnimalController.ResearchSpeciesByName(researchSpecies.Text))
+                foreach (ESPECE s in AnimalController.ResearchSpeciesByName(specieFormResearchBar.Text))
                 {
                     specieFormAllSpecieLB.Items.Add(s);
                 }
             }
-            if (sender.Equals(researchBreeds))
+            if (sender.Equals(breedFormResearchBar))
             {
-                breedForUpdate.Items.Clear();
-                breedForUpdate.Items.Add(" ");
-                foreach (RACE b in AnimalController.ResearchBreedByName(selectedSpeciesBreedForm, researchBreeds.Text))
+                breedFromBreedLB.Items.Clear();
+                breedFromBreedLB.Items.Add(" ");
+                foreach (RACE b in AnimalController.ResearchBreedByName(breedFormSelectedSpecie, breedFormResearchBar.Text))
                 {
-                    breedForUpdate.Items.Add(b);
+                    breedFromBreedLB.Items.Add(b);
                 }
             }
         }

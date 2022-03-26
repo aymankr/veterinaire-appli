@@ -134,7 +134,7 @@ namespace Mauxnimale_CE2.ui
         {
             if (surnameBox.Text.Length != 0 && nameBox.Text.Length != 0 && numberBox.Text.Length != 0 && numberBox.Text.Length == 10)
             {
-                ClientController.AddClient(nameBox.Text.ToUpper(), NormalizeSurname(), numberBox.Text);
+                ClientController.RegisterClient(nameBox.Text.ToUpper(), NormalizeSurname(), numberBox.Text);
                 MessageBox.Show("Le client " + nameBox.Text + " " + surnameBox.Text + " à bien été ajouté à la base avec le numéro de téléphone " + numberBox.Text,
                     "Validation d'ajout",
                     MessageBoxButtons.OK,

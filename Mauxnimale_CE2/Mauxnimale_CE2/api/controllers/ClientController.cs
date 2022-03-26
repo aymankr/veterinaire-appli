@@ -12,17 +12,27 @@ namespace Mauxnimale_CE2.api.controllers
         /// <summary>
         /// Ajouter un client dans la bd, avec ses informations
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="surname"></param>
-        /// <param name="phoneNumber"></param>
-       public static void AddClient(string name, string surname, string phoneNumber)
+        /// <param name="name">Le nom du client</param>
+        /// <param name="surname">Le prénom du client</param>
+        /// <param name="phoneNumber">Le téléphone du client</param>
+       public static bool RegisterClient(string name, string surname, string phoneNumber)
         {
-            CLIENT c = new CLIENT();
-            c.NOMCLIENT = name;
-            c.PRENOMCLIENT = surname;
-            c.TELCLIENT = phoneNumber;
-            DbContext.get().CLIENT.Add(c);
-            DbContext.get().SaveChanges();
+            try
+            {
+                CLIENT c = new CLIENT
+                {
+                    NOMCLIENT = name,
+                    PRENOMCLIENT = surname,
+                    TELCLIENT = phoneNumber
+                };
+                DbContext.get().CLIENT.Add(c);
+                DbContext.get().SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -80,12 +90,12 @@ namespace Mauxnimale_CE2.api.controllers
         }
 
         /// <summary>
-        /// Récupérer tous les clients
+        /// Récupérer tous les clients, triés par nom
         /// </summary>
         /// <returns></returns>
         public static List<CLIENT> AllClient()
         {
-            return DbContext.get().CLIENT.ToList();
+            return DbContext.get().CLIENT.OrderBy(customer => customer.NOMCLIENT).ToList();
         }
 
         /// <summary>
@@ -136,8 +146,8 @@ namespace Mauxnimale_CE2.api.controllers
         /// <summary>
         /// Ajouter l'animal d'un client
         /// </summary>
-        /// <param name="c"></param>
-        /// <param name="a"></param>
+        /// <param name="c">Propriètaire</param>
+        /// <param name="a">Animal</param>
         public static void AddAnimal(CLIENT c, ANIMAL a)
         {
             c.ANIMAL.Add(a);
@@ -154,13 +164,13 @@ namespace Mauxnimale_CE2.api.controllers
         }
 
         /// <summary>
-        /// Récupérer les animaux du client
+        /// Récupérer les animaux du client, trié par nom.
         /// </summary>
         /// <param name="c"></param>
         /// <returns></returns>
         public static List<ANIMAL> ListOfAnimal(CLIENT c)
         {
-            return c.ANIMAL.ToList();
+            return c.ANIMAL.OrderBy(animal => animal.NOM).ToList();
         }
 
         public static List<ANIMAL> ListAnimalByName(CLIENT c, string name)

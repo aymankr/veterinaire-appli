@@ -38,35 +38,9 @@ namespace Mauxnimale_CE2.ui
 
         private void generateComboBox()
         {
-            // Style
-            _employeesList = new ComboBox();
-            _employeesList.Name = "EmployeesList";
+            _employeesList = new EmployeesComboBox();
             _employeesList.Size = new Size(window.Width / 3, 100);
             _employeesList.Location = new Point(50, 200);
-            _employeesList.DropDownStyle = ComboBoxStyle.DropDownList;
-
-            // Values
-            DataTable employees = new DataTable();
-            employees.Columns.Add("id", typeof(int));
-            employees.Columns.Add("name", typeof(string));
-            employees.Columns.Add("salary", typeof(decimal));
-            employees.Columns.Add("internshipStart", typeof(DateTime));
-            employees.Columns.Add("internshipEnd", typeof(DateTime));
-
-            foreach (SALARIE employee in UserController.getAllEmployees())
-            {
-                if (employee.PREMIERECONNEXION)
-                    employees.Rows.Add(employee.IDCOMPTE, employee.ToString(), employee.SALAIRE, employee.DATEDEBUTSTAGE, employee.DATEFINSTAGE);
-            }
-
-            DataRow emptyRow = employees.NewRow();
-            emptyRow["id"] = -1;
-            emptyRow["name"] = "-- Veuillez choisir un salarié--";
-            employees.Rows.InsertAt(emptyRow, 0);
-
-            _employeesList.ValueMember = "id";
-            _employeesList.DisplayMember = "name";
-            _employeesList.DataSource = employees;
 
             // Events
             _employeesList.SelectedValueChanged += onEmployeeChosen;
@@ -125,7 +99,7 @@ namespace Mauxnimale_CE2.ui
         private void onVacationManagementButtonClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceGestionCongé(window, user));
+            window.switchInterface(new InterfaceVacationManagement(window, user, _selectedEmployee));
         }
 
         private void onEmployeeChosen(object sender, EventArgs e)

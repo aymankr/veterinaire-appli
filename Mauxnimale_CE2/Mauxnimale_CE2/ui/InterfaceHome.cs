@@ -13,7 +13,7 @@ namespace Mauxnimale_CE2.ui
         Header header;
         Footer footer;
 
-        UIButton manageCongé, manageMaladie, manageVentes, stats, manageConsultation, manageStock;
+        UIButton employeesManagementBtn, manageMaladie, manageVentes, stats, manageConsultation, manageStock;
         Button compte;
         Label incEvent;
         TextBox events;
@@ -78,15 +78,15 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(manageConsultation);
 
             if(!user.ASSISTANT){
-                manageCongé = new UIButton(UIColor.DARKBLUE, "Gestion des congés", window.Width / 4);
-                manageCongé.Location = new System.Drawing.Point(window.Width * 325 / 1000, window.Height * 625 / 1000);
-                window.Controls.Add(manageCongé);
+                employeesManagementBtn = new UIButton(UIColor.DARKBLUE, "Gestion des salariés", window.Width / 4);
+                employeesManagementBtn.Location = new System.Drawing.Point(window.Width * 325 / 1000, window.Height * 625 / 1000);
+                window.Controls.Add(employeesManagementBtn);
 
                 stats = new UIButton(UIColor.DARKBLUE, "Statistiques", window.Width / 4);
                 stats.Location = new System.Drawing.Point(window.Width * 6 / 10, window.Height * 625 / 1000);
                 window.Controls.Add(stats);
 
-                manageCongé.Click += new EventHandler(manageCongéClick);
+                employeesManagementBtn.Click += new EventHandler(onEmployeesManagementBtnClick);
                 stats.Click += new EventHandler(statsClick);
             }
 
@@ -126,10 +126,10 @@ namespace Mauxnimale_CE2.ui
             window.switchInterface(new InterfaceAccountManagement(window, user));
         }
 
-        public void manageCongéClick(object sender, EventArgs e)
+        public void onEmployeesManagementBtnClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceGestionCongé(window, user));
+            window.switchInterface(new InterfaceEmployeesManagement(window, user));
         }
 
         public void manageStockClick(object sender, EventArgs e)

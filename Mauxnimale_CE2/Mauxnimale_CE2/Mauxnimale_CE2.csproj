@@ -144,6 +144,9 @@
     <Compile Include="api\entities\TYPE_RDV.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ui\components\EmployeesComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ui\InterfaceAppointmentCreation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -177,7 +180,7 @@
     <Compile Include="ui\InterfaceAdmin.cs" />
     <Compile Include="ui\InterfaceConnection.cs" />
     <Compile Include="ui\InterfaceAccountManagement.cs" />
-    <Compile Include="ui\InterfaceGestionCongé.cs" />
+    <Compile Include="ui\InterfaceVacationManagement.cs" />
     <Compile Include="ui\InterfaceHome.cs" />
     <Compile Include="ui\InterfaceInscription.cs" />
     <Compile Include="ui\InterfaceLegalMentions.cs" />

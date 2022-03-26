@@ -10,11 +10,11 @@ namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceNewsRelatedToAnimals : AInterface
     {
-        MainWindow window;
-        AInterface interfaceWhoLauchThisWindow;
+        readonly MainWindow window;
+        readonly AInterface interfaceWhoLauchThisWindow;
+        readonly Header header;
+        readonly Footer footer;
 
-        Header header;
-        Footer footer;
         Label animalLabel, breedLabel, speciesLabel;
 
         #region Animal form elements and attribute
@@ -69,9 +69,9 @@ namespace Mauxnimale_CE2.ui
             //Génération des éléments du formulaire liés à l'ajout et de modification d'une race
             FormBreed();
             // Ajout des données dans les éléments
-            AddToIsMaleCB();
-            InitCBAndCB();
-            AddToClientCB();
+            InitGenderCB();
+            AddDataInCBandB();
+            InitClientCB();
         }
 
         #region Back button
@@ -364,8 +364,11 @@ namespace Mauxnimale_CE2.ui
         /// <summary>
         /// Méthode permettant d'ajouter les données dans les ComboBox et ListBox associées
         /// </summary>
-        private void InitCBAndCB()
+        private void AddDataInCBandB()
         {
+            animalFormSpeciesCB.Items.Clear();
+            breedFormSpeciesCB.Items.Clear();
+            specieFormAllSpecieLB.Items.Clear();
             foreach (ESPECE species in AnimalController.AllSpecies())
             {
                 animalFormSpeciesCB.Items.Add(species);
@@ -382,7 +385,7 @@ namespace Mauxnimale_CE2.ui
         /// <summary>
         /// Méthode permettant d'ajouter les deux choix possible pour le genre de l'animal dans la ComboBox associée
         /// </summary>
-        private void AddToIsMaleCB()
+        private void InitGenderCB()
         {
             animalFormGenderCB.Items.Add("Male");
             animalFormGenderCB.Items.Add("Femelle");
@@ -391,7 +394,7 @@ namespace Mauxnimale_CE2.ui
         /// <summary>
         /// Méthode permettant d'ajouter les clients possible pour les lié à l'animal dans la ComBox associée
         /// </summary>
-        public void AddToClientCB()
+        public void InitClientCB()
         {
             foreach (CLIENT c in ClientController.AllClient())
             {
@@ -497,6 +500,7 @@ namespace Mauxnimale_CE2.ui
             {
                 if (AnimalController.DeleteSpecie((ESPECE)specieFormAllSpecieLB.SelectedItem))
                 {
+                    AddDataInCBandB();
                     MessageBox.Show("L'espèce à bien été supprimée.", "Confirmation de suppression", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -546,6 +550,7 @@ namespace Mauxnimale_CE2.ui
                     MessageBox.Show("Ce nom d'espèce existe déjà", "Problème d'insertion", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+            AddDataInCBandB();
         }
 
         /// <summary>
@@ -654,6 +659,7 @@ namespace Mauxnimale_CE2.ui
             if(result == DialogResult.OK)
             {
                 if (AnimalController.DeleteBreed(breedFormSelectedBreed)){
+                    AddToBreedCB();
                     MessageBox.Show("La race a bien été supprimée.", "Validation de suppression", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }else
                 {
@@ -750,6 +756,7 @@ namespace Mauxnimale_CE2.ui
                     MessageBox.Show("La race existe déjà", "Problème d'insertion à la base de donnée", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+            AddToBreedCB();
         }
         #endregion
 

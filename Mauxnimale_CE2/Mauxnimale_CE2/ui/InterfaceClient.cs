@@ -10,10 +10,9 @@ namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceClient : AInterface
     {
-        MainWindow window;
-
-        Header header;
-        Footer footer;
+        readonly MainWindow window;
+        readonly Header header;
+        readonly Footer footer;
 
         ListBox listClient, listInfoClient, listAnimal, listInfoAnimal;
         TextBox researchBar;
@@ -34,15 +33,19 @@ namespace Mauxnimale_CE2.ui
             footer = new Footer(window, user);
         }
 
+        /// <summary>
+        /// Permet de générer les éléments de la fenêtre
+        /// </summary>
         public override void load()
         {
+            // On génere les éléments de décoration de de la fenêtre
             header.load("Mauxnimale - Page de gestion des clients");
             footer.load();
-
+            // On génere les éléments avec lequels l'utilisateur peut interagir 
             GenerateLists();
             GenerateTextBox();
             GenerateButtons();
-
+            // On remplis la liste des clients avec des données de la base
             AddListOfClient();
         }
 
@@ -55,6 +58,9 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        /// <summary>
+        /// Permet de générer toutes les ComboBox de l'interface.s
+        /// </summary>
         public void GenerateLists()
         {
             listClient = new ListBox
@@ -105,6 +111,9 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(listInfoAnimal);
         }
 
+        /// <summary>
+        /// Permet de générer toutes les TextBox de l'interface
+        /// </summary>
         public void GenerateTextBox()
         {
             researchBar = new TextBox();
@@ -117,71 +126,85 @@ namespace Mauxnimale_CE2.ui
             researchBar.TextChanged += new EventHandler(Research);
         }
 
+        /// <summary>
+        /// Permet de générer tous les boutons de l'interface.
+        /// </summary>
         public void GenerateButtons()
         {
-            newClient = new UIButton(UIColor.ORANGE, "Nouveau", window.Width / 8);
-            newClient.Height = window.Height / 25;
-            newClient.Location = new Point(window.Width * 20 / 1000, window.Height * 12 / 15);
+            newClient = new UIButton(UIColor.ORANGE, "Nouveau", window.Width / 8)
+            {
+                Height = window.Height / 25,
+                Location = new Point(window.Width * 20 / 1000, window.Height * 12 / 15)
+            };
             newClient.Click += new EventHandler(OpenNewClientInterface);
             window.Controls.Add(newClient);
 
-            deleteClient = new UIButton(UIColor.ORANGE, "Supprimer", window.Width / 8);
-            deleteClient.Height = window.Height / 25;
-            deleteClient.Location = new Point(window.Width * 295 / 1000, window.Height * 12 / 15);
+            deleteClient = new UIButton(UIColor.ORANGE, "Supprimer", window.Width / 8)
+            {
+                Height = window.Height / 25,
+                Location = new Point(window.Width * 295 / 1000, window.Height * 12 / 15)
+            };
             deleteClient.Click += new EventHandler(DeleteClient);
 
-            updateClient = new UIButton(UIColor.ORANGE, "Modifier", window.Width / 8);
-            updateClient.Height = window.Height / 25;
-            updateClient.Location = new Point(window.Width * 157 / 1000, window.Height * 12 / 15);
+            updateClient = new UIButton(UIColor.ORANGE, "Modifier", window.Width / 8)
+            {
+                Height = window.Height / 25,
+                Location = new Point(window.Width * 157 / 1000, window.Height * 12 / 15)
+            };
             updateClient.Click += new EventHandler(OpenUpdateClientInterface);
 
-            newAnimal = new UIButton(UIColor.ORANGE, "Nouveau", window.Width / 10);
-            newAnimal.Height = window.Height / 25;
-            newAnimal.Location = new Point(window.Width * 520 / 1000, window.Height * 12 / 15);
+            newAnimal = new UIButton(UIColor.ORANGE, "Nouveau", window.Width / 10)
+            {
+                Height = window.Height / 25,
+                Location = new Point(window.Width * 520 / 1000, window.Height * 12 / 15)
+            };
             newAnimal.Click += new EventHandler(OpenNewAnimalInterface);
             window.Controls.Add(newAnimal);
 
-            deleteAnimal = new UIButton(UIColor.ORANGE, "Supprimer", window.Width / 10);
-            deleteAnimal.Height = window.Height / 25;
-            deleteAnimal.Location = new Point(window.Width * 789 / 1000, window.Height * 12 / 15);
+            deleteAnimal = new UIButton(UIColor.ORANGE, "Supprimer", window.Width / 10)
+            {
+                Height = window.Height / 25,
+                Location = new Point(window.Width * 789 / 1000, window.Height * 12 / 15)
+            };
             deleteAnimal.Click += new EventHandler(DeleteAnimal);
 
-            updateAnimal = new UIButton(UIColor.ORANGE, "Modifier", window.Width / 10);
-            updateAnimal.Height = window.Height / 25;
-            updateAnimal.Location = new Point(window.Width * 655 / 1000, window.Height * 12 / 15);
+            updateAnimal = new UIButton(UIColor.ORANGE, "Modifier", window.Width / 10)
+            {
+                Height = window.Height / 25,
+                Location = new Point(window.Width * 655 / 1000, window.Height * 12 / 15)
+            };
             updateAnimal.Click += new EventHandler(OpenUpdateAnimalInterface);
 
-            byName = new UIButton(UIColor.ORANGE, "Par nom", window.Width / 12);
-            byName.Font = new Font("Poppins", window.Height * 1 / 100);
-            byName.Location = new Point(window.Width * 245 / 1000, window.Height / 11);
+            byName = new UIButton(UIColor.ORANGE, "Par nom", window.Width / 12)
+            {
+                Font = new Font("Poppins", window.Height * 1 / 100),
+                Location = new Point(window.Width * 245 / 1000, window.Height / 11)
+            };
             window.Controls.Add(byName);
             byName.Click += new EventHandler(ChangeMode);
 
-            bySurname = new UIButton(UIColor.LIGHTBLUE, "Par prénom", window.Width / 12);
-            bySurname.Font = new Font("Poppins", window.Height * 1 / 100);
-            bySurname.Location = new Point(window.Width * 335 / 1000, window.Height / 11);
+            bySurname = new UIButton(UIColor.LIGHTBLUE, "Par prénom", window.Width / 12)
+            {
+                Font = new Font("Poppins", window.Height * 1 / 100),
+                Location = new Point(window.Width * 335 / 1000, window.Height / 11)
+            };
             window.Controls.Add(bySurname);
             bySurname.Click += new EventHandler(ChangeMode);
 
-            backButton = new UIRoundButton(window.Width / 20, "<");
-            backButton.Location = new Point(window.Width * 9 / 10, window.Height / 10);
+            backButton = new UIRoundButton(window.Width / 20, "<")
+            {
+                Location = new Point(window.Width * 9 / 10, window.Height / 10)
+            };
             window.Controls.Add(backButton);
             backButton.Click += new EventHandler(ReturnHomePage);
         }
 
-        private void OpenNewAnimalInterface(object sender, EventArgs e)
-        {
-            window.Controls.Clear();
-            window.switchInterface(new InterfaceNewsRelatedToAnimals(window, user, this));
-        }
-
-        private void ReturnHomePage(object sender, EventArgs e)
-        {
-            window.Controls.Clear();
-            window.switchInterface(new InterfaceHome(window, user));
-        }
-
         #region Delete something
+        /// <summary>
+        /// Permet de supprimer un client.
+        /// </summary>
+        /// <param name="sender">Bouton supprimer client</param>
+        /// <param name="e">clics</param>
         private void DeleteClient(object sender, EventArgs e)
         {
             string message = "Êtes vous sur de vouloirs supprimer le client suivant : \n" + selectedClient + "\nSa suppression sera IRRÉVERSIBLE";
@@ -195,6 +218,11 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        /// <summary>
+        /// Permet de supprimer un animal.
+        /// </summary>
+        /// <param name="sender">Bouton supprimer animal</param>
+        /// <param name="e">clic</param>
         private void DeleteAnimal(object sender, EventArgs e)
         {
             AnimalController.RemoveAnimal(selectedAnimal);
@@ -205,6 +233,34 @@ namespace Mauxnimale_CE2.ui
         #endregion
 
         #region Open other interface
+
+        /// <summary>
+        /// Permet de retourner sur l'interface principale.
+        /// </summary>
+        /// <param name="sender">Bouton retour</param>
+        /// <param name="e">clic</param>
+        private void ReturnHomePage(object sender, EventArgs e)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceHome(window, user));
+        }
+
+        /// <summary>
+        /// Permet de changer d'interface vers l'interface nouvel animal.
+        /// </summary>
+        /// <param name="sender">Bouton nouvel animal</param>
+        /// <param name="e">clic</param>
+        private void OpenNewAnimalInterface(object sender, EventArgs e)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceNewsRelatedToAnimals(window, user, this));
+        }
+
+        /// <summary>
+        /// Permet de changer d'interface vers l'interface de modification client.s
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OpenUpdateClientInterface(object sender, EventArgs e)
         {
             window.Controls.Clear();

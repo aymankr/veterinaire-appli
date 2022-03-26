@@ -2,16 +2,14 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.ui.components;
+using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceHome : AInterface
     {
-        MainWindow window;
-
         Header header;
         Footer footer;
 
@@ -20,12 +18,10 @@ namespace Mauxnimale_CE2.ui
         Label incEvent;
         TextBox events;
 
-        public InterfaceHome(MainWindow window, SALARIE s)
+        public InterfaceHome(MainWindow window, SALARIE user) : base(window, user)
         {
-            this.window = window;
             header = new Header(window);
-            footer = new Footer(window, s);
-            user = s;
+            footer = new Footer(window, user);
 
         }
         public override void load()
@@ -166,11 +162,5 @@ namespace Mauxnimale_CE2.ui
             window.switchInterface(new InterfaceStatsPage(window, user));
         }
         #endregion
-
-        public override void updateSize()
-        {
-            window.Controls.Clear();
-            this.load();
-        }
     }
 }

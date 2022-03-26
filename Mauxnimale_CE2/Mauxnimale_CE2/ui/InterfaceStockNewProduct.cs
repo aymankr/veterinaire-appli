@@ -1,21 +1,15 @@
 ﻿using Mauxnimale_CE2.api.controllers;
 using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.ui.components;
-using Mauxnimale_CE2.ui.components.componentsTools;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Mauxnimale_CE2.ui.components.componentsTools;
 
 namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceStockNewProduct : AInterface
     {
-        MainWindow window;
-
         Header header;
         Footer footer;
 
@@ -28,6 +22,12 @@ namespace Mauxnimale_CE2.ui
         Label lQuantity, lInitialCost, lResellCost, lExpirationDate, lName, lType;
         DateTimePicker expirationDate;
         TextBox name;
+
+        public InterfaceStockNewProduct(MainWindow window, SALARIE user) : base(window, user)
+        {
+            header = new Header(window);
+            footer = new Footer(window, user);
+        }
 
         #region Input events handling
 
@@ -139,14 +139,6 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(l);
         }
 
-        public InterfaceStockNewProduct(MainWindow window, SALARIE user)
-        {
-            this.window = window;
-            header = new Header(window);
-            footer = new Footer(window, user);
-            base.user = user;
-        }
-
         private void generateBox()
         {
             type = new ComboBox();
@@ -236,12 +228,6 @@ namespace Mauxnimale_CE2.ui
             textBox.ForeColor = Color.Gray;
             textBox.Text = text;
             window.Controls.Add(textBox);
-        }
-
-        public override void updateSize()
-        {
-            window.Controls.Clear();
-            this.load();
         }
     }
 }

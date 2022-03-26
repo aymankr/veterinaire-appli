@@ -35,6 +35,16 @@ public static class UserController
 		return DbContext.get().SALARIE.ToList();
 	}
 
+	/// <summary>
+	/// Retounre l'employé correspondant à l'identifiant donné s'il existe dans la base.
+	/// </summary>
+	/// <param name="employeeId">L'identifiant de l'employé</param>
+	/// <returns>L'employé s'il a été trouvé, null sinon.</returns>
+	public static SALARIE getEmployeeWithId(int employeeId)
+    {
+		return DbContext.get().SALARIE.Find(employeeId);
+    }
+
 
 	/* UPDATES METHODS */
 

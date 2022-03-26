@@ -157,9 +157,6 @@
     <Compile Include="ui\components\UIPicture.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ui\components\UITextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="ui\components\UITitleLabel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -173,11 +170,11 @@
     <Compile Include="ui\InterfaceChangeID.cs" />
     <Compile Include="ui\InterfaceChangePassword.cs" />
     <Compile Include="ui\InterfaceChangeStock.cs" />
+    <Compile Include="ui\InterfaceEmployeesManagement.cs" />
     <Compile Include="ui\InterfaceFirstConnection.cs" />
     <Compile Include="ui\components\MinimalHeader.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ui\ExempleInterface.cs" />
     <Compile Include="ui\InterfaceAdmin.cs" />
     <Compile Include="ui\InterfaceConnection.cs" />
     <Compile Include="ui\InterfaceAccountManagement.cs" />

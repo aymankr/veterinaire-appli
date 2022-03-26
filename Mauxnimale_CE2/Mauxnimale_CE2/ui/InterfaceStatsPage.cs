@@ -7,20 +7,16 @@ namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceStatsPage : AInterface
     {
-        MainWindow window;
-
         Header header;
         Footer footer;
 
         UIButton productPage, clientPage;
         UIRoundButton back;
 
-        public InterfaceStatsPage(MainWindow forme, SALARIE s)
+        public InterfaceStatsPage(MainWindow window, SALARIE user) : base(window, user)
         {
-            this.window = forme;
             header = new Header(window);
-            footer = new Footer(window, s);
-            user = s;
+            footer = new Footer(window, user);
         }
 
         public override void load()
@@ -65,12 +61,6 @@ namespace Mauxnimale_CE2.ui
         {
             window.Controls.Clear();
             window.switchInterface(new InterfaceHome(window, user));
-        }
-
-        public override void updateSize()
-        {
-            window.Controls.Clear();
-            this.load();
         }
     }
 }

@@ -1,11 +1,27 @@
-﻿using Mauxnimale_CE2.api.entities;
+﻿using System.Windows.Forms;
+using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2
 {
     public abstract class AInterface
     {
-        public SALARIE user;
+        protected MainWindow window;
+        protected SALARIE user;
+
+        public AInterface(MainWindow window, SALARIE user)
+        {
+            this.user = user;
+            this.window = window;
+        }
+
         public abstract void load();
-        public abstract void updateSize();
+        public void updateSize()
+        {
+            if (window.WindowState != FormWindowState.Minimized)
+            {
+                window.Controls.Clear();
+                load();
+            }
+        }
     }
 }

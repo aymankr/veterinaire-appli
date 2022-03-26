@@ -8,20 +8,16 @@ namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceLegalMentions : AInterface
     {
-        MainWindow window;
-
         Header header;
         Footer footer;
         Label text;
         UIRoundButton back;
         //Lister ici les différents éléments qui seront utilisés dans l'interface
 
-        public InterfaceLegalMentions(MainWindow forme, SALARIE s)
+        public InterfaceLegalMentions(MainWindow window, SALARIE user) : base(window, user)
         {
-            this.window = forme;
             header = new Header(window);
-            footer = new Footer(window, s);
-            user = s;
+            footer = new Footer(window, user);
         }
 
         public void generateLabel()
@@ -56,12 +52,6 @@ namespace Mauxnimale_CE2.ui
         {
             window.Controls.Clear();
             window.switchInterface(new InterfaceHome(window, user));
-        }
-
-        public override void updateSize()
-        {
-            window.Controls.Clear();
-            this.load();
         }
     }
 }

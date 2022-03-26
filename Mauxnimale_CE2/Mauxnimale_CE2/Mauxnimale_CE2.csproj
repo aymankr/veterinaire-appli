@@ -148,6 +148,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ui\AInterface.cs" />
+    <Compile Include="ui\InterfaceClient.cs" />
     <Compile Include="ui\components\UIButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -181,7 +182,10 @@
     <Compile Include="ui\InterfaceHome.cs" />
     <Compile Include="ui\InterfaceInscription.cs" />
     <Compile Include="ui\InterfaceLegalMentions.cs" />
+    <Compile Include="ui\InterfaceUpdateRelatedToAnimals.cs" />
+    <Compile Include="ui\InterfaceNewsRelatedToAnimals.cs" />
     <Compile Include="ui\InterfaceStatsPage.cs" />
+    <Compile Include="ui\InterfaceUpdateClient.cs" />
     <Compile Include="ui\InterfaceStockManagement.cs" />
     <Compile Include="ui\InterfaceStockNewProduct.cs" />
     <Compile Include="ui\MainWindow.cs">
@@ -196,6 +200,7 @@
     <Compile Include="ui\components\UIRoundButton.Designer.cs">
       <DependentUpon>UIRoundButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="ui\InterfaceNewClient.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

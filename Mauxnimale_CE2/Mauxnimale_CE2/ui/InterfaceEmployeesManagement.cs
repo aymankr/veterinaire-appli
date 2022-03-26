@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Data;
 using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
@@ -10,8 +9,9 @@ namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceEmployeesManagement : AInterface
     {
-        private Header _header;
-        private Footer _footer;
+        private readonly Header _header;
+        private readonly Footer _footer;
+        private UIRoundButton _homeBtn;
 
         private SALARIE _selectedEmployee;
 
@@ -27,6 +27,7 @@ namespace Mauxnimale_CE2.ui
             _footer = new Footer(window, user);
             _selectedEmployee = null;
 
+            generateHomeButton();
             generateComboBox();
             generateVacationButton();
             generateForm();
@@ -35,6 +36,14 @@ namespace Mauxnimale_CE2.ui
         }
 
         #region Components generation
+
+        private void generateHomeButton()
+        {
+            _homeBtn = new UIRoundButton(window.Width / 20, "<");
+            _homeBtn.Location = new Point(window.Width * 9 / 10, window.Height / 10);
+            _homeBtn.Click += onHomeButtonClick;
+        }
+
 
         private void generateComboBox()
         {
@@ -95,11 +104,16 @@ namespace Mauxnimale_CE2.ui
         #endregion
 
         #region Event management
+        private void onHomeButtonClick(object sender, EventArgs eventArgs)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceHome(window, user));
+        }
 
         private void onVacationManagementButtonClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceVacationManagement(window, user, _selectedEmployee));
+            window.switchInterface(new InterfaceVacationManagement(window, user));
         }
 
         private void onEmployeeChosen(object sender, EventArgs e)
@@ -264,6 +278,8 @@ namespace Mauxnimale_CE2.ui
         {
             _header.load("Gestion des salariés");
             _footer.load();
+
+            window.Controls.Add(_homeBtn);
             window.Controls.Add(_employeesList);
             window.Controls.Add(_vacationManagementButton);
             window.Controls.Add(_modifyInfosButton);

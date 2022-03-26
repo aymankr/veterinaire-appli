@@ -11,48 +11,51 @@ namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceVacationManagement : AInterface
     {
-        Header _header;
-        Footer _footer;
+        private readonly Header _header;
+        private readonly Footer _footer;
+        private UIRoundButton _returnBtn, _homeBtn;
 
-        SALARIE _selectedEmployee;
+        private SALARIE _selectedEmployee;
 
         // composants de l'interface
-        EmployeesComboBox _employeesList;
-        Label _nbVacationsRemaining;
-        MonthCalendar _calendar;
-        UIButton _addVacationButton;
-        UIButton _removeVacationButton;
+        private EmployeesComboBox _employeesList;
+        private Label _nbVacationsRemaining;
+        private MonthCalendar _calendar;
+        private UIButton _addVacationButton, _removeVacationButton;
 
-        public InterfaceVacationManagement(MainWindow window, SALARIE user, SALARIE preSelectedEmployee) : base(window, user)
+        public InterfaceVacationManagement(MainWindow window, SALARIE user) : base(window, user)
         {
             _header = new Header(window);
             _footer = new Footer(window, user);
-            _selectedEmployee = preSelectedEmployee;
+            _selectedEmployee = null;
 
+            generateReturnButtons();
             generateEmployeesList();
             generateVacationsRemaining();
             generateMonthCalendar();
             generateButtons();
 
-            if (preSelectedEmployee == null)
-            {
-                _calendar.Enabled = false;
-                _addVacationButton.Enabled = false;
-                _removeVacationButton.Enabled = false;
-                clearInfos();
-            }
-            else
-            {
-                fillInfos();
-                _calendar.Enabled = true;
-            }
+            _calendar.Enabled = false;
+            _addVacationButton.Enabled = false;
+            _removeVacationButton.Enabled = false;
+            clearInfos();
         }
 
         #region Composants de l'interface
 
+        private void generateReturnButtons()
+        {
+            _returnBtn = new UIRoundButton(window.Width / 20, "<");
+            _returnBtn.Location = new Point(window.Width * 9 / 10, window.Height / 10);
+            _returnBtn.Click += onReturnButtonClick;
+
+            _homeBtn = new UIRoundButton(window.Width / 20, "«");
+            _homeBtn.Location = new Point(window.Width * 8 / 10, window.Height / 10);
+            _homeBtn.Click += onHomeButtonClick;
+        }
+
         private void generateEmployeesList()
         {
-            _employeesList = new EmployeesComboBox();
             _employeesList = new EmployeesComboBox();
             _employeesList.Size = new Size(window.Width / 3, 100);
             _employeesList.Location = new Point(50, 200);
@@ -152,7 +155,7 @@ namespace Mauxnimale_CE2.ui
         private void onAddVacationClick(object sender, EventArgs eventArgs)
         {
             string message, caption;
-            if (int.Parse(_nbVacationsRemaining.Text) > 0)  // Signifie que le salarié a des jours de congés restants
+            if (int.Parse(_nbVacationsRemaining.Text) > 0) // Signifie que le salarié a des jours de congés restants
             {
                 message = "Confirmer l'ajout d'un jour de congé pour " + _selectedEmployee.NOM + " " + _selectedEmployee.PRENOM + " le " 
                            + _calendar.SelectionStart.ToShortDateString() + " ?";
@@ -194,6 +197,18 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        private void onReturnButtonClick(object sender, EventArgs eventArgs)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceEmployeesManagement(window, user));
+        }
+
+        private void onHomeButtonClick(object sender, EventArgs eventArgs)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceHome(window, user));
+        }
+
         #endregion
 
         #region Infos management
@@ -212,8 +227,27 @@ namespace Mauxnimale_CE2.ui
             _nbVacationsRemaining.Text = (30 - employeeVacations.Count).ToString();
 
             // Visualisation de ces jours dans le calendrier
+            _calendar.RemoveAllBoldedDates();
             employeeVacations.ForEach(day => _calendar.AddBoldedDate(day.JOURNEE.DATE));
             _calendar.UpdateBoldedDates();
+
+            DateTime chosenDate = _calendar.SelectionStart;
+
+            // Récupération des dates de congés
+            List<DateTime> vacationsDates = new List<DateTime>();
+            employeeVacations.ForEach(day => vacationsDates.Add(day.JOURNEE.DATE));
+
+            // Autorise l'utilisateur a supprimer le jour de congé s'il y en a un pour la date sélectionnée
+            if (vacationsDates.Contains(chosenDate))
+            {
+                _removeVacationButton.Enabled = true;
+                _addVacationButton.Enabled = false;
+            }
+            else // Autorise l'utilisateur a ajouter un jour de congé sur le jour choisi s'il lui en reste assez
+            {
+                _addVacationButton.Enabled = true;
+                _removeVacationButton.Enabled = false;
+            }
         }
 
         #endregion
@@ -246,12 +280,13 @@ namespace Mauxnimale_CE2.ui
 
         #endregion
 
-
         public override void load()
         {
             _header.load("Mauxnimale - Gestion Congé");
             _footer.load();
 
+            window.Controls.Add(_homeBtn);
+            window.Controls.Add(_returnBtn);
             window.Controls.Add(_employeesList);
             window.Controls.Add(_nbVacationsRemaining);
             window.Controls.Add(_calendar);

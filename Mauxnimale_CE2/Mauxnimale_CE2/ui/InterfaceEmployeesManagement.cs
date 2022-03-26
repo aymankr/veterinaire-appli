@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Data;
 using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
@@ -10,8 +9,9 @@ namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceEmployeesManagement : AInterface
     {
-        private Header _header;
-        private Footer _footer;
+        private readonly Header _header;
+        private readonly Footer _footer;
+        private UIRoundButton _homeBtn;
 
         private SALARIE _selectedEmployee;
 
@@ -27,6 +27,7 @@ namespace Mauxnimale_CE2.ui
             _footer = new Footer(window, user);
             _selectedEmployee = null;
 
+            generateHomeButton();
             generateComboBox();
             generateVacationButton();
             generateForm();
@@ -36,37 +37,19 @@ namespace Mauxnimale_CE2.ui
 
         #region Components generation
 
+        private void generateHomeButton()
+        {
+            _homeBtn = new UIRoundButton(window.Width / 20, "<");
+            _homeBtn.Location = new Point(window.Width * 9 / 10, window.Height / 10);
+            _homeBtn.Click += onHomeButtonClick;
+        }
+
+
         private void generateComboBox()
         {
-            // Style
-            _employeesList = new ComboBox();
-            _employeesList.Name = "EmployeesList";
+            _employeesList = new EmployeesComboBox();
             _employeesList.Size = new Size(window.Width / 3, 100);
             _employeesList.Location = new Point(50, 200);
-            _employeesList.DropDownStyle = ComboBoxStyle.DropDownList;
-
-            // Values
-            DataTable employees = new DataTable();
-            employees.Columns.Add("id", typeof(int));
-            employees.Columns.Add("name", typeof(string));
-            employees.Columns.Add("salary", typeof(decimal));
-            employees.Columns.Add("internshipStart", typeof(DateTime));
-            employees.Columns.Add("internshipEnd", typeof(DateTime));
-
-            foreach (SALARIE employee in UserController.getAllEmployees())
-            {
-                if (employee.PREMIERECONNEXION)
-                    employees.Rows.Add(employee.IDCOMPTE, employee.ToString(), employee.SALAIRE, employee.DATEDEBUTSTAGE, employee.DATEFINSTAGE);
-            }
-
-            DataRow emptyRow = employees.NewRow();
-            emptyRow["id"] = -1;
-            emptyRow["name"] = "-- Veuillez choisir un salarié--";
-            employees.Rows.InsertAt(emptyRow, 0);
-
-            _employeesList.ValueMember = "id";
-            _employeesList.DisplayMember = "name";
-            _employeesList.DataSource = employees;
 
             // Events
             _employeesList.SelectedValueChanged += onEmployeeChosen;
@@ -121,11 +104,16 @@ namespace Mauxnimale_CE2.ui
         #endregion
 
         #region Event management
+        private void onHomeButtonClick(object sender, EventArgs eventArgs)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceHome(window, user));
+        }
 
         private void onVacationManagementButtonClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceGestionCongé(window, user));
+            window.switchInterface(new InterfaceVacationManagement(window, user));
         }
 
         private void onEmployeeChosen(object sender, EventArgs e)
@@ -290,6 +278,8 @@ namespace Mauxnimale_CE2.ui
         {
             _header.load("Gestion des salariés");
             _footer.load();
+
+            window.Controls.Add(_homeBtn);
             window.Controls.Add(_employeesList);
             window.Controls.Add(_vacationManagementButton);
             window.Controls.Add(_modifyInfosButton);

@@ -1,30 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mauxnimale_CE2.ui.components.componentsTools;
-using Mauxnimale_CE2.ui.components;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mauxnimale_CE2.api.entities;
+using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Collections;
+using Mauxnimale_CE2.ui.components;
+using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api;
+using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.api.controllers;
 
 namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceAppointmentCreation : AInterface
     {
-        MainWindow window;
-
-
         Header header;
         Footer footer;
 
@@ -50,13 +37,10 @@ namespace Mauxnimale_CE2.ui
         RichTextBox descriptionTexBox;
 
 
-        public InterfaceAppointmentCreation(MainWindow window, SALARIE s)
+        public InterfaceAppointmentCreation(MainWindow window, SALARIE user) : base(window, user)
         {
-            this.window = window;
-            user = s;
             header = new Header(window);
-            footer = new Footer(window, user);
-
+            footer = new Footer(window, base.user);
         }
 
         public override void load()
@@ -490,14 +474,6 @@ namespace Mauxnimale_CE2.ui
 
 
         #endregion
-        public override void updateSize()
-        {
-            if( window.WindowState != FormWindowState.Minimized )
-            {
-                window.Controls.Clear();
-                this.load();
-            }
-        }
 
     }
 }

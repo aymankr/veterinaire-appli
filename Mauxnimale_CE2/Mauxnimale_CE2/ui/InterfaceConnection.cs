@@ -4,28 +4,21 @@ using System.Windows.Forms;
 using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
-using Mauxnimale_CE2.api.controllers;
 
 namespace Mauxnimale_CE2.ui
 {
     class InterfaceConnection : AInterface
     {
-
         UIButton connectionButton;
 
         Header header;
-
         TextBox login;
         TextBox password;
-
-        MainWindow window;
         //Lister ici les différents éléments qui seront utilisés dans l'interface
 
-        public InterfaceConnection(MainWindow form,SALARIE user)
+        public InterfaceConnection(MainWindow window, SALARIE user) : base(window, user)
         {
-            this.user = user;
-            this.window = form;
-            header = new Header(form);
+            header = new Header(window);
         }
 
         public override void load()
@@ -147,12 +140,6 @@ namespace Mauxnimale_CE2.ui
                 password.ForeColor = Color.Gray;
                 password.PasswordChar = (char)0;
             }
-        }
-
-        public override void updateSize()
-        {
-            window.Controls.Clear();
-            this.load();
         }
     }
 }

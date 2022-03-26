@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using Mauxnimale_CE2.ui.components.componentsTools;
-using Mauxnimale_CE2.ui.components;
 using System.Drawing;
-using Mauxnimale_CE2.api.entities;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using Mauxnimale_CE2.ui.components;
+using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api;
+using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.api.controllers;
 
 namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceAppointmentManagment : AInterface
     {
-        MainWindow window;
-
-
         Header header;
         Footer footer;
 
@@ -30,12 +27,10 @@ namespace Mauxnimale_CE2.ui
         ListBox consultOfDay;
         TextBox infosConsult;
 
-        public InterfaceAppointmentManagment(MainWindow window, SALARIE s)
+        public InterfaceAppointmentManagment(MainWindow window, SALARIE user) : base(window, user)
         {
-            this.window = window;
-            user = s;
             header = new Header(window);
-            footer = new Footer(window, user);
+            footer = new Footer(window, base.user);
             selected = null;
 
         }
@@ -251,15 +246,6 @@ namespace Mauxnimale_CE2.ui
         }
 
         #endregion
-
-        public override void updateSize()
-        {
-            if (window.WindowState != FormWindowState.Minimized)
-            {
-                window.Controls.Clear();
-                this.load();
-            }
-        }
     }
 }
 

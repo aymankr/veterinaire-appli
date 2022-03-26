@@ -11,16 +11,13 @@ namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceInscription : AInterface
     {
-        private MainWindow window;
-
         private MinimalHeader header;
         private Footer footer;
 
         private TextBox loginTextBox;
 
-        public InterfaceInscription(MainWindow window, SALARIE user)
+        public InterfaceInscription(MainWindow window, SALARIE user) : base(window, user)
         {
-            this.window = window;
             header = new MinimalHeader(window);
             footer = new Footer(window, user);
             loginTextBox = generateLoginTextBox();
@@ -118,10 +115,5 @@ namespace Mauxnimale_CE2.ui
         }
 
         #endregion
-
-        public override void updateSize()
-        {
-            //throw new System.NotImplementedException();
-        }
     }
 }

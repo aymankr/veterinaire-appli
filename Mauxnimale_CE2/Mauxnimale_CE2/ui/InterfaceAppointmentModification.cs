@@ -1,30 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mauxnimale_CE2.ui.components.componentsTools;
-using Mauxnimale_CE2.ui.components;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mauxnimale_CE2.api.entities;
 using System.Windows.Forms;
-using System.Collections;
+using System.Collections.Generic;
+using Mauxnimale_CE2.ui.components;
+using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api;
+using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.api.controllers;
 
 namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceAppointmentModification: AInterface
     {
-        MainWindow window;
-
-
         Header header;
         Footer footer;
 
@@ -52,15 +39,12 @@ namespace Mauxnimale_CE2.ui
         RichTextBox descriptionTexBox;
 
 
-        public InterfaceAppointmentModification(MainWindow window, SALARIE s, RENDEZ_VOUS rdv)
+        public InterfaceAppointmentModification(MainWindow window, SALARIE user, RENDEZ_VOUS rdv) : base(window, user)
         {
-            this.window = window;
-            user = s;
             header = new Header(window);
-            footer = new Footer(window, user);
+            footer = new Footer(window, base.user);
             this.rdv = rdv;
             animalsInRDV = new HashSet<ANIMAL>();
-
         }
 
         public override void load()
@@ -491,16 +475,6 @@ namespace Mauxnimale_CE2.ui
 
 
         #endregion
-
-        public override void updateSize()
-        {
-            if (window.WindowState != FormWindowState.Minimized)
-            {
-                window.Controls.Clear();
-                this.load();
-            }
-        }
-
     }
 }
 

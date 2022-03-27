@@ -10,16 +10,15 @@ namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceUpdateRelatedToAnimals : AInterface
     {
-        MainWindow window;
-        AInterface interfaceWhoLaunchThisWindow;
+        private AInterface originInterface;
 
-        readonly RACE breed;
-        readonly ANIMAL animal;
-        readonly ESPECE specie;
+        private readonly RACE breed;
+        private readonly ANIMAL animal;
+        private readonly ESPECE specie;
 
-        Header header;
-        Footer footer;
-        Label animalLabel, breedLabel, speciesLabel;
+        private Header header;
+        private Footer footer;
+        private Label animalLabel, breedLabel, speciesLabel;
 
         #region Animal form elements and attribute
         TextBox animalFormNameBox, animalFormBirthYearBox, animalFormSizeBox, animalFormWeigtBox, currentGender,currentBreed, currentOwner, currentSpecie;
@@ -42,13 +41,11 @@ namespace Mauxnimale_CE2.ui
 
         UIRoundButton backButton;
 
-        public InterfaceUpdateRelatedToAnimals(MainWindow window, SALARIE s, object o, AInterface interfaceWhoLaunchThisWindow)
+        public InterfaceUpdateRelatedToAnimals(MainWindow window, SALARIE user, object o, AInterface originInterface) : base(window, user)
         {
-            this.window = window;
-            user = s;
-            this.interfaceWhoLaunchThisWindow = interfaceWhoLaunchThisWindow;
+            this.originInterface = originInterface;
             header = new Header(window);
-            footer = new Footer(window, user);
+            footer = new Footer(window, base.user);
             if (o.GetType().ToString().Contains("ANIMAL"))
             {
                 animal = (ANIMAL)o;
@@ -98,11 +95,11 @@ namespace Mauxnimale_CE2.ui
         #region Back button
         private void BackPage(object sender, EventArgs e)
         {
-            if(interfaceWhoLaunchThisWindow.GetType().ToString().Contains("InterfaceClient"))
+            if(originInterface.GetType().ToString().Contains("InterfaceClient"))
             {
                 window.Controls.Clear();
                 window.switchInterface(new InterfaceClient(window, user));
-            } else if (interfaceWhoLaunchThisWindow.GetType().ToString().Contains("InterfaceNewsRelatedToAnimals"))
+            } else if (originInterface.GetType().ToString().Contains("InterfaceNewsRelatedToAnimals"))
             {
                 window.Controls.Clear();
                 window.switchInterface(new InterfaceNewsRelatedToAnimals(window, user, new InterfaceClient(window, user)));
@@ -119,15 +116,6 @@ namespace Mauxnimale_CE2.ui
             backButton.Click += new EventHandler(BackPage);
         }
         #endregion
-
-        public override void updateSize()
-        {
-            if (window.WindowState != FormWindowState.Minimized)
-            {
-                window.Controls.Clear();
-                this.load();
-            }
-        }
 
         #region Label
         private void GenerateLabel()

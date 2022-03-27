@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Mauxnimale_CE2.api.entities;
 
-namespace Mauxnimale_CE2.api
+namespace Mauxnimale_CE2.api.controllers
 {
     public static class AppointmentController
     {
-
         /**
          * Method to add an appointment to the database and to set attributes
          */

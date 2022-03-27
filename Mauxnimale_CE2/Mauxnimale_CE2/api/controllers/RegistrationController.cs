@@ -5,7 +5,7 @@ using Mauxnimale_CE2.api.controllers.utils;
 
 namespace Mauxnimale_CE2.api.controllers
 {
-    internal class RegistrationController
+    public static class RegistrationController
     {
         /// <summary>
         /// Verify if the a user with the given login already exists in the database or not.

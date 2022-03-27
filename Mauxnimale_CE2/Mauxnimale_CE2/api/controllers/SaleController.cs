@@ -1,9 +1,6 @@
-﻿using Mauxnimale_CE2.api.entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2.api.controllers
 {

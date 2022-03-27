@@ -10,26 +10,21 @@ namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceUpdateClient : AInterface
     {
-        // Fenêtre principale
-        MainWindow window;
-
         // Mise en forme du haut et du bas de la fenêtre
-        readonly Header header;
-        readonly Footer footer;
+        private readonly Header header;
+        private readonly Footer footer;
         // Les différents éléments de la fenêtre
-        TextBox nameBox, surnameBox, numberBox;
-        UIButton validate;
-        UIRoundButton backButton;
+        private TextBox nameBox, surnameBox, numberBox;
+        private UIButton validate;
+        private UIRoundButton backButton;
 
-        CLIENT selectedClient;
+        private CLIENT selectedClient;
 
-        public InterfaceUpdateClient(MainWindow window, SALARIE s, CLIENT c)
+        public InterfaceUpdateClient(MainWindow window, SALARIE user, CLIENT client) : base(window, user)
         {
-            this.window = window;
-            user = s;
             header = new Header(window);
-            footer = new Footer(window, user);
-            selectedClient = c;
+            footer = new Footer(window, base.user);
+            selectedClient = client;
         }
 
         /// <summary>
@@ -205,15 +200,6 @@ namespace Mauxnimale_CE2.ui
                 surnameWithCapital += letter;
             }
             return surnameWithCapital;
-        }
-
-        /// <summary>
-        /// Méthode permettant de redimensionner la fenêtre et ses éléments.
-        /// </summary>
-        public override void updateSize()
-        {
-            window.Controls.Clear();
-            this.load();
         }
     }
 }

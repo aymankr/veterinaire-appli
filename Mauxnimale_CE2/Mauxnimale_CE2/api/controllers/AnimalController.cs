@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using Mauxnimale_CE2.api.entities;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace Mauxnimale_CE2.api.controllers
 {
     /// <summary>
     /// Static class implementing methods related to animals management.
     /// </summary>
-    internal static class AnimalController
+    public static class AnimalController
     {
         /// <summary>
         /// Vérifie si l'animal donné est déjà enregistré dans la base.

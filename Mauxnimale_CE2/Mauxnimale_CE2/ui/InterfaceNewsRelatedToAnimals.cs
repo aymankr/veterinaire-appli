@@ -10,12 +10,11 @@ namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceNewsRelatedToAnimals : AInterface
     {
-        readonly MainWindow window;
-        readonly AInterface interfaceWhoLauchThisWindow;
-        readonly Header header;
-        readonly Footer footer;
+        private readonly AInterface originInterface;
+        private readonly Header header;
+        private readonly Footer footer;
 
-        Label animalLabel, breedLabel, speciesLabel;
+        private Label animalLabel, breedLabel, speciesLabel;
 
         #region Animal form elements and attribute
         TextBox animalFormNameBox, animalFormBirthYearBox, animalFormSizeBox, animalFormWeightBox;
@@ -41,13 +40,11 @@ namespace Mauxnimale_CE2.ui
 
         UIRoundButton backButton;
 
-        public InterfaceNewsRelatedToAnimals(MainWindow window, SALARIE s, AInterface interfaceWhoLauchThisWindow)
+        public InterfaceNewsRelatedToAnimals(MainWindow window, SALARIE user, AInterface originInterface) : base(window, user)
         {
-            this.window = window;
-            user = s;
-            this.interfaceWhoLauchThisWindow = interfaceWhoLauchThisWindow;
+            this.originInterface = originInterface;
             header = new Header(window);
-            footer = new Footer(window, user);
+            footer = new Footer(window, base.user);
         }
 
         /// <summary>
@@ -78,7 +75,7 @@ namespace Mauxnimale_CE2.ui
         private void BackPage(object sender, EventArgs e)
         {
             // Permet de retourne sur l'interface qui avait lancée cette interface
-            if (interfaceWhoLauchThisWindow.GetType().ToString().Split('.')[2] == "InterfaceClient")
+            if (originInterface.GetType().ToString().Split('.')[2] == "InterfaceClient")
             {
                 window.Controls.Clear();
                 window.switchInterface(new InterfaceClient(window, user));
@@ -95,15 +92,6 @@ namespace Mauxnimale_CE2.ui
             backButton.Click += new EventHandler(BackPage);
         }
         #endregion
-
-        public override void updateSize()
-        {
-            if (window.WindowState != FormWindowState.Minimized)
-            {
-                window.Controls.Clear();
-                this.load();
-            }
-        }
 
         #region Label
         /// <summary>

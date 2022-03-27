@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2.api.controllers
 {
-    public class DayController
+    public static class DayController
     {
         /// <summary>
         /// Ajout d'une journée d'un salarié

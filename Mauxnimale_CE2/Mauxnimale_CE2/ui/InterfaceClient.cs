@@ -10,27 +10,24 @@ namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceClient : AInterface
     {
-        readonly MainWindow window;
-        readonly Header header;
-        readonly Footer footer;
+        private readonly Header header;
+        private readonly Footer footer;
 
-        ListBox listClient, listInfoClient, listAnimal, listInfoAnimal;
-        TextBox researchBar;
-        UIButton updateClient, deleteClient, newClient, 
+        private ListBox listClient, listInfoClient, listAnimal, listInfoAnimal;
+        private TextBox researchBar;
+        private UIButton updateClient, deleteClient, newClient, 
                  byName, bySurname,
                  updateAnimal, deleteAnimal, newAnimal;
 
-        UIRoundButton backButton;
+        private UIRoundButton backButton;
 
-        CLIENT selectedClient;
-        ANIMAL selectedAnimal;
+        private CLIENT selectedClient;
+        private ANIMAL selectedAnimal;
 
-        public InterfaceClient(MainWindow window, SALARIE s)
+        public InterfaceClient(MainWindow window, SALARIE user) : base(window, user)
         {
-            this.window = window;
-            user = s;
             header = new Header(window);
-            footer = new Footer(window, user);
+            footer = new Footer(window, base.user);
         }
 
         /// <summary>
@@ -47,15 +44,6 @@ namespace Mauxnimale_CE2.ui
             GenerateButtons();
             // On remplis la liste des clients avec des données de la base
             AddListOfClient();
-        }
-
-        public override void updateSize()
-        {
-            if (window.WindowState != FormWindowState.Minimized)
-            {
-                window.Controls.Clear();
-                this.load();
-            }
         }
 
         /// <summary>

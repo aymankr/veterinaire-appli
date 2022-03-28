@@ -15,26 +15,20 @@ namespace Mauxnimale_CE2.api.entities
 using System;
     using System.Collections.Generic;
     
-public partial class JOURNEE_SALARIE
+public partial class LIEN_SOIN
 {
 
-    public int IDJOURNEESALARIE { get; set; }
+    public int LIENID { get; set; }
 
-    public int IDCOMPTE { get; set; }
+    public int IDSOIN { get; set; }
 
-    public int IDJOURNEE { get; set; }
-
-    public System.TimeSpan HEUREDEBUT { get; set; }
-
-    public System.TimeSpan HEUREFIN { get; set; }
-
-    public bool CONGE { get; set; }
+    public int IDORDONNANCE { get; set; }
 
 
 
-    public virtual JOURNEE JOURNEE { get; set; }
+    public virtual ORDONNANCE ORDONNANCE { get; set; }
 
-    public virtual SALARIE SALARIE { get; set; }
+    public virtual SOIN SOIN { get; set; }
 
 }
 

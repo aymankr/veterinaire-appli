@@ -137,7 +137,7 @@ namespace Mauxnimale_CE2.api.controllers
         /// </summary>
         /// <param name="specieName">Nom de l'espèce à ajouter</param>
         /// <returns>Vrai si l'ajout s'est bien passé, faux sinon</returns>
-        internal static bool AddSpecie(string specieName)
+        public static bool AddSpecie(string specieName)
         {
             if (!SpecieIsAlreadyRegistered(specieName))
             {
@@ -174,7 +174,7 @@ namespace Mauxnimale_CE2.api.controllers
         /// <param name="specie">Nom de l'espèce de la race</param>
         /// <param name="breedName">Nom de la race</param>
         /// <returns>Vrai si la race à été ajoutée, faux sinon</returns>
-        internal static bool AddBreed(ESPECE specie, string breedName)
+        public static bool AddBreed(ESPECE specie, string breedName)
         {
             if (!BreedIsAlreadyRegistered(specie.NOMESPECE, breedName))
             {
@@ -209,7 +209,7 @@ namespace Mauxnimale_CE2.api.controllers
             return isAlready;
         }
 
-        internal static bool UpdateAnimal(ANIMAL animal, RACE newBreed, CLIENT newOwner, string name, string birthYear, int size, int weight, bool isMale)
+        public static bool UpdateAnimal(ANIMAL animal, RACE newBreed, CLIENT newOwner, string name, string birthYear, int size, int weight, bool isMale)
         {
             try
             {
@@ -233,7 +233,7 @@ namespace Mauxnimale_CE2.api.controllers
         /// </summary>
         /// <param name="specieName">Le nom de l'espèce recherchée</param>
         /// <returns>La liste des espèce comportant ce nom dans leur nom</returns>
-        internal static ICollection<ESPECE> ResearchSpeciesByName(string specieName)
+        public static ICollection<ESPECE> ResearchSpeciesByName(string specieName)
         {
             var species = from s in DbContext.get().ESPECE
                          where s.NOMESPECE.Contains(specieName)
@@ -241,7 +241,7 @@ namespace Mauxnimale_CE2.api.controllers
             return species.ToList();
         }
 
-        internal static bool UpdateSpecie(ESPECE specie, string name)
+        public static bool UpdateSpecie(ESPECE specie, string name)
         {
             if (!SpecieIsAlreadyRegistered(specie.NOMESPECE))
             {

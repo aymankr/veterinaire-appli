@@ -57,6 +57,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="api\controllers\AnimalControllerTests.cs" />
+    <Compile Include="api\controllers\AppointmentControllerTests.cs" />
+    <Compile Include="api\controllers\CareControllerTests.cs" />
+    <Compile Include="api\controllers\ClientControllerTests.cs" />
+    <Compile Include="api\controllers\DayControllerTests.cs" />
+    <Compile Include="api\controllers\InvoiceControllerTests.cs" />
+    <Compile Include="api\controllers\PrescriptionControllerTests.cs" />
+    <Compile Include="api\controllers\ProductControllerTests.cs" />
+    <Compile Include="api\controllers\RegistrationControllerTests.cs" />
+    <Compile Include="api\controllers\SaleControllerTests.cs" />
+    <Compile Include="api\controllers\UserControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

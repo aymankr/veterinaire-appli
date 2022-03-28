@@ -222,7 +222,7 @@ namespace Mauxnimale_CE2.ui
         public void createOrdonanceClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            //form.changerClasse(new Interface...());
+            window.switchInterface(new InterfacePrescriptionCreation(window, user));
         }
 
         public void deleteConsultClick(object sender, EventArgs e)

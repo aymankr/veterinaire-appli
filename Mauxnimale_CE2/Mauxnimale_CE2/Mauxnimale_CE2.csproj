@@ -108,6 +108,9 @@
     <Compile Include="api\entities\LIEN_MALADIE.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="api\entities\LIEN_SOIN.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="api\entities\LOG.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>

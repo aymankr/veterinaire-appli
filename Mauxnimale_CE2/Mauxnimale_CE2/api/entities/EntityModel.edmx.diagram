@@ -43,6 +43,9 @@
         <AssociationConnector Association="PT4_S4P2C_E2Model.FK_RENDEZ_VOUS_TYPE_RDV" ManuallyRouted="false" />
         <AssociationConnector Association="PT4_S4P2C_E2Model.PATIENT" ManuallyRouted="false" />
         <AssociationConnector Association="PT4_S4P2C_E2Model.SOIGNER" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.LIEN_SOIN" Width="1.5" PointX="7.5" PointY="18.25" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_IdOrdonnance_LienSoin" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_IdSoin_LienSoin" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

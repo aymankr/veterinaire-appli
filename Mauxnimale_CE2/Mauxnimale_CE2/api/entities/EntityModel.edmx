@@ -4,7 +4,15 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PT4_S4P2C_E2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PT4_S4P2C_E2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="LIEN_SOIN">
+          <Key>
+            <PropertyRef Name="LIENID" />
+          </Key>
+          <Property Name="LIENID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDSOIN" Type="int" Nullable="false" />
+          <Property Name="IDORDONNANCE" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="ANIMAL">
           <Key>
             <PropertyRef Name="IDANIMAL" />
@@ -90,6 +98,8 @@
           </Key>
           <Property Name="IDORDONNANCE" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDANIMAL" Type="int" Nullable="false" />
+          <Property Name="PRESCRIPTION" Type="varchar" MaxLength="255" />
+          <Property Name="DIAGNOSTIQUE" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="PATIENT">
           <Key>
@@ -231,6 +241,30 @@
             </Principal>
             <Dependent Role="FACTURE_PRODUIT">
               <PropertyRef Name="IDCLIENT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdOrdonnance_LienSoin">
+          <End Role="ORDONNANCE" Type="Self.ORDONNANCE" Multiplicity="1" />
+          <End Role="LIEN_SOIN" Type="Self.LIEN_SOIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDONNANCE">
+              <PropertyRef Name="IDORDONNANCE" />
+            </Principal>
+            <Dependent Role="LIEN_SOIN">
+              <PropertyRef Name="IDORDONNANCE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdSoin_LienSoin">
+          <End Role="SOIN" Type="Self.SOIN" Multiplicity="1" />
+          <End Role="LIEN_SOIN" Type="Self.LIEN_SOIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOIN">
+              <PropertyRef Name="IDSOINS" />
+            </Principal>
+            <Dependent Role="LIEN_SOIN">
+              <PropertyRef Name="IDSOIN" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -451,6 +485,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="PT4_S4P2C_E2ModelStoreContainer">
+          <EntitySet Name="LIEN_SOIN" EntityType="Self.LIEN_SOIN" Schema="db_accessadmin" store:Type="Tables" />
           <EntitySet Name="ANIMAL" EntityType="Self.ANIMAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CLIENT" EntityType="Self.CLIENT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ESPECE" EntityType="Self.ESPECE" Schema="dbo" store:Type="Tables" />
@@ -483,6 +518,14 @@
           <AssociationSet Name="FK_FACTURE_PRODUIT_CLIENT" Association="Self.FK_FACTURE_PRODUIT_CLIENT">
             <End Role="CLIENT" EntitySet="CLIENT" />
             <End Role="FACTURE_PRODUIT" EntitySet="FACTURE_PRODUIT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdOrdonnance_LienSoin" Association="Self.FK_IdOrdonnance_LienSoin">
+            <End Role="ORDONNANCE" EntitySet="ORDONNANCE" />
+            <End Role="LIEN_SOIN" EntitySet="LIEN_SOIN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdSoin_LienSoin" Association="Self.FK_IdSoin_LienSoin">
+            <End Role="SOIN" EntitySet="SOIN" />
+            <End Role="LIEN_SOIN" EntitySet="LIEN_SOIN" />
           </AssociationSet>
           <AssociationSet Name="FK_JOURNEE_SALARIE_JOURNEE" Association="Self.FK_JOURNEE_SALARIE_JOURNEE">
             <End Role="JOURNEE" EntitySet="JOURNEE" />
@@ -557,8 +600,7 @@
             <End Role="SOIGNER" EntitySet="SOIGNER" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PT4_S4P2C_E2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -668,6 +710,9 @@
           <Property Name="IDANIMAL" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ANIMAL" Relationship="Self.FK_ORDONNANCE_ANIMAL" FromRole="ORDONNANCE" ToRole="ANIMAL" />
           <NavigationProperty Name="PRODUITLIES" Relationship="Self.FK_PRODUITLIES_ORDONNANCE" FromRole="ORDONNANCE" ToRole="PRODUITLIES" />
+          <Property Name="PRESCRIPTION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DIAGNOSTIQUE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="LIEN_SOIN" Relationship="PT4_S4P2C_E2Model.FK_IdOrdonnance_LienSoin" FromRole="ORDONNANCE" ToRole="LIEN_SOIN" />
         </EntityType>
         <EntityType Name="PRODUIT">
           <Key>
@@ -759,6 +804,7 @@
           <Property Name="IDSOINS" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DESCRIPTION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="MALADIE" Relationship="Self.SOIGNER" FromRole="SOIN" ToRole="MALADIE" />
+          <NavigationProperty Name="LIEN_SOIN" Relationship="PT4_S4P2C_E2Model.FK_IdSoin_LienSoin" FromRole="SOIN" ToRole="LIEN_SOIN" />
         </EntityType>
         <EntityType Name="TYPE_PRODUIT">
           <Key>
@@ -1085,7 +1131,50 @@
             <End Role="MALADIE" EntitySet="MALADIE" />
             <End Role="SOIN" EntitySet="SOIN" />
           </AssociationSet>
+          <EntitySet Name="LIEN_SOIN" EntityType="PT4_S4P2C_E2Model.LIEN_SOIN" />
+          <AssociationSet Name="FK_IdOrdonnance_LienSoin" Association="PT4_S4P2C_E2Model.FK_IdOrdonnance_LienSoin">
+            <End Role="ORDONNANCE" EntitySet="ORDONNANCE" />
+            <End Role="LIEN_SOIN" EntitySet="LIEN_SOIN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdSoin_LienSoin" Association="PT4_S4P2C_E2Model.FK_IdSoin_LienSoin">
+            <End Role="SOIN" EntitySet="SOIN" />
+            <End Role="LIEN_SOIN" EntitySet="LIEN_SOIN" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="LIEN_SOIN">
+          <Key>
+            <PropertyRef Name="LIENID" />
+          </Key>
+          <Property Name="LIENID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDSOIN" Type="Int32" Nullable="false" />
+          <Property Name="IDORDONNANCE" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ORDONNANCE" Relationship="PT4_S4P2C_E2Model.FK_IdOrdonnance_LienSoin" FromRole="LIEN_SOIN" ToRole="ORDONNANCE" />
+          <NavigationProperty Name="SOIN" Relationship="PT4_S4P2C_E2Model.FK_IdSoin_LienSoin" FromRole="LIEN_SOIN" ToRole="SOIN" />
+        </EntityType>
+        <Association Name="FK_IdOrdonnance_LienSoin">
+          <End Type="PT4_S4P2C_E2Model.ORDONNANCE" Role="ORDONNANCE" Multiplicity="1" />
+          <End Type="PT4_S4P2C_E2Model.LIEN_SOIN" Role="LIEN_SOIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDONNANCE">
+              <PropertyRef Name="IDORDONNANCE" />
+            </Principal>
+            <Dependent Role="LIEN_SOIN">
+              <PropertyRef Name="IDORDONNANCE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdSoin_LienSoin">
+          <End Type="PT4_S4P2C_E2Model.SOIN" Role="SOIN" Multiplicity="1" />
+          <End Type="PT4_S4P2C_E2Model.LIEN_SOIN" Role="LIEN_SOIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOIN">
+              <PropertyRef Name="IDSOINS" />
+            </Principal>
+            <Dependent Role="LIEN_SOIN">
+              <PropertyRef Name="IDSOIN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1183,6 +1272,8 @@
           <EntitySetMapping Name="ORDONNANCE">
             <EntityTypeMapping TypeName="PT4_S4P2C_E2Model.ORDONNANCE">
               <MappingFragment StoreEntitySet="ORDONNANCE">
+                <ScalarProperty Name="DIAGNOSTIQUE" ColumnName="DIAGNOSTIQUE" />
+                <ScalarProperty Name="PRESCRIPTION" ColumnName="PRESCRIPTION" />
                 <ScalarProperty Name="IDORDONNANCE" ColumnName="IDORDONNANCE" />
                 <ScalarProperty Name="IDANIMAL" ColumnName="IDANIMAL" />
               </MappingFragment>
@@ -1302,6 +1393,15 @@
               <ScalarProperty Name="IDSOINS" ColumnName="IDSOINS" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="LIEN_SOIN">
+            <EntityTypeMapping TypeName="PT4_S4P2C_E2Model.LIEN_SOIN">
+              <MappingFragment StoreEntitySet="LIEN_SOIN">
+                <ScalarProperty Name="IDORDONNANCE" ColumnName="IDORDONNANCE" />
+                <ScalarProperty Name="IDSOIN" ColumnName="IDSOIN" />
+                <ScalarProperty Name="LIENID" ColumnName="LIENID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

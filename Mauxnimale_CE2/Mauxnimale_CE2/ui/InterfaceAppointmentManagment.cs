@@ -15,23 +15,27 @@ namespace Mauxnimale_CE2.ui
         Header header;
         Footer footer;
 
-        UIButton modifConsult, createOrdonance, deleteConsult, createConsult;
+        UIButton modifConsult, createOrdonance, deleteConsult, createConsult, switchDisplay;
         UIRoundButton back;
         MonthCalendar calendar;
 
         DateTime selectedDate;
         List<RENDEZ_VOUS> rdvOfDay;
-        RENDEZ_VOUS selected;
+        RENDEZ_VOUS selectedRdv;
+        ANIMAL selectedAnimal;
 
         Label calendarLabel;
         ListBox consultOfDay;
-        TextBox infosConsult;
+        ComboBox animalsAtRDV;
+        TextBox infosConsult, prescription;
+
+        Boolean prescriptionMode = false;
 
         public InterfaceAppointmentManagment(MainWindow window, SALARIE user) : base(window, user)
         {
             header = new Header(window);
             footer = new Footer(window, base.user);
-            selected = null;
+            selectedRdv = null;
 
         }
         public override void load()
@@ -69,6 +73,20 @@ namespace Mauxnimale_CE2.ui
             consultOfDay.SelectedIndexChanged += new EventHandler(rdvSelection);
             #endregion
 
+            #region animalsAtRDV
+
+            animalsAtRDV = new ComboBox();
+            animalsAtRDV.Text = "";
+            animalsAtRDV.Font = new Font("Poppins", window.Height * 1 / 100);
+            animalsAtRDV.ForeColor = Color.Black;
+            animalsAtRDV.BackColor = Color.White;
+            animalsAtRDV.Location = new Point(window.Width * 500 / 1000, window.Height * 2 / 10);
+            animalsAtRDV.Size = new Size(window.Width * 40 / 100, window.Height * 5 / 100);
+            animalsAtRDV.SelectedIndexChanged += new EventHandler(AnimalComboBoxSearch);
+            animalsAtRDV.Enabled = false;
+            animalsAtRDV.Hide();
+            #endregion
+
             #region InfosConsult
 
             infosConsult = new TextBox();
@@ -82,6 +100,22 @@ namespace Mauxnimale_CE2.ui
             infosConsult.Size = new Size(window.Width * 40 / 100, window.Height * 45 / 100);
             #endregion
 
+            #region Prescription
+
+            prescription = new TextBox();
+            prescription.ReadOnly = true;
+            prescription.Text = "";
+            prescription.Font = new Font("Poppins", window.Height * 1 / 100);
+            prescription.ForeColor = Color.Black;
+            prescription.BackColor = Color.White;
+            prescription.Multiline = true;
+            prescription.Location = new Point(window.Width * 500 / 1000, window.Height * 5 / 20);
+            prescription.Size = new Size(window.Width * 40 / 100, window.Height * 40 / 100);
+            prescription.Enabled = false;
+            prescription.Hide();
+
+            #endregion
+
             #region calendar
             calendar = new MonthCalendar();
             calendar.Location = new Point(window.Width * 25 / 1000, window.Height * 2 / 10);
@@ -91,6 +125,8 @@ namespace Mauxnimale_CE2.ui
             #endregion
 
             window.Controls.Add(consultOfDay);
+            window.Controls.Add(animalsAtRDV);
+            window.Controls.Add(prescription);
             window.Controls.Add(infosConsult);
             window.Controls.Add(calendar);
         }
@@ -99,29 +135,37 @@ namespace Mauxnimale_CE2.ui
         public void generateButton()
         {
             #region Modif Button
+            switchDisplay = new UIButton(UIColor.DARKBLUE, "Afficher Ordonnances", window.Width * 3 / 20);
+            switchDisplay.Location = new Point(window.Width * 30 / 40, window.Height * 14 / 20);
+            switchDisplay.Click += new EventHandler(SwitchDisplauClick);
+            switchDisplay.Enabled = false;
+            #endregion
+
+
+            #region Modif Button
             modifConsult = new UIButton(UIColor.DARKBLUE, "Modifier Consultation", window.Width * 3 / 20);
-            modifConsult.Location = new Point(window.Width * 5 / 15, window.Height * 14 / 20);
+            modifConsult.Location = new Point(window.Width * 23 / 40, window.Height * 14 / 20);
             modifConsult.Click += new EventHandler(modifConsultClick);
             modifConsult.Enabled = false;
             #endregion
 
             #region CreateOrdoButton
             createOrdonance = new UIButton(UIColor.DARKBLUE, "Créer ordonance", window.Width * 3 / 20);
-            createOrdonance.Location = new Point(window.Width * 8 / 15, window.Height * 14 / 20);
+            createOrdonance.Location = new Point(window.Width * 16 / 40, window.Height * 14 / 20);
             createOrdonance.Click += new EventHandler(createOrdonanceClick);
             createOrdonance.Enabled = false;    
             #endregion
 
             #region delete Button
             deleteConsult = new UIButton(UIColor.DARKBLUE, "Supprimer Consultation", window.Width * 3 / 20);
-            deleteConsult.Location = new Point(window.Width * 11 / 15, window.Height * 14 / 20);
+            deleteConsult.Location = new Point(window.Width * 9 / 40, window.Height * 14 / 20);
             deleteConsult.Click += new EventHandler(deleteConsultClick);
             deleteConsult.Enabled = false;
             #endregion
 
             #region createButton
             createConsult = new UIButton(UIColor.DARKBLUE, "Créer Consultation", window.Width * 3 / 20);
-            createConsult.Location = new Point(window.Width * 2 / 15, window.Height * 14 / 20);
+            createConsult.Location = new Point(window.Width * 2 / 40, window.Height * 14 / 20);
             createConsult.Click += new EventHandler(createConsultClick);
             #endregion
 
@@ -131,6 +175,7 @@ namespace Mauxnimale_CE2.ui
             back.Click += new EventHandler(backClick);
             #endregion
 
+            window.Controls.Add(switchDisplay);
             window.Controls.Add(modifConsult);
             window.Controls.Add(createOrdonance);
             window.Controls.Add(deleteConsult);
@@ -139,30 +184,39 @@ namespace Mauxnimale_CE2.ui
         }
 
 
+
         #region eventHandler
 
         #region Selection
         private void rdvSelection(object sender, EventArgs e)
         {
             infosConsult.Clear();
+            prescription.Clear();
+            animalsAtRDV.Items.Clear();
+            selectedAnimal = null;
 
-            selected = (RENDEZ_VOUS)consultOfDay.SelectedItem;
+            selectedRdv = (RENDEZ_VOUS)consultOfDay.SelectedItem;
 
-            if(selected != null)
+            if(selectedRdv != null)
             {
-                infosConsult.AppendText("HORRAIRE : " + selected + Environment.NewLine);
-                infosConsult.AppendText("CLIENT : " + selected.CLIENT + Environment.NewLine);
-                infosConsult.AppendText("TYPE DE RDV : " + selected.TYPE_RDV.ToString() + Environment.NewLine);
+
+                #region description Rdv
+                infosConsult.AppendText("HORRAIRE : " + selectedRdv + Environment.NewLine);
+                infosConsult.AppendText("CLIENT : " + selectedRdv.CLIENT + Environment.NewLine);
+                infosConsult.AppendText("TYPE DE RDV : " + selectedRdv.TYPE_RDV.ToString() + Environment.NewLine);
                 infosConsult.AppendText("ANNIMAUX :" + Environment.NewLine);
 
-                foreach (ANIMAL animal in AppointmentController.getAnimalFromRDV(selected))
+                foreach (ANIMAL animal in AppointmentController.getAnimalFromRDV(selectedRdv))
                 {
                     infosConsult.AppendText("    " + animal + Environment.NewLine);
+                    animalsAtRDV.Items.Add(animal);
                 }
 
 
                 infosConsult.AppendText("DESCRIPTION : " + Environment.NewLine);
-                infosConsult.AppendText(selected.RAISON + Environment.NewLine);
+                infosConsult.AppendText(selectedRdv.RAISON + Environment.NewLine);
+
+                #endregion
             }
             EnableButtons();
 
@@ -172,7 +226,7 @@ namespace Mauxnimale_CE2.ui
         {
             infosConsult.Clear();
             consultOfDay.Items.Clear();
-            selected = null;
+            selectedRdv = null;
 
             selectedDate = new DateTime(e.Start.Year, e.Start.Month, e.Start.Day);
 
@@ -190,19 +244,41 @@ namespace Mauxnimale_CE2.ui
             EnableButtons();
         }
 
+        private void AnimalComboBoxSearch(object sender, EventArgs e)
+        {
+            selectedAnimal = (ANIMAL)animalsAtRDV.SelectedItem;
+
+            prescription.AppendText("LOl c'est une ordonnance HORRAIRE : " + selectedRdv + Environment.NewLine);
+            prescription.AppendText("CLIENT : " + selectedRdv.CLIENT + Environment.NewLine);
+            prescription.AppendText("TYPE DE RDV : " + selectedRdv.TYPE_RDV.ToString() + Environment.NewLine);
+            prescription.AppendText("ANNIMAUX :" + Environment.NewLine);
+
+            foreach (ANIMAL animal in AppointmentController.getAnimalFromRDV(selectedRdv))
+            {
+                animalsAtRDV.Items.Add(animal);
+            }
+
+
+            prescription.AppendText("DESCRIPTION : " + Environment.NewLine);
+            prescription.AppendText(selectedRdv.RAISON + Environment.NewLine);
+
+        }
+
         public void EnableButtons()
         {
-            if(selected != null)
+            if(selectedRdv != null)
             {
                 deleteConsult.Enabled = true;
                 modifConsult.Enabled = true;
                 createOrdonance.Enabled = true;
+                switchDisplay.Enabled = true;
             }
             else
             {
                 createOrdonance.Enabled = false;
                 deleteConsult.Enabled = false;
                 modifConsult.Enabled = false;
+                switchDisplay.Enabled = false;
             }
         }
         #endregion
@@ -213,26 +289,53 @@ namespace Mauxnimale_CE2.ui
             window.switchInterface(new InterfaceHome(window, user));
         }
 
+        private void SwitchDisplauClick(object sender, EventArgs e)
+        {
+            prescriptionMode = !prescriptionMode;
+            if (prescriptionMode)
+            {
+                switchDisplay.Text = "Afficher RDV";
+                infosConsult.Hide();
+                infosConsult.Enabled = false;
+                prescription.Show();
+                prescription.Enabled = true;
+                animalsAtRDV.Show();
+                animalsAtRDV.Enabled = true;
+            }
+            else
+            {
+                switchDisplay.Text = "Afficher Ordonnances";
+
+                prescription.Hide();
+                prescription.Enabled = false;
+                animalsAtRDV.Hide();
+                animalsAtRDV.Enabled = false;
+                infosConsult.Show();
+                infosConsult.Enabled = true;
+
+            }
+        }
+
         public void modifConsultClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceAppointmentModification(window, user, selected));
+            window.switchInterface(new InterfaceAppointmentModification(window, user, selectedRdv));
         }
 
         public void createOrdonanceClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfacePrescriptionCreation(window, user));
+            window.switchInterface(new InterfacePrescriptionCreation(window, user, selectedRdv));
         }
 
         public void deleteConsultClick(object sender, EventArgs e)
         {
-            if (selected!=null)
+            if (selectedRdv!=null)
             {
                 DialogResult mb = MessageBox.Show("Are you sure you want to Delete", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
                 if (mb == DialogResult.OK)
                 {
-                    AppointmentController.deleteAppointment(selected);
+                    AppointmentController.deleteAppointment(selectedRdv);
                     window.Controls.Clear();
                     this.load();
                 }

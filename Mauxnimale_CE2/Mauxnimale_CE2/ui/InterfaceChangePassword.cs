@@ -27,7 +27,7 @@ namespace Mauxnimale_CE2.ui
         {
             if (newPassword.Text.Length == 0)
             {
-                newPassword.Text = "Texte à codé";//mettre le prénom de l'utilisateur connecté ici
+                newPassword.Text = "Nouveau mot de passe";
             }
         }
 
@@ -35,7 +35,7 @@ namespace Mauxnimale_CE2.ui
         {
             if (oldPassword.Text.Length == 0)
             {
-                oldPassword.Text = "Texte à codé";//mettre l'email de l'utilisateur connecté ici
+                oldPassword.Text = "Ancien mot de passe";
             }
         }
 
@@ -43,12 +43,17 @@ namespace Mauxnimale_CE2.ui
         {
             if (confirmPassword.Text.Length == 0)
             {
-                confirmPassword.Text = "Texte à codé";//mettre le numéro de l'utilisateur connecté ici
+                confirmPassword.Text = "Confirmez le mot de passe";
             }
         }
         public void confirmIDClick(object sender, EventArgs e)
         {
-            //effectuer les changements sur la base de données
+            if (oldPassword.Text.Length != 0 && newPassword.Text.Length != 0 && confirmPassword.Text.Length != 0 && confirmPassword.Text != "Confirmez le mot de passe" && newPassword.Text != "Nouveau mot de passe" && oldPassword.Text != "Ancien mot de passe")
+            {
+                UserController.updatePassword(user, oldPassword.Text, newPassword.Text);
+                window.Controls.Clear();
+                window.switchInterface(new InterfaceAccountManagement(window, user));
+            }
         }
 
         public void homeClick(object sender, EventArgs e)
@@ -77,30 +82,30 @@ namespace Mauxnimale_CE2.ui
             oldPassword = new TextBox();
             oldPassword.LostFocus += new EventHandler(oldIDLeave);
             oldPassword.Location = new Point(window.Width / 8, window.Height * 22 / 100);
-            setBox(oldPassword, "Texte a codé");//mettre le nom de l'utilisateur connecté ici
+            setBox(oldPassword, "Ancien mot de passe");//mettre le nom de l'utilisateur connecté ici
 
             newPassword = new TextBox();
             newPassword.LostFocus += new EventHandler(newIDLeave);
             newPassword.Location = new Point(window.Width / 8, window.Height * 37 / 100);
-            setBox(newPassword, "Texte a codé");//mettre le prénom de l'utilisateur connecté ici
+            setBox(newPassword, "Nouveau mot de passe");//mettre le prénom de l'utilisateur connecté ici
 
             confirmPassword = new TextBox();
             confirmPassword.LostFocus += new EventHandler(confirmIDLeave);
             confirmPassword.Location = new Point(window.Width / 8, window.Height * 52 / 100);
-            setBox(confirmPassword, "Texte a codé");//mettre l'email de l'utilisateur connecté ici
+            setBox(confirmPassword, "Confirmez le mot de passe");//mettre l'email de l'utilisateur connecté ici
         }
 
         public void generateLabel()
         {
             lOldPassword = new Label();
             lOldPassword.Location = new Point(window.Width / 20, window.Height * 17 / 100);
-            setLabel(lOldPassword, "Ancien Mot de passe");
+            setLabel(lOldPassword, "Ancien mot de passe");
             lNewPassword = new Label();
             lNewPassword.Location = new Point(window.Width / 20, window.Height * 32 / 100);
-            setLabel(lNewPassword, "Nouveau Mot de passe");
+            setLabel(lNewPassword, "Nouveau mot de passe");
             lConfirmPassword = new Label();
             lConfirmPassword.Location = new Point(window.Width / 20, window.Height * 47 / 100);
-            setLabel(lConfirmPassword, "Confirmer Mot de passe");
+            setLabel(lConfirmPassword, "Confirmez le mot de passe");
         }
 
         private void generateButton()

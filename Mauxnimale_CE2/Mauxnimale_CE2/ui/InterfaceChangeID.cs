@@ -27,7 +27,7 @@ namespace Mauxnimale_CE2.ui
         {
             if (newID.Text.Length == 0)
             {
-                newID.Text = "Texte à codé";//mettre le prénom de l'utilisateur connecté ici
+                newID.Text = "Nouveau identifiant";
             }
         }
 
@@ -35,7 +35,7 @@ namespace Mauxnimale_CE2.ui
         {
             if (oldID.Text.Length == 0)
             {
-                oldID.Text = "Texte à codé";//mettre l'email de l'utilisateur connecté ici
+                oldID.Text = "Ancien identifiant";
             }
         }
 
@@ -43,12 +43,17 @@ namespace Mauxnimale_CE2.ui
         {
             if (confirmID.Text.Length == 0)
             {
-                confirmID.Text = "Texte à codé";//mettre le numéro de l'utilisateur connecté ici
+                confirmID.Text = "Confirmez l'identifiant";
             }
         }
         public void confirmIDClick(object sender, EventArgs e)
         {
-            //effectuer les changements sur la base de données
+            if (confirmID.Text.Length != 0 && oldID.Text.Length != 0 && newID.Text.Length != 0 && confirmID.Text != "Confirmez l'identifiant" && newID.Text != "Nouveau identifiant" && oldID.Text != "Ancien identifiant")
+            {
+                UserController.updateLogin(user, confirmID.Text);
+                window.Controls.Clear();
+                window.switchInterface(new InterfaceAccountManagement(window, user));
+            }
         }
 
         public void homeClick(object sender, EventArgs e)
@@ -77,17 +82,17 @@ namespace Mauxnimale_CE2.ui
             oldID = new TextBox();
             oldID.LostFocus += new EventHandler(oldIDLeave);
             oldID.Location = new Point(window.Width / 8, window.Height * 22 / 100);
-            setBox(oldID, "Texte a codé");//mettre le nom de l'utilisateur connecté ici
+            setBox(oldID, "Ancien identifiant");
 
             newID = new TextBox();
             newID.LostFocus += new EventHandler(newIDLeave);
             newID.Location = new Point(window.Width / 8, window.Height * 37 / 100);
-            setBox(newID, "Texte a codé");//mettre le prénom de l'utilisateur connecté ici
+            setBox(newID, "Nouveau identifiant");
 
             confirmID = new TextBox();
             confirmID.LostFocus += new EventHandler(confirmIDLeave);
             confirmID.Location = new Point(window.Width / 8, window.Height * 52 / 100);
-            setBox(confirmID, "Texte a codé");//mettre l'email de l'utilisateur connecté ici
+            setBox(confirmID, "Confirmez l'identifiant");
         }
 
         public void generateLabel()

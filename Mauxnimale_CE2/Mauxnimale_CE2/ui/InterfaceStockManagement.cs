@@ -1,3 +1,5 @@
+﻿using Mauxnimale_CE2.api.controllers;
+using Mauxnimale_CE2.api.entities;
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -13,6 +15,7 @@ namespace Mauxnimale_CE2.ui
         Header header;
         Footer footer;
         ComboBox type;
+        PRODUIT choosed;
         UIRoundButton back;
         UIButton newProduct, changeProduct, deleteProduct;
         List<TYPE_PRODUIT> productType = new List<TYPE_PRODUIT>();
@@ -28,8 +31,7 @@ namespace Mauxnimale_CE2.ui
         public void generateBox()
         {
             type = new ComboBox();
-            //génerer liste des types avec une fonction API requete sql tous ca
-            foreach(TYPE_PRODUIT typeProduct in productType)
+            foreach (TYPE_PRODUIT typeProduct in ProductController.getTypes())
             {
                 type.Items.Add(typeProduct);
             }
@@ -48,7 +50,6 @@ namespace Mauxnimale_CE2.ui
             products.ForeColor = Color.Gray;
             products.SelectedIndexChanged += new EventHandler(productSelectedChange);
 
-            updateProducts();
             window.Controls.Add(products);
         }
 
@@ -97,40 +98,44 @@ namespace Mauxnimale_CE2.ui
 
         public void deleteProductClick(object sender, EventArgs e)
         {
-            //if(choisi != null)
-            //{
-                //deleteProduct
-            //}
+            if(choosed != null)
+            {
+                ProductController.removeProduct(choosed);
+                choosed = null;
+                products.Items.Clear();
+                foreach (PRODUIT product in ProductController.getProductsFromType((TYPE_PRODUIT)type.Items[type.SelectedIndex]))
+                {
+                    products.Items.Add(product);
+                }
+            }
         }
 
         public void changeProductClick(object sender, EventArgs e)
         {
-            //if(choisi != null)
-            //{
+            if(choosed != null)
+            {
                 window.Controls.Clear();
-                window.switchInterface(new InterfaceChangeStock(window, user));
-            //}
+                window.switchInterface(new InterfaceChangeStock(window, user, choosed));
+            }
         }
 
         public void typeSelectedChange(object sender, EventArgs e)
         {
-            //mettre a jour la liste des produits (productsList) a affichés en fonction du type choisi (type.items[type.SelectedIndex])
-            updateProducts();
+            products.Items.Clear();
+            if(ProductController.getProductsFromType((TYPE_PRODUIT)type.Items[type.SelectedIndex])!= null)
+            {
+                foreach (PRODUIT product in ProductController.getProductsFromType((TYPE_PRODUIT)type.Items[type.SelectedIndex]))
+                {
+                    products.Items.Add(product);
+                }
+            }
         }
         
         public void productSelectedChange(object sender, EventArgs e)
         {
-            //choisi = Le produit qui faut chopper a partir du string (product.items[product.SelectedIndex])
-            //si jamais ca vous casse les couilles de chopper le produit a partir d'un string appelez moi je vous dirai comment modifiez la listBox pour que ca soit plus simple
-        }
-
-        public void updateProducts()
-        {
-            foreach (PRODUIT product in productsList)
+            if(products.SelectedIndex != -1)
             {
-                //ajouter chaque produit dans la liste
-                //products.Items.Add(le nom du produit + " -  quantité : " + la quantité du produit);
-                products.Items.Add(product.IDPRODUIT + ". " + product.NOMPRODUIT + " - Quantité : " + product.QUANTITEENSTOCK);
+                choosed = (PRODUIT)products.Items[products.SelectedIndex];
             }
         }
     }

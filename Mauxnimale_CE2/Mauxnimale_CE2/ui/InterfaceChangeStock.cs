@@ -19,10 +19,10 @@ namespace Mauxnimale_CE2.ui
         UIRoundButton back, home;
         NumericUpDown quantity;
 
-        public InterfaceChangeStock(MainWindow window, SALAIRE user, PRODUIT product) : base(window, user)
+        public InterfaceChangeStock(MainWindow window, SALARIE user, PRODUIT product) : base(window, user)
         {
             header = new Header(window);
-            footer = new Footer(window, s);
+            footer = new Footer(window, user);
             choosed = product;
         }
 

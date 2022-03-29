@@ -9,37 +9,37 @@ namespace Mauxnimale_CE2.api.controllers
 	public static class UserController
 	{
 
-	/// <summary>
-	/// Get all the employees in the database.
-	/// </summary>
-	/// <returns>A list of all the employees present in the database.</returns>
-	public static List<SALARIE> getAllEmployees()
-	{
-		return DbContext.get().SALARIE.ToList();
-	}
+		/// <summary>
+		/// Get all the employees in the database.
+		/// </summary>
+		/// <returns>A list of all the employees present in the database.</returns>
+		public static List<SALARIE> getAllEmployees()
+		{
+			return DbContext.get().SALARIE.ToList();
+		}
 
-	/// <summary>
-	/// Get the user corresponding to the given login and password if he exists.
-	/// </summary>
-	/// <param name="login">The login of the user to get</param>
-	/// <param name="password">The password of the user to get</param>
-	/// <returns>SALARIE the user if found, null otherwise.</returns>
+		/// <summary>
+		/// Get the user corresponding to the given login and password if he exists.
+		/// </summary>
+		/// <param name="login">The login of the user to get</param>
+		/// <param name="password">The password of the user to get</param>
+		/// <returns>SALARIE the user if found, null otherwise.</returns>
 		public static SALARIE getConnection(string login, string password)
 		{
 			string hashedPassword = PasswordUtils.getHash(password);
 			var allUsers = from s in DbContext.get().SALARIE
-				   where s.LOGIN == login
-				   where s.MDP == hashedPassword
-				   select s;
+						   where s.LOGIN == login
+						   where s.MDP == hashedPassword
+						   select s;
 
 			return allUsers.FirstOrDefault();
 		}
 
-/// <summary>
-/// Retounre l'employé correspondant à l'identifiant donné s'il existe dans la base.
-/// </summary>
-/// <param name="employeeId">L'identifiant de l'employé</param>
-/// <returns>L'employé s'il a été trouvé, null sinon.</returns>
+		/// <summary>
+		/// Retounre l'employé correspondant à l'identifiant donné s'il existe dans la base.
+		/// </summary>
+		/// <param name="employeeId">L'identifiant de l'employé</param>
+		/// <returns>L'employé s'il a été trouvé, null sinon.</returns>
 		public static SALARIE getEmployeeWithId(int employeeId)
 		{
 			return DbContext.get().SALARIE.Find(employeeId);
@@ -87,114 +87,115 @@ namespace Mauxnimale_CE2.api.controllers
 			}
 
 
-		if (adress != null && adress.Any())
-		{
-			user.ADRESSE = adress;
-		}
-
-		if (password != null && password.Any())
-		{
-			user.MDP = PasswordUtils.getHash(password);
-		}
-
-		if (email != null && email.Any())
-		{
-			if (InputVerification.isEmail(email))
-				user.EMAIL = email;
-			else
+			if (adress != null && adress.Any())
 			{
-				Console.WriteLine("Email: " + email + " invalid. It does not match the email pattern.");
+				user.ADRESSE = adress;
+			}
+
+			if (password != null && password.Any())
+			{
+				user.MDP = PasswordUtils.getHash(password);
+			}
+
+			if (email != null && email.Any())
+			{
+				if (InputVerification.isEmail(email))
+					user.EMAIL = email;
+				else
+				{
+					Console.WriteLine("Email: " + email + " invalid. It does not match the email pattern.");
+					return false;
+				}
+			}
+
+			if (phoneNumber != null && phoneNumber.Any())
+			{
+				if (InputVerification.isPhoneNumber(phoneNumber))
+					user.TEL = phoneNumber.Trim();
+				else
+				{
+					Console.WriteLine("Phone number: " + phoneNumber + " invalid. It does not exclusively contains numbers.");
+					return false;
+				}
+			}
+
+			DbContext.get().SaveChanges();
+			Console.WriteLine("All infos updated successfully.");
+			return true;
+		}
+
+		/// <summary>
+		/// Update the user's login if valid.
+		/// </summary>
+		/// <param name="user">The user to update the login to</param>
+		/// <param name="newLogin">The new user's login</param>
+		/// <returns>true if it succeeded, false otherwise</returns>
+		public static bool updateLogin(SALARIE user, string newLogin)
+		{
+			return updateInfos(user, null, null, newLogin, null, null, null, null);
+		}
+
+		/// <summary>
+		/// Update the user's password if valid.
+		/// </summary>
+		/// <param name="user">The user to update the password to</param>
+		/// <param name="newLogin">The new user's password</param>
+		/// <returns>true if it succeeded, false otherwise</returns>
+		public static bool updatePassword(SALARIE user, string enteredPrevPassword, string newPassword)
+		{
+			if (user.MDP != PasswordUtils.getHash(enteredPrevPassword))
+			{
+				Console.WriteLine("WARNING: Entered previous password does not correspond to the user's password.");
 				return false;
 			}
+
+			return updateInfos(user, null, null, null, newPassword, null, null, null);
 		}
 
-		if (phoneNumber != null && phoneNumber.Any())
+		/// <summary>
+		/// Update the salary of the given employee.
+		/// </summary>
+		/// <param name="employee">The employee concerned.</param>
+		/// <param name="newSalary">The new salary amount</param>
+		public static void updateSalary(SALARIE employee, decimal newSalary)
 		{
-			if (InputVerification.isPhoneNumber(phoneNumber))
-				user.TEL = phoneNumber.Trim();
-			else
+			employee.SALAIRE = newSalary;
+			DbContext.get().SaveChanges();
+			Console.WriteLine("Salary updated.");
+		}
+
+		/// <summary>
+		/// Update the intership dates of the given intern.
+		/// </summary>
+		/// <param name="intern">The intern concerned.</param>
+		/// <param name="beginDate">The new begin date of the internship</param>
+		/// <param name="endDate">The new end date of the internship</param>
+		/// <returns>true if it succeeded, false otherwise.</returns>
+		public static bool updateInternshipDates(SALARIE intern, DateTime beginDate, DateTime endDate)
+		{
+			if (!InputVerification.isDateEarlier(beginDate, endDate))
 			{
-				Console.WriteLine("Phone number: " + phoneNumber + " invalid. It does not exclusively contains numbers.");
+				Console.WriteLine("Begin date: " + beginDate + " is not earlier than end date: " + endDate);
 				return false;
 			}
+
+			intern.DATEDEBUTSTAGE = beginDate;
+			intern.DATEFINSTAGE = endDate;
+			DbContext.get().SaveChanges();
+
+			Console.WriteLine("Internship dates updated.");
+			return true;
 		}
 
-		DbContext.get().SaveChanges();
-		Console.WriteLine("All infos updated successfully.");
-		return true;
-	}
-
-	/// <summary>
-	/// Update the user's login if valid.
-	/// </summary>
-	/// <param name="user">The user to update the login to</param>
-	/// <param name="newLogin">The new user's login</param>
-	/// <returns>true if it succeeded, false otherwise</returns>
-	public static bool updateLogin(SALARIE user, string newLogin)
-	{
-		return updateInfos(user, null, null, newLogin, null, null, null, null);
-	}
-
-	/// <summary>
-	/// Update the user's password if valid.
-	/// </summary>
-	/// <param name="user">The user to update the password to</param>
-	/// <param name="newLogin">The new user's password</param>
-	/// <returns>true if it succeeded, false otherwise</returns>
-	public static bool updatePassword(SALARIE user, string enteredPrevPassword, string newPassword)
-	{
-		if (user.MDP != PasswordUtils.getHash(enteredPrevPassword))
+		/// <summary>
+		/// Set the first connection property of the user as true.
+		/// </summary>
+		/// <param name="user">The user concerned.</param>
+		public static void setFirstConnectionDone(SALARIE user)
 		{
-			Console.WriteLine("WARNING: Entered previous password does not correspond to the user's password.");
-			return false;
+			user.PREMIERECONNEXION = true;
+			DbContext.get().SaveChanges();
+			Console.WriteLine("User with login: " + user.LOGIN + " has connected for the first time.");
 		}
-
-		return updateInfos(user, null, null, null, newPassword, null, null, null);
-	}
-
-	/// <summary>
-	/// Update the salary of the given employee.
-	/// </summary>
-	/// <param name="employee">The employee concerned.</param>
-	/// <param name="newSalary">The new salary amount</param>
-	public static void updateSalary(SALARIE employee, decimal newSalary)
-	{
-		employee.SALAIRE = newSalary;
-		DbContext.get().SaveChanges();
-		Console.WriteLine("Salary updated.");
-	}
-
-	/// <summary>
-	/// Update the intership dates of the given intern.
-	/// </summary>
-	/// <param name="intern">The intern concerned.</param>
-	/// <param name="beginDate">The new begin date of the internship</param>
-	/// <param name="endDate">The new end date of the internship</param>
-	/// <returns>true if it succeeded, false otherwise.</returns>
-	public static bool updateInternshipDates(SALARIE intern, DateTime beginDate, DateTime endDate)
-	{
-		if (!InputVerification.isDateEarlier(beginDate, endDate))
-		{
-			Console.WriteLine("Begin date: " + beginDate + " is not earlier than end date: " + endDate);
-			return false;
-		}
-
-		intern.DATEDEBUTSTAGE = beginDate;
-		intern.DATEFINSTAGE = endDate;
-		DbContext.get().SaveChanges();
-
-		Console.WriteLine("Internship dates updated.");
-		return true;
-	}
-
-	/// <summary>
-	/// Set the first connection property of the user as true.
-	/// </summary>
-	/// <param name="user">The user concerned.</param>
-	public static void setFirstConnectionDone(SALARIE user)
-	{
-		user.PREMIERECONNEXION = true;
-		DbContext.get().SaveChanges();
-		Console.WriteLine("User with login: " + user.LOGIN + " has connected for the first time.");
 	}
 }

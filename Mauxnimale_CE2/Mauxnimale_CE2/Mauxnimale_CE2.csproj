@@ -59,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="api\controllers\AppointmentController.cs" />
-    <Compile Include="api\controllers\CareController.cs" />
+    <Compile Include="api\controllers\CareAndDiseaseController.cs" />
     <Compile Include="api\controllers\ClientController.cs" />
     <Compile Include="api\controllers\InvoiceController.cs" />
     <Compile Include="api\controllers\PrescriptionController.cs" />
@@ -176,6 +176,7 @@
     <Compile Include="ui\InterfaceChangeID.cs" />
     <Compile Include="ui\InterfaceChangePassword.cs" />
     <Compile Include="ui\InterfaceChangeStock.cs" />
+    <Compile Include="ui\InterfaceDiseaseAndCares.cs" />
     <Compile Include="ui\InterfaceEmployeesManagement.cs" />
     <Compile Include="ui\InterfaceFirstConnection.cs" />
     <Compile Include="ui\components\MinimalHeader.cs">

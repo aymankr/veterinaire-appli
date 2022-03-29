@@ -42,7 +42,11 @@ public partial class MALADIE
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<SOIN> SOIN { get; set; }
-
+    public override string ToString()
+    {
+            return NOMMALADIE;
+    }
 }
+
 
 }

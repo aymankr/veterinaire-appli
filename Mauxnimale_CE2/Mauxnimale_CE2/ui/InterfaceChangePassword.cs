@@ -1,20 +1,14 @@
-﻿using Mauxnimale_CE2.api.entities;
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
 using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceChangePassword : AInterface
     {
-        MainWindow window;
-
         Header header;
         Footer footer;
 
@@ -23,13 +17,10 @@ namespace Mauxnimale_CE2.ui
         TextBox oldPassword, newPassword, confirmPassword;
         Label lOldPassword, lNewPassword, lConfirmPassword;
 
-        public InterfaceChangePassword(MainWindow forme, SALARIE s)
+        public InterfaceChangePassword(MainWindow window, SALARIE user) : base(window, user)
         {
-            user = s;
-            this.window = forme;
             header = new Header(window);
-            footer = new Footer(window, s);
-            user = s;
+            footer = new Footer(window, user);
         }
 
         public void newIDLeave(object sender, EventArgs e)
@@ -151,12 +142,6 @@ namespace Mauxnimale_CE2.ui
             box.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 100);
             box.Text = text;
             window.Controls.Add(box);
-        }
-
-        public override void updateSize()
-        {
-            window.Controls.Clear();
-            this.load();
         }
     }
 }

@@ -21,17 +21,7 @@ namespace Mauxnimale_CE2.api.entities
             this.FACTURE_PRODUIT = new HashSet<FACTURE_PRODUIT>();
             this.RENDEZ_VOUS = new HashSet<RENDEZ_VOUS>();
         }
-
-        public CLIENT(string nom, string prenom, string tel)
-        {
-            this.ANIMAL = new HashSet<ANIMAL>();
-            this.FACTURE_PRODUIT = new HashSet<FACTURE_PRODUIT>();
-            this.RENDEZ_VOUS = new HashSet<RENDEZ_VOUS>();
-            NOMCLIENT = nom;
-            PRENOMCLIENT = prenom;
-            TELCLIENT = tel;
-        }
-
+    
         public int IDCLIENT { get; set; }
         public string NOMCLIENT { get; set; }
         public string PRENOMCLIENT { get; set; }
@@ -43,6 +33,7 @@ namespace Mauxnimale_CE2.api.entities
         public virtual ICollection<FACTURE_PRODUIT> FACTURE_PRODUIT { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RENDEZ_VOUS> RENDEZ_VOUS { get; set; }
+
         public override string ToString()
         {
             return this.NOMCLIENT + " " + this.PRENOMCLIENT;

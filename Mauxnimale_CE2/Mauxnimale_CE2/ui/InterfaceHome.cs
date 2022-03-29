@@ -2,30 +2,26 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.ui.components;
+using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceHome : AInterface
     {
-        MainWindow window;
-
         Header header;
         Footer footer;
 
-        UIButton manageCongé, manageMaladie, manageVentes, stats, manageConsultation, manageStock;
+        UIButton employeesManagementBtn, manageMaladie, manageVentes, stats, manageConsultation, manageStock;
         Button compte;
         Label incEvent;
         TextBox events;
 
-        public InterfaceHome(MainWindow window, SALARIE s)
+        public InterfaceHome(MainWindow window, SALARIE user) : base(window, user)
         {
-            this.window = window;
             header = new Header(window);
-            footer = new Footer(window, s);
-            user = s;
+            footer = new Footer(window, user);
 
         }
         public override void load()
@@ -82,15 +78,15 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(manageConsultation);
 
             if(!user.ASSISTANT){
-                manageCongé = new UIButton(UIColor.DARKBLUE, "Gestion des congés", window.Width / 4);
-                manageCongé.Location = new System.Drawing.Point(window.Width * 325 / 1000, window.Height * 625 / 1000);
-                window.Controls.Add(manageCongé);
+                employeesManagementBtn = new UIButton(UIColor.DARKBLUE, "Gestion des salariés", window.Width / 4);
+                employeesManagementBtn.Location = new System.Drawing.Point(window.Width * 325 / 1000, window.Height * 625 / 1000);
+                window.Controls.Add(employeesManagementBtn);
 
                 stats = new UIButton(UIColor.DARKBLUE, "Statistiques", window.Width / 4);
                 stats.Location = new System.Drawing.Point(window.Width * 6 / 10, window.Height * 625 / 1000);
                 window.Controls.Add(stats);
 
-                manageCongé.Click += new EventHandler(manageCongéClick);
+                employeesManagementBtn.Click += new EventHandler(onEmployeesManagementBtnClick);
                 stats.Click += new EventHandler(statsClick);
             }
 
@@ -130,10 +126,10 @@ namespace Mauxnimale_CE2.ui
             window.switchInterface(new InterfaceAccountManagement(window, user));
         }
 
-        public void manageCongéClick(object sender, EventArgs e)
+        public void onEmployeesManagementBtnClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceGestionCongé(window, user));
+            window.switchInterface(new InterfaceEmployeesManagement(window, user));
         }
 
         public void manageStockClick(object sender, EventArgs e)
@@ -166,11 +162,5 @@ namespace Mauxnimale_CE2.ui
             window.switchInterface(new InterfaceStatsPage(window, user));
         }
         #endregion
-
-        public override void updateSize()
-        {
-            window.Controls.Clear();
-            this.load();
-        }
     }
 }

@@ -44,5 +44,6 @@ namespace Mauxnimale_CE2.api.entities
         public virtual DbSet<SOIN> SOIN { get; set; }
         public virtual DbSet<TYPE_PRODUIT> TYPE_PRODUIT { get; set; }
         public virtual DbSet<TYPE_RDV> TYPE_RDV { get; set; }
+        public virtual DbSet<LIEN_SOIN> LIEN_SOIN { get; set; }
     }
 }

@@ -20,14 +20,7 @@ namespace Mauxnimale_CE2.api.entities
             this.JOURNEE_SALARIE = new HashSet<JOURNEE_SALARIE>();
             this.RENDEZ_VOUS = new HashSet<RENDEZ_VOUS>();
         }
-
-        public JOURNEE(DateTime date)
-        {
-            this.JOURNEE_SALARIE = new HashSet<JOURNEE_SALARIE>();
-            this.RENDEZ_VOUS = new HashSet<RENDEZ_VOUS>();
-            DATE = date;
-        }
-
+    
         public int IDJOURNEE { get; set; }
         public System.DateTime DATE { get; set; }
     

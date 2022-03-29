@@ -1,9 +1,7 @@
 ﻿using Mauxnimale_CE2.api.entities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Mauxnimale_CE2.api.controllers
 {
@@ -30,6 +28,14 @@ namespace Mauxnimale_CE2.api.controllers
             }
             DbContext.get().ORDONNANCE.Add(prescription);
             DbContext.get().SaveChanges();
+        }
+
+        public static ORDONNANCE GetORDONNANCEFromRDVAndAnimal(RENDEZ_VOUS rdv, ANIMAL animal)
+        {
+            ORDONNANCE ordonnance = (from o in DbContext.get().ORDONNANCE
+                             where o.IDANIMAL == animal.IDANIMAL && o.IDRDV == rdv.IDRDV
+                             select o).FirstOrDefault();
+            return ordonnance;
         }
     }
 }

@@ -18,6 +18,7 @@ namespace Mauxnimale_CE2.api.entities
         public SOIN()
         {
             this.MALADIE = new HashSet<MALADIE>();
+            this.LIEN_SOIN = new HashSet<LIEN_SOIN>();
         }
     
         public int IDSOINS { get; set; }
@@ -25,5 +26,7 @@ namespace Mauxnimale_CE2.api.entities
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MALADIE> MALADIE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LIEN_SOIN> LIEN_SOIN { get; set; }
     }
 }

@@ -18,18 +18,20 @@ namespace Mauxnimale_CE2.api.entities
         public ORDONNANCE()
         {
             this.PRODUITLIES = new HashSet<PRODUITLIES>();
+            this.LIEN_SOIN = new HashSet<LIEN_SOIN>();
         }
-        public ORDONNANCE(ANIMAL animal, RENDEZ_VOUS rendez_vous)
-        {
-            this.PRODUITLIES = new HashSet<PRODUITLIES>();
-            ANIMAL = animal;
-        }
-
+    
         public int IDORDONNANCE { get; set; }
         public int IDANIMAL { get; set; }
+        public string PRESCRIPTION { get; set; }
+        public string DIAGNOSTIQUE { get; set; }
+        public Nullable<int> IDRDV { get; set; }
     
         public virtual ANIMAL ANIMAL { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PRODUITLIES> PRODUITLIES { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LIEN_SOIN> LIEN_SOIN { get; set; }
+        public virtual RENDEZ_VOUS RENDEZ_VOUS { get; set; }
     }
 }

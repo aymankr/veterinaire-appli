@@ -51,7 +51,7 @@ namespace Mauxnimale_CE2.api.controllers.utils
                 new MailAddress(text);
                 return true;
             }
-            catch (Exception e)
+            catch (Exception _)
             {
                 return false;
             }

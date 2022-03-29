@@ -1,21 +1,16 @@
 ﻿using Mauxnimale_CE2.api.controllers;
 using Mauxnimale_CE2.api.entities;
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
 using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceChangeStock : AInterface
     {
-        MainWindow window;
-
         PRODUIT choosed;
         Header header;
         UIButton applyQuantity;
@@ -24,10 +19,8 @@ namespace Mauxnimale_CE2.ui
         UIRoundButton back, home;
         NumericUpDown quantity;
 
-        public InterfaceChangeStock(MainWindow forme, SALARIE s, PRODUIT product)
+        public InterfaceChangeStock(MainWindow window, SALAIRE user, PRODUIT product) : base(window, user)
         {
-            user = s;
-            this.window = forme;
             header = new Header(window);
             footer = new Footer(window, s);
             choosed = product;
@@ -40,12 +33,6 @@ namespace Mauxnimale_CE2.ui
             generateButton();
             generateNumericUpDown();
             generateLabel();
-        }
-
-        public override void updateSize()
-        {
-            window.Controls.Clear();
-            this.load();
         }
 
         private void generateNumericUpDown()

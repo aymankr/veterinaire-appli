@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="38d0387e275b41298be8b085f85ed7ad" Name="Diagram1">
+      <Diagram DiagramId="38d0387e275b41298be8b085f85ed7ad" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="PT4_S4P2C_E2Model.ANIMAL" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="PT4_S4P2C_E2Model.CLIENT" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="PT4_S4P2C_E2Model.ESPECE" Width="1.5" PointX="1.5" PointY="2.5" IsExpanded="true" />
@@ -43,6 +43,10 @@
         <AssociationConnector Association="PT4_S4P2C_E2Model.FK_RENDEZ_VOUS_TYPE_RDV" ManuallyRouted="false" />
         <AssociationConnector Association="PT4_S4P2C_E2Model.PATIENT" ManuallyRouted="false" />
         <AssociationConnector Association="PT4_S4P2C_E2Model.SOIGNER" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PT4_S4P2C_E2Model.LIEN_SOIN" Width="1.5" PointX="7.5" PointY="18.25" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_IdOrdonnance_LienSoin" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_IdSoin_LienSoin" />
+        <AssociationConnector Association="PT4_S4P2C_E2Model.FK_IdRdv_Ordonnance" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

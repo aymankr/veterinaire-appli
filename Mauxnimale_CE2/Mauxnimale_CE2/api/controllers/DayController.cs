@@ -1,10 +1,11 @@
-﻿using Mauxnimale_CE2.api.entities;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System;
+using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2.api.controllers
 {
-    public class DayController
+    public static class DayController
     {
         /// <summary>
         /// Ajout d'une journée d'un salarié
@@ -21,8 +22,10 @@ namespace Mauxnimale_CE2.api.controllers
             j.HEUREDEBUT = TimeSpan.Parse(startHour);
             j.HEUREFIN = TimeSpan.Parse(endHour);
             j.CONGE = false;
-            DbContext.get().JOURNEE_SALARIE.Add(j);
-            DbContext.get().SaveChanges();
+
+            PT4_S4P2C_E2Entities dbContext = DbContext.get();
+            dbContext.JOURNEE_SALARIE.Add(j);
+            dbContext.SaveChanges();
         }
 
         /// <summary>
@@ -31,20 +34,42 @@ namespace Mauxnimale_CE2.api.controllers
         /// <param name="dayEmployee"></param>
         public static void removeDayEmployee(JOURNEE_SALARIE dayEmployee)
         {
-            DbContext.get().JOURNEE_SALARIE.Remove(dayEmployee);
-            DbContext.get().SaveChanges();
+            PT4_S4P2C_E2Entities dbContext = DbContext.get();
+            dbContext.JOURNEE_SALARIE.Remove(dayEmployee);
+            dbContext.SaveChanges();
+        }
+
+        /// <param name="day">Le jour concerné</param>
+        /// <param name="employee">L'employé concerné</param>
+        /// <returns>La journée du salarié correspondante si elle existe, null sinon.</returns>
+        public static JOURNEE_SALARIE getDayEmployee(JOURNEE day, SALARIE employee)
+        {
+            List<JOURNEE_SALARIE> daysFound = DbContext.get().JOURNEE_SALARIE.Where(d => 
+                                              d.JOURNEE.IDJOURNEE == day.IDJOURNEE && d.SALARIE.IDCOMPTE == employee.IDCOMPTE).ToList();
+            if (daysFound.Count > 0)
+                return daysFound[0];
+            return null;
+
         }
 
         /// <summary>
-        /// Poser un congé pour un salarié
+        /// Poser ou supprimer un congé pour un salarié
         /// </summary>
         /// <param name="vacationDay"></param>
         /// <param name="isAVacation"></param>
         public static void setVacation(JOURNEE_SALARIE vacationDay, bool isAVacation)
         {
-            DbContext.get().JOURNEE_SALARIE.Find(vacationDay.IDJOURNEESALARIE).CONGE = isAVacation;
-            DbContext.get().SaveChanges();
+            PT4_S4P2C_E2Entities dbContext = DbContext.get();
+            dbContext.JOURNEE_SALARIE.Find(vacationDay.IDJOURNEESALARIE).CONGE = isAVacation;
+            dbContext.SaveChanges();
         }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="employee">Le salarié dont on veut obtenir les congés.</param>
+        /// <returns>Une liste contenant les jours de congés posés du salarié.</returns>
+        public static List<JOURNEE_SALARIE> getEmployeeVacations(SALARIE employee) => 
+            DbContext.get().JOURNEE_SALARIE.Where(day => day.SALARIE.IDCOMPTE == employee.IDCOMPTE && day.CONGE).ToList();
 
         /// <summary>
         /// Ajout d'une journée

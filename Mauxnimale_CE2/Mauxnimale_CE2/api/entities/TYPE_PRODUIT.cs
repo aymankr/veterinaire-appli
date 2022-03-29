@@ -25,9 +25,5 @@ namespace Mauxnimale_CE2.api.entities
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PRODUIT> PRODUIT { get; set; }
-        public override string ToString()
-        {
-            return NOMTYPE;
-        }
     }
 }

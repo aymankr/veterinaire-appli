@@ -2,9 +2,6 @@ using Mauxnimale_CE2.ui;
 using System;
 using System.Windows.Forms;
 
-using Mauxnimale_CE2.api;
-using Mauxnimale_CE2.api.entities;
-
 namespace Mauxnimale_CE2
 {
     public partial class MainWindow : Form
@@ -15,7 +12,7 @@ namespace Mauxnimale_CE2
             InitializeComponent();
             Resize += new EventHandler(windowResize);
 
-            interfac = new InterfaceConnection(this,null);
+            interfac = new InterfaceAppointmentManagment(this, null);
             interfac.load();
 
             Refresh();

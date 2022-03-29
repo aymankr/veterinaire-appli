@@ -1,30 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Mauxnimale_CE2.api;
 using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.api.controllers.utils;
 
-public static class UserController
+namespace Mauxnimale_CE2.api.controllers
 {
-	/* GET METHODS */
-
-	/// <summary>
-	/// Get the user corresponding to the given login and password if he exists.
-	/// </summary>
-	/// <param name="login">The login of the user to get</param>
-	/// <param name="password">The password of the user to get</param>
-	/// <returns>SALARIE the user if found, null otherwise.</returns>
-	public static SALARIE getConnection(string login, string password)
+	public static class UserController
 	{
-		string hashedPassword = PasswordUtils.getHash(password);
-		var allUsers = from s in DbContext.get().SALARIE
-					   where s.LOGIN == login
-					   where s.MDP == hashedPassword
-					   select s;
-
-		return allUsers.FirstOrDefault();
-	}
 
 	/// <summary>
 	/// Get all the employees in the database.
@@ -35,10 +18,33 @@ public static class UserController
 		return DbContext.get().SALARIE.ToList();
 	}
 
+	/// <summary>
+	/// Get the user corresponding to the given login and password if he exists.
+	/// </summary>
+	/// <param name="login">The login of the user to get</param>
+	/// <param name="password">The password of the user to get</param>
+	/// <returns>SALARIE the user if found, null otherwise.</returns>
+		public static SALARIE getConnection(string login, string password)
+		{
+			string hashedPassword = PasswordUtils.getHash(password);
+			var allUsers = from s in DbContext.get().SALARIE
+				   where s.LOGIN == login
+				   where s.MDP == hashedPassword
+				   select s;
 
-	/* UPDATES METHODS */
+			return allUsers.FirstOrDefault();
+		}
 
-	public static bool updateInfos(SALARIE user,
+/// <summary>
+/// Retounre l'employé correspondant à l'identifiant donné s'il existe dans la base.
+/// </summary>
+/// <param name="employeeId">L'identifiant de l'employé</param>
+/// <returns>L'employé s'il a été trouvé, null sinon.</returns>
+		public static SALARIE getEmployeeWithId(int employeeId)
+		{
+			return DbContext.get().SALARIE.Find(employeeId);
+		}
+		public static bool updateInfos(SALARIE user,
 								   string firstName,
 								   string lastName,
 								   string login,
@@ -46,39 +52,40 @@ public static class UserController
 								   string email,
 								   string phoneNumber,
 								   string adress)
-	{
-		if (firstName != null && firstName.Any())
 		{
-			if (InputVerification.noNumber(firstName))
-				user.PRENOM = firstName;
-			else
+			if (firstName != null && firstName.Any())
 			{
-				Console.WriteLine("First name: " + firstName + " invalid. Contains a number.");
-				return false;
+				if (InputVerification.noNumber(firstName))
+					user.PRENOM = firstName;
+				else
+				{
+					Console.WriteLine("First name: " + firstName + " invalid. Contains a number.");
+					return false;
+				}
 			}
-		}
 
-		if (lastName != null && lastName.Any())
-		{
-			if (InputVerification.noNumber(lastName))
-				user.NOM = lastName;
-			else
+			if (lastName != null && lastName.Any())
 			{
-				Console.WriteLine("Last name: " + lastName + " invalid. Contains a number.");
-				return false;
+				if (InputVerification.noNumber(lastName))
+					user.NOM = lastName;
+				else
+				{
+					Console.WriteLine("Last name: " + lastName + " invalid. Contains a number.");
+					return false;
+				}
 			}
-		}
 
-		if (login != null && login.Any())
-		{
-			if (InputVerification.noSpecialCharacters(login))
-				user.LOGIN = login;
-			else
+			if (login != null && login.Any())
 			{
-				Console.WriteLine("Login: " + login + " invalid. Contains a special character.");
-				return false;
+				if (InputVerification.noSpecialCharacters(login))
+					user.LOGIN = login;
+				else
+				{
+					Console.WriteLine("Login: " + login + " invalid. Contains a special character.");
+					return false;
+				}
 			}
-		}
+
 
 		if (adress != null && adress.Any())
 		{

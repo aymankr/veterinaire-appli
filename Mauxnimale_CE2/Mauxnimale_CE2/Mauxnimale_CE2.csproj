@@ -108,6 +108,9 @@
     <Compile Include="api\entities\LIEN_MALADIE.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="api\entities\LIEN_SOIN.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="api\entities\LOG.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
@@ -144,19 +147,21 @@
     <Compile Include="api\entities\TYPE_RDV.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ui\InterfacePrescriptionCreation.cs" />
+    <Compile Include="ui\components\EmployeesComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ui\InterfaceAppointmentCreation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ui\AInterface.cs" />
+    <Compile Include="ui\InterfaceClient.cs" />
     <Compile Include="ui\components\UIButton.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ui\components\componentsTools\UIColor.cs" />
     <Compile Include="ui\components\componentsTools\UIFont.cs" />
     <Compile Include="ui\components\UIPicture.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ui\components\UITextBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ui\components\UITitleLabel.cs">
@@ -168,22 +173,26 @@
       <DependentUpon>UIButton.cs</DependentUpon>
     </Compile>
     <Compile Include="ui\InterfaceAppointmentManagment.cs" />
+    <Compile Include="ui\InterfaceAppointmentModification.cs" />
     <Compile Include="ui\InterfaceChangeID.cs" />
     <Compile Include="ui\InterfaceChangePassword.cs" />
     <Compile Include="ui\InterfaceChangeStock.cs" />
+    <Compile Include="ui\InterfaceEmployeesManagement.cs" />
     <Compile Include="ui\InterfaceFirstConnection.cs" />
     <Compile Include="ui\components\MinimalHeader.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ui\ExempleInterface.cs" />
     <Compile Include="ui\InterfaceAdmin.cs" />
     <Compile Include="ui\InterfaceConnection.cs" />
     <Compile Include="ui\InterfaceAccountManagement.cs" />
-    <Compile Include="ui\InterfaceGestionCongé.cs" />
+    <Compile Include="ui\InterfaceVacationManagement.cs" />
     <Compile Include="ui\InterfaceHome.cs" />
     <Compile Include="ui\InterfaceInscription.cs" />
     <Compile Include="ui\InterfaceLegalMentions.cs" />
+    <Compile Include="ui\InterfaceUpdateRelatedToAnimals.cs" />
+    <Compile Include="ui\InterfaceNewsRelatedToAnimals.cs" />
     <Compile Include="ui\InterfaceStatsPage.cs" />
+    <Compile Include="ui\InterfaceUpdateClient.cs" />
     <Compile Include="ui\InterfaceStockManagement.cs" />
     <Compile Include="ui\InterfaceStockNewProduct.cs" />
     <Compile Include="ui\MainWindow.cs">
@@ -198,6 +207,7 @@
     <Compile Include="ui\components\UIRoundButton.Designer.cs">
       <DependentUpon>UIRoundButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="ui\InterfaceNewClient.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

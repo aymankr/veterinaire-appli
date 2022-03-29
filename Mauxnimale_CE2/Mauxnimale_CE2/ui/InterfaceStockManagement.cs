@@ -1,21 +1,17 @@
 ﻿using Mauxnimale_CE2.api.controllers;
 using Mauxnimale_CE2.api.entities;
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Collections.Generic;
 using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceStockManagement : AInterface
     {
-        MainWindow window;
-
         Header header;
         Footer footer;
         ComboBox type;
@@ -26,12 +22,10 @@ namespace Mauxnimale_CE2.ui
         ListBox products;
         List<PRODUIT> productsList = new List<PRODUIT>();
 
-        public InterfaceStockManagement(MainWindow forme, SALARIE s)
+        public InterfaceStockManagement(MainWindow window, SALARIE user) : base(window, user)
         {
-            user = s;
-            this.window = forme;
-            header = new Header(window);
-            footer = new Footer(window, s);
+            header = new Header(this.window);
+            footer = new Footer(this.window, user);
         }
 
         public void generateBox()
@@ -143,12 +137,6 @@ namespace Mauxnimale_CE2.ui
             {
                 choosed = (PRODUIT)products.Items[products.SelectedIndex];
             }
-        }
-
-        public override void updateSize()
-        {
-            window.Controls.Clear();
-            this.load();
         }
     }
 }

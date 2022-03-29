@@ -22,19 +22,23 @@ namespace Mauxnimale_CE2.ui
         Label medsLabel, prescriptionLabel, diagnosticLabel, careLabel, descriptionLabel;
         ComboBox careComboBox, medsComboBox;
         RichTextBox prescriptionTextBox, diagTextBox;
-        TextBox descriptionTexBox;
+        TextBox descriptionTextBox;
 
 
 
-        String description, prescription, diagnostic = "";
+        string prescription, diagnostic;
+        PRODUIT selectedProduit;
         RENDEZ_VOUS rdv;
+        List<PRODUITLIES> products;
+        ANIMAL animal;
 
 
-        public InterfacePrescriptionCreation(MainWindow window, SALARIE user, RENDEZ_VOUS rdv) : base(window, user)
+        public InterfacePrescriptionCreation(MainWindow window, SALARIE user, RENDEZ_VOUS rdv, ANIMAL animal) : base(window, user)
         {
             header = new Header(window);
             footer = new Footer(window, base.user);
             this.rdv = rdv;
+            this.animal = animal;
 
         }
 
@@ -131,17 +135,17 @@ namespace Mauxnimale_CE2.ui
 
             #region descriptionBox
 
-            descriptionTexBox.TextChanged += new EventHandler(DescriptionTexBoxChanged);
-            descriptionTexBox = new TextBox();
-            descriptionTexBox.ReadOnly = true;
-            descriptionTexBox.Text = "";
-            descriptionTexBox.Font = new Font("Poppins", window.Height * 1 / 100);
-            descriptionTexBox.ForeColor = Color.Black;
-            descriptionTexBox.BackColor = Color.White;
-            descriptionTexBox.Multiline = true;
-            descriptionTexBox.Size = new Size(window.Width * 45 / 100, window.Height * 60 / 100);
-            descriptionTexBox.Location = new Point(window.Width * 490 / 1000, window.Height * 9 / 40);
-            setDescription();
+            descriptionTextBox = new TextBox();
+            descriptionTextBox.ReadOnly = true;
+            descriptionTextBox.Text = "";
+            descriptionTextBox.Font = new Font("Poppins", window.Height * 1 / 100);
+            descriptionTextBox.ForeColor = Color.Black;
+            descriptionTextBox.BackColor = Color.White;
+            descriptionTextBox.Multiline = true;
+            descriptionTextBox.Size = new Size(window.Width * 45 / 100, window.Height * 60 / 100);
+            descriptionTextBox.Location = new Point(window.Width * 490 / 1000, window.Height * 9 / 40);
+            descriptionTextBox.TextChanged += new EventHandler(DescriptionTexBoxChanged);
+            
 
             #endregion
 
@@ -150,6 +154,7 @@ namespace Mauxnimale_CE2.ui
             prescriptionTextBox.Size = new Size(window.Width * 20 / 100, window.Height * 3 / 20);
             prescriptionTextBox.Location = new Point(window.Width * 50 / 1000, window.Height * 7 / 20);
             prescriptionTextBox.TextChanged += new EventHandler(prescriptionTextBoxChanged);
+            prescription = "";
             #endregion
             
             #region DiagnosticBox
@@ -157,20 +162,35 @@ namespace Mauxnimale_CE2.ui
             diagTextBox.Size = new Size(window.Width * 20 / 100, window.Height * 3 / 20);
             diagTextBox.Location = new Point(window.Width * 270 / 1000, window.Height * 7 / 20);
             diagTextBox.TextChanged += new EventHandler(diagTextBoxChanged);
+            diagnostic = "";
             #endregion
 
-            
+
             window.Controls.Add(careComboBox);
             window.Controls.Add(medsComboBox);
-            window.Controls.Add(descriptionTexBox);
+            window.Controls.Add(descriptionTextBox);
             window.Controls.Add(prescriptionTextBox);
             window.Controls.Add(diagTextBox);
+            
+            setDescription();
         }
 
         private void setDescription()
         {
-            descriptionTexBox.AppendText("Date :" + DateTime.Now);
-            descriptionTexBox.AppendText("Client :" + rdv.CLIENT);
+            descriptionTextBox.Clear();
+            
+            descriptionTextBox.AppendText("Date : " + rdv.JOURNEE + Environment.NewLine);
+            descriptionTextBox.AppendText("Horraire : " + rdv.HEUREDEBUT + " à " + rdv.HEUREFIN + Environment.NewLine);
+            descriptionTextBox.AppendText("Client : " + rdv.CLIENT + Environment.NewLine);
+            descriptionTextBox.AppendText("Animal : " + animal + Environment.NewLine);
+            descriptionTextBox.AppendText("Diagnostique : " + diagnostic + Environment.NewLine);
+            descriptionTextBox.AppendText("Prescription : " + prescription + Environment.NewLine);
+            descriptionTextBox.AppendText("Médicaments prescrits : " + Environment.NewLine);
+            /*foreach (PRODUITLIES product in products)
+            {
+                descriptionTextBox.AppendText("    " + product.PRODUIT.ToString() + " x " + product.QUANTITEPRODUITS + Environment.NewLine);
+            }*/
+            
         }
 
         public void generateButton()
@@ -228,11 +248,13 @@ namespace Mauxnimale_CE2.ui
         private void prescriptionTextBoxChanged(object sender, EventArgs e)
         {
             prescription = prescriptionTextBox.Text;
+            setDescription();
         }
 
         private void DescriptionTexBoxChanged(object sender, EventArgs e)
         {
-            description = descriptionTexBox.Text;
+            diagnostic = diagTextBox.Text;
+            setDescription();
         }
 
         private void MedsComboSearch(object sender, EventArgs e)

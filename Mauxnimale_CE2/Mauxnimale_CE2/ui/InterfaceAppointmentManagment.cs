@@ -30,7 +30,7 @@ namespace Mauxnimale_CE2.ui
         ComboBox animalsAtRDV;
         TextBox infosConsult, prescription;
 
-        Boolean prescriptionMode = false;
+        bool prescriptionMode = false;
 
         public InterfaceAppointmentManagment(MainWindow window, SALARIE user) : base(window, user)
         {
@@ -133,16 +133,15 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(calendar);
         }
 
-
         public void generateButton()
         {
+
             #region Modif Button
             switchDisplay = new UIButton(UIColor.DARKBLUE, "Afficher Ordonnances", window.Width * 3 / 20);
             switchDisplay.Location = new Point(window.Width * 30 / 40, window.Height * 14 / 20);
             switchDisplay.Click += new EventHandler(SwitchDisplauClick);
             switchDisplay.Enabled = false;
             #endregion
-
 
             #region Modif Button
             modifConsult = new UIButton(UIColor.DARKBLUE, "Modifier Consultation", window.Width * 3 / 20);
@@ -193,9 +192,6 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(modifOrdonnance);
             window.Controls.Add(back);
         }
-
-
-
 
         #region eventHandler
 
@@ -272,6 +268,11 @@ namespace Mauxnimale_CE2.ui
                 prescription.AppendText("Horraire : " + ordonnance.RENDEZ_VOUS.HEUREDEBUT + " à " + ordonnance.RENDEZ_VOUS.HEUREFIN + Environment.NewLine);
                 prescription.AppendText("Client : " + ordonnance.RENDEZ_VOUS.CLIENT + Environment.NewLine);
                 prescription.AppendText("Animal : " + ordonnance.ANIMAL + Environment.NewLine);
+                prescription.AppendText("Soins effectués: " + ordonnance.ANIMAL + Environment.NewLine);
+                foreach(LIEN_SOIN care in ordonnance.LIEN_SOIN)
+                {
+                    prescription.AppendText("    " + care.SOIN + Environment.NewLine);
+                }
                 prescription.AppendText("Diagnostique : " + ordonnance.DIAGNOSTIQUE + Environment.NewLine);
                 prescription.AppendText("Prescription : " + ordonnance.PRESCRIPTION + Environment.NewLine);
                 prescription.AppendText("Médicaments prescrits : " + Environment.NewLine);
@@ -279,25 +280,33 @@ namespace Mauxnimale_CE2.ui
                 {
                     prescription.AppendText("    " + product.PRODUIT.ToString() + " x " + product.QUANTITEPRODUITS + Environment.NewLine);
                 }
+
             }
             EnableButtons();
 
 
         }
 
+        #endregion
+
+        #region Buttons
         public void EnableButtons()
         {
             if(selectedRdv != null)
             {
-                if (selectedAnimal != null && ordonnance!=null)
+                if (selectedAnimal != null)
                 {
-                    modifOrdonnance.Enabled = true;
-                    createOrdonnance.Enabled = false;
-                }
-                else
-                {
-                    createOrdonnance.Enabled = true;
-                    modifOrdonnance.Enabled = false;
+                    if(ordonnance != null)
+                    {
+                        modifOrdonnance.Enabled = true;
+                        createOrdonnance.Enabled = false;
+
+                    }
+                    else
+                    {                 
+                        createOrdonnance.Enabled = true;
+                        modifOrdonnance.Enabled = false;
+                    }
                 }
                 deleteConsult.Enabled = true;
                 modifConsult.Enabled = true;
@@ -312,7 +321,6 @@ namespace Mauxnimale_CE2.ui
                 modifOrdonnance.Enabled = false;
             }
         }
-        #endregion
 
         public void backClick(object sender, EventArgs e)
         {
@@ -364,7 +372,7 @@ namespace Mauxnimale_CE2.ui
         private void modifOrdonnanceClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfacePrescriptionCreation(window, user, selectedRdv, selectedAnimal));
+            window.switchInterface(new InterfacePrescriptionCreation(window, user, ordonnance));
         }
 
         public void createOrdonanceClick(object sender, EventArgs e)
@@ -392,6 +400,7 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Clear();
             window.switchInterface(new InterfaceAppointmentCreation(window, user));
         }
+        #endregion
 
         #endregion
     }

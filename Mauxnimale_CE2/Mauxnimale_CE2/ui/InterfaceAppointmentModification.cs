@@ -416,7 +416,6 @@ namespace Mauxnimale_CE2.ui
             addButtons();
         }
 
-
         private void AppointmentTypeComboBoxSelected(object sender, EventArgs e)
         {
             selectedType = (TYPE_RDV)appointmentTypeComboBox.SelectedItem;

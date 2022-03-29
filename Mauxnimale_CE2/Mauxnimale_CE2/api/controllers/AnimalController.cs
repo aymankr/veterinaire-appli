@@ -75,34 +75,21 @@ namespace Mauxnimale_CE2.api.controllers
             // Supprime les lien entre l'animal et les maladies
             if (animalToRemove.LIEN_MALADIE.Any())
             {
-                var links = from l in DbContext.get().LIEN_MALADIE
-                           where l.ANIMAL == animalToRemove
-                           select l;
-                foreach(LIEN_MALADIE lm in links.ToList())
-                {
-                    DbContext.get().LIEN_MALADIE.Remove(lm);
-                }
+                animalToRemove.LIEN_MALADIE.ToList().ForEach(lm => DbContext.get().LIEN_MALADIE.Remove(lm));
             }
+
             // Supprime les rendez-vous de cet animal
             if (animalToRemove.RENDEZ_VOUS.Any())
             {
-                List<RENDEZ_VOUS> appointments = animalToRemove.RENDEZ_VOUS.ToList();
-                foreach(RENDEZ_VOUS appointment in appointments)
-                {
-                    AppointmentController.deleteAppointment(appointment);
-                }
+                animalToRemove.RENDEZ_VOUS.ToList().ForEach(a => AppointmentController.deleteAppointment(a));
             }
+
             // Supprime les ordonnance lié à cet animal
             if (animalToRemove.ORDONNANCE.Any())
             {
-                var prescriptions = from p in DbContext.get().ORDONNANCE
-                                    where p.ANIMAL == animalToRemove
-                                    select p;
-                foreach (ORDONNANCE r in prescriptions.ToList())
-                {
-                    DbContext.get().ORDONNANCE.Remove(r);
-                }
+                animalToRemove.ORDONNANCE.ToList().ForEach(p => DbContext.get().ORDONNANCE.Remove(p));
             }
+
             // On supprime l'animal
             animalToRemove.RENDEZ_VOUS.Clear();
             PT4_S4P2C_E2Entities dbContext = DbContext.get();
@@ -137,7 +124,7 @@ namespace Mauxnimale_CE2.api.controllers
         /// </summary>
         /// <param name="specieName">Nom de l'espèce à ajouter</param>
         /// <returns>Vrai si l'ajout s'est bien passé, faux sinon</returns>
-        internal static bool AddSpecie(string specieName)
+        public static bool AddSpecie(string specieName)
         {
             if (!SpecieIsAlreadyRegistered(specieName))
             {
@@ -164,7 +151,7 @@ namespace Mauxnimale_CE2.api.controllers
             var specie = from s in DbContext.get().ESPECE
                          where s.NOMESPECE == specieName
                          select s;
-            bool isAlready = specie.Count() != 0;
+            bool isAlready = specie.Count() > 0;
             return isAlready;
         }
 
@@ -174,7 +161,7 @@ namespace Mauxnimale_CE2.api.controllers
         /// <param name="specie">Nom de l'espèce de la race</param>
         /// <param name="breedName">Nom de la race</param>
         /// <returns>Vrai si la race à été ajoutée, faux sinon</returns>
-        internal static bool AddBreed(ESPECE specie, string breedName)
+        public static bool AddBreed(ESPECE specie, string breedName)
         {
             if (!BreedIsAlreadyRegistered(specie.NOMESPECE, breedName))
             {
@@ -209,7 +196,7 @@ namespace Mauxnimale_CE2.api.controllers
             return isAlready;
         }
 
-        internal static bool UpdateAnimal(ANIMAL animal, RACE newBreed, CLIENT newOwner, string name, string birthYear, int size, int weight, bool isMale)
+        public static bool UpdateAnimal(ANIMAL animal, RACE newBreed, CLIENT newOwner, string name, string birthYear, int size, int weight, bool isMale)
         {
             try
             {
@@ -233,7 +220,7 @@ namespace Mauxnimale_CE2.api.controllers
         /// </summary>
         /// <param name="specieName">Le nom de l'espèce recherchée</param>
         /// <returns>La liste des espèce comportant ce nom dans leur nom</returns>
-        internal static ICollection<ESPECE> ResearchSpeciesByName(string specieName)
+        public static ICollection<ESPECE> ResearchSpeciesByName(string specieName)
         {
             var species = from s in DbContext.get().ESPECE
                          where s.NOMESPECE.Contains(specieName)
@@ -241,9 +228,9 @@ namespace Mauxnimale_CE2.api.controllers
             return species.ToList();
         }
 
-        internal static bool UpdateSpecie(ESPECE specie, string name)
+        public static bool UpdateSpecie(ESPECE specie, string name)
         {
-            if (!SpecieIsAlreadyRegistered(specie.NOMESPECE))
+            if (!SpecieIsAlreadyRegistered(name))
             {
                 specie.NOMESPECE = name;
                 DbContext.get().SaveChanges();
@@ -252,7 +239,6 @@ namespace Mauxnimale_CE2.api.controllers
             {
                 return false;
             }
-            
         }
 
         internal static ICollection<RACE> ResearchBreedByName(ESPECE specie , string breedName)
@@ -291,7 +277,7 @@ namespace Mauxnimale_CE2.api.controllers
         /// <param name="specie">Nouvelle espèce de la race</param>
         /// <param name="nameBreed">Nouveau nom de la race</param>
         /// <returns>Vrai si la race a bien été modifiée, faux sinon</returns>
-        internal static bool UpdateBreed(RACE breed, ESPECE specie, string nameBreed)
+        public static bool UpdateBreed(RACE breed, ESPECE specie, string nameBreed)
         {
             if(!BreedIsAlreadyRegistered(specie.NOMESPECE, nameBreed))
             {
@@ -310,7 +296,7 @@ namespace Mauxnimale_CE2.api.controllers
         /// </summary>
         /// <param name="specieToBeDeleted">L'espèce a supprimer</param>
         /// <returns>Vrai si l'espèce a été supprimée avec succès, faux sinon</returns>
-        internal static bool DeleteSpecie(ESPECE specieToBeDeleted)
+        public static bool DeleteSpecie(ESPECE specieToBeDeleted)
         {
             try
             {
@@ -342,11 +328,7 @@ namespace Mauxnimale_CE2.api.controllers
             {
                 if (breedToBeDeleted.ANIMAL.Any())
                 {
-                    List<ANIMAL> animals = breedToBeDeleted.ANIMAL.ToList();
-                    foreach(ANIMAL animal in animals)
-                    {
-                        RemoveAnimal(animal);
-                    }
+                    breedToBeDeleted.ANIMAL.ToList().ForEach(a => RemoveAnimal(a));
                 }
                 DbContext.get().RACE.Remove(breedToBeDeleted);
                 DbContext.get().SaveChanges();

@@ -1,4 +1,5 @@
-﻿using Mauxnimale_CE2.api.entities;
+﻿using Mauxnimale_CE2.api.controllers;
+using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
 using System;
@@ -23,12 +24,13 @@ namespace Mauxnimale_CE2.ui
         UIRoundButton back, home;
         NumericUpDown quantity;
 
-        public InterfaceChangeStock(MainWindow forme, SALARIE s)
+        public InterfaceChangeStock(MainWindow forme, SALARIE s, PRODUIT product)
         {
             user = s;
             this.window = forme;
             header = new Header(window);
             footer = new Footer(window, s);
+            choosed = product;
         }
 
         public override void load()
@@ -53,7 +55,7 @@ namespace Mauxnimale_CE2.ui
             quantity.Size = new System.Drawing.Size(window.Width / 13, window.Height / 10);
             quantity.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 100);
             quantity.ForeColor = Color.Black;
-            //quantity.Minimum = -choosed.QUANTITEENSTOCK;
+            quantity.Minimum = -choosed.QUANTITEENSTOCK;
 
             quantity.Location = new Point(window.Width  * 5 / 13, window.Height / 2);
             window.Controls.Add(quantity);
@@ -80,8 +82,8 @@ namespace Mauxnimale_CE2.ui
         private void generateLabel()
         {
             productName = new Label();
-            productName.Text = "Congé restant";// choosed.NOMPRODUIT;
-            productName.Font = new System.Drawing.Font("Poppins", Math.Min(window.Width * 10 / 100, window.Height * 6 / 100));
+            productName.Text = choosed.NOMPRODUIT;
+            productName.Font = new System.Drawing.Font("Poppins", Math.Min(window.Width * 10 / 100, window.Height * 6 / 100)/(int)Math.Sqrt(Math.Sqrt(choosed.NOMPRODUIT.Length)));
             productName.ForeColor = UIColor.LIGHTBLUE;
             productName.Size = new System.Drawing.Size(window.Width, window.Height * 1 / 10);
             productName.Location = new Point(window.Width / 3, window.Height * 3 / 10);
@@ -90,7 +92,16 @@ namespace Mauxnimale_CE2.ui
 
         public void applyClick(object sender, EventArgs e)
         {
-            //appliquer la modification au produit
+            if(quantity.Value ==- choosed.QUANTITEENSTOCK)
+            {
+                ProductController.removeProduct(choosed);
+            }
+            else
+            {
+                ProductController.setProductQuantity(choosed, (int)quantity.Value);
+            }
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceStockManagement(window, user));
         }
 
         public void homeClick(object sender, EventArgs e)

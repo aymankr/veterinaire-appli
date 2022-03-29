@@ -44,7 +44,8 @@ public static class UserController
 								   string login,
 								   string password,
 								   string email,
-								   string phoneNumber)
+								   string phoneNumber,
+								   string adress)
 	{
 		if (firstName != null && firstName.Any())
 		{
@@ -79,6 +80,11 @@ public static class UserController
 			}
 		}
 
+		if (adress != null && adress.Any())
+		{
+			user.ADRESSE = adress;
+		}
+
 		if (password != null && password.Any())
 		{
 			user.MDP = PasswordUtils.getHash(password);
@@ -98,7 +104,7 @@ public static class UserController
 		if (phoneNumber != null && phoneNumber.Any())
 		{
 			if (InputVerification.isPhoneNumber(phoneNumber))
-				user.TEL = phoneNumber;
+				user.TEL = phoneNumber.Trim();
 			else
 			{
 				Console.WriteLine("Phone number: " + phoneNumber + " invalid. It does not exclusively contains numbers.");
@@ -119,7 +125,7 @@ public static class UserController
 	/// <returns>true if it succeeded, false otherwise</returns>
 	public static bool updateLogin(SALARIE user, string newLogin)
 	{
-		return updateInfos(user, null, null, newLogin, null, null, null);
+		return updateInfos(user, null, null, newLogin, null, null, null, null);
 	}
 
 	/// <summary>
@@ -130,13 +136,13 @@ public static class UserController
 	/// <returns>true if it succeeded, false otherwise</returns>
 	public static bool updatePassword(SALARIE user, string enteredPrevPassword, string newPassword)
 	{
-		if (user.MDP != enteredPrevPassword)
+		if (user.MDP != PasswordUtils.getHash(enteredPrevPassword))
 		{
 			Console.WriteLine("WARNING: Entered previous password does not correspond to the user's password.");
 			return false;
 		}
 
-		return updateInfos(user, null, null, null, newPassword, null, null);
+		return updateInfos(user, null, null, null, newPassword, null, null, null);
 	}
 
 	/// <summary>

@@ -100,6 +100,7 @@
           <Property Name="IDANIMAL" Type="int" Nullable="false" />
           <Property Name="PRESCRIPTION" Type="varchar" MaxLength="255" />
           <Property Name="DIAGNOSTIQUE" Type="varchar" MaxLength="255" />
+          <Property Name="IDRDV" Type="int" />
         </EntityType>
         <EntityType Name="PATIENT">
           <Key>
@@ -253,6 +254,18 @@
             </Principal>
             <Dependent Role="LIEN_SOIN">
               <PropertyRef Name="IDORDONNANCE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdRdv_Ordonnance">
+          <End Role="RENDEZ_VOUS" Type="Self.RENDEZ_VOUS" Multiplicity="0..1" />
+          <End Role="ORDONNANCE" Type="Self.ORDONNANCE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RENDEZ_VOUS">
+              <PropertyRef Name="IDRDV" />
+            </Principal>
+            <Dependent Role="ORDONNANCE">
+              <PropertyRef Name="IDRDV" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -523,6 +536,10 @@
             <End Role="ORDONNANCE" EntitySet="ORDONNANCE" />
             <End Role="LIEN_SOIN" EntitySet="LIEN_SOIN" />
           </AssociationSet>
+          <AssociationSet Name="FK_IdRdv_Ordonnance" Association="Self.FK_IdRdv_Ordonnance">
+            <End Role="RENDEZ_VOUS" EntitySet="RENDEZ_VOUS" />
+            <End Role="ORDONNANCE" EntitySet="ORDONNANCE" />
+          </AssociationSet>
           <AssociationSet Name="FK_IdSoin_LienSoin" Association="Self.FK_IdSoin_LienSoin">
             <End Role="SOIN" EntitySet="SOIN" />
             <End Role="LIEN_SOIN" EntitySet="LIEN_SOIN" />
@@ -713,6 +730,8 @@
           <Property Name="PRESCRIPTION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="DIAGNOSTIQUE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="LIEN_SOIN" Relationship="PT4_S4P2C_E2Model.FK_IdOrdonnance_LienSoin" FromRole="ORDONNANCE" ToRole="LIEN_SOIN" />
+          <Property Name="IDRDV" Type="Int32" />
+          <NavigationProperty Name="RENDEZ_VOUS" Relationship="PT4_S4P2C_E2Model.FK_IdRdv_Ordonnance" FromRole="ORDONNANCE" ToRole="RENDEZ_VOUS" />
         </EntityType>
         <EntityType Name="PRODUIT">
           <Key>
@@ -777,6 +796,7 @@
           <NavigationProperty Name="JOURNEE" Relationship="Self.FK_RENDEZ_VOUS_JOURNEE" FromRole="RENDEZ_VOUS" ToRole="JOURNEE" />
           <NavigationProperty Name="TYPE_RDV" Relationship="Self.FK_RENDEZ_VOUS_TYPE_RDV" FromRole="RENDEZ_VOUS" ToRole="TYPE_RDV" />
           <NavigationProperty Name="ANIMAL" Relationship="Self.PATIENT" FromRole="RENDEZ_VOUS" ToRole="ANIMAL" />
+          <NavigationProperty Name="ORDONNANCE" Relationship="PT4_S4P2C_E2Model.FK_IdRdv_Ordonnance" FromRole="RENDEZ_VOUS" ToRole="ORDONNANCE" />
         </EntityType>
         <EntityType Name="SALARIE">
           <Key>
@@ -1140,6 +1160,10 @@
             <End Role="SOIN" EntitySet="SOIN" />
             <End Role="LIEN_SOIN" EntitySet="LIEN_SOIN" />
           </AssociationSet>
+          <AssociationSet Name="FK_IdRdv_Ordonnance" Association="PT4_S4P2C_E2Model.FK_IdRdv_Ordonnance">
+            <End Role="RENDEZ_VOUS" EntitySet="RENDEZ_VOUS" />
+            <End Role="ORDONNANCE" EntitySet="ORDONNANCE" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="LIEN_SOIN">
           <Key>
@@ -1172,6 +1196,18 @@
             </Principal>
             <Dependent Role="LIEN_SOIN">
               <PropertyRef Name="IDSOIN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdRdv_Ordonnance">
+          <End Type="PT4_S4P2C_E2Model.RENDEZ_VOUS" Role="RENDEZ_VOUS" Multiplicity="0..1" />
+          <End Type="PT4_S4P2C_E2Model.ORDONNANCE" Role="ORDONNANCE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RENDEZ_VOUS">
+              <PropertyRef Name="IDRDV" />
+            </Principal>
+            <Dependent Role="ORDONNANCE">
+              <PropertyRef Name="IDRDV" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1272,6 +1308,7 @@
           <EntitySetMapping Name="ORDONNANCE">
             <EntityTypeMapping TypeName="PT4_S4P2C_E2Model.ORDONNANCE">
               <MappingFragment StoreEntitySet="ORDONNANCE">
+                <ScalarProperty Name="IDRDV" ColumnName="IDRDV" />
                 <ScalarProperty Name="DIAGNOSTIQUE" ColumnName="DIAGNOSTIQUE" />
                 <ScalarProperty Name="PRESCRIPTION" ColumnName="PRESCRIPTION" />
                 <ScalarProperty Name="IDORDONNANCE" ColumnName="IDORDONNANCE" />

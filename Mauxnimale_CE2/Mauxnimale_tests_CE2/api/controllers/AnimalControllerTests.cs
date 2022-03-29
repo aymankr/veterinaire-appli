@@ -81,7 +81,7 @@ namespace Mauxnimale_CE2.api.controllers.Tests
             Assert.IsTrue(result);
 
             // Vérification de son existence
-            ANIMAL created = dbContext.ANIMAL.Where(a => a.NOM.Equals("Karli") && a.CLIENT.IDCLIENT == owner.IDCLIENT).ToArray()[0];
+            ANIMAL created = dbContext.ANIMAL.Where(a => a.NOM.Equals("Karli") && a.CLIENT.IDCLIENT == owner.IDCLIENT).FirstOrDefault();
             Assert.IsNotNull(created);
             Assert.AreEqual(created.CLIENT, owner);
             Assert.AreEqual(created.NOM, "Karli");
@@ -99,25 +99,178 @@ namespace Mauxnimale_CE2.api.controllers.Tests
         [TestMethod()]
         public void UpdateAnimalTest()
         {
-            Assert.Fail();
+            // Création d'un animal de test
+            ANIMAL test = new ANIMAL();
+            test.RACE = dbContext.RACE.Find(1);
+            test.IDRACE = test.RACE.IDRACE;
+            test.CLIENT = dbContext.CLIENT.Find(3);
+            test.IDCLIENT = test.CLIENT.IDCLIENT;
+            test.NOM = "Juvia";
+            test.ANNEENAISSANCE = "2020";
+            test.TAILLE = 74;
+            test.POIDS = 50;
+            test.ESTMALE = false;
+
+            // Ajout de l'animal de test
+            dbContext.ANIMAL.Add(test);
+            dbContext.SaveChanges();
+
+            // Update de toutes les infos
+            string newName = "Marcel";
+            RACE newBreed = dbContext.RACE.Find(2);
+            CLIENT newClient = dbContext.CLIENT.Find(9);
+            string newBirthYear = "2018";
+            int newSize = 20, newWeight = 30;
+            bool newGenre = true;
+
+            AnimalController.UpdateAnimal(test, newBreed, newClient, newName, newBirthYear, newSize, newWeight, newGenre);
+
+            // Vérification de l'intégrité des nouvelles informations
+            // Avec l'objet déjà créé
+            Assert.AreEqual(test.NOM, newName);
+            Assert.AreEqual(test.RACE, newBreed);
+            Assert.AreEqual(test.CLIENT, newClient);
+            Assert.AreEqual(test.ANNEENAISSANCE, newBirthYear);
+            Assert.AreEqual(test.TAILLE, newSize);
+            Assert.AreEqual(test.POIDS, newWeight);
+            Assert.AreEqual(test.ESTMALE, newGenre);
+
+            // En récupérant de la bd
+            ANIMAL updated = dbContext.ANIMAL.Where(a => a.NOM.Equals(newName) && a.IDCLIENT.Equals(newClient.IDCLIENT)).FirstOrDefault();
+            Assert.AreEqual(updated.NOM, newName);
+            Assert.AreEqual(updated.RACE, newBreed);
+            Assert.AreEqual(updated.CLIENT, newClient);
+            Assert.AreEqual(updated.ANNEENAISSANCE, newBirthYear);
+            Assert.AreEqual(updated.TAILLE, newSize);
+            Assert.AreEqual(updated.POIDS, newWeight);
+            Assert.AreEqual(updated.ESTMALE, newGenre);
+
+            // Suppression de l'animal de test
+            dbContext.ANIMAL.Remove(test);
+            dbContext.SaveChanges();
         }
 
         [TestMethod()]
         public void RemoveAnimalTest()
         {
-            Assert.Fail();
+            // Création d'un animal de test
+            ANIMAL test = new ANIMAL();
+            test.RACE = dbContext.RACE.Find(1);
+            test.IDRACE = test.RACE.IDRACE;
+            test.CLIENT = dbContext.CLIENT.Find(3);
+            test.IDCLIENT = test.CLIENT.IDCLIENT;
+            test.NOM = "Juvia";
+            test.ANNEENAISSANCE = "2020";
+            test.TAILLE = 74;
+            test.POIDS = 50;
+            test.ESTMALE = false;
+
+            dbContext.ANIMAL.Add(test);
+            dbContext.SaveChanges();
+
+            // Suppression de l'animal de test à l'aide de la méthode
+            AnimalController.RemoveAnimal(test);
+
+            // Vérifions qu'il a bien été supprimé
+            Assert.AreEqual(dbContext.ANIMAL.Where(a => a.NOM.Equals("Juvia") && a.IDCLIENT.Equals(test.IDCLIENT)).Count(), 0);
+
+            // Ajoutons des dépendances à cet animal et vérifions qu'elles sont bien supprimées
+
+            // Maladie
+            LIEN_MALADIE testDeases = new LIEN_MALADIE();
+            testDeases.ANIMAL = test;
+            testDeases.IDANIMAL = test.IDANIMAL;
+            testDeases.MALADIE = dbContext.MALADIE.Find(1);
+            testDeases.IDMALADIE = testDeases.MALADIE.IDMALADIE;
+
+            // Rendez-vous
+            RENDEZ_VOUS testAppointment = new RENDEZ_VOUS();
+            testAppointment.ANIMAL.Add(test);
+            testAppointment.CLIENT = test.CLIENT;
+            testAppointment.IDCLIENT = test.CLIENT.IDCLIENT;
+            testAppointment.HEUREDEBUT = new System.TimeSpan(11, 15, 0);
+            testAppointment.HEUREFIN = new System.TimeSpan(11, 40, 0);
+            testAppointment.RAISON = "Test";
+            testAppointment.TYPE_RDV = dbContext.TYPE_RDV.Find(1);
+            testAppointment.IDTYPE = testAppointment.TYPE_RDV.IDTYPE;
+            testAppointment.JOURNEE = dbContext.JOURNEE.Find(50);
+            testAppointment.IDJOURNEE = testAppointment.JOURNEE.IDJOURNEE;
+
+            // Ordonnance
+            ORDONNANCE testPrescription = new ORDONNANCE();
+            testPrescription.ANIMAL = test;
+            testPrescription.IDANIMAL = test.IDANIMAL;
         }
 
         [TestMethod()]
         public void AddSpecieTest()
         {
-            Assert.Fail();
+            // Création d'une nouvelle espèce de test
+            Assert.IsTrue(AnimalController.AddSpecie("test"));
+
+            // Vérification de sa présence dans la bd et de l'intégrité des informations
+            ESPECE created = dbContext.ESPECE.Where(e => e.NOMESPECE.Equals("test")).FirstOrDefault();
+            Assert.IsNotNull(created);
+            Assert.AreEqual(created.NOMESPECE, "test");
+
+            // Création de la même espèce (doit échouer)
+            Assert.IsFalse(AnimalController.AddSpecie("test"));
+
+            // Suppression de l'espèce de test
+            dbContext.ESPECE.Remove(created);
+            dbContext.SaveChanges();
+
+            // Vérifions qu'un doublon n'a pas été créé
+            ESPECE duplicate = dbContext.ESPECE.Where(e => e.NOMESPECE.Equals("test")).FirstOrDefault();
+            Assert.IsNull(duplicate);
         }
 
         [TestMethod()]
         public void UpdateSpecieTest()
         {
             Assert.Fail();
+        }
+
+        [TestMethod()]
+        public void DeleteSpecieTest()
+        {
+            // Création d'une nouvelle espèce de test
+            ESPECE test = new ESPECE();
+            test.NOMESPECE = "test";
+
+            dbContext.ESPECE.Add(test);
+            dbContext.SaveChanges();
+
+            // Suprression de cette espèce sans race
+            AnimalController.DeleteSpecie(test);
+
+            // Vérificaiton de la suppression
+            Assert.IsNull(dbContext.ESPECE.Where(e => e.NOMESPECE.Equals("test")).FirstOrDefault());
+
+            // Création de races liées à cette espèce
+            RACE breed1 = new RACE(), breed2 = new RACE();
+            breed1.NOMRACE = "testBreed1";
+            breed1.ESPECE = test;
+            breed1.IDESPECE = test.IDESPECE;
+            breed2.NOMRACE = "testBreed2";
+            breed2.ESPECE = test;
+            breed2.IDESPECE = test.IDESPECE;
+
+            test.RACE.Add(breed1);
+            test.RACE.Add(breed2);
+
+            dbContext.ESPECE.Add(test);
+            dbContext.RACE.Add(breed1);
+            dbContext.RACE.Add(breed2);
+            dbContext.SaveChanges();
+
+            // Suprression de cette espèce avec les races liées
+            AnimalController.DeleteSpecie(test);
+
+            // Vérification des suppressions
+            Assert.IsNull(dbContext.ESPECE.Where(e => e.NOMESPECE.Equals("test")).FirstOrDefault());
+            Assert.IsNull(dbContext.RACE.Where(r => r.NOMRACE.Equals("breed1")).FirstOrDefault());
+            Assert.IsNull(dbContext.RACE.Where(r => r.NOMRACE.Equals("breed2")).FirstOrDefault());
         }
 
         [TestMethod()]
@@ -137,6 +290,5 @@ namespace Mauxnimale_CE2.api.controllers.Tests
         {
             Assert.Fail();
         }
-
     }
 }

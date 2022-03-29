@@ -310,7 +310,7 @@ namespace Mauxnimale_CE2.api.controllers
         /// </summary>
         /// <param name="specieToBeDeleted">L'espèce a supprimer</param>
         /// <returns>Vrai si l'espèce a été supprimée avec succès, faux sinon</returns>
-        internal static bool DeleteSpecie(ESPECE specieToBeDeleted)
+        public static bool DeleteSpecie(ESPECE specieToBeDeleted)
         {
             try
             {

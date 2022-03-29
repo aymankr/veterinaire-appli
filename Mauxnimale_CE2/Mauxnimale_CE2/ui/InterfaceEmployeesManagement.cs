@@ -26,14 +26,6 @@ namespace Mauxnimale_CE2.ui
         {
             _header = new Header(window);
             _footer = new Footer(window, user);
-            _selectedEmployee = null;
-
-            generateHomeButton();
-            generateComboBox();
-            generateVacationButton();
-            generateForm();
-            generateModifyInfosButton();
-            setFormEnabled(false);
         }
 
         #region Components generation
@@ -58,18 +50,18 @@ namespace Mauxnimale_CE2.ui
 
         private void generateVacationButton()
         {
-            _vacationManagementButton = new UIButton(UIColor.ORANGE, "Gestion des congés", 200);
+            _vacationManagementButton = new UIButton(UIColor.ORANGE, "Gestion des congés", window.Width/4);
             _vacationManagementButton.Name = "VacationManagementButon";
             _vacationManagementButton.Location = new Point(_employeesList.Location.X + _employeesList.Width / 2 - _vacationManagementButton.Width / 2,
-                                                           window.Height - 300);
+                                                           window.Height * 7 / 10);
             _vacationManagementButton.Click += new EventHandler(onVacationManagementButtonClick);
         }
 
         private void generateModifyInfosButton()
         {
-            _modifyInfosButton = new UIButton(UIColor.ORANGE, "Modifier les informations", 200);
+            _modifyInfosButton = new UIButton(UIColor.ORANGE, "Modifier les informations", window.Width / 4);
             _modifyInfosButton.Name = "ModifyInfosButton";
-            _modifyInfosButton.Location = new Point(_salary.Location.X + _salary.Width / 2 - _modifyInfosButton.Width / 2, window.Height - 300);
+            _modifyInfosButton.Location = new Point(_salary.Location.X + _salary.Width / 2 - _modifyInfosButton.Width / 2, window.Height *7/10);
             _modifyInfosButton.Click += new EventHandler(onModifyInfosClick);
             _modifyInfosButton.Enabled = false;
         }
@@ -78,28 +70,28 @@ namespace Mauxnimale_CE2.ui
         {
             _lastName = new TextBox();
             _lastName.Size = new Size(window.Width / 5, 0);
-            _lastName.Location = new Point(window.Width / 2, 200);
+            _lastName.Location = new Point(window.Width / 2, window.Height/4);
             _lastName.Font = new Font("Poppins", window.Height * 3 / 100);
             _lastName.Enabled = false;
 
             _firstName = new TextBox();
             _firstName.Size = new Size(window.Width / 5, 0);
-            _firstName.Location = new Point(_lastName.Location.X + _lastName.Width + 10, 200);
+            _firstName.Location = new Point(_lastName.Location.X + _lastName.Width + 10, window.Height / 4);
             _firstName.Font = new Font("Poppins", window.Height * 3 / 100);
             _firstName.Enabled = false;
 
             _salary = new TextBox();
             _salary.Size = new Size(window.Width / 5 * 2 + 10, 0);
-            _salary.Location = new Point(window.Width / 2, 350);
+            _salary.Location = new Point(window.Width / 2, window.Height / 3);
             _salary.Font = new Font("Poppins", window.Height * 3 / 100);
 
             _internshipStart = new DateTimePicker();
             _internshipStart.Size = new Size(window.Width / 5, window.Height * 3 / 100);
-            _internshipStart.Location = new Point(window.Width / 2, 500);
+            _internshipStart.Location = new Point(window.Width / 2, window.Height / 2);
 
             _internshipEnd = new DateTimePicker();
             _internshipEnd.Size = new Size(window.Width / 5, window.Height * 3 / 100);
-            _internshipEnd.Location = new Point(_internshipStart.Location.X + _internshipStart.Width + 10, 500);
+            _internshipEnd.Location = new Point(_internshipStart.Location.X + _internshipStart.Width + 10, window.Height / 2);
         }
 
         #endregion
@@ -279,6 +271,14 @@ namespace Mauxnimale_CE2.ui
         {
             _header.load("Gestion des salariés");
             _footer.load();
+
+            generateHomeButton();
+            generateComboBox();
+            generateVacationButton();
+            generateForm();
+            generateModifyInfosButton();
+            _selectedEmployee = null;
+            setFormEnabled(false);
 
             window.Controls.Add(_homeBtn);
             window.Controls.Add(_employeesList);

@@ -133,6 +133,10 @@ namespace Mauxnimale_CE2.ui
             careComboBox.Location = new Point(window.Width * 50 / 1000, window.Height * 12 / 20);
             careComboBox.TextChanged += new EventHandler(careComboSearch);
             careComboBox.SelectedIndexChanged += new EventHandler(careComboSearch);
+            foreach(SOIN soin in CareController.getAllCares())
+            {
+                careComboBox.Items.Add(soin);
+            }
             #endregion
 
             #region medsBox
@@ -197,6 +201,10 @@ namespace Mauxnimale_CE2.ui
             descriptionTextBox.AppendText("Horraire : " + rdv.HEUREDEBUT.ToString() + " à " + rdv.HEUREFIN.ToString() + Environment.NewLine);
             descriptionTextBox.AppendText("Client : " + rdv.CLIENT + Environment.NewLine);
             descriptionTextBox.AppendText("Animal : " + animal + Environment.NewLine);
+            foreach(SOIN care in cares)
+            {
+                descriptionTextBox.AppendText("    " + care);
+            }
             descriptionTextBox.AppendText("Diagnostique : " + diagnostic + Environment.NewLine);
             descriptionTextBox.AppendText("Prescription : " + prescription + Environment.NewLine);
             descriptionTextBox.AppendText("Médicaments prescrits : " + Environment.NewLine);
@@ -297,7 +305,29 @@ namespace Mauxnimale_CE2.ui
 
         private void careComboSearch(object sender, EventArgs e)
         {
-            
+            selectedCare = (SOIN)careComboBox.SelectedItem;
+            if (selectedCare == null)
+            {
+                careComboBox.Items.Clear();
+            }
+
+            if (careComboBox.Text.Length == 0)
+            {
+                ICollection<PRODUIT> produits = ProductController.getProducts();
+                foreach (PRODUIT product in produits)
+                {
+                    careComboBox.Items.Add(product);
+                }
+            }
+            else
+            {
+                List<PRODUIT> produits = ProductController.getByName(careComboBox.Text);
+                foreach (PRODUIT product in produits)
+                {
+                    careComboBox.Items.Add(product);
+                }
+            }
+            careComboBox.Select(careComboBox.Text.Length, 0);
         }
 
 

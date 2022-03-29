@@ -28,27 +28,10 @@ namespace Mauxnimale_CE2.api.entities
         public virtual ICollection<LIEN_MALADIE> LIEN_MALADIE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SOIN> SOIN { get; set; }
-    }
-
-
-    public int IDMALADIE { get; set; }
-
-    public string NOMMALADIE { get; set; }
-
-
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
-    public virtual ICollection<LIEN_MALADIE> LIEN_MALADIE { get; set; }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
-    public virtual ICollection<SOIN> SOIN { get; set; }
-    public override string ToString()
-    {
+        public override string ToString()
+        {
             return NOMMALADIE;
+        }
     }
-}
-
-
+    
 }

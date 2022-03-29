@@ -38,8 +38,6 @@ namespace Mauxnimale_CE2.ui
             GenerateButton();
             AddDataInDiseases();
             AddDataInCares();
-
-
         }
 
         private void AddDataInDiseases()

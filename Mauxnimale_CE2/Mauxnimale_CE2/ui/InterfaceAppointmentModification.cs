@@ -151,12 +151,17 @@ namespace Mauxnimale_CE2.ui
             }
             clientComboBox.SelectedIndex = clientComboBox.Items.IndexOf(ClientController.GetClientFromID(rdv.IDCLIENT));
             selectedClient = ClientController.GetClientFromID((int)rdv.IDCLIENT);   
+            clientComboBox.TextChanged += new EventHandler(ClientComboBoxSearch);
+            clientComboBox.SelectedIndexChanged += new EventHandler(ClientComboBoxSearch);
             #endregion
 
             #region animalBox
             animalComboBox = new ComboBox();
             animalComboBox.Size = new Size(window.Width * 20 / 100, window.Height * 3 / 20);
             animalComboBox.Location = new Point(window.Width * 500 / 1000, window.Height * 8 / 40);
+            animalComboBox.TextChanged += new EventHandler(AnimalComboBoxSearch);
+            animalComboBox.GotFocus += new EventHandler(AnimalComboBoxFocus);
+            animalComboBox.SelectedIndexChanged += new EventHandler(AnimalComboBoxSearch);
             #endregion
 
             #region selectedAnimals
@@ -168,6 +173,9 @@ namespace Mauxnimale_CE2.ui
                 selectedAnimals.Items.Add(animal);
                 animalsInRDV.Add(animal);
             }
+            selectedAnimals.TextChanged += new EventHandler(AnimalSelectionComboBoxSearch);
+            selectedAnimals.GotFocus += new EventHandler(AnimalSelectionComboBoxSearch);
+            selectedAnimals.SelectedIndexChanged += new EventHandler(AnimalSelectionComboBoxSearch);
             #endregion
 
             #region typeBox
@@ -182,6 +190,7 @@ namespace Mauxnimale_CE2.ui
             }
             appointmentTypeComboBox.SelectedItem = rdv.TYPE_RDV;
             selectedType = rdv.TYPE_RDV;
+            appointmentTypeComboBox.SelectedIndexChanged += new EventHandler(AppointmentTypeComboBoxSelected);
             #endregion
 
             #region timeBox
@@ -195,6 +204,7 @@ namespace Mauxnimale_CE2.ui
             startTimePicker.Text = rdv.HEUREDEBUT.ToString();
             DateTime tmp = startTimePicker.Value;
             RDVStart = rdv.HEUREDEBUT;
+            startTimePicker.ValueChanged += new EventHandler(StartTimePickerChanged);
 
             endTimePicker = new DateTimePicker();
             endTimePicker.Size = new Size(window.Width * 10 / 100, window.Height * 6 / 20);
@@ -206,6 +216,7 @@ namespace Mauxnimale_CE2.ui
             endTimePicker.Text = rdv.HEUREFIN.ToString();
             tmp = endTimePicker.Value;
             RDVEnd = rdv.HEUREFIN;
+            endTimePicker.ValueChanged += new EventHandler(EndTimePickerChanged);
             #endregion
 
             #region descriptionBox
@@ -214,6 +225,7 @@ namespace Mauxnimale_CE2.ui
             descriptionTexBox.Location = new Point(window.Width * 350 / 1000, window.Height * 18 / 40);
             descriptionTexBox.Text = rdv.RAISON;
             description = rdv.RAISON;
+            descriptionTexBox.TextChanged += new EventHandler(DescriptionTexBoxChanged);
             #endregion
 
             #region calendar
@@ -223,21 +235,6 @@ namespace Mauxnimale_CE2.ui
             calendar.SetDate(rdv.JOURNEE.DATE);
             selectedDate = rdv.JOURNEE.DATE;
             selectedJOURNEE = DayController.getDay(selectedDate);
-            #endregion
-
-            #region EventHandler
-            clientComboBox.TextChanged += new EventHandler(ClientComboBoxSearch);
-            clientComboBox.SelectedIndexChanged += new EventHandler(ClientComboBoxSearch);
-            animalComboBox.TextChanged += new EventHandler(AnimalComboBoxSearch);
-            animalComboBox.GotFocus += new EventHandler(AnimalComboBoxFocus);
-            animalComboBox.SelectedIndexChanged += new EventHandler(AnimalComboBoxSearch);
-            selectedAnimals.TextChanged += new EventHandler(AnimalSelectionComboBoxSearch);
-            selectedAnimals.GotFocus += new EventHandler(AnimalSelectionComboBoxSearch);
-            selectedAnimals.SelectedIndexChanged += new EventHandler(AnimalSelectionComboBoxSearch);
-            appointmentTypeComboBox.SelectedIndexChanged += new EventHandler(AppointmentTypeComboBoxSelected);
-            startTimePicker.ValueChanged += new EventHandler(StartTimePickerChanged);
-            endTimePicker.ValueChanged += new EventHandler(EndTimePickerChanged);
-            descriptionTexBox.TextChanged += new EventHandler(DescriptionTexBoxChanged);
             calendar.DateSelected += new DateRangeEventHandler(dateSelection);
             #endregion
 

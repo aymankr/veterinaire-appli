@@ -231,7 +231,7 @@ namespace Mauxnimale_CE2.ui
         {
             if (validEntry())
             {
-                if (UserController.updateInfos(user, firstName.Text, lastName.Text, null, pswd.Text, email.Text, phoneNumber.Text))
+                if (UserController.updateInfos(user, firstName.Text, lastName.Text, null, pswd.Text, email.Text, phoneNumber.Text, address.Text))
                 {
                     UserController.setFirstConnectionDone(user);
                     window.Controls.Clear();

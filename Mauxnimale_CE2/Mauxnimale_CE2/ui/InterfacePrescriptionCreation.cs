@@ -133,10 +133,10 @@ namespace Mauxnimale_CE2.ui
             careComboBox.Location = new Point(window.Width * 50 / 1000, window.Height * 12 / 20);
             careComboBox.TextChanged += new EventHandler(careComboSearch);
             careComboBox.SelectedIndexChanged += new EventHandler(careComboSearch);
-            foreach(SOIN soin in CareController.getAllCares())
+            /*foreach(SOIN soin in CareController.getAllCares())
             {
                 careComboBox.Items.Add(soin);
-            }
+            }*/
             #endregion
 
             #region medsBox
@@ -278,6 +278,7 @@ namespace Mauxnimale_CE2.ui
         {
             
             selectedProduct = (PRODUIT)medsComboBox.SelectedItem;
+            
             if(selectedProduct == null)
             {
                 medsComboBox.Items.Clear();
@@ -298,8 +299,8 @@ namespace Mauxnimale_CE2.ui
                 {
                     medsComboBox.Items.Add(product);
                 }
+                medsComboBox.Select(medsComboBox.Text.Length, 0);
             }
-            medsComboBox.Select(medsComboBox.Text.Length, 0);
              
         }
 

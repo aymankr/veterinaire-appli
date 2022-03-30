@@ -104,12 +104,14 @@ namespace Mauxnimale_CE2.ui
         /// </summary>
         public void GenerateTextBox()
         {
-            researchBar = new TextBox();
-            researchBar.Font = new Font("Poppins", window.Height * 1 / 100);
-            researchBar.ForeColor = Color.Black;
-            researchBar.BackColor = Color.White;
-            researchBar.Location = new Point(window.Width * 20 / 1000, window.Height / 10);
-            researchBar.Size = new Size(window.Width * 22 / 100, window.Height * 5 / 100);
+            researchBar = new TextBox
+            {
+                Font = new Font("Poppins", window.Height * 1 / 100),
+                ForeColor = Color.Black,
+                BackColor = Color.White,
+                Location = new Point(window.Width * 20 / 1000, window.Height / 10),
+                Size = new Size(window.Width * 22 / 100, window.Height * 5 / 100)
+            };
             window.Controls.Add(researchBar);
             researchBar.TextChanged += new EventHandler(Research);
         }

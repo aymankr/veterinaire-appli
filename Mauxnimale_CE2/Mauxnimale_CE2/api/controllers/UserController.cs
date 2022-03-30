@@ -8,7 +8,15 @@ namespace Mauxnimale_CE2.api.controllers
 {
 	public static class UserController
 	{
-		/* GET METHODS */
+
+		/// <summary>
+		/// Get all the employees in the database.
+		/// </summary>
+		/// <returns>A list of all the employees present in the database.</returns>
+		public static List<SALARIE> getAllEmployees()
+		{
+			return DbContext.get().SALARIE.ToList();
+		}
 
 		/// <summary>
 		/// Get the user corresponding to the given login and password if he exists.
@@ -28,15 +36,6 @@ namespace Mauxnimale_CE2.api.controllers
 		}
 
 		/// <summary>
-		/// Get all the employees in the database.
-		/// </summary>
-		/// <returns>A list of all the employees present in the database.</returns>
-		public static List<SALARIE> getAllEmployees()
-		{
-			return DbContext.get().SALARIE.ToList();
-		}
-
-		/// <summary>
 		/// Retounre l'employé correspondant à l'identifiant donné s'il existe dans la base.
 		/// </summary>
 		/// <param name="employeeId">L'identifiant de l'employé</param>
@@ -45,17 +44,14 @@ namespace Mauxnimale_CE2.api.controllers
 		{
 			return DbContext.get().SALARIE.Find(employeeId);
 		}
-
-
-		/* UPDATES METHODS */
-
 		public static bool updateInfos(SALARIE user,
-									   string firstName,
-									   string lastName,
-									   string login,
-									   string password,
-									   string email,
-									   string phoneNumber)
+								   string firstName,
+								   string lastName,
+								   string login,
+								   string password,
+								   string email,
+								   string phoneNumber,
+								   string adress)
 		{
 			if (firstName != null && firstName.Any())
 			{
@@ -90,6 +86,12 @@ namespace Mauxnimale_CE2.api.controllers
 				}
 			}
 
+
+			if (adress != null && adress.Any())
+			{
+				user.ADRESSE = adress;
+			}
+
 			if (password != null && password.Any())
 			{
 				user.MDP = PasswordUtils.getHash(password);
@@ -109,7 +111,7 @@ namespace Mauxnimale_CE2.api.controllers
 			if (phoneNumber != null && phoneNumber.Any())
 			{
 				if (InputVerification.isPhoneNumber(phoneNumber))
-					user.TEL = phoneNumber;
+					user.TEL = phoneNumber.Trim();
 				else
 				{
 					Console.WriteLine("Phone number: " + phoneNumber + " invalid. It does not exclusively contains numbers.");
@@ -130,7 +132,7 @@ namespace Mauxnimale_CE2.api.controllers
 		/// <returns>true if it succeeded, false otherwise</returns>
 		public static bool updateLogin(SALARIE user, string newLogin)
 		{
-			return updateInfos(user, null, null, newLogin, null, null, null);
+			return updateInfos(user, null, null, newLogin, null, null, null, null);
 		}
 
 		/// <summary>
@@ -141,13 +143,13 @@ namespace Mauxnimale_CE2.api.controllers
 		/// <returns>true if it succeeded, false otherwise</returns>
 		public static bool updatePassword(SALARIE user, string enteredPrevPassword, string newPassword)
 		{
-			if (user.MDP != enteredPrevPassword)
+			if (user.MDP != PasswordUtils.getHash(enteredPrevPassword))
 			{
 				Console.WriteLine("WARNING: Entered previous password does not correspond to the user's password.");
 				return false;
 			}
 
-			return updateInfos(user, null, null, null, newPassword, null, null);
+			return updateInfos(user, null, null, null, newPassword, null, null, null);
 		}
 
 		/// <summary>

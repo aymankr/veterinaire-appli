@@ -39,7 +39,12 @@ namespace Mauxnimale_CE2.ui
 
         public void newProductClick(object sender, EventArgs e)
         {
-            //Ajouter le produit a la base;
+            if(quantity.Value > 0 && name.Text != "Nom" && choosed != null)
+            {
+                ProductController.addProduct(choosed, (int)quantity.Value, name.Text, resellCost.Value, expirationDate.Value);
+                window.Controls.Clear();
+                window.switchInterface(new InterfaceStockManagement(window, user));
+            }
         }
 
         public void homeClick(object sender, EventArgs e)

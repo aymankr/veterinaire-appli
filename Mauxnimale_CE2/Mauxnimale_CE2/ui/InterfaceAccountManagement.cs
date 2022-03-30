@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.api.entities;
+using Mauxnimale_CE2.api.controllers;
 
 namespace Mauxnimale_CE2.ui
 {
@@ -37,12 +38,11 @@ namespace Mauxnimale_CE2.ui
 
         public void confirmClick(object sender, EventArgs e)
         {
-            //effectuer les changements sur la base de données
+            UserController.updateInfos(user, prénom.Text, name.Text, null, null, email.Text, phone.Text, adresse.Text);
         }
 
         public void logOutClick(object sender, EventArgs e)
         {
-            // déconnecter l'utilisateur
             window.Controls.Clear();
             window.switchInterface(new InterfaceConnection(window,null));
         }
@@ -69,14 +69,14 @@ namespace Mauxnimale_CE2.ui
         {
             if (name.Text.Length == 0)
             {
-                name.Text = "Texte à codé";//mettre le nom de l'utilisateur connecté ici
+                name.Text = user.NOM;
             }
         }
         public void adresseLeave(object sender, EventArgs e)
         {
             if (adresse.Text.Length == 0)
             {
-                adresse.Text = "Texte à codé";//mettre le nom de l'utilisateur connecté ici
+                adresse.Text = user.ADRESSE;
             }
         }
 
@@ -84,7 +84,7 @@ namespace Mauxnimale_CE2.ui
         {
             if (prénom.Text.Length == 0)
             {
-                prénom.Text = "Texte à codé";//mettre le prénom de l'utilisateur connecté ici
+                prénom.Text = user.PRENOM;
             }
         }
 
@@ -92,7 +92,7 @@ namespace Mauxnimale_CE2.ui
         {
             if (email.Text.Length == 0)
             {
-                email.Text = "Texte à codé";//mettre l'email de l'utilisateur connecté ici
+                email.Text = user.EMAIL;
             }
         }
 
@@ -100,7 +100,7 @@ namespace Mauxnimale_CE2.ui
         {
             if (phone.Text.Length == 0)
             {
-                phone.Text = "Texte à codé";//mettre le numéro de l'utilisateur connecté ici
+                phone.Text = user.TEL;
             }
         }
         #endregion
@@ -138,27 +138,27 @@ namespace Mauxnimale_CE2.ui
             name = new TextBox();
             name.LostFocus += new EventHandler(nameLeave);
             name.Location = new Point(window.Width / 8, window.Height * 22 / 100);
-            setBox(name, "Texte a codé");//mettre le nom de l'utilisateur connecté ici
+            setBox(name, user.NOM);
 
             prénom = new TextBox();
             prénom.LostFocus += new EventHandler(prénomLeave);
             prénom.Location = new Point(window.Width / 8, window.Height * 37 / 100);
-            setBox(prénom, "Texte a codé");//mettre le prénom de l'utilisateur connecté ici
+            setBox(prénom, user.PRENOM);
 
             email = new TextBox();
             email.LostFocus += new EventHandler(emailLeave);
             email.Location = new Point(window.Width / 8, window.Height * 52 / 100);
-            setBox(email, "Texte a codé");//mettre l'email de l'utilisateur connecté ici
+            setBox(email, user.EMAIL);
 
             phone = new TextBox();
             phone.LostFocus += new EventHandler(phoneLeave);
             phone.Location = new Point(window.Width / 8, window.Height * 67 / 100);
-            setBox(phone, "Texte a codé");//mettre le numéro de l'utilisateur connecté ici
+            setBox(phone, user.TEL);
 
             adresse = new TextBox();
             adresse.LostFocus += new EventHandler(adresseLeave);
             adresse.Location = new Point(window.Width / 8, window.Height * 82 / 100);
-            setBox(adresse, "Texte a codé");
+            setBox(adresse, user.ADRESSE);
         }
         public void setBox(TextBox box, String text)
         {

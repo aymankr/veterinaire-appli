@@ -15,13 +15,13 @@ namespace Mauxnimale_CE2.api.controllers
         /// <param name="name"></param>
         /// <param name="price"></param>
         /// <param name="image"></param>
-        public static void addProduct(TYPE_PRODUIT type, int quantity, string name, decimal price, byte[] image)
+        public static void addProduct(TYPE_PRODUIT type, int quantity, string name, decimal price, DateTime date)
         {
             PRODUIT p = new PRODUIT();
             p.TYPE_PRODUIT = type;
             p.QUANTITEENSTOCK = quantity;
             p.PRIXDACHAT = price;
-            p.IMAGEPRODUIT = image;
+            p.DATEPEREMPTION = date;
             p.NOMPRODUIT = name;
             DbContext.get().PRODUIT.Add(p);
             DbContext.get().SaveChanges();
@@ -58,6 +58,7 @@ namespace Mauxnimale_CE2.api.controllers
                 date = date.AddMonths(3);
                 p.DATEPEREMPTION = date;
             }
+            DbContext.get().SaveChanges();
         }
 
         /// <summary>

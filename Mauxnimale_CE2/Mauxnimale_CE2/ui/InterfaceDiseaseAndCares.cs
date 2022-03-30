@@ -272,11 +272,6 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
-        private void OpenUpdateCareAndDiseaseInterface(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         private void DeleteDisease(object sender, EventArgs e)
         {
             var result = MessageBox.Show("Êtes vous sure de vouloir supprimer cette maladie. Cette action sera IRRÉVERSIBLE.", "Demande de comfirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
@@ -289,7 +284,20 @@ namespace Mauxnimale_CE2.ui
 
         private void OpenNewCareAndDiseseaseInterface(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceNewCaresAndDiseases(window, user));
+        }
+
+        private void OpenUpdateCareAndDiseaseInterface(object sender, EventArgs e)
+        {
+            window.Controls.Clear();
+            if (sender.Equals(updateDisease))
+            {
+                window.switchInterface(new InterfaceUpdateCareOrDiseases(window, user, selectedDisease));
+            } else if (sender.Equals(updateCare))
+            {
+                window.switchInterface(new InterfaceUpdateCareOrDiseases(window, user, selectedCare));
+            }
         }
 
     }

@@ -10,15 +10,39 @@ namespace Mauxnimale_CE2.api.controllers
         /// <summary>
         /// Méthode pour ajouter un soin dans la base de données, avec une raison
         /// </summary>
-        /// <param name="reason"></param>
-        public static void AddCare(string reason)
+        /// <param name="description"></param>
+        public static bool AddCare(string description)
         {
             SOIN newCare = new SOIN
             {
-                DESCRIPTION = reason
+                DESCRIPTION = description
             };
-            DbContext.get().SOIN.Add(newCare);
-            DbContext.get().SaveChanges();
+            if (!CareAlreadyExist(newCare))
+            {
+                DbContext.get().SOIN.Add(newCare);
+                DbContext.get().SaveChanges();
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Permet de savoir si le nouveau soin est déjà dans la base.
+        /// </summary>
+        /// <param name="newCare">Le nouveau soin à tester</param>
+        /// <returns>Vrai si il est déjà présent, faux sinon</returns>
+        private static bool CareAlreadyExist(SOIN newCare)
+        {
+            foreach(SOIN care in DbContext.get().SOIN)
+            {
+                if(newCare == care)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>
@@ -37,13 +61,41 @@ namespace Mauxnimale_CE2.api.controllers
             return DbContext.get().SOIN.ToList();
         }
 
-        public static void AddDisease(string name)
+        public static bool AddDisease(string name, ICollection<SOIN> associatedCares)
         {
             MALADIE m = new MALADIE
             {
                 NOMMALADIE = name
             };
-            DbContext.get().MALADIE.Add(m);
+            if(associatedCares.Any())
+            {
+                m.SOIN = associatedCares;
+            }
+            if (!DiseasesAlreadyExist(m))
+            {
+                DbContext.get().MALADIE.Add(m);
+                DbContext.get().SaveChanges();
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Permet de savoir si une maladie est déjà présete dans la base de données
+        /// </summary>
+        /// <param name="m">La maladie a tester</param>
+        /// <returns>Vrai si la maladie existe déjà, faux sinon</returns>
+        private static bool DiseasesAlreadyExist(MALADIE testedDisease)
+        {
+            foreach(MALADIE currentDisease in DbContext.get().MALADIE){
+                if (currentDisease == testedDisease)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public static void RemoveDisease(MALADIE disease)
@@ -77,6 +129,14 @@ namespace Mauxnimale_CE2.api.controllers
         internal static ICollection<SOIN> ListCaresByDisease(MALADIE disease)
         {
             return disease.SOIN.ToList();
+        }
+
+        internal static IEnumerable<SOIN> ResearchCareByName(string name)
+        {
+            var result = from c in DbContext.get().SOIN
+                         where c.DESCRIPTION.Contains(name)
+                         select c;
+            return result.ToList();
         }
     }
 }

@@ -17,7 +17,6 @@ namespace Mauxnimale_CE2.ui
 
         private SALARIE _selectedEmployee;
 
-        // composants de l'interface
         private EmployeesComboBox _employeesList;
         private Label _nbVacationsRemaining;
         private MonthCalendar _calendar;
@@ -97,12 +96,12 @@ namespace Mauxnimale_CE2.ui
 
         private void generateButtons()
         {
-            _addVacationButton = new UIButton(UIColor.ORANGE, "Add vacation", 250);
-            _addVacationButton.Location = new Point(_calendar.Left - 25, window.Height - 300);
+            _addVacationButton = new UIButton(UIColor.ORANGE, "Add vacation", window.Width/6);
+            _addVacationButton.Location = new Point(_calendar.Left, window.Height * 7/10);
             _addVacationButton.Click += onAddVacationClick;
 
-            _removeVacationButton = new UIButton(UIColor.ORANGE, "Remove vacation", 250);
-            _removeVacationButton.Location = new Point(_addVacationButton.Right + 20, window.Height - 300);
+            _removeVacationButton = new UIButton(UIColor.ORANGE, "Remove vacation", window.Width / 6);
+            _removeVacationButton.Location = new Point(_addVacationButton.Left + window.Width/5, window.Height * 7 / 10);
             _removeVacationButton.Click += onRemoveVacationClick;
         }
 
@@ -284,6 +283,12 @@ namespace Mauxnimale_CE2.ui
         {
             _header.load("Mauxnimale - Gestion Congé");
             _footer.load();
+
+            generateReturnButtons();
+            generateEmployeesList();
+            generateVacationsRemaining();
+            generateMonthCalendar();
+            generateButtons();
 
             window.Controls.Add(_homeBtn);
             window.Controls.Add(_returnBtn);

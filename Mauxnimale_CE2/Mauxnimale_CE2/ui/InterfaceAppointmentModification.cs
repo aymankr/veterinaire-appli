@@ -76,7 +76,7 @@ namespace Mauxnimale_CE2.ui
             clientLabel.Font = new Font("Poppins", window.Height * 2 / 100);
             clientLabel.ForeColor = UIColor.DARKBLUE;
             clientLabel.Size = new Size(window.Width * 2 / 10, window.Height * 1 / 20);
-            clientLabel.Location = new Point(window.Width * 250 / 1000, window.Height * 5 / 40);
+            clientLabel.Location = new Point(window.Width * 270 / 1000, window.Height * 5 / 40);
             #endregion
 
             #region animalLabel
@@ -96,7 +96,7 @@ namespace Mauxnimale_CE2.ui
             appointmentTypeLabel.Font = new Font("Poppins", window.Height * 2 / 100);
             appointmentTypeLabel.ForeColor = UIColor.DARKBLUE;
             appointmentTypeLabel.Size = new Size(window.Width * 2 / 10, window.Height * 1 / 20);
-            appointmentTypeLabel.Location = new Point(window.Width * 250 / 1000, window.Height * 10 / 40);
+            appointmentTypeLabel.Location = new Point(window.Width * 270 / 1000, window.Height * 10 / 40);
             #endregion
 
             #region Selected Animals Label
@@ -143,7 +143,7 @@ namespace Mauxnimale_CE2.ui
             #region clientBox
             clientComboBox = new ComboBox();
             clientComboBox.Size = new Size(window.Width * 20 / 100, window.Height * 3 / 20);
-            clientComboBox.Location = new Point(window.Width * 250 / 1000, window.Height * 8 / 40);
+            clientComboBox.Location = new Point(window.Width * 270 / 1000, window.Height * 8 / 40);
             List<CLIENT> clients = ClientController.AllClient();
             foreach (CLIENT client in clients)
             {
@@ -181,7 +181,7 @@ namespace Mauxnimale_CE2.ui
             #region typeBox
             appointmentTypeComboBox = new ComboBox();
             appointmentTypeComboBox.Size = new Size(window.Width * 20 / 100, window.Height * 6 / 20);
-            appointmentTypeComboBox.Location = new Point(window.Width * 250 / 1000, window.Height * 13 / 40);
+            appointmentTypeComboBox.Location = new Point(window.Width * 270 / 1000, window.Height * 13 / 40);
             appointmentTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             List<TYPE_RDV> types = AppointmentController.GetAllRDVType();
             foreach (TYPE_RDV type in types)

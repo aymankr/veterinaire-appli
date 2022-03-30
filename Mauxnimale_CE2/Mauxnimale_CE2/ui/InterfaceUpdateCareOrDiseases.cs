@@ -5,22 +5,29 @@ using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.api.controllers;
+using System.Collections.Generic;
+
 namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceUpdateCareOrDiseases : AInterface
     {
-        Header header;
-        Footer footer;
+        readonly Header header;
+        readonly Footer footer;
 
-        MALADIE disease;
-        SOIN care;
+        readonly MALADIE disease;
+        readonly SOIN care;
 
         #region DiseaseForm elements
         Label nameDiseaseForm;
-        TextBox currentDiseaseName, newDiseaseName;
-        ComboBox allPossibleCares;
-        ListBox currentCares, newCares;
+        TextBox currentDiseaseName, newDiseaseName, researchCare;
+        ListBox currentCares, newCares, allPossibleCares;
         UIButton validateDiseaseForm;
+        #endregion
+
+        #region CareForm elements
+        Label nameCareForm;
+        TextBox currentCaresName, newCaresName;
+        UIButton validateCareForm;
         #endregion
 
         UIRoundButton backButton;
@@ -38,6 +45,9 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        /// <summary>
+        /// Permet de charger les éléments de la fenêtre.
+        /// </summary>
         public override void load()
         {
             GenerateBackButton();
@@ -52,9 +62,13 @@ namespace Mauxnimale_CE2.ui
             {
                 header.load("Modification d'un soin");
                 footer.load();
+                GenerateUpdateCareForm();
             }
         }
 
+        /// <summary>
+        /// Permet d'ajouter les données possibles et actuelles des soins de la maladie.
+        /// </summary>
         private void GenerateData()
         {
             foreach(SOIN care in disease.SOIN)
@@ -68,6 +82,75 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        /// <summary>
+        /// Permet de générer les éléments du formulaire de modification d'un soin
+        /// </summary>
+        public void GenerateUpdateCareForm()
+        {
+            nameCareForm = new Label()
+            {
+                Text = "Formulaire modification d'un soin",
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Poppins", window.Height * 2 / 100),
+                ForeColor = UIColor.DARKBLUE,
+                Size = new Size(window.Width * 4 / 10, window.Height * 1 / 10),
+                Location = new Point(window.Width * 5 / 15, window.Height * 3 / 20)
+            };
+            window.Controls.Add(nameCareForm);
+
+            newCaresName = new TextBox()
+            {
+                Text = care.DESCRIPTION,
+                Font = new Font("Poppins", window.Height * 2 / 100),
+                ForeColor = Color.Black,
+                Size = new Size(window.Width * 3 / 10, window.Height * 1 / 10),
+                Location = new Point(window.Width * 27 / 50, window.Height * 5 / 20)
+            };
+            window.Controls.Add(newCaresName);
+
+            currentCaresName = new TextBox()
+            {
+                Text = care.DESCRIPTION,
+                Font = new Font("Poppins", window.Height * 2 / 100),
+                ForeColor = Color.Black,
+                Size = new Size(window.Width * 3 / 10, window.Height * 1 / 10),
+                Location = new Point(window.Width * 8 / 50, window.Height * 5 / 20),
+                Enabled = false
+            };
+            window.Controls.Add(currentCaresName);
+
+            validateCareForm = new UIButton(UIColor.ORANGE, "Modifier", window.Width * 15 / 100)
+            {
+                Font = new Font("Poppins", window.Height * 1 / 100),
+                Height = window.Height / 25,
+                Location = new Point(window.Width * 18 / 50, window.Height * 6 / 20),
+                Size = new Size(window.Width * 3 / 10, window.Height / 15),
+            };
+            validateCareForm.Click += new EventHandler(SubmitCareForm);
+            window.Controls.Add(validateCareForm);
+        }
+
+        /// <summary>
+        /// Permet de modifier un soin.
+        /// </summary>
+        /// <param name="sender">Bouton de validation</param>
+        /// <param name="e">clic</param>
+        private void SubmitCareForm(object sender, EventArgs e)
+        {
+            if (newCaresName.Text.Trim().Length != 0)
+            {
+                if(CareAndDiseaseController.UpdateCare(care, NormalizeName(newCaresName.Text))){
+                    MessageBox.Show("Le soin a bien été modifié.", "Validation de modification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                } else
+                {
+                    MessageBox.Show("Le soin existe déjà.", "Annulation de modification", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Permet de générer les éléments du formulaire de modification de maladie.
+        /// </summary>
         private void GenerateUpdateDiseaseForm()
         {
             nameDiseaseForm = new Label()
@@ -91,16 +174,29 @@ namespace Mauxnimale_CE2.ui
             };
             window.Controls.Add(newDiseaseName);
 
-            allPossibleCares = new ComboBox()
+
+            researchCare = new TextBox()
             {
-                Text = "Soins",
+                Text = "Recherche...",
                 Font = new Font("Poppins", window.Height * 2 / 100),
                 ForeColor = Color.Gray,
                 Size = new Size(window.Width * 3 / 10, window.Height * 1 / 10),
                 Location = new Point(window.Width * 27 / 50, window.Height * 6 / 20)
             };
+            researchCare.TextChanged += new EventHandler(SearchCare);
+            researchCare.GotFocus += new EventHandler(GotFocus);
+            window.Controls.Add(researchCare);
+
+
+            allPossibleCares = new ListBox()
+            {
+                Text = "Soins",
+                Font = new Font("Poppins", window.Height * 2 / 100),
+                ForeColor = Color.Black,
+                Size = new Size(window.Width * 3 / 10, window.Height * 2 / 10),
+                Location = new Point(window.Width * 27 / 50, window.Height * 7 / 20)
+            };
             allPossibleCares.SelectedValueChanged += new EventHandler(SelectCare);
-            allPossibleCares.TextChanged += new EventHandler(SearchCare);
             window.Controls.Add(allPossibleCares);
 
             newCares = new ListBox()
@@ -108,7 +204,7 @@ namespace Mauxnimale_CE2.ui
                 Font = new Font("Poppins", window.Height * 2 / 100),
                 ForeColor = Color.Gray,
                 Size = new Size(window.Width * 3 / 10, window.Height * 2 / 10),
-                Location = new Point(window.Width * 27 / 50, window.Height * 7 / 20)
+                Location = new Point(window.Width * 27 / 50, window.Height * 11 / 20)
             };
             newCares.SelectedValueChanged += new EventHandler(SelectCare);
             window.Controls.Add(newCares);
@@ -130,7 +226,7 @@ namespace Mauxnimale_CE2.ui
                 Font = new Font("Poppins", window.Height * 2 / 100),
                 ForeColor = Color.Gray,
                 Size = new Size(window.Width * 3 / 10, window.Height * 2 / 10),
-                Location = new Point(window.Width * 8 / 50, window.Height * 7 / 20),
+                Location = new Point(window.Width * 8 / 50, window.Height * 11 / 20),
                 Enabled = false
             };
             window.Controls.Add(currentCares);
@@ -140,33 +236,71 @@ namespace Mauxnimale_CE2.ui
             {
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 Height = window.Height / 25,
-                Location = new Point(window.Width * 18 / 50, window.Height * 11 / 20),
+                Location = new Point(window.Width * 18 / 50, window.Height * 15 / 20),
                 Size = new Size(window.Width * 3 / 10, window.Height * 1 / 15),
             };
             validateDiseaseForm.Click += new EventHandler(SubmitDiseaseForm);
             window.Controls.Add(validateDiseaseForm);
         }
 
-        private void SubmitDiseaseForm(object sender, EventArgs e)
+        /// <summary>
+        /// Méthode gérant le focus sur la barre de recherche.
+        /// </summary>
+        /// <param name="sender">Barre de recherche de soin</param>
+        /// <param name="e">Changement de texte</param>
+        private void GotFocus(object sender, EventArgs e)
         {
-            
+            if (sender.Equals(researchCare) && researchCare.Text == "Recherche...")
+            {
+                researchCare.Text = "";
+                researchCare.ForeColor = Color.Black;
+            }
         }
 
         /// <summary>
-        /// Permet de rechercher un soin dans la ComboBox
+        /// Permet de modifier une maladie si les informations sont correctement remplies.
+        /// </summary>
+        /// <param name="sender">Bouton de validation</param>
+        /// <param name="e">clic</param>
+        private void SubmitDiseaseForm(object sender, EventArgs e)
+        {
+            if(newDiseaseName.Text.Trim().Length != 0)
+            {
+                List<SOIN> cares = new List<SOIN>();
+                foreach (SOIN care in newCares.Items)
+                {
+                    cares.Add(care);
+                }
+                if (CareAndDiseaseController.UpdateDisease(disease, NormalizeName(newDiseaseName.Text), cares))
+                {
+                    MessageBox.Show("La maladie à bien été modifiée.", "Confirmation de modification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                } else
+                {
+                    MessageBox.Show("La maladie existe déjà dans la base.", "Anuulation de modification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Permet de rechercher un soin dans la ComboBox.
         /// </summary>
         /// <param name="sender">ComboBox</param>
         /// <param name="e">Changement de text</param>
         private void SearchCare(object sender, EventArgs e)
         {
-            allPossibleCares.ForeColor = Color.Black;
-            allPossibleCares.Items.Clear();
-            allPossibleCares.Items.Add(" ");
-            foreach (SOIN care in CareAndDiseaseController.ResearchCareByName(allPossibleCares.Text))
+            if (researchCare.Text != "")
             {
-                allPossibleCares.Items.Add(care);
+                allPossibleCares.Items.Clear();
+                allPossibleCares.Items.Add(" ");
+                foreach (SOIN care in CareAndDiseaseController.ResearchCareByName(researchCare.Text))
+                {
+                    allPossibleCares.Items.Add(care);
+                }
             }
-            allPossibleCares.Select(allPossibleCares.Text.Length, 0);
+            else
+            {
+                GenerateData();
+            }
         }
 
         /// <summary>
@@ -210,6 +344,33 @@ namespace Mauxnimale_CE2.ui
         {
             window.Controls.Clear();
             window.switchInterface(new InterfaceDiseaseAndCares(window, user));
+        }
+
+        /// <summary>
+        /// Méthode permettant de normaliser le prénom du nouveau client.
+        /// C'est à dire première lettre en majuscule et le reste en minuscule.
+        /// </summary>
+        /// <returns>Le prénom normalisé</returns>
+        private string NormalizeName(string name)
+        {
+            char[] nameLetter = name.ToCharArray();
+            string nameWithCapital = "";
+            string letter;
+            bool firstLetter = true;
+            foreach (char c in nameLetter)
+            {
+                if (firstLetter)
+                {
+                    letter = c.ToString().ToUpper();
+                    firstLetter = false;
+                }
+                else
+                {
+                    letter = c.ToString().ToLower();
+                }
+                nameWithCapital += letter;
+            }
+            return nameWithCapital;
         }
     }
 }

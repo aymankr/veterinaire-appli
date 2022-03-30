@@ -227,6 +227,11 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        /// <summary>
+        /// Permet d'afficher les boutons de suppression liés à un soin.
+        /// </summary>
+        /// <param name="sender">Liste contenant les soins</param>
+        /// <param name="e">Sélection d'un soin</param>
         private void CareSelection(object sender, EventArgs e)
         {
             selectedCare = (caresLB.SelectedItem != " ") ? (SOIN)caresLB.SelectedItem : null;
@@ -242,6 +247,11 @@ namespace Mauxnimale_CE2.ui
             window.Refresh();
         }
 
+        /// <summary>
+        /// Permet d'afficher les boutons de suppression liés à une maladie.
+        /// </summary>
+        /// <param name="sender">Liste contenant les maladies</param>
+        /// <param name="e">Sélection d'un soin</param>
         private void DiseaseSelection(object sender, EventArgs e)
         {
             selectedDisease = (diseasesLB.SelectedItem != " ") ? (MALADIE)diseasesLB.SelectedItem : null;
@@ -262,6 +272,11 @@ namespace Mauxnimale_CE2.ui
             window.Refresh();
         }
         
+        /// <summary>
+        /// Permet de supprimer un soin.
+        /// </summary>
+        /// <param name="sender">Bouton de suppression</param>
+        /// <param name="e">clic</param>
         private void DeleteCare(object sender, EventArgs e)
         {
             var result = MessageBox.Show("Êtes vous sure de vouloir supprimer ce soin. Cette action sera IRRÉVERSIBLE.", "Demande de comfirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
@@ -269,9 +284,16 @@ namespace Mauxnimale_CE2.ui
             {
                 CareAndDiseaseController.RemoveCare(selectedCare);
                 MessageBox.Show("Le soin a été supprimé avec succès.", "Validation de suppression", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                AddDataInCares();
+                AddDataInDiseases();
             }
         }
 
+        /// <summary>
+        /// Permet de supprimer une maladie.
+        /// </summary>
+        /// <param name="sender">Bouton de suppression</param>
+        /// <param name="e">clic</param>
         private void DeleteDisease(object sender, EventArgs e)
         {
             var result = MessageBox.Show("Êtes vous sure de vouloir supprimer cette maladie. Cette action sera IRRÉVERSIBLE.", "Demande de comfirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
@@ -279,15 +301,27 @@ namespace Mauxnimale_CE2.ui
             {
                 CareAndDiseaseController.RemoveDisease(selectedDisease);
                 MessageBox.Show("La maladie a été supprimée avec succès.", "Validation de suppression", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                AddDataInDiseases();
+                AddDataInCares();
             }
         }
 
+        /// <summary>
+        /// Permet de lancer l'interface d'ajout de soins et maladies.
+        /// </summary>
+        /// <param name="sender">Tous les boutons "nouveau"</param>
+        /// <param name="e">clic</param>
         private void OpenNewCareAndDiseseaseInterface(object sender, EventArgs e)
         {
             window.Controls.Clear();
             window.switchInterface(new InterfaceNewCaresAndDiseases(window, user));
         }
 
+        /// <summary>
+        /// Permet de lancer l'interface de modification suivant l'élément choisi.
+        /// </summary>
+        /// <param name="sender">Bouton de modification d'une maladie ou d'un soin</param>
+        /// <param name="e">clic</param>
         private void OpenUpdateCareAndDiseaseInterface(object sender, EventArgs e)
         {
             window.Controls.Clear();

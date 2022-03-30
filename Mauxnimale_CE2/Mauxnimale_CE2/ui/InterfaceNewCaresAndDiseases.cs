@@ -16,13 +16,12 @@ namespace Mauxnimale_CE2.ui
 
         #region DiseaseForm
         Label nameDiseaseForm;
-        TextBox diseaseName;
-        ComboBox allPossibleCares;
-        ListBox allSelectedCares;
+        TextBox diseaseName, researchCare;
+        ListBox allPossibleCares, allSelectedCares;
         UIButton validateDiseaseForm;
         #endregion
 
-        #region CaareForm
+        #region CareForm
         Label nameCareForm;
         TextBox careDescription;
         UIButton validateCareForm;
@@ -64,6 +63,9 @@ namespace Mauxnimale_CE2.ui
             window.switchInterface(new InterfaceDiseaseAndCares(window, user));
         }
 
+        /// <summary>
+        /// Permet de générer les élémetns du formulaire d'ajout d'une maladie.
+        /// </summary>
         private void GenerateDiseaseForm()
         {
             nameDiseaseForm = new Label()
@@ -88,16 +90,28 @@ namespace Mauxnimale_CE2.ui
             diseaseName.GotFocus += new EventHandler(GotFocus);
             window.Controls.Add(diseaseName);
 
-            allPossibleCares = new ComboBox()
+            researchCare = new TextBox()
             {
-                Text = "Soins",
+                Text = "Recherche...",
                 Font = new Font("Poppins", window.Height * 2 / 100),
                 ForeColor = Color.Gray,
                 Size = new Size(window.Width * 3 / 10, window.Height * 1 / 10),
-                Location = new Point(window.Width* 7 / 50, window.Height * 6 / 20)
+                Location = new Point(window.Width * 7 / 50, window.Height * 6 / 20)
+            };
+            researchCare.TextChanged += new EventHandler(SearchCare);
+            researchCare.GotFocus += new EventHandler(GotFocus);
+            window.Controls.Add(researchCare);
+
+
+            allPossibleCares = new ListBox()
+            {
+                Text = "Soins",
+                Font = new Font("Poppins", window.Height * 2 / 100),
+                ForeColor = Color.Black,
+                Size = new Size(window.Width * 3 / 10, window.Height * 2 / 10),
+                Location = new Point(window.Width * 7 / 50, window.Height * 7 / 20)
             };
             allPossibleCares.SelectedValueChanged += new EventHandler(SelectCare);
-            allPossibleCares.TextChanged += new EventHandler(SearchCare);
             window.Controls.Add(allPossibleCares);
 
             allSelectedCares = new ListBox()
@@ -105,7 +119,7 @@ namespace Mauxnimale_CE2.ui
                 Font = new Font("Poppins", window.Height * 2 / 100),
                 ForeColor = Color.Gray,
                 Size = new Size(window.Width * 3 / 10, window.Height * 2 / 10),
-                Location = new Point(window.Width * 7 / 50, window.Height * 7 / 20)
+                Location = new Point(window.Width * 7 / 50, window.Height * 11 / 20)
             };
             allSelectedCares.SelectedValueChanged += new EventHandler(SelectCare);
             window.Controls.Add(allSelectedCares);
@@ -114,7 +128,7 @@ namespace Mauxnimale_CE2.ui
             {
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 Height = window.Height / 25,
-                Location = new Point(window.Width * 7 / 50, window.Height * 11 / 20),
+                Location = new Point(window.Width * 7 / 50, window.Height * 15 / 20),
                 Size = new Size(window.Width * 3 / 10, window.Height * 1 / 15),
             };
             validateDiseaseForm.Click += new EventHandler(SubmitDiseaseForm);
@@ -128,14 +142,18 @@ namespace Mauxnimale_CE2.ui
         /// <param name="e">Changement de text</param>
         private void SearchCare(object sender, EventArgs e)
         {
-            allPossibleCares.ForeColor = Color.Black;
-            allPossibleCares.Items.Clear();
-            allPossibleCares.Items.Add(" ");
-            foreach(SOIN care in CareAndDiseaseController.ResearchCareByName(allPossibleCares.Text))
+            if(researchCare.Text != "")
             {
-                allPossibleCares.Items.Add(care);
+                allPossibleCares.Items.Clear();
+                allPossibleCares.Items.Add(" ");
+                foreach(SOIN care in CareAndDiseaseController.ResearchCareByName(researchCare.Text))
+                {
+                    allPossibleCares.Items.Add(care);
+                }
+            } else
+            {
+                AddDataInCaresList();
             }
-            allPossibleCares.Select(allPossibleCares.Text.Length, 0);
         }
 
         /// <summary>
@@ -171,7 +189,7 @@ namespace Mauxnimale_CE2.ui
         {
             if (sender.Equals(allPossibleCares))
             {
-                if(allPossibleCares.SelectedItem != " ")
+                if(allPossibleCares.SelectedItem != " " && allPossibleCares.SelectedItem != null)
                 {
                     if (!allSelectedCares.Items.Contains(allPossibleCares.SelectedItem))
                     {
@@ -181,7 +199,7 @@ namespace Mauxnimale_CE2.ui
                         MessageBox.Show("Ce soins est déjà lié à cette maladie.", "Soin déjà lié", MessageBoxButtons.OK, MessageBoxIcon.Information); 
                     }
                 }
-            } else if (sender.Equals(allSelectedCares))
+            } else if (sender.Equals(allSelectedCares) && allPossibleCares.SelectedItem != null)
             {
                 allSelectedCares.Items.Remove(allSelectedCares.SelectedItem);
             }
@@ -194,14 +212,20 @@ namespace Mauxnimale_CE2.ui
         /// <param name="e">prise de focus</param>
         private void GotFocus(object sender, EventArgs e)
         {
-            if(diseaseName.Text == "Nom")
+            if(sender.Equals(diseaseName) && diseaseName.Text == "Nom")
             {
                 diseaseName.Text = "";
                 diseaseName.ForeColor = Color.Black;
-            } else if (careDescription.Text == "Nom")
+            } 
+            else if (sender.Equals(careDescription) &&  careDescription.Text == "Nom")
             {
                 careDescription.Text = "";
                 careDescription.ForeColor = Color.Black;
+            }
+            else if (sender.Equals(researchCare) && researchCare.Text == "Recherche...")
+            {
+                researchCare.Text = "";
+                researchCare.ForeColor = Color.Black;
             }
         }
 
@@ -218,6 +242,9 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        /// <summary>
+        /// Permet de générer les éléments du formulaire d'ajout d'un soin
+        /// </summary>
         private void GenerateCaresForm()
         {
             nameCareForm = new Label()
@@ -239,7 +266,7 @@ namespace Mauxnimale_CE2.ui
                 Size = new Size(window.Width * 3 / 10, window.Height * 1 / 10),
                 Location = new Point(window.Width * 30 / 50, window.Height * 5 / 20)
             };
-            diseaseName.GotFocus += new EventHandler(GotFocus);
+            careDescription.GotFocus += new EventHandler(GotFocus);
             window.Controls.Add(careDescription);
 
             validateCareForm = new UIButton(UIColor.ORANGE, "Ajouter", window.Width * 15 / 100)
@@ -253,6 +280,11 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(validateCareForm);
         }
 
+        /// <summary>
+        /// Permet d'ajouter un soin à la base
+        /// </summary>
+        /// <param name="sender">Bouton de validation</param>
+        /// <param name="e">clic</param>
         private void SubmitCareForm(object sender, EventArgs e)
         {
             if(careDescription.Text != "Nom" && careDescription.Text.Trim().Length != 0)

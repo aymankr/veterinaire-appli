@@ -131,12 +131,50 @@ namespace Mauxnimale_CE2.api.controllers
             return disease.SOIN.ToList();
         }
 
-        internal static IEnumerable<SOIN> ResearchCareByName(string name)
+        internal static ICollection<SOIN> ResearchCareByName(string name)
         {
             var result = from c in DbContext.get().SOIN
                          where c.DESCRIPTION.Contains(name)
                          select c;
             return result.ToList();
+        }
+
+        internal static bool UpdateDisease(MALADIE disease, string name, List<SOIN> cares)
+        {
+
+            MALADIE tempDisease = new MALADIE()
+            {
+                NOMMALADIE = name,
+                SOIN = cares
+            };
+            if (!DiseasesAlreadyExist(tempDisease))
+            {
+                disease.NOMMALADIE = name;
+                disease.SOIN = cares;
+                DbContext.get().SaveChanges();
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+
+        internal static bool UpdateCare(SOIN care, string name)
+        {
+            SOIN tempCare = new SOIN()
+            {
+                DESCRIPTION = name,
+            };
+            if (!CareAlreadyExist(tempCare))
+            {
+                care.DESCRIPTION = name;
+                DbContext.get().SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Mauxnimale_CE2.ui
         private TextBox _lastName, _firstName, _salary;
         private DateTimePicker _internshipStart, _internshipEnd;
 
-        private UIButton _vacationManagementButton, _modifyInfosButton;
+        private UIButton _vacationManagementButton, _modifyInfosButton, createEmployee;
 
         public InterfaceEmployeesManagement(MainWindow window, SALARIE user) : base(window, user) 
         {
@@ -41,10 +41,10 @@ namespace Mauxnimale_CE2.ui
         private void generateComboBox()
         {
             _employeesList = new EmployeesComboBox();
-            _employeesList.Size = new Size(window.Width / 3, 100);
-            _employeesList.Location = new Point(50, 200);
+            _employeesList.Size = new Size(window.Width / 3, window.Height/10);
+            _employeesList.Location = new Point(50, window.Height/5);
+            _employeesList.Font = new Font("Poppins", window.Height * 3 / 100);
 
-            // Events
             _employeesList.SelectedValueChanged += onEmployeeChosen;
         }
 
@@ -64,6 +64,11 @@ namespace Mauxnimale_CE2.ui
             _modifyInfosButton.Location = new Point(_salary.Location.X + _salary.Width / 2 - _modifyInfosButton.Width / 2, window.Height *7/10);
             _modifyInfosButton.Click += new EventHandler(onModifyInfosClick);
             _modifyInfosButton.Enabled = false;
+
+            createEmployee = new UIButton(UIColor.ORANGE, "Créer un compte", window.Width / 4);
+            createEmployee.Location = new Point(_employeesList.Location.X + _employeesList.Width / 2 - _vacationManagementButton.Width / 2, window.Height * 5 / 10);
+            createEmployee.Click += new EventHandler(createEmployeeClick);
+            window.Controls.Add(createEmployee);
         }
 
         private void generateForm()
@@ -86,12 +91,14 @@ namespace Mauxnimale_CE2.ui
             _salary.Font = new Font("Poppins", window.Height * 3 / 100);
 
             _internshipStart = new DateTimePicker();
-            _internshipStart.Size = new Size(window.Width / 5, window.Height * 3 / 100);
+            _internshipStart.Size = new Size(window.Width / 5, window.Height * 8 / 100);
             _internshipStart.Location = new Point(window.Width / 2, window.Height / 2);
+            _internshipStart.Font = new Font("Poppins", window.Height * 2 / 100);
 
             _internshipEnd = new DateTimePicker();
-            _internshipEnd.Size = new Size(window.Width / 5, window.Height * 3 / 100);
+            _internshipEnd.Size = new Size(window.Width / 5, window.Height * 8 / 100);
             _internshipEnd.Location = new Point(_internshipStart.Location.X + _internshipStart.Width + 10, window.Height / 2);
+            _internshipEnd.Font = new Font("Poppins", window.Height * 2 / 100);
         }
 
         #endregion
@@ -101,6 +108,12 @@ namespace Mauxnimale_CE2.ui
         {
             window.Controls.Clear();
             window.switchInterface(new InterfaceHome(window, user));
+        }
+
+        private void createEmployeeClick(object sender, EventArgs eventArgs)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceInscription(window, user));
         }
 
         private void onVacationManagementButtonClick(object sender, EventArgs e)

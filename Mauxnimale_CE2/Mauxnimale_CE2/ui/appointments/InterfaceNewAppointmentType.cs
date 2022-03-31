@@ -129,6 +129,7 @@ namespace Mauxnimale_CE2.ui.appointments
                 }
             }
             //AppointmentController.AddTypeRDV(typeName.Text);
+
             window.Controls.Clear();
             window.switchInterface(new InterfaceAppointmentCreation(window, user));
         }

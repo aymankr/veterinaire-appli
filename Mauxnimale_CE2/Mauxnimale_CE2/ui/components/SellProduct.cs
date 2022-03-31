@@ -7,6 +7,12 @@ namespace Mauxnimale_CE2.ui.components
     public class SellProduct : SplitContainer
     {
         public PRODUIT Product;
+
+        public NumericUpDown QuantityChooser 
+        { 
+            get { return _quantityChooser; }
+        }
+
         public int QuantityToSell
         {
             get { return (int)_quantityChooser.Value; }

@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="api\controllers\AppointmentController.cs" />
+    <Compile Include="api\controllers\CareAndDiseaseController.cs" />
     <Compile Include="api\controllers\CareController.cs" />
     <Compile Include="api\controllers\ClientController.cs" />
     <Compile Include="api\controllers\InvoiceController.cs" />
@@ -151,12 +152,17 @@
     <Compile Include="ui\appointments\InterfacePrescriptionCreation.cs" />
     <Compile Include="ui\diseasesAndCares\InterfaceUpdateCareOrDiseases.cs" />
     <Compile Include="ui\diseasesAndCares\InterfaceNewCaresAndDiseases.cs" />
+    <Compile Include="ui\components\ClientsListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ui\components\ProductTypesComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ui\components\SellProduct.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ui\InterfaceDiseaseAndCares.cs" />
+    <Compile Include="ui\InterfaceNewCaresAndDiseases.cs" />
     <Compile Include="ui\InterfacePrescriptionCreation.cs" />
     <Compile Include="ui\components\EmployeesComboBox.cs">
       <SubType>Component</SubType>

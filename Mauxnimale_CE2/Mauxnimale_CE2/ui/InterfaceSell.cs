@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Data;
+using System.Collections.Generic;
 using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.controllers;
@@ -20,11 +20,13 @@ namespace Mauxnimale_CE2.ui
         private TextBox _productsNameFilter;
 
         private Label _clientsLabel;
-        private ListBox _clients;
+        private ClientsListBox _clients;
         private TextBox _clientsNameFilter;
+        CLIENT _currentClient;
 
         private Label _sellVisualLabel;
         private GroupBox _sellVisual;
+        private List<SellProduct> _productsAdded;
         private Label _total;
 
         private UIButton _stockButton, _clientsButton, _sellButton;
@@ -34,6 +36,8 @@ namespace Mauxnimale_CE2.ui
             _header = new Header(window);
             _footer = new Footer(window, user);
 
+            _productsAdded = new List<SellProduct>();
+
             generateProductsList();
             generateProductsType();
             generateProductsNameFilter();
@@ -42,6 +46,7 @@ namespace Mauxnimale_CE2.ui
             generateClientsNameFilter();
 
             generateSellVisual();
+            generateSellTotal();
 
             generateButtons();
             generateLabels();
@@ -89,12 +94,12 @@ namespace Mauxnimale_CE2.ui
         private void generateClientsList()
         {
             // Taille & position
-            _clients = new ListBox();
+            _clients = new ClientsListBox();
             _clients.Size = new Size(window.Width / 4, window.Height / 2);
             _clients.Location = new Point(_products.Right + window.Width / 20, window.Height / 4);
 
-            // Données
-            ClientController.AllClient().ForEach(client => _clients.Items.Add(client));
+            // Evénements
+            _clients.SelectedValueChanged += onClientChoosed;
         }
 
         private void generateClientsNameFilter()
@@ -114,12 +119,16 @@ namespace Mauxnimale_CE2.ui
             _sellVisual = new GroupBox();
             _sellVisual.Size = new Size(window.Width / 4, window.Height / 2);
             _sellVisual.Location = new Point(_clients.Right + window.Width / 20, window.Height / 4);
+        }
 
+        private void generateSellTotal()
+        {
+            // Total du prix de vente
             _total = new Label();
-            _total.Size = new Size(window.Width / 4, _sellVisual.Height / 12);
-            _total.Location = new Point(0, _sellVisual.Bottom - _total.Height);
             _total.Text = "Total : 0 €";
-            
+            _total.Font = new Font("Poppins", window.Height / 70);
+            _total.Size = TextRenderer.MeasureText(_total.Text, _total.Font);
+            _total.Location = new Point(_sellVisual.Width - _total.Width - 2, _sellVisual.Height - _total.Height - 2);
 
             _sellVisual.Controls.Add(_total);
         }
@@ -137,6 +146,7 @@ namespace Mauxnimale_CE2.ui
             _sellButton = new UIButton(UIColor.ORANGE, "Réaliser la vente", window.Width / 5);
             _sellButton.Location = new Point(_sellVisual.Left + _sellVisual.Width / 2 - _sellButton.Width / 2, _sellVisual.Bottom + 10);
             _sellButton.Click += onSellButtonClick;
+            _sellButton.Enabled = false;
         }
 
         private void generateLabels()
@@ -185,9 +195,48 @@ namespace Mauxnimale_CE2.ui
             window.switchInterface(new InterfaceClient(window, user));
         }
 
+        /// <summary>
+        /// Demande la confirmation de la vente et la réalise si l'utilisateur confirme.
+        /// </summary>
         private void onSellButtonClick(object sender, EventArgs eventArgs)
         {
-            
+            if (_productsAdded.Count == 0)
+            {
+                MessageBox.Show("Veuillez ajouter au moins un produit à la vente en cours.", "Conditions de ventes non valides", MessageBoxButtons.OK);
+                return;
+            }
+            if (_clients.SelectedValue == null)
+            {
+                MessageBox.Show("Veuillez choisir un client à qui vendre.", "Conditions de ventes non valides", MessageBoxButtons.OK);
+                return;
+            }
+
+            string productsToSellStr = "";
+            _productsAdded.ForEach(p => productsToSellStr += p.Product.ToString() + " x" + p.QuantityToSell.ToString() + "\n");
+            string message = "Résumé de la vente:\n\n" +
+                             productsToSellStr + "\n" +
+                             _total.Text + "\n" +
+                             "Confirmez vous la réalisation de la vente ?";
+
+            DialogResult confirmed = MessageBox.Show(message, "Demande de confirmation", MessageBoxButtons.YesNo);
+            if (confirmed == DialogResult.Yes)
+            {
+                // Enlève les produits vendus du stock
+                _productsAdded.ForEach(p => ProductController.setProductQuantity(p.Product, -p.QuantityToSell));
+                _products.Items.Clear();
+                ProductController.getProducts().ForEach(product => _products.Items.Add(product));
+
+                // Demander la génération d'une facture
+                confirmed = MessageBox.Show("Les produits vendus ont été retirés du stock avec succès.\nVoulez vous générer une facture ?", "Demande de confirmation", MessageBoxButtons.YesNo);
+                if (confirmed == DialogResult.Yes)
+                {
+                    Console.WriteLine("Générer la facture");
+                }
+
+                // Réinitialiser la fenêtre
+                window.Controls.Clear();
+                window.switchInterface(new InterfaceSell(window, user));
+            }
         }
 
         /// <summary>
@@ -199,6 +248,9 @@ namespace Mauxnimale_CE2.ui
         }
 
         
+        /// <summary>
+        /// Filtre les produits par au nom entré.
+        /// </summary>
         private void onProductNameFilterType(object sender, EventArgs eventArgs)
         {
             filterProducts();
@@ -221,10 +273,25 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
-        private void onProductCheckedChange(object sender, ItemCheckEventArgs eventArgs)
+        /// <summary>
+        /// Ajoute ou retire le produit de la vente en cours et met à jour le visuel.
+        /// </summary>
+        private void onProductCheckedChange(object sender, ItemCheckEventArgs eventArgs) => window.BeginInvoke((MethodInvoker)(() => updateVisual()));
+
+        /// <summary>
+        /// Met à jour le total de la vente avec la nouvelle quantité.
+        /// </summary>
+        private void onProductQuantityChanged(object sender, EventArgs eventArgs) => updateTotal();
+
+        /// <summary>
+        /// Authorise l'utilisateur à réaliser la vente si au moins un produit a été ajouté.
+        /// </summary>
+        private void onClientChoosed(object sender, EventArgs eventArgs)
         {
-            window.BeginInvoke((MethodInvoker)(
-            () => updateVisual()));
+            if (_productsAdded.Count > 0 && !_sellButton.Enabled)
+                _sellButton.Enabled = true;
+
+            _currentClient = ClientController.GetClientFromID((int)_clients.SelectedValue);
         }
 
         #endregion
@@ -268,55 +335,112 @@ namespace Mauxnimale_CE2.ui
 
         #region Gestion du visuel de la vente en cours
 
+        /// <summary>
+        /// Met à jour la vue de la vente en cours.
+        /// </summary>
         private void updateVisual()
         {
+            decimal totalPrice = 0;
+
+            // Mise à jour de la liste des produits
             for (int i = 0; i < _products.Items.Count; i++)
             {
                 PRODUIT product = (PRODUIT)_products.Items[i];
 
                 if (!isProductAdded(product) && _products.GetItemChecked(i))
+                {
                     addNewProduct(product);
+                    totalPrice += product.PRIXDEVENTECLIENT;
+                }
+                else if (isProductAdded(product))
+                {
+                    if (!_products.GetItemChecked(i))
+                        removeAddedProduct(product);
+                    else
+                        totalPrice += product.PRIXDEVENTECLIENT;
+                }
+            }
+            updateTotal();
 
-                else if (isProductAdded(product) && !_products.GetItemChecked(i))
-                    removeAddedProduct(product);
+            if (_productsAdded.Count > 0 && _currentClient != null)
+                _sellButton.Enabled = true;
+            else
+            {
+                if (_sellButton.Enabled)
+                    _sellButton.Enabled = false;            
             }
 
             _sellVisual.Refresh();
         }
 
+        /// <summary>
+        /// Détermine si un produit est ajotué dans la vente en cours.
+        /// </summary>
+        /// <param name="product">Le produit en question</param>
+        /// <returns>true si le produit est dans la vente en cours, false sinon.</returns>
         private bool isProductAdded(PRODUIT product)
         {
-            foreach (Control item in _sellVisual.Controls)
+            foreach (SellProduct sellProduct in _productsAdded)
             {
-                SellProduct sellProduct = (SellProduct)item;
                 if (sellProduct.Product.IDPRODUIT == product.IDPRODUIT)
                     return true;
             }
             return false;
         }
 
+        /// <summary>
+        /// Ajoute un nouveau produit à la vente en cours.
+        /// </summary>
+        /// <param name="product">Le produit à ajouter</param>
         private void addNewProduct(PRODUIT product)
         {
-            int yLocation = _sellVisual.Controls.Count == 0 ? 15 : _sellVisual.Controls[_sellVisual.Controls.Count - 1].Bottom;
+            // Taille & position
+            int yLocation = _productsAdded.Count == 0 ? 15 : _productsAdded[_productsAdded.Count - 1].Bottom;
             SellProduct sellProduct = new SellProduct(product,
                                                       new Size(_sellVisual.Width - 20, _sellVisual.Height / 15),
                                                       new Point(10, yLocation));
+            // Evénements
+            sellProduct.QuantityChooser.ValueChanged += onProductQuantityChanged;
+
+            _productsAdded.Add(sellProduct);
             _sellVisual.Controls.Add(sellProduct);
         }
 
+        /// <summary>
+        /// Supprime un produit ajouté à la vente de la vente en cours.
+        /// </summary>
+        /// <param name="product">Le produit à supprimer</param>
         private void removeAddedProduct(PRODUIT product)
         {
-            for (int i = 0; i < _sellVisual.Controls.Count; i++)
+            for (int i = 1; i < _sellVisual.Controls.Count; i++)
             {
                 SellProduct sellProduct = (SellProduct)_sellVisual.Controls[i];
                 if (sellProduct.Product.IDPRODUIT == product.IDPRODUIT)
+                {
                     _sellVisual.Controls.Remove(_sellVisual.Controls[i]);
+                    _productsAdded.Remove(sellProduct);
+                }
             }
 
-            for (int i = 0; i < _sellVisual.Controls.Count; i++)
+            for (int i = 1; i < _sellVisual.Controls.Count; i++)
             {
-                _sellVisual.Controls[i].Location = new Point(10, _sellVisual.Height / 15 * i + 15);
+                _sellVisual.Controls[i].Location = new Point(10, _sellVisual.Height / 15 * (i - 1) + 15);
             }
+        }
+
+        /// <summary>
+        /// Calcule le prix total de vente et l'affiche en fonction des produits ajoutés et de la quantité choisi.
+        /// </summary>
+        private void updateTotal()
+        {
+            decimal totalPrice = 0;
+
+            // Calcul tu prix total
+            _productsAdded.ForEach(p => totalPrice += p.Product.PRIXDEVENTECLIENT * p.QuantityToSell);
+
+            _total.Text = "Total : " + totalPrice + " €";
+            _total.Size = TextRenderer.MeasureText(_total.Text, _total.Font);
+            _total.Location = new Point(_sellVisual.Width - _total.Width - 2, _sellVisual.Height - _total.Height - 2);
         }
 
         #endregion

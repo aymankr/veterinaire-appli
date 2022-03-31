@@ -12,6 +12,7 @@ using Mauxnimale_CE2.ui.appointments;
 using Mauxnimale_CE2.ui.stats;
 using Mauxnimale_CE2.api.controllers;
 using Mauxnimale_CE2.ui.diseasesAndCares;
+using Mauxnimale_CE2.ui.clients;
 
 namespace Mauxnimale_CE2.ui
 {
@@ -20,7 +21,7 @@ namespace Mauxnimale_CE2.ui
         Header header;
         Footer footer;
 
-        UIButton employeesManagementBtn, manageMaladie, manageVentes, stats, manageConsultation, manageStock;
+        UIButton employeesManagementBtn, manageMaladie, manageVentes, stats, manageConsultation, manageStock, manageClients;
         Button compte;
         Label incEvent;
         TextBox events;
@@ -91,28 +92,32 @@ namespace Mauxnimale_CE2.ui
         public void generateButton()
         {
             manageStock = new UIButton(UIColor.DARKBLUE, "Gestion du stock", window.Width / 4);
-            manageStock.Location = new System.Drawing.Point(window.Width * 325 / 1000, window.Height * 225 / 1000);
+            manageStock.Location = new System.Drawing.Point(window.Width * 325 / 1000, window.Height * 125 / 1000);
             window.Controls.Add(manageStock);
 
             manageMaladie = new UIButton(UIColor.DARKBLUE, "Gestion des maladies", window.Width / 4);
-            manageMaladie.Location = new System.Drawing.Point(window.Width * 6 / 10, window.Height * 225 / 1000);
+            manageMaladie.Location = new System.Drawing.Point(window.Width * 6 / 10, window.Height * 125 / 1000);
             window.Controls.Add(manageMaladie);
 
             manageVentes = new UIButton(UIColor.DARKBLUE, "Gestion des ventes", window.Width / 4);
-            manageVentes.Location = new System.Drawing.Point(window.Width * 325 / 1000, window.Height * 425 / 1000);
+            manageVentes.Location = new System.Drawing.Point(window.Width * 325 / 1000, window.Height * 325 / 1000);
             window.Controls.Add(manageVentes);
 
             manageConsultation = new UIButton(UIColor.DARKBLUE, "Gestion des consultations", window.Width / 4);
-            manageConsultation.Location = new System.Drawing.Point(window.Width * 6 / 10, window.Height * 425 / 1000);
+            manageConsultation.Location = new System.Drawing.Point(window.Width * 6 / 10, window.Height * 325 / 1000);
             window.Controls.Add(manageConsultation);
 
-            if(!user.ASSISTANT){
+            manageClients = new UIButton(UIColor.DARKBLUE, "Gestion des consultations", window.Width / 4);
+            manageClients.Location = new System.Drawing.Point(window.Width * 465 / 1000, window.Height * 525 / 1000);
+            window.Controls.Add(manageClients);
+
+            if (!user.ASSISTANT){
                 employeesManagementBtn = new UIButton(UIColor.DARKBLUE, "Gestion des salariés", window.Width / 4);
-                employeesManagementBtn.Location = new System.Drawing.Point(window.Width * 325 / 1000, window.Height * 625 / 1000);
+                employeesManagementBtn.Location = new Point(window.Width * 325 / 1000, window.Height * 725 / 1000);
                 window.Controls.Add(employeesManagementBtn);
 
                 stats = new UIButton(UIColor.DARKBLUE, "Statistiques", window.Width / 4);
-                stats.Location = new System.Drawing.Point(window.Width * 6 / 10, window.Height * 625 / 1000);
+                stats.Location = new System.Drawing.Point(window.Width * 6 / 10, window.Height * 725 / 1000);
                 window.Controls.Add(stats);
 
                 employeesManagementBtn.Click += new EventHandler(onEmployeesManagementBtnClick);
@@ -131,9 +136,16 @@ namespace Mauxnimale_CE2.ui
             manageMaladie.Click += new EventHandler(manageMaladieClick);
             manageVentes.Click += new EventHandler(manageVentesClick);
             manageConsultation.Click += new EventHandler(manageConsultationClick);
+            manageClients.Click += new EventHandler(manageClientsClick);
         }
 
+
         #region eventHandler
+        private void manageClientsClick(object sender, EventArgs e)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceClient(window, user));
+        }
 
         protected void comptePaint(object sender, PaintEventArgs pe)
         {

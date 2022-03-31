@@ -28,5 +28,6 @@ namespace Mauxnimale_CE2.api.entities
         public virtual CLIENT CLIENT { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PRODUITVENDU> PRODUITVENDU { get; set; }
+
     }
 }

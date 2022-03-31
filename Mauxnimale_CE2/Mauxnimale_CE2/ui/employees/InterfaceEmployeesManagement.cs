@@ -15,13 +15,15 @@ namespace Mauxnimale_CE2.ui.employees
         private readonly Footer _footer;
         private UIRoundButton _homeBtn;
 
+        private Label _internshipLabel, _salaryLabel, _nameLabel, _surnameLabel;
+
         private SALARIE _selectedEmployee;
 
         private ComboBox _employeesList;
         private TextBox _lastName, _firstName, _salary;
         private DateTimePicker _internshipStart, _internshipEnd;
 
-        private UIButton _vacationManagementButton, _modifyInfosButton, createEmployee;
+        private UIButton _vacationManagementButton, _modifyInfosButton, _createEmployee, _deleteButton;
 
         public InterfaceEmployeesManagement(MainWindow window, SALARIE user) : base(window, user) 
         {
@@ -66,39 +68,112 @@ namespace Mauxnimale_CE2.ui.employees
             _modifyInfosButton.Click += new EventHandler(onModifyInfosClick);
             _modifyInfosButton.Enabled = false;
 
-            createEmployee = new UIButton(UIColor.ORANGE, "Créer un compte", window.Width / 4);
-            createEmployee.Location = new Point(_employeesList.Location.X + _employeesList.Width / 2 - _vacationManagementButton.Width / 2, window.Height * 5 / 10);
-            createEmployee.Click += new EventHandler(createEmployeeClick);
-            window.Controls.Add(createEmployee);
+            _createEmployee = new UIButton(UIColor.ORANGE, "Créer un compte", window.Width / 4);
+            _createEmployee.Location = new Point(_employeesList.Location.X + _employeesList.Width / 2 - _vacationManagementButton.Width / 2, window.Height * 5 / 10);
+            _createEmployee.Click += new EventHandler(createEmployeeClick);
+            window.Controls.Add(_createEmployee);
+        }
+
+        private void generateDeleteButton()
+        {
+            _deleteButton = new UIButton(UIColor.ORANGE, "Supprimer employé", window.Width / 6);
+            _deleteButton.Name = "DeleteButton";
+            _deleteButton.Location = new Point(window.Width * 3 / 8, window.Height  * 6 / 8);
+            _deleteButton.Click += new EventHandler(deleteButtonClick);
+        }
+
+
+        public override void load()
+        {
+            _header.load("Gestion des salariés");
+            _footer.load();
+
+            generateHomeButton();
+            generateComboBox();
+            generateVacationButton();
+            generateDeleteButton();
+            generateForm();
+            generateLabel();
+            generateModifyInfosButton();
+            _selectedEmployee = null;
+            setFormEnabled(false);
+
+            window.Controls.Add(_homeBtn);
+            window.Controls.Add(_employeesList);
+            window.Controls.Add(_vacationManagementButton);
+            window.Controls.Add(_modifyInfosButton);
+            window.Controls.Add(_lastName);
+            window.Controls.Add(_firstName);
+            window.Controls.Add(_salary);
+            window.Controls.Add(_internshipStart);
+            window.Controls.Add(_internshipEnd);
+            window.Controls.Add(_internshipLabel);
+            window.Controls.Add(_salaryLabel);
+            window.Controls.Add(_nameLabel);
+            window.Controls.Add(_surnameLabel);
+            window.Controls.Add(_deleteButton);
+        }
+
+        private void generateLabel()
+        {
+            _internshipLabel = new Label();
+            _internshipLabel.Size = new Size(window.Width / 5, window.Height * 8 / 100);
+            _internshipLabel.Location = new Point(window.Width / 2, window.Height * 11 / 20);
+            _internshipLabel.Font = new Font("Poppins", window.Height * 2 / 100);
+            _internshipLabel.ForeColor = UIColor.DARKBLUE;
+            _internshipLabel.Text = "Début et fin du stage";
+
+            _salaryLabel = new Label();
+            _salaryLabel.Size = new Size(window.Width / 5, window.Height * 8 / 100);
+            _salaryLabel.Location = new Point(window.Width / 2, window.Height * 8 / 20);
+            _salaryLabel.Font = new Font("Poppins", window.Height * 2 / 100);
+            _salaryLabel.ForeColor = UIColor.DARKBLUE;
+            _salaryLabel.Text = "Salaire";
+
+            _nameLabel = new Label();
+            _nameLabel.Size = new Size(window.Width / 5, window.Height * 8 / 100);
+            _nameLabel.Location = new Point(window.Width / 2, window.Height * 5 / 20);
+            _nameLabel.Font = new Font("Poppins", window.Height * 2 / 100);
+            _nameLabel.ForeColor = UIColor.DARKBLUE;
+            _nameLabel.Text = "Nom";
+
+            _surnameLabel = new Label();
+            _surnameLabel.Size = new Size(window.Width / 5, window.Height * 8 / 100);
+            _surnameLabel.Location = new Point(_firstName.Location.X, window.Height * 5 / 20);
+            _surnameLabel.Font = new Font("Poppins", window.Height * 2 / 100);
+            _surnameLabel.ForeColor = UIColor.DARKBLUE;
+            _surnameLabel.Text = "Prénom";
+
+
         }
 
         private void generateForm()
         {
             _lastName = new TextBox();
             _lastName.Size = new Size(window.Width / 5, 0);
-            _lastName.Location = new Point(window.Width / 2, window.Height/4);
+            _lastName.Location = new Point(window.Width / 2, window.Height * 6 / 20);
             _lastName.Font = new Font("Poppins", window.Height * 3 / 100);
             _lastName.Enabled = false;
 
             _firstName = new TextBox();
             _firstName.Size = new Size(window.Width / 5, 0);
-            _firstName.Location = new Point(_lastName.Location.X + _lastName.Width + 10, window.Height / 4);
+            _firstName.Location = new Point(_lastName.Location.X + _lastName.Width + 10, window.Height * 6 / 20);
             _firstName.Font = new Font("Poppins", window.Height * 3 / 100);
             _firstName.Enabled = false;
 
             _salary = new TextBox();
             _salary.Size = new Size(window.Width / 5 * 2 + 10, 0);
-            _salary.Location = new Point(window.Width / 2, window.Height / 3);
+            _salary.Location = new Point(window.Width / 2, window.Height * 9 / 20);
             _salary.Font = new Font("Poppins", window.Height * 3 / 100);
 
             _internshipStart = new DateTimePicker();
             _internshipStart.Size = new Size(window.Width / 5, window.Height * 8 / 100);
-            _internshipStart.Location = new Point(window.Width / 2, window.Height / 2);
+            _internshipStart.Location = new Point(window.Width / 2, window.Height * 12 / 20);
             _internshipStart.Font = new Font("Poppins", window.Height * 2 / 100);
 
             _internshipEnd = new DateTimePicker();
             _internshipEnd.Size = new Size(window.Width / 5, window.Height * 8 / 100);
-            _internshipEnd.Location = new Point(_internshipStart.Location.X + _internshipStart.Width + 10, window.Height / 2);
+            _internshipEnd.Location = new Point(_internshipStart.Location.X + _internshipStart.Width + 10, window.Height * 12 / 20);
             _internshipEnd.Font = new Font("Poppins", window.Height * 2 / 100);
         }
 
@@ -121,6 +196,12 @@ namespace Mauxnimale_CE2.ui.employees
         {
             window.Controls.Clear();
             window.switchInterface(new InterfaceVacationManagement(window, user));
+        }
+        private void deleteButtonClick(object sender, EventArgs e)
+        {
+            UserController.deleteEmployee(_selectedEmployee);
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceEmployeesManagement(window, user));
         }
 
         private void onEmployeeChosen(object sender, EventArgs e)
@@ -187,6 +268,7 @@ namespace Mauxnimale_CE2.ui.employees
         /// <param name="enabled">true pour autoriser, false pour interdire.</param>
         private void setFormEnabled(bool enabled)
         {
+            _deleteButton.Enabled = enabled;
             _salary.Enabled = enabled;
             _internshipStart.Enabled = enabled;
             _internshipEnd.Enabled = enabled;
@@ -281,28 +363,5 @@ namespace Mauxnimale_CE2.ui.employees
 
         #endregion
 
-        public override void load()
-        {
-            _header.load("Gestion des salariés");
-            _footer.load();
-
-            generateHomeButton();
-            generateComboBox();
-            generateVacationButton();
-            generateForm();
-            generateModifyInfosButton();
-            _selectedEmployee = null;
-            setFormEnabled(false);
-
-            window.Controls.Add(_homeBtn);
-            window.Controls.Add(_employeesList);
-            window.Controls.Add(_vacationManagementButton);
-            window.Controls.Add(_modifyInfosButton);
-            window.Controls.Add(_lastName);
-            window.Controls.Add(_firstName);
-            window.Controls.Add(_salary);
-            window.Controls.Add(_internshipStart);
-            window.Controls.Add(_internshipEnd);
-        }
     }
 }

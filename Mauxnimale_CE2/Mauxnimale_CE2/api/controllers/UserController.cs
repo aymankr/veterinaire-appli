@@ -197,5 +197,13 @@ namespace Mauxnimale_CE2.api.controllers
 			DbContext.get().SaveChanges();
 			Console.WriteLine("User with login: " + user.LOGIN + " has connected for the first time.");
 		}
+
+
+		public static void deleteEmployee(SALARIE employee)
+        {
+			employee.JOURNEE_SALARIE.Clear();
+			DbContext.get().SALARIE.Remove(employee);
+			DbContext.get().SaveChanges();	
+        }
 	}
 }

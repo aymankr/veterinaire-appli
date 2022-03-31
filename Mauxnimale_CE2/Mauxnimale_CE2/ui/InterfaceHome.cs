@@ -11,6 +11,7 @@ using Mauxnimale_CE2.ui.stocks;
 using Mauxnimale_CE2.ui.appointments;
 using Mauxnimale_CE2.ui.stats;
 using Mauxnimale_CE2.api.controllers;
+using Mauxnimale_CE2.ui.diseasesAndCares;
 
 namespace Mauxnimale_CE2.ui
 {
@@ -55,7 +56,7 @@ namespace Mauxnimale_CE2.ui
         {
             events = new TextBox();
             events.Text = "";
-            events.Font = new System.Drawing.Font("Poppins", window.Height * 2 / 100);
+            events.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 200);
             events.ForeColor = Color.Black;
             events.BackColor = Color.White;
             events.ReadOnly = true;
@@ -70,12 +71,12 @@ namespace Mauxnimale_CE2.ui
         private void setEvents()
         {
             JOURNEE today = DayController.getDay(DateTime.Today);
-            events.AppendText("Aujourd'hui" + today.ToString() + Environment.NewLine);
+            events.AppendText(today + Environment.NewLine);
             foreach(JOURNEE_SALARIE js in today.JOURNEE_SALARIE)
             {
                 if (js.CONGE)
                 {
-                    events.AppendText(js.SALARIE + "est absent.e" + Environment.NewLine);
+                    events.AppendText(js.SALARIE + " est absent.e aujourd'hui" + Environment.NewLine);
                 }
             }
             events.AppendText("Vos Rendez-Vous :" + Environment.NewLine);
@@ -169,7 +170,7 @@ namespace Mauxnimale_CE2.ui
         public void manageMaladieClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            //form.changerClasse(new Interface...());
+            window.switchInterface(new InterfaceDiseaseAndCares(window, user));
         }
 
         public void manageVentesClick(object sender, EventArgs e)

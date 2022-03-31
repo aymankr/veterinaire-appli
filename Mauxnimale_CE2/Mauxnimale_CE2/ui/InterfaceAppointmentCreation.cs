@@ -330,6 +330,8 @@ namespace Mauxnimale_CE2.ui
 
         private void AnimalComboBoxFocus(object sender, EventArgs e)
         {
+            animalComboBox.Items.Clear();
+
             if (animalComboBox.Text.Length == 0)
             {
                 List<ANIMAL> animaux = ClientController.ListOfAnimal(selectedClient);

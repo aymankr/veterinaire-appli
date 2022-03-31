@@ -16,7 +16,7 @@ namespace Mauxnimale_CE2.ui
         Header header;
         Footer footer;
 
-        UIButton newClient, newAnimal, createConsult;
+        UIButton createConsult;
         UIRoundButton back, medsPlus, medsMinus, carePlus, careMinus;
 
         Label medsLabel, prescriptionLabel, diagnosticLabel, careLabel, descriptionLabel;
@@ -26,11 +26,16 @@ namespace Mauxnimale_CE2.ui
 
 
 
-        string prescription, diagnostic;
-        PRODUIT selectedProduit;
         RENDEZ_VOUS rdv;
-        List<PRODUITLIES> products;
         ANIMAL animal;
+        string prescription, diagnostic;
+
+        Dictionary<PRODUIT,int> products = new Dictionary<PRODUIT, int>();
+        List<SOIN> cares = new List<SOIN>();
+        PRODUIT selectedProduct;
+        SOIN selectedCare;
+        ORDONNANCE ordonnance;
+        bool modif;
 
 
         public InterfacePrescriptionCreation(MainWindow window, SALARIE user, RENDEZ_VOUS rdv, ANIMAL animal) : base(window, user)
@@ -39,7 +44,17 @@ namespace Mauxnimale_CE2.ui
             footer = new Footer(window, base.user);
             this.rdv = rdv;
             this.animal = animal;
+            modif = false;
+        }
 
+        public InterfacePrescriptionCreation(MainWindow window, SALARIE user, ORDONNANCE ordonnance) : base(window, user)
+        {
+            header = new Header(window);
+            footer = new Footer(window, base.user);
+            this.rdv = ordonnance.RENDEZ_VOUS;
+            this.animal = ordonnance.ANIMAL;
+            this.ordonnance = ordonnance;
+            modif = true;
         }
 
 
@@ -51,6 +66,7 @@ namespace Mauxnimale_CE2.ui
             generateButton();
             generateLabels();
             generateBox();
+            setDescription();
         }
 
 
@@ -107,6 +123,7 @@ namespace Mauxnimale_CE2.ui
             descriptionLabel.Location = new Point(window.Width * 490 / 1000, window.Height * 7 / 40);
             #endregion
 
+
             window.Controls.Add(medsLabel);
             window.Controls.Add(prescriptionLabel);
             window.Controls.Add(diagnosticLabel);
@@ -122,6 +139,10 @@ namespace Mauxnimale_CE2.ui
             careComboBox.Location = new Point(window.Width * 50 / 1000, window.Height * 12 / 20);
             careComboBox.TextChanged += new EventHandler(careComboSearch);
             careComboBox.SelectedIndexChanged += new EventHandler(careComboSearch);
+            foreach (SOIN soin in CareAndDiseaseController.AllCares())
+            {
+                careComboBox.Items.Add(soin);
+            }
             #endregion
 
             #region medsBox
@@ -131,22 +152,10 @@ namespace Mauxnimale_CE2.ui
             medsComboBox.TextChanged += new EventHandler(MedsComboSearch);
             medsComboBox.GotFocus += new EventHandler(MedsComboSearch);
             medsComboBox.SelectedIndexChanged += new EventHandler(MedsComboSearch);
-            #endregion
-
-            #region descriptionBox
-
-            descriptionTextBox = new TextBox();
-            descriptionTextBox.ReadOnly = true;
-            descriptionTextBox.Text = "";
-            descriptionTextBox.Font = new Font("Poppins", window.Height * 1 / 100);
-            descriptionTextBox.ForeColor = Color.Black;
-            descriptionTextBox.BackColor = Color.White;
-            descriptionTextBox.Multiline = true;
-            descriptionTextBox.Size = new Size(window.Width * 45 / 100, window.Height * 60 / 100);
-            descriptionTextBox.Location = new Point(window.Width * 490 / 1000, window.Height * 9 / 40);
-            descriptionTextBox.TextChanged += new EventHandler(DescriptionTexBoxChanged);
-            
-
+            foreach(PRODUIT med in ProductController.getProducts())
+            {
+                medsComboBox.Items.Add(med);
+            }
             #endregion
 
             #region PrescriptonBox
@@ -165,39 +174,84 @@ namespace Mauxnimale_CE2.ui
             diagnostic = "";
             #endregion
 
+            #region descriptionBox
+
+            descriptionTextBox = new TextBox();
+            descriptionTextBox.ReadOnly = true;
+            descriptionTextBox.Text = "";
+            descriptionTextBox.Font = new Font("Poppins", window.Height * 1 / 100);
+            descriptionTextBox.ForeColor = Color.Black;
+            descriptionTextBox.BackColor = Color.White;
+            descriptionTextBox.Multiline = true;
+            descriptionTextBox.Size = new Size(window.Width * 45 / 100, window.Height * 60 / 100);
+            descriptionTextBox.Location = new Point(window.Width * 490 / 1000, window.Height * 9 / 40);
+            if (modif)
+            {
+                prescription = ordonnance.PRESCRIPTION;
+                prescriptionTextBox.Text = prescription;
+                diagnostic = ordonnance.DIAGNOSTIQUE;
+                diagTextBox.Text = diagnostic;
+                foreach(LIEN_SOIN linkedCare in ordonnance.LIEN_SOIN)
+                {
+                    cares.Add(linkedCare.SOIN);
+                    Console.WriteLine(linkedCare.SOIN);
+                }
+
+                foreach(PRODUITLIES linkedProduct in ordonnance.PRODUITLIES)
+                {
+                    products[linkedProduct.PRODUIT] = linkedProduct.QUANTITEPRODUITS;
+                    Console.WriteLine(linkedProduct.PRODUIT + "   "+ linkedProduct.QUANTITEPRODUITS);
+                }
+            }
+            
+
+            #endregion
+
+
 
             window.Controls.Add(careComboBox);
             window.Controls.Add(medsComboBox);
             window.Controls.Add(descriptionTextBox);
             window.Controls.Add(prescriptionTextBox);
             window.Controls.Add(diagTextBox);
-            
-            setDescription();
         }
 
         private void setDescription()
         {
             descriptionTextBox.Clear();
-            
-            descriptionTextBox.AppendText("Date : " + rdv.JOURNEE + Environment.NewLine);
-            descriptionTextBox.AppendText("Horraire : " + rdv.HEUREDEBUT + " à " + rdv.HEUREFIN + Environment.NewLine);
+
+            descriptionTextBox.AppendText("Date : " + rdv.JOURNEE.DATE.Day+"/"+ rdv.JOURNEE.DATE.Month + "/" + rdv.JOURNEE.DATE.Year +  Environment.NewLine);
+
+            descriptionTextBox.AppendText("Horraire : " + rdv.HEUREDEBUT.ToString() + " à " + rdv.HEUREFIN.ToString() + Environment.NewLine);
             descriptionTextBox.AppendText("Client : " + rdv.CLIENT + Environment.NewLine);
             descriptionTextBox.AppendText("Animal : " + animal + Environment.NewLine);
+            descriptionTextBox.AppendText("Soins effectués : " + Environment.NewLine);
+            foreach(SOIN care in cares)
+            {
+                descriptionTextBox.AppendText("    " + care + Environment.NewLine);
+            }
             descriptionTextBox.AppendText("Diagnostique : " + diagnostic + Environment.NewLine);
             descriptionTextBox.AppendText("Prescription : " + prescription + Environment.NewLine);
             descriptionTextBox.AppendText("Médicaments prescrits : " + Environment.NewLine);
-            /*foreach (PRODUITLIES product in products)
+            foreach (KeyValuePair<PRODUIT,int> product  in products)
             {
-                descriptionTextBox.AppendText("    " + product.PRODUIT.ToString() + " x " + product.QUANTITEPRODUITS + Environment.NewLine);
-            }*/
-            
+                descriptionTextBox.AppendText("    " + product.Key.NOMPRODUIT + " x " + product.Value + Environment.NewLine);
+            }
+
         }
 
         public void generateButton()
         {
-            createConsult = new UIButton(UIColor.DARKBLUE, "Créer Consultation", window.Width * 3 / 20);
+            if (modif)
+            {
+                createConsult = new UIButton(UIColor.DARKBLUE, "Modifier Ordonnance", window.Width * 3 / 20);
+            }
+            else
+            {
+                createConsult = new UIButton(UIColor.DARKBLUE, "Créer Ordonnance", window.Width * 3 / 20);
+            }
             createConsult.Location = new Point(window.Width * 2 / 15, window.Height * 14 / 20);
-            createConsult.Enabled = false;
+            createConsult.Click += new EventHandler(createConsultClick);
             window.Controls.Add(createConsult);
 
             #region RoudButtons
@@ -229,9 +283,7 @@ namespace Mauxnimale_CE2.ui
             #endregion
 
 
-            createConsult.Click += new EventHandler(createConsultClick);
         }
-
 
         #endregion
 
@@ -243,28 +295,70 @@ namespace Mauxnimale_CE2.ui
         private void diagTextBoxChanged(object sender, EventArgs e)
         {
             diagnostic = diagTextBox.Text;
+            setDescription();
         }
 
         private void prescriptionTextBoxChanged(object sender, EventArgs e)
         {
+            Console.WriteLine(prescription);
             prescription = prescriptionTextBox.Text;
-            setDescription();
-        }
-
-        private void DescriptionTexBoxChanged(object sender, EventArgs e)
-        {
-            diagnostic = diagTextBox.Text;
             setDescription();
         }
 
         private void MedsComboSearch(object sender, EventArgs e)
         {
-
+            
+            selectedProduct = (PRODUIT)medsComboBox.SelectedItem;
+            
+            if(selectedProduct == null)
+            {
+                medsComboBox.Items.Clear();
+            }
+            
+            if (medsComboBox.Text.Length == 0)
+            {
+                ICollection<PRODUIT> produits = ProductController.getProducts();
+                foreach(PRODUIT product in produits)
+                {
+                    medsComboBox.Items.Add(product);
+                }
+            }
+            else
+            {
+                List<PRODUIT> produits = ProductController.getByName(medsComboBox.Text);
+                foreach (PRODUIT product in produits)
+                {
+                    medsComboBox.Items.Add(product);
+                }
+                medsComboBox.Select(medsComboBox.Text.Length, 0);
+            }
+             
         }
 
         private void careComboSearch(object sender, EventArgs e)
         {
-            
+            selectedCare = (SOIN)careComboBox.SelectedItem;
+            if (selectedCare == null)
+            {
+                careComboBox.Items.Clear();
+
+
+                if (careComboBox.Text.Length == 0)
+                {
+                    foreach (SOIN care in CareAndDiseaseController.AllCares())
+                    {
+                        careComboBox.Items.Add(care);
+                    }
+                }
+                else
+                {
+                    foreach (SOIN care in CareAndDiseaseController.SearchCaresByNames(careComboBox.Text))
+                    {
+                        careComboBox.Items.Add(care);
+                    }
+                }
+                careComboBox.Select(careComboBox.Text.Length, 0);
+            }
         }
 
 
@@ -274,22 +368,59 @@ namespace Mauxnimale_CE2.ui
 
         private void careMinusClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            if (selectedCare != null)
+            {
+                if (cares.Contains(selectedCare))
+                {
+                    cares.Remove(selectedCare);
+                }
+                setDescription();
+            }
         }
 
         private void carePlusClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            if (selectedCare != null)
+            {
+                if (!cares.Contains(selectedCare))
+                {
+                    cares.Add(selectedCare);
+                }
+                setDescription();
+            }
         }
 
         private void medsMinusClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            if (selectedProduct != null)
+            {
+                if (products.ContainsKey(selectedProduct))
+                {
+                    products[selectedProduct]--;
+                    if (products[selectedProduct] <= 0)
+                    {
+                        products.Remove(selectedProduct);
+                    }
+                }
+                setDescription();
+            }
         }
 
         private void medsPlusClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            if (selectedProduct != null)
+            {
+                if (products.ContainsKey(selectedProduct))
+                {
+                    products[selectedProduct]++;
+
+                }
+                else
+                {
+                    products[selectedProduct] = 1;
+                }
+                setDescription();
+            }
         }
 
         public void backClick(object sender, EventArgs e)
@@ -300,7 +431,15 @@ namespace Mauxnimale_CE2.ui
 
         public void createConsultClick(object sender, EventArgs e)
         {
-
+            if (modif)
+            {
+                Console.WriteLine(products.Keys.ToString(), cares, prescription, diagnostic);
+                PrescriptionController.modifPrescription(ordonnance, products, cares, prescription, diagnostic);
+            }
+            else
+            {
+                PrescriptionController.addAPrescription(animal, products, cares, rdv, prescription, diagnostic);
+            }
             window.Controls.Clear();
             window.switchInterface(new InterfaceAppointmentManagment(window, user));
         }

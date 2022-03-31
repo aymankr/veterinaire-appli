@@ -103,5 +103,13 @@ namespace Mauxnimale_CE2.api.controllers
             DbContext.get().PRODUIT.Remove(p);
             DbContext.get().SaveChanges();
         }
+
+        internal static List<PRODUIT> getByName(string name)
+        {
+            var products = (from p in DbContext.get().PRODUIT
+                                      where p.NOMPRODUIT.StartsWith(name)
+                                      select p).ToList();
+            return products.ToList();
+        }
     }
 }

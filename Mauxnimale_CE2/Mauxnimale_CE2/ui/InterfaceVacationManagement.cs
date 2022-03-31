@@ -56,8 +56,9 @@ namespace Mauxnimale_CE2.ui
         private void generateEmployeesList()
         {
             _employeesList = new EmployeesComboBox();
-            _employeesList.Size = new Size(window.Width / 3, 100);
-            _employeesList.Location = new Point(50, 200);
+            _employeesList.Size = new Size(window.Width / 3, window.Height / 10);
+            _employeesList.Location = new Point(50, window.Height / 5);
+            _employeesList.Font = new Font("Poppins", window.Height * 3 / 100);
 
             _employeesList.SelectedValueChanged += onEmployeeChosen;
         }

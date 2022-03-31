@@ -434,11 +434,11 @@ namespace Mauxnimale_CE2.ui
             if (modif)
             {
                 Console.WriteLine(products.Keys.ToString(), cares, prescription, diagnostic);
-                PrescriptionController.modifPrescription(ordonnance, products, cares, prescription, diagnostic);
+                PrescriptionController.ModifPrescription(ordonnance, products, cares, prescription, diagnostic);
             }
             else
             {
-                PrescriptionController.addAPrescription(animal, products, cares, rdv, prescription, diagnostic);
+                PrescriptionController.AddAPrescription(animal, products, cares, rdv, prescription, diagnostic);
             }
             window.Controls.Clear();
             window.switchInterface(new InterfaceAppointmentManagment(window, user));

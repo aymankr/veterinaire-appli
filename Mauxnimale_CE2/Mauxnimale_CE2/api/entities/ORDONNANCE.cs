@@ -30,8 +30,8 @@ namespace Mauxnimale_CE2.api.entities
         public virtual ANIMAL ANIMAL { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PRODUITLIES> PRODUITLIES { get; set; }
+        public virtual RENDEZ_VOUS RENDEZ_VOUS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LIEN_SOIN> LIEN_SOIN { get; set; }
-        public virtual RENDEZ_VOUS RENDEZ_VOUS { get; set; }
     }
 }

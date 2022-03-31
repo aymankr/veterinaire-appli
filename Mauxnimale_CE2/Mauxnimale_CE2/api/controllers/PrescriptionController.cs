@@ -13,7 +13,7 @@ namespace Mauxnimale_CE2.api.controllers
         /// </summary>
         /// <param name="animal"></param>
         /// <param name="productsWithQuantities"></param>
-        public static void addAPrescription(ANIMAL animal, Dictionary<PRODUIT, int> productsWithQuantities, List<SOIN> cares, RENDEZ_VOUS rdv, string orders, string diagnostique)
+        public static void AddAPrescription(ANIMAL animal, Dictionary<PRODUIT, int> productsWithQuantities, List<SOIN> cares, RENDEZ_VOUS rdv, string orders, string diagnostique)
         {
             ORDONNANCE prescription = new ORDONNANCE();
             prescription.ANIMAL = animal;
@@ -44,18 +44,12 @@ namespace Mauxnimale_CE2.api.controllers
             DbContext.get().SaveChanges();
         }
 
-        public static void modifPrescription(ORDONNANCE prescription, Dictionary<PRODUIT, int> productsWithQuantities, List<SOIN> cares, string orders, string diagnostique)
+        public static void ModifPrescription(ORDONNANCE prescription, Dictionary<PRODUIT, int> productsWithQuantities, List<SOIN> cares, string orders, string diagnostique)
         {
-            ORDONNANCE newPrescription = new ORDONNANCE()
-            {
-                ANIMAL = prescription.ANIMAL,
-                RENDEZ_VOUS = prescription.RENDEZ_VOUS,
-            };
-
+            ANIMAL animal = prescription.ANIMAL;
+            RENDEZ_VOUS appointement = prescription.RENDEZ_VOUS;
             DeletePrescription(prescription);
-            
-            addAPrescription(newPrescription.ANIMAL, productsWithQuantities,cares, prescription.RENDEZ_VOUS, orders, diagnostique);
-
+            AddAPrescription(animal, productsWithQuantities, cares, appointement, orders, diagnostique);
         }
 
         public static ORDONNANCE GetORDONNANCEFromRDVAndAnimal(RENDEZ_VOUS rdv, ANIMAL animal)

@@ -164,6 +164,8 @@
     <Compile Include="ui\components\StockProduct.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ui\stats\InterfaceStatsClients.cs" />
+    <Compile Include="ui\stats\InterfaceStatsProducts.cs" />
     <Compile Include="ui\stocks\InterfaceNewProductType.cs" />
     <Compile Include="ui\components\EmployeesComboBox.cs">
       <SubType>Component</SubType>

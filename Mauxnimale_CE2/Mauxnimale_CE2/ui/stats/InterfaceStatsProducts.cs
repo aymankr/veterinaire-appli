@@ -91,7 +91,7 @@ namespace Mauxnimale_CE2.ui
                 TextAlign = ContentAlignment.MiddleCenter,
                 Font = new Font("Poppins", window.Height * 2 / 100),
                 ForeColor = UIColor.DARKBLUE,
-                Location = new Point(window.Width * 5/ 15, window.Height * 5 / 20),
+                Location = new Point(window.Width * 5 / 15, window.Height * 5 / 20),
                 Size = new Size(window.Width * 3 / 10, window.Height * 1 / 10)
             };
             window.Controls.Add(secondProductLabel);
@@ -99,7 +99,7 @@ namespace Mauxnimale_CE2.ui
             totalSecondProduct = new TextBox()
             {
                 Font = new Font("Poppins", window.Height * 4 / 100),
-                Location = new Point(window.Width * 4/ 10, window.Height * 7 / 20),
+                Location = new Point(window.Width * 4 / 10, window.Height * 7 / 20),
                 Size = new Size(window.Width * 2 / 10, window.Height * 2 / 20),
                 Enabled = false,
                 TextAlign = HorizontalAlignment.Center,
@@ -135,7 +135,7 @@ namespace Mauxnimale_CE2.ui
         /// </summary>
         public void GenerateValueSellTotal()
         {
-            
+
             TYPE_PRODUIT[] types = ProductController.getTypeProductOrderByStock();
             firstProductLabel.Text += types[0];
             int stock = 0;
@@ -169,7 +169,7 @@ namespace Mauxnimale_CE2.ui
         private string CalculateStock()
         {
             int stock = 0;
-            foreach(PRODUIT p in ProductController.getProducts())
+            foreach (PRODUIT p in ProductController.getProducts(false))
             {
                 stock += p.QUANTITEENSTOCK;
             }

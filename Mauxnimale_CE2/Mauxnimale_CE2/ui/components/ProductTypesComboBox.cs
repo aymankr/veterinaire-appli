@@ -21,7 +21,7 @@ namespace Mauxnimale_CE2.ui.components
             types.Columns.Add("name", typeof(string));
 
             ProductController.getTypes().ForEach(type => types.Rows.Add(type.IDTYPE, type.NOMTYPE));
-
+            
             DataRow emptyRow = types.NewRow();
             emptyRow["id"] = -1;
             emptyRow["name"] = "-- Tout --";

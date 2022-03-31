@@ -25,7 +25,7 @@ namespace Mauxnimale_CE2.ui
         CLIENT _currentClient;
 
         private Label _sellVisualLabel;
-        private GroupBox _sellVisual;
+        private Panel _sellVisual;
         private List<SellProduct> _productsAdded;
         private Label _total;
 
@@ -63,7 +63,7 @@ namespace Mauxnimale_CE2.ui
             _products.CheckOnClick = true;
 
             // Données
-            ProductController.getProducts().ForEach(product => _products.Items.Add(product));
+            ProductController.getProducts(true).ForEach(product => _products.Items.Add(product));
 
             // Evénements
             _products.ItemCheck += onProductCheckedChange;
@@ -116,9 +116,11 @@ namespace Mauxnimale_CE2.ui
         private void generateSellVisual()
         {
             // Taille & position
-            _sellVisual = new GroupBox();
+            _sellVisual = new Panel();
+            _sellVisual.AutoScroll = true;
             _sellVisual.Size = new Size(window.Width / 4, window.Height / 2);
             _sellVisual.Location = new Point(_clients.Right + window.Width / 20, window.Height / 4);
+            _sellVisual.BorderStyle = BorderStyle.FixedSingle;
         }
 
         private void generateSellTotal()
@@ -222,16 +224,9 @@ namespace Mauxnimale_CE2.ui
             if (confirmed == DialogResult.Yes)
             {
                 // Enlève les produits vendus du stock
-                _productsAdded.ForEach(p => ProductController.setProductQuantity(p.Product, -p.QuantityToSell));
+                _productsAdded.ForEach(p => ProductController.setProductQuantity(p.Product, p.Product.QUANTITEENSTOCK - p.QuantityToSell));
                 _products.Items.Clear();
-                ProductController.getProducts().ForEach(product => _products.Items.Add(product));
-
-                // Demander la génération d'une facture
-                confirmed = MessageBox.Show("Les produits vendus ont été retirés du stock avec succès.\nVoulez vous générer une facture ?", "Demande de confirmation", MessageBoxButtons.YesNo);
-                if (confirmed == DialogResult.Yes)
-                {
-                    Console.WriteLine("Générer la facture");
-                }
+                ProductController.getProducts(true).ForEach(product => _products.Items.Add(product));
 
                 // Réinitialiser la fenêtre
                 window.Controls.Clear();
@@ -314,7 +309,7 @@ namespace Mauxnimale_CE2.ui
                 }
                 else
                 {
-                    ProductController.getProducts().ForEach(product => _products.Items.Add(product));
+                    ProductController.getProducts(true).ForEach(product => _products.Items.Add(product));
                 }
             }
             else
@@ -322,11 +317,11 @@ namespace Mauxnimale_CE2.ui
                 if ((int)_productsType.SelectedValue != -1)
                 {
                     TYPE_PRODUIT currentType = ProductController.getTypeById((int)_productsType.SelectedValue);
-                    ProductController.getProductsByNameAndType(_productsNameFilter.Text, currentType).ForEach(product => _products.Items.Add(product));
+                    ProductController.getProductsByNameAndType(_productsNameFilter.Text, currentType, true).ForEach(product => _products.Items.Add(product));
                 }
                 else
                 {
-                    ProductController.getProductsByName(_productsNameFilter.Text).ForEach(product => _products.Items.Add(product));
+                    ProductController.getProductsByName(_productsNameFilter.Text, true).ForEach(product => _products.Items.Add(product));
                 }
             }
         }

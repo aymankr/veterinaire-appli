@@ -176,7 +176,7 @@ namespace Mauxnimale_CE2.ui
         public void manageVentesClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            //form.changerClasse(new Interface...());
+            window.switchInterface(new InterfaceSell(window, user));
         }
 
         public void manageConsultationClick(object sender, EventArgs e)

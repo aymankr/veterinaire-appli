@@ -6,6 +6,7 @@ using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.api.controllers;
 using Mauxnimale_CE2.ui.appointments;
+using Mauxnimale_CE2.api.controllers.utils;
 
 namespace Mauxnimale_CE2.ui.clients
 {
@@ -145,7 +146,7 @@ namespace Mauxnimale_CE2.ui.clients
         {
             if (surnameBox.Text.Length != 0 && nameBox.Text.Length != 0 && numberBox.Text.Length != 0 && numberBox.Text.Length == 10)
             {
-                ClientController.RegisterClient(nameBox.Text.ToUpper(), NormalizeSurname(), numberBox.Text);
+                ClientController.RegisterClient(nameBox.Text.ToUpper(), InputVerification.capitalizeText(surnameBox.Text), numberBox.Text);
                 MessageBox.Show("Le client " + nameBox.Text + " " + surnameBox.Text + " à bien été ajouté à la base avec le numéro de téléphone " + numberBox.Text,
                     "Validation d'ajout",
                     MessageBoxButtons.OK,
@@ -178,38 +179,9 @@ namespace Mauxnimale_CE2.ui.clients
         }
 
         /// <summary>
-        /// Méthode permettant de normaliser le prénom du nouveau client.
-        /// C'est à dire première lettre en majuscule et le reste en minuscule.
-        /// </summary>
-        /// <returns>Le prénom normalisé</returns>
-        private string NormalizeSurname()
-        {
-            char[] surnameLetter = surnameBox.Text.ToCharArray();
-            string surnameWithCapital = "";
-            string letter;
-            bool firstLetter = true;
-            foreach (char c in surnameLetter)
-            {
-                if (firstLetter)
-                {
-                    letter = c.ToString().ToUpper();
-                    firstLetter = false;
-                }
-                else
-                {
-                    letter = c.ToString().ToLower();
-                }
-                surnameWithCapital += letter;
-            }
-            return surnameWithCapital;
-        }
-
-        /// <summary>
         /// Méthode répondant à l'évènement de la perte de focus des TextBox.
         /// Si elle est vide on replace le text initial en gris.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void LostFocus(object sender, EventArgs e)
         {
 

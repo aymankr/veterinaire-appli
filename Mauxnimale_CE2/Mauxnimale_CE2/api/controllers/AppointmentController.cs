@@ -35,7 +35,6 @@ namespace Mauxnimale_CE2.api.controllers
         {
             // current appointment is the selected item
             currentAppointment.ANIMAL.Clear();
-            currentAppointment.ORDONNANCE.Clear();
             DbContext.get().RENDEZ_VOUS.Remove(currentAppointment);
             DbContext.get().SaveChanges();
         }
@@ -90,21 +89,9 @@ namespace Mauxnimale_CE2.api.controllers
             DbContext.get().SaveChanges();
         }
 
-        public static List<RENDEZ_VOUS> getAllRDV()
-        {            
-            return DbContext.get().RENDEZ_VOUS.ToList();
-        }
-
-        public static void AddTypeRDV(string typeName)
+        internal static List<RENDEZ_VOUS> AllAppointment()
         {
-            TYPE_RDV type = new TYPE_RDV
-            {
-                NOMTYPE = typeName,
-                MONTANT = 0
-            };
-            DbContext.get().TYPE_RDV.Add(type);
-            DbContext.get().SaveChanges();
-            
+            return DbContext.get().RENDEZ_VOUS.ToList();
         }
     }
 }

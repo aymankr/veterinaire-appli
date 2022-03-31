@@ -34,5 +34,22 @@ namespace Mauxnimale_CE2.api.controllers
             DbContext.get().FACTURE_PRODUIT.Find(invoice.IDFACTURE).MONTANT = totalPrice;
             DbContext.get().SaveChanges();
         }
+
+        /// <summary>
+        /// Permet de récupérer toutes les factures de la bases.
+        /// </summary>
+        /// <returns></returns>
+        public static List<FACTURE_PRODUIT> allInvoices()
+        {
+            List<FACTURE_PRODUIT> allInvoices = new List<FACTURE_PRODUIT>();
+            foreach (CLIENT c in DbContext.get().CLIENT)
+            {
+                foreach (FACTURE_PRODUIT invoice in c.FACTURE_PRODUIT)
+                {
+                    allInvoices.Add(invoice);
+                }
+            }
+            return allInvoices;
+        }
     }
 }

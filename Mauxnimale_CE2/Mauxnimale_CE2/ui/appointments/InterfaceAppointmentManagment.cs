@@ -140,7 +140,7 @@ namespace Mauxnimale_CE2.ui.appointments
             calendar.DateSelected += new DateRangeEventHandler(dateSelection);
             selectedDate = DateTime.Now;
             List<DateTime> dateRDVs = new List<DateTime>(); 
-            foreach(RENDEZ_VOUS rdv in AppointmentController.getAllRDV())
+            foreach(RENDEZ_VOUS rdv in AppointmentController.AllAppointment())
             {
                 dateRDVs.Add(rdv.JOURNEE.DATE);
             }

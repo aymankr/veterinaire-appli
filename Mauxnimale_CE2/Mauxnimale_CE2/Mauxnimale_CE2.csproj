@@ -179,6 +179,8 @@
     <Compile Include="ui\appointments\InterfaceAppointmentModification.cs" />
     <Compile Include="ui\accounts\InterfaceChangeID.cs" />
     <Compile Include="ui\accounts\InterfaceChangePassword.cs" />
+    <Compile Include="ui\stats\InterfaceStatsClient.cs" />
+    <Compile Include="ui\stats\InterfaceStatsProducts.cs" />
     <Compile Include="ui\stocks\InterfaceChangeStock.cs" />
     <Compile Include="ui\diseasesAndCares\InterfaceDiseaseAndCares.cs" />
     <Compile Include="ui\employees\InterfaceEmployeesManagement.cs" />

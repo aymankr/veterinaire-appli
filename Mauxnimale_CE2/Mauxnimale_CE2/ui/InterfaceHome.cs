@@ -5,6 +5,10 @@ using System.Windows.Forms;
 using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
+using Mauxnimale_CE2.ui.accounts;
+using Mauxnimale_CE2.ui.employees;
+using Mauxnimale_CE2.ui.stocks;
+using Mauxnimale_CE2.ui.appointments;
 
 namespace Mauxnimale_CE2.ui
 {

@@ -7,7 +7,7 @@ using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.api.controllers;
 using Mauxnimale_CE2.api.controllers.utils;
 
-namespace Mauxnimale_CE2.ui
+namespace Mauxnimale_CE2.ui.accounts
 {
     internal class InterfaceInscription : AInterface
     {

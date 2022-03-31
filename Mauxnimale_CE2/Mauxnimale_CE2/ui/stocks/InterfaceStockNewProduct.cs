@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Mauxnimale_CE2.ui.components.componentsTools;
 
-namespace Mauxnimale_CE2.ui
+namespace Mauxnimale_CE2.ui.stocks
 {
     internal class InterfaceStockNewProduct : AInterface
     {

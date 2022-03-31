@@ -8,7 +8,7 @@ using Mauxnimale_CE2.api;
 using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.api.controllers;
 
-namespace Mauxnimale_CE2.ui
+namespace Mauxnimale_CE2.ui.appointments
 {
     internal class InterfaceAppointmentManagment : AInterface
     {

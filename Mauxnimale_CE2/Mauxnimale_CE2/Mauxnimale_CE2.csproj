@@ -186,7 +186,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ui\InterfaceAdmin.cs" />
-    <Compile Include="ui\InterfaceConnection.cs" />
+    <Compile Include="ui\accounts\InterfaceConnection.cs" />
     <Compile Include="ui\accounts\InterfaceAccountManagement.cs" />
     <Compile Include="ui\employees\InterfaceVacationManagement.cs" />
     <Compile Include="ui\InterfaceHome.cs" />
@@ -194,7 +194,7 @@
     <Compile Include="ui\InterfaceLegalMentions.cs" />
     <Compile Include="ui\clients\InterfaceUpdateRelatedToAnimals.cs" />
     <Compile Include="ui\clients\InterfaceNewsRelatedToAnimals.cs" />
-    <Compile Include="ui\InterfaceStatsPage.cs" />
+    <Compile Include="ui\stats\InterfaceStatsPage.cs" />
     <Compile Include="ui\clients\InterfaceUpdateClient.cs" />
     <Compile Include="ui\stocks\InterfaceStockManagement.cs" />
     <Compile Include="ui\stocks\InterfaceStockNewProduct.cs" />

@@ -52,6 +52,11 @@ namespace Mauxnimale_CE2.api.controllers
         public static void RemoveCare(SOIN currentCare)
         {
             currentCare.MALADIE.Clear();
+            List<LIEN_SOIN> listCares = currentCare.LIEN_SOIN.ToList();
+            foreach (LIEN_SOIN l in listCares)
+            {
+                DbContext.get().LIEN_SOIN.Remove(l);
+            }
             DbContext.get().SOIN.Remove(currentCare);
             DbContext.get().SaveChanges();
         }

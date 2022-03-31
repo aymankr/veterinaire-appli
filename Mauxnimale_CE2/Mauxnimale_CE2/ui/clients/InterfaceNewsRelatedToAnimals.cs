@@ -6,7 +6,7 @@ using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.api.controllers;
 
-namespace Mauxnimale_CE2.ui
+namespace Mauxnimale_CE2.ui.clients
 {
     internal class InterfaceNewsRelatedToAnimals : AInterface
     {
@@ -40,6 +40,11 @@ namespace Mauxnimale_CE2.ui
 
         UIRoundButton backButton;
 
+        /// <summary>
+        /// Constructeur de l'interface
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="user"></param>
         public InterfaceNewsRelatedToAnimals(MainWindow window, SALARIE user, AInterface originInterface) : base(window, user)
         {
             this.originInterface = originInterface;

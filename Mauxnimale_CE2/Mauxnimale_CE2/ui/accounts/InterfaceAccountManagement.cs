@@ -6,7 +6,7 @@ using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.api.controllers;
 
-namespace Mauxnimale_CE2.ui
+namespace Mauxnimale_CE2.ui.accounts
 {
     internal class InterfaceAccountManagement : AInterface
     {

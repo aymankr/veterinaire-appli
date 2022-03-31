@@ -3,7 +3,7 @@ using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.api.entities;
 
-namespace Mauxnimale_CE2.ui
+namespace Mauxnimale_CE2.ui.stats
 {
     internal class InterfaceStatsPage : AInterface
     {
@@ -13,12 +13,20 @@ namespace Mauxnimale_CE2.ui
         UIButton productPage, clientPage;
         UIRoundButton back;
 
+        /// <summary>
+        /// Constructeur de l'interface
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="user"></param>
         public InterfaceStatsPage(MainWindow window, SALARIE user) : base(window, user)
         {
             header = new Header(window);
             footer = new Footer(window, user);
         }
 
+        /// <summary>
+        /// Fonction permettant de générer l'interface
+        /// </summary>
         public override void load()
         {
             header.load("Mauxnimale - Page Statistiques");
@@ -26,6 +34,9 @@ namespace Mauxnimale_CE2.ui
             generateButton();
         }
 
+        /// <summary>
+        /// Génère les bouttons
+        /// </summary>
         public void generateButton()
         {
             productPage = new UIButton(UIColor.DARKBLUE, "Statistiques produits", window.Width / 3);
@@ -44,6 +55,7 @@ namespace Mauxnimale_CE2.ui
             clientPage.Click += new EventHandler(clientPageClick);
             back.Click += new EventHandler(backClick);
         }
+
 
         public void productPageClick(object sender, EventArgs e)
         {

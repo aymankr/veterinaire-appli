@@ -8,7 +8,7 @@ using Mauxnimale_CE2.api;
 using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.api.controllers;
 
-namespace Mauxnimale_CE2.ui
+namespace Mauxnimale_CE2.ui.appointments
 {
     internal class InterfaceAppointmentModification: AInterface
     {
@@ -38,7 +38,12 @@ namespace Mauxnimale_CE2.ui
         DateTimePicker startTimePicker, endTimePicker;
         RichTextBox descriptionTexBox;
 
-
+        /// <summary>
+        /// Constructeur d'une interface de modification d'un rendez vous
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="user"></param>
+        /// <param name="rdv"></param>
         public InterfaceAppointmentModification(MainWindow window, SALARIE user, RENDEZ_VOUS rdv) : base(window, user)
         {
             header = new Header(window);
@@ -47,6 +52,9 @@ namespace Mauxnimale_CE2.ui
             animalsInRDV = new HashSet<ANIMAL>();
         }
 
+        /// <summary>
+        /// Génère les différents éléments de l'interface
+        /// </summary>
         public override void load()
         {
             header.load("Mauxnimale - Modification d'une consultations");
@@ -57,6 +65,10 @@ namespace Mauxnimale_CE2.ui
         }
 
         #region Generation
+
+        /// <summary>
+        /// Génère les labels de l'interface
+        /// </summary>
         public void generateLabels()
         {
             #region calendarLabel
@@ -138,6 +150,9 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(descriptionLabel);
         }
 
+        /// <summary>
+        /// Génère les boxs de l'interface
+        /// </summary>
         public void generateBox()
         {
             #region clientBox
@@ -248,7 +263,9 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(descriptionTexBox);
         }
 
-
+        /// <summary>
+        /// Génère les boutons de l'interface
+        /// </summary>
         public void generateButton()
         {
 
@@ -270,6 +287,12 @@ namespace Mauxnimale_CE2.ui
         #region eventHandler
 
         #region Selection
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DescriptionTexBoxChanged(object sender, EventArgs e)
         {
             description = descriptionTexBox.Text;
@@ -415,7 +438,6 @@ namespace Mauxnimale_CE2.ui
             clientComboBox.Select(clientComboBox.Text.Length, 0);
             addButtons();
         }
-
 
         private void AppointmentTypeComboBoxSelected(object sender, EventArgs e)
         {

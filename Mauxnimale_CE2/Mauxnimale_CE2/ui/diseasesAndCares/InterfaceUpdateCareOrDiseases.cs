@@ -7,7 +7,7 @@ using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.api.controllers;
 using System.Collections.Generic;
 
-namespace Mauxnimale_CE2.ui
+namespace Mauxnimale_CE2.ui.diseasesAndCares
 {
     internal class InterfaceUpdateCareOrDiseases : AInterface
     {
@@ -32,6 +32,11 @@ namespace Mauxnimale_CE2.ui
 
         UIRoundButton backButton;
 
+        /// <summary>
+        /// Constructeur de l'interface
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="user"></param>
         public InterfaceUpdateCareOrDiseases(MainWindow window, SALARIE user, object o) : base(window,user)
         {
             header = new Header(window);

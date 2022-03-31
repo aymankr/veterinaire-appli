@@ -92,9 +92,9 @@ namespace Mauxnimale_CE2.api.controllers
 
             // On supprime l'animal
             animalToRemove.RENDEZ_VOUS.Clear();
-            PT4_S4P2C_E2Entities dbContext = DbContext.get();
-            dbContext.ANIMAL.Remove(animalToRemove);
-            dbContext.SaveChanges();
+
+            DbContext.get().ANIMAL.Remove(animalToRemove);
+            DbContext.get().SaveChanges();
         }
 
         /// <summary>

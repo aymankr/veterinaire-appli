@@ -6,7 +6,7 @@ using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.api.controllers;
 
-namespace Mauxnimale_CE2.ui
+namespace Mauxnimale_CE2.ui.clients
 {
     internal class InterfaceClient : AInterface
     {
@@ -24,6 +24,11 @@ namespace Mauxnimale_CE2.ui
         private CLIENT selectedClient;
         private ANIMAL selectedAnimal;
 
+        /// <summary>
+        /// Constructeur de l'interface
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="user"></param>
         public InterfaceClient(MainWindow window, SALARIE user) : base(window, user)
         {
             header = new Header(window);

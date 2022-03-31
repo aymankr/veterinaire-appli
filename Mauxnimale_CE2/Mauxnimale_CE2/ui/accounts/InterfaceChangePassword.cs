@@ -6,7 +6,7 @@ using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.api.controllers;
 
-namespace Mauxnimale_CE2.ui
+namespace Mauxnimale_CE2.ui.accounts
 {
     internal class InterfaceChangePassword : AInterface
     {
@@ -18,57 +18,20 @@ namespace Mauxnimale_CE2.ui
         TextBox oldPassword, newPassword, confirmPassword;
         Label lOldPassword, lNewPassword, lConfirmPassword;
 
+        /// <summary>
+        /// Constructeur de l'interface
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="user"></param>
         public InterfaceChangePassword(MainWindow window, SALARIE user) : base(window, user)
         {
             header = new Header(window);
             footer = new Footer(window, user);
         }
 
-        public void newIDLeave(object sender, EventArgs e)
-        {
-            if (newPassword.Text.Length == 0)
-            {
-                newPassword.Text = "Nouveau mot de passe";
-            }
-        }
-
-        public void oldIDLeave(object sender, EventArgs e)
-        {
-            if (oldPassword.Text.Length == 0)
-            {
-                oldPassword.Text = "Ancien mot de passe";
-            }
-        }
-
-        public void confirmIDLeave(object sender, EventArgs e)
-        {
-            if (confirmPassword.Text.Length == 0)
-            {
-                confirmPassword.Text = "Confirmez le mot de passe";
-            }
-        }
-        public void confirmIDClick(object sender, EventArgs e)
-        {
-            if (oldPassword.Text.Length != 0 && newPassword.Text.Length != 0 && confirmPassword.Text.Length != 0 && confirmPassword.Text != "Confirmez le mot de passe" && newPassword.Text != "Nouveau mot de passe" && oldPassword.Text != "Ancien mot de passe")
-            {
-                UserController.updatePassword(user, oldPassword.Text, newPassword.Text);
-                window.Controls.Clear();
-                window.switchInterface(new InterfaceAccountManagement(window, user));
-            }
-        }
-
-        public void homeClick(object sender, EventArgs e)
-        {
-            window.Controls.Clear();
-            window.switchInterface(new InterfaceHome(window, user));
-        }
-
-        public void backClick(object sender, EventArgs e)
-        {
-            window.Controls.Clear();
-            window.switchInterface(new InterfaceAccountManagement(window, user));
-        }
-
+        /// <summary>
+        /// Fonction permettant de générer l'interface
+        /// </summary>
         public override void load()
         {
             header.load("Plannimaux - Changement de mot de passe");
@@ -96,6 +59,9 @@ namespace Mauxnimale_CE2.ui
             setBox(confirmPassword, "Confirmez le mot de passe");//mettre l'email de l'utilisateur connecté ici
         }
 
+        /// <summary>
+        /// Génère les Labels de l'interface
+        /// </summary>
         public void generateLabel()
         {
             lOldPassword = new Label();
@@ -109,6 +75,9 @@ namespace Mauxnimale_CE2.ui
             setLabel(lConfirmPassword, "Confirmez le mot de passe");
         }
 
+        /// <summary>
+        /// Génère les bouttons
+        /// </summary>
         private void generateButton()
         {
             confirm = new UIButton(UIColor.ORANGE, "Confirmer changement", window.Width / 5);
@@ -128,6 +97,11 @@ namespace Mauxnimale_CE2.ui
             back.Click += new EventHandler(backClick);
         }
 
+        /// <summary>
+        /// Set les labels
+        /// </summary>
+        /// <param name="l"></param>
+        /// <param name="s"></param>
         public void setLabel(Label l, string s)
         {
             l.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 100);
@@ -137,6 +111,11 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(l);
         }
 
+        /// <summary>
+        /// Set les boxs
+        /// </summary>
+        /// <param name="box"></param>
+        /// <param name="text"></param>
         public void setBox(TextBox box, String text)
         {
             box.Size = new System.Drawing.Size(window.Width / 2, window.Height * 5 / 100);
@@ -144,5 +123,83 @@ namespace Mauxnimale_CE2.ui
             box.Text = text;
             window.Controls.Add(box);
         }
+
+
+        /// <summary>
+        /// Met un placeHolder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void newIDLeave(object sender, EventArgs e)
+        {
+            if (newPassword.Text.Length == 0)
+            {
+                newPassword.Text = "Nouveau mot de passe";
+            }
+        }
+
+        /// <summary>
+        /// Met un placeHolder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void oldIDLeave(object sender, EventArgs e)
+        {
+            if (oldPassword.Text.Length == 0)
+            {
+                oldPassword.Text = "Ancien mot de passe";
+            }
+        }
+
+        /// <summary>
+        /// Met un placeHolder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void confirmIDLeave(object sender, EventArgs e)
+        {
+            if (confirmPassword.Text.Length == 0)
+            {
+                confirmPassword.Text = "Confirmez le mot de passe";
+            }
+        }
+
+        /// <summary>
+        /// Met un placeHolder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void confirmIDClick(object sender, EventArgs e)
+        {
+            if (oldPassword.Text.Length != 0 && newPassword.Text.Length != 0 && confirmPassword.Text.Length != 0 && confirmPassword.Text != "Confirmez le mot de passe" && newPassword.Text != "Nouveau mot de passe" && oldPassword.Text != "Ancien mot de passe")
+            {
+                UserController.updatePassword(user, oldPassword.Text, newPassword.Text);
+                window.Controls.Clear();
+                window.switchInterface(new InterfaceAccountManagement(window, user));
+            }
+        }
+
+        /// <summary>
+        /// Met un placeHolder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void homeClick(object sender, EventArgs e)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceHome(window, user));
+        }
+
+        /// <summary>
+        /// Met un placeHolder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void backClick(object sender, EventArgs e)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceAccountManagement(window, user));
+        }
+
     }
 }

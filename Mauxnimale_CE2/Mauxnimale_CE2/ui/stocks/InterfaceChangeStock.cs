@@ -7,7 +7,7 @@ using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
 
-namespace Mauxnimale_CE2.ui
+namespace Mauxnimale_CE2.ui.stocks
 {
     internal class InterfaceChangeStock : AInterface
     {
@@ -19,6 +19,11 @@ namespace Mauxnimale_CE2.ui
         UIRoundButton back, home;
         NumericUpDown quantity;
 
+        /// <summary>
+        /// Constructeur de l'interface
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="user"></param>
         public InterfaceChangeStock(MainWindow window, SALARIE user, PRODUIT product) : base(window, user)
         {
             header = new Header(window);
@@ -26,6 +31,9 @@ namespace Mauxnimale_CE2.ui
             choosed = product;
         }
 
+        /// <summary>
+        /// Fonction permettant de générer l'interface
+        /// </summary>
         public override void load()
         {
             header.load("Plannimaux - Changer Produit");
@@ -35,18 +43,9 @@ namespace Mauxnimale_CE2.ui
             generateLabel();
         }
 
-        private void generateNumericUpDown()
-        {
-
-            quantity = new NumericUpDown();
-            quantity.Size = new System.Drawing.Size(window.Width / 13, window.Height / 10);
-            quantity.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 100);
-            quantity.ForeColor = Color.Black;
-            quantity.Minimum = -choosed.QUANTITEENSTOCK;
-
-            quantity.Location = new Point(window.Width  * 5 / 13, window.Height / 2);
-            window.Controls.Add(quantity);
-        }
+        /// <summary>
+        /// Génère les bouttons
+        /// </summary>
         private void generateButton()
         {
             back = new UIRoundButton(window.Width / 20, "<");
@@ -66,6 +65,25 @@ namespace Mauxnimale_CE2.ui
             back.Click += new EventHandler(backClick);
         }
 
+        /// <summary>
+        /// Génère un slecteur de quantité
+        /// </summary>
+        private void generateNumericUpDown()
+        {
+
+            quantity = new NumericUpDown();
+            quantity.Size = new System.Drawing.Size(window.Width / 13, window.Height / 10);
+            quantity.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 100);
+            quantity.ForeColor = Color.Black;
+            quantity.Minimum = -choosed.QUANTITEENSTOCK;
+
+            quantity.Location = new Point(window.Width  * 5 / 13, window.Height / 2);
+            window.Controls.Add(quantity);
+        }
+
+        /// <summary>
+        /// Génère les Labels de l'interface
+        /// </summary>
         private void generateLabel()
         {
             productName = new Label();
@@ -77,6 +95,11 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(productName);
         }
 
+        /// <summary>
+        /// Modifie la quantité du produit séléctionné
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void applyClick(object sender, EventArgs e)
         {
             if(quantity.Value ==- choosed.QUANTITEENSTOCK)
@@ -91,12 +114,22 @@ namespace Mauxnimale_CE2.ui
             window.switchInterface(new InterfaceStockManagement(window, user));
         }
 
+        /// <summary>
+        /// Retourne vers la page du menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void homeClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
             window.switchInterface(new InterfaceHome(window, user));
         }
 
+        /// <summary>
+        /// Retourne vers l'interface de gestion des stocks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void backClick(object sender, EventArgs e)
         {
             window.Controls.Clear();

@@ -15,7 +15,7 @@ namespace Mauxnimale_CE2.ui
         Header header;
         Footer footer;
 
-        UIButton modifConsult, createOrdonnance, deleteConsult, createConsult, switchDisplay, modifOrdonnance;
+        UIButton modifConsult, createOrdonnance, deleteConsult, createConsult, switchDisplay, modifOrdonnance, deletePrescri;
         UIRoundButton back;
         MonthCalendar calendar;
 
@@ -172,6 +172,14 @@ namespace Mauxnimale_CE2.ui
             deleteConsult.Enabled = false;
             #endregion
 
+            #region delete Button
+            deletePrescri = new UIButton(UIColor.DARKBLUE, "Supprimer Ordonnance", window.Width * 3 / 20);
+            deletePrescri.Location = new Point(window.Width * 9 / 40, window.Height * 14 / 20);
+            deletePrescri.Click += new EventHandler(deletePrescriClick);
+            deletePrescri.Enabled = false;
+            deletePrescri.Hide();
+            #endregion
+
             #region createButton
             createConsult = new UIButton(UIColor.DARKBLUE, "Créer Consultation", window.Width * 3 / 20);
             createConsult.Location = new Point(window.Width * 2 / 40, window.Height * 14 / 20);
@@ -188,10 +196,12 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(modifConsult);
             window.Controls.Add(createOrdonnance);
             window.Controls.Add(deleteConsult);
+            window.Controls.Add(deletePrescri);
             window.Controls.Add(createConsult);
             window.Controls.Add(modifOrdonnance);
             window.Controls.Add(back);
         }
+
 
         #region eventHandler
 
@@ -264,7 +274,7 @@ namespace Mauxnimale_CE2.ui
             {
                 prescription.AppendText("PAS D'ORDONNANCE POUR LE MOMENT");
             }else{
-                prescription.AppendText("Date : " + ordonnance.RENDEZ_VOUS.JOURNEE + Environment.NewLine);
+                prescription.AppendText("Date : " +ordonnance.RENDEZ_VOUS.JOURNEE.DATE.Day + "/" + ordonnance.RENDEZ_VOUS.JOURNEE.DATE.Month + "/" + ordonnance.RENDEZ_VOUS.JOURNEE.DATE.Year + Environment.NewLine);
                 prescription.AppendText("Horraire : " + ordonnance.RENDEZ_VOUS.HEUREDEBUT + " à " + ordonnance.RENDEZ_VOUS.HEUREFIN + Environment.NewLine);
                 prescription.AppendText("Client : " + ordonnance.RENDEZ_VOUS.CLIENT + Environment.NewLine);
                 prescription.AppendText("Animal : " + ordonnance.ANIMAL + Environment.NewLine);
@@ -299,13 +309,15 @@ namespace Mauxnimale_CE2.ui
                     if(ordonnance != null)
                     {
                         modifOrdonnance.Enabled = true;
+                        deletePrescri.Enabled = true;
                         createOrdonnance.Enabled = false;
 
                     }
                     else
                     {                 
-                        createOrdonnance.Enabled = true;
                         modifOrdonnance.Enabled = false;
+                        deletePrescri.Enabled = false;
+                        createOrdonnance.Enabled = true;
                     }
                 }
                 deleteConsult.Enabled = true;
@@ -319,6 +331,7 @@ namespace Mauxnimale_CE2.ui
                 modifConsult.Enabled = false;
                 switchDisplay.Enabled = false;
                 modifOrdonnance.Enabled = false;
+                deletePrescri.Enabled = false;
             }
         }
 
@@ -334,16 +347,20 @@ namespace Mauxnimale_CE2.ui
             if (prescriptionMode)
             {
                 switchDisplay.Text = "Afficher RDV";
+
                 infosConsult.Hide();
                 infosConsult.Enabled = false;
                 modifConsult.Hide();
                 modifConsult.Enabled = false;
+                deleteConsult.Hide();
+                deleteConsult.Enabled = false;
 
                 prescription.Show();
                 prescription.Enabled = true;
                 animalsAtRDV.Show();
                 animalsAtRDV.Enabled = true;
                 modifOrdonnance.Show();
+                deletePrescri.Show();
             }
             else
             {
@@ -355,11 +372,16 @@ namespace Mauxnimale_CE2.ui
                 animalsAtRDV.Enabled = false;
                 modifOrdonnance.Hide();
                 modifOrdonnance.Enabled = false;
+                deletePrescri.Hide();
+                deletePrescri.Enabled = false;
 
                 modifConsult.Show();    
                 modifConsult.Enabled=true;
                 infosConsult.Show();
                 infosConsult.Enabled = true;
+                deleteConsult.Show();
+                deleteConsult.Enabled=true;
+
             }
         }
 
@@ -373,6 +395,10 @@ namespace Mauxnimale_CE2.ui
         {
             window.Controls.Clear();
             window.switchInterface(new InterfacePrescriptionCreation(window, user, ordonnance));
+        }
+        private void deletePrescriClick(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public void createOrdonanceClick(object sender, EventArgs e)

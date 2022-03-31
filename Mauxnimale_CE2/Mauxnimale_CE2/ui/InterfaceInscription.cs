@@ -11,22 +11,24 @@ namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceInscription : AInterface
     {
-        private MinimalHeader header;
+        private Header header;
         private Footer footer;
+        private UIRoundButton back, home;
 
         private TextBox loginTextBox;
 
         public InterfaceInscription(MainWindow window, SALARIE user) : base(window, user)
         {
-            header = new MinimalHeader(window);
+            header = new Header(window);
             footer = new Footer(window, user);
             loginTextBox = generateLoginTextBox();
         }
 
         public override void load()
         {
-            header.load();
+            header.load("Mauxnimale - Création de compte");
             footer.load();
+            generateButton();
             window.Controls.Add(generateSubmitButton());
             window.Controls.Add(loginTextBox);
         }
@@ -58,10 +60,34 @@ namespace Mauxnimale_CE2.ui
             return loginTextBox;
         }
 
+        private void generateButton()
+        {
+            back = new UIRoundButton(window.Width / 20, "<");
+            back.Location = new System.Drawing.Point(window.Width * 9 / 10, window.Height / 10);
+            window.Controls.Add(back);
+
+            home = new UIRoundButton(window.Width / 20, "«");
+            home.Location = new System.Drawing.Point(window.Width * 8 / 10, window.Height / 10);
+            window.Controls.Add(home);
+            home.Click += new EventHandler(homeClick);
+            back.Click += new EventHandler(backClick);
+        }
+
         #endregion
 
         #region Event management
 
+        public void homeClick(object sender, EventArgs e)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceHome(window, user));
+        }
+
+        public void backClick(object sender, EventArgs e)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceEmployeesManagement(window, user));
+        }
         private void loginFocusEnter(object sender, EventArgs e)
         {
             if (loginTextBox.Text == "Identifiant du nouvel utilisateur")

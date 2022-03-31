@@ -7,7 +7,7 @@ using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.api.controllers;
 
-namespace Mauxnimale_CE2.ui
+namespace Mauxnimale_CE2.ui.employees
 {
     internal class InterfaceVacationManagement : AInterface
     {

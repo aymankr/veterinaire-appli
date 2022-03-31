@@ -7,7 +7,7 @@ using Mauxnimale_CE2.api.controllers;
 using Mauxnimale_CE2.api.controllers.utils;
 using Mauxnimale_CE2.api.entities;
 
-namespace Mauxnimale_CE2.ui
+namespace Mauxnimale_CE2.ui.accounts
 {
     class InterfaceFirstConnection : AInterface
     {

@@ -147,17 +147,17 @@
     <Compile Include="api\entities\TYPE_RDV.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ui\InterfaceUpdateCareOrDiseases.cs" />
-    <Compile Include="ui\InterfaceNewCaresAndDiseases.cs" />
-    <Compile Include="ui\InterfacePrescriptionCreation.cs" />
+    <Compile Include="ui\appointments\InterfacePrescriptionCreation.cs" />
+    <Compile Include="ui\diseasesAndCares\InterfaceUpdateCareOrDiseases.cs" />
+    <Compile Include="ui\diseasesAndCares\InterfaceNewCaresAndDiseases.cs" />
     <Compile Include="ui\components\EmployeesComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ui\InterfaceAppointmentCreation.cs" />
+    <Compile Include="ui\appointments\InterfaceAppointmentCreation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ui\AInterface.cs" />
-    <Compile Include="ui\InterfaceClient.cs" />
+    <Compile Include="ui\clients\InterfaceClient.cs" />
     <Compile Include="ui\components\UIButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -174,30 +174,30 @@
     <Compile Include="ui\components\UIButton.Designer.cs">
       <DependentUpon>UIButton.cs</DependentUpon>
     </Compile>
-    <Compile Include="ui\InterfaceAppointmentManagment.cs" />
-    <Compile Include="ui\InterfaceAppointmentModification.cs" />
-    <Compile Include="ui\InterfaceChangeID.cs" />
-    <Compile Include="ui\InterfaceChangePassword.cs" />
-    <Compile Include="ui\InterfaceChangeStock.cs" />
-    <Compile Include="ui\InterfaceDiseaseAndCares.cs" />
-    <Compile Include="ui\InterfaceEmployeesManagement.cs" />
-    <Compile Include="ui\InterfaceFirstConnection.cs" />
+    <Compile Include="ui\appointments\InterfaceAppointmentManagment.cs" />
+    <Compile Include="ui\appointments\InterfaceAppointmentModification.cs" />
+    <Compile Include="ui\accounts\InterfaceChangeID.cs" />
+    <Compile Include="ui\accounts\InterfaceChangePassword.cs" />
+    <Compile Include="ui\stocks\InterfaceChangeStock.cs" />
+    <Compile Include="ui\diseasesAndCares\InterfaceDiseaseAndCares.cs" />
+    <Compile Include="ui\employees\InterfaceEmployeesManagement.cs" />
+    <Compile Include="ui\accounts\InterfaceFirstConnection.cs" />
     <Compile Include="ui\components\MinimalHeader.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ui\InterfaceAdmin.cs" />
     <Compile Include="ui\InterfaceConnection.cs" />
-    <Compile Include="ui\InterfaceAccountManagement.cs" />
-    <Compile Include="ui\InterfaceVacationManagement.cs" />
+    <Compile Include="ui\accounts\InterfaceAccountManagement.cs" />
+    <Compile Include="ui\employees\InterfaceVacationManagement.cs" />
     <Compile Include="ui\InterfaceHome.cs" />
-    <Compile Include="ui\InterfaceInscription.cs" />
+    <Compile Include="ui\accounts\InterfaceInscription.cs" />
     <Compile Include="ui\InterfaceLegalMentions.cs" />
-    <Compile Include="ui\InterfaceUpdateRelatedToAnimals.cs" />
-    <Compile Include="ui\InterfaceNewsRelatedToAnimals.cs" />
+    <Compile Include="ui\clients\InterfaceUpdateRelatedToAnimals.cs" />
+    <Compile Include="ui\clients\InterfaceNewsRelatedToAnimals.cs" />
     <Compile Include="ui\InterfaceStatsPage.cs" />
-    <Compile Include="ui\InterfaceUpdateClient.cs" />
-    <Compile Include="ui\InterfaceStockManagement.cs" />
-    <Compile Include="ui\InterfaceStockNewProduct.cs" />
+    <Compile Include="ui\clients\InterfaceUpdateClient.cs" />
+    <Compile Include="ui\stocks\InterfaceStockManagement.cs" />
+    <Compile Include="ui\stocks\InterfaceStockNewProduct.cs" />
     <Compile Include="ui\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -210,7 +210,7 @@
     <Compile Include="ui\components\UIRoundButton.Designer.cs">
       <DependentUpon>UIRoundButton.cs</DependentUpon>
     </Compile>
-    <Compile Include="ui\InterfaceNewClient.cs" />
+    <Compile Include="ui\clients\InterfaceNewClient.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

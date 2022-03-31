@@ -5,6 +5,7 @@ using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.controllers;
 using Mauxnimale_CE2.api.entities;
+using Mauxnimale_CE2.ui.accounts;
 
 namespace Mauxnimale_CE2.ui
 {

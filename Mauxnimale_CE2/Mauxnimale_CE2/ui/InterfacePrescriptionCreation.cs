@@ -37,7 +37,13 @@ namespace Mauxnimale_CE2.ui
         ORDONNANCE ordonnance;
         bool modif;
 
-
+        /// <summary>
+        /// Constructeur pour la crréation d'une ordonnance
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="user"></param>
+        /// <param name="rdv"></param>
+        /// <param name="animal"></param>
         public InterfacePrescriptionCreation(MainWindow window, SALARIE user, RENDEZ_VOUS rdv, ANIMAL animal) : base(window, user)
         {
             header = new Header(window);
@@ -47,6 +53,12 @@ namespace Mauxnimale_CE2.ui
             modif = false;
         }
 
+        /// <summary>
+        /// Constructeur de modification d'une ordonnance
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="user"></param>
+        /// <param name="ordonnance"></param>
         public InterfacePrescriptionCreation(MainWindow window, SALARIE user, ORDONNANCE ordonnance) : base(window, user)
         {
             header = new Header(window);
@@ -58,7 +70,10 @@ namespace Mauxnimale_CE2.ui
         }
 
 
-
+        #region Generation
+        /// <summary>
+        /// génère l'interface
+        /// </summary>
         public override void load()
         {
             header.load("Mauxnimale - Création d'une Ordonnance");
@@ -69,8 +84,9 @@ namespace Mauxnimale_CE2.ui
             setDescription();
         }
 
-
-        #region Generation
+        /// <summary>
+        /// Génère les labels de l'interface
+        /// </summary>
         public void generateLabels()
         {
             #region medsLabel
@@ -131,6 +147,9 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(descriptionLabel);
         }
 
+        /// <summary>
+        /// Génère les différentes listbox/combobox/textbox/richbox de l'ordonnance
+        /// </summary>
         public void generateBox()
         {
             #region careBox
@@ -216,6 +235,9 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(diagTextBox);
         }
 
+        /// <summary>
+        /// Met en forme la textbox correspondant à la description de 
+        /// </summary>
         private void setDescription()
         {
             descriptionTextBox.Clear();
@@ -240,6 +262,9 @@ namespace Mauxnimale_CE2.ui
 
         }
 
+        /// <summary>
+        /// Génère les Boutons de l'interface
+        /// </summary>
         public void generateButton()
         {
             if (modif)
@@ -288,16 +313,25 @@ namespace Mauxnimale_CE2.ui
         #endregion
 
 
-
         #region eventHandler
 
         #region Selection
+        /// <summary>
+        /// Change le texte du diagnostique
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void diagTextBoxChanged(object sender, EventArgs e)
         {
             diagnostic = diagTextBox.Text;
             setDescription();
         }
 
+        /// <summary>
+        /// Change le texte de la prescription
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void prescriptionTextBoxChanged(object sender, EventArgs e)
         {
             Console.WriteLine(prescription);
@@ -305,6 +339,11 @@ namespace Mauxnimale_CE2.ui
             setDescription();
         }
 
+        /// <summary>
+        /// Permet de choisir un médicament présent dans là base
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MedsComboSearch(object sender, EventArgs e)
         {
             
@@ -335,6 +374,11 @@ namespace Mauxnimale_CE2.ui
              
         }
 
+        /// <summary>
+        /// permet de choisir un des soins présent dans la base
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void careComboSearch(object sender, EventArgs e)
         {
             selectedCare = (SOIN)careComboBox.SelectedItem;
@@ -366,6 +410,11 @@ namespace Mauxnimale_CE2.ui
 
         #region Buttons
 
+        /// <summary>
+        /// Retire un soin effectué à l'ordonnance
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void careMinusClick(object sender, EventArgs e)
         {
             if (selectedCare != null)
@@ -378,6 +427,11 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        /// <summary>
+        /// Ajoute un soin effectué à l'ordonnace
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void carePlusClick(object sender, EventArgs e)
         {
             if (selectedCare != null)
@@ -390,6 +444,11 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        /// <summary>
+        /// Retire un produit prescrit à l'ordonnance
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void medsMinusClick(object sender, EventArgs e)
         {
             if (selectedProduct != null)
@@ -406,6 +465,11 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        /// <summary>
+        /// Ajoute une unité d'un produit à l'ordonnance
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void medsPlusClick(object sender, EventArgs e)
         {
             if (selectedProduct != null)
@@ -423,12 +487,22 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        /// <summary>
+        /// Retourne à l'interface de gestion des consultations
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void backClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
             window.switchInterface(new InterfaceAppointmentManagment(window, user));
         }
 
+        /// <summary>
+        /// Créé ou modifie l'ordonnance affichée
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void createConsultClick(object sender, EventArgs e)
         {
             if (modif)

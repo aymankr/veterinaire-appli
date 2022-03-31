@@ -32,6 +32,11 @@ namespace Mauxnimale_CE2.ui
 
         bool prescriptionMode = false;
 
+        /// <summary>
+        /// Constructeur de l'interface
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="user"></param>
         public InterfaceAppointmentManagment(MainWindow window, SALARIE user) : base(window, user)
         {
             header = new Header(window);
@@ -39,6 +44,10 @@ namespace Mauxnimale_CE2.ui
             selectedRdv = null;
 
         }
+
+        /// <summary>
+        /// Génère l'interface
+        /// </summary>
         public override void load()
         {
             header.load("Mauxnimale - Gestion des Consultations");
@@ -48,6 +57,9 @@ namespace Mauxnimale_CE2.ui
             generateListBox();
         }
 
+        /// <summary>
+        /// Génère les labels
+        /// </summary>
         public void generateLabels()
         {
             calendarLabel = new Label();
@@ -60,6 +72,9 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(calendarLabel);
         }
 
+        /// <summary>
+        /// Génère les différentes box de l'interface
+        /// </summary>
         public void generateListBox()
         {
 
@@ -133,6 +148,9 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(calendar);
         }
 
+        /// <summary>
+        /// Génère les boutons de l'interface
+        /// </summary>
         public void generateButton()
         {
 
@@ -206,6 +224,43 @@ namespace Mauxnimale_CE2.ui
         #region eventHandler
 
         #region Selection
+        
+        /// <summary>
+        /// Permet de sélectionner une journée pour voir les rendez vous de cette journée
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dateSelection(object sender, DateRangeEventArgs e)
+        {
+            infosConsult.Clear();
+            consultOfDay.Items.Clear();
+            prescription.Clear();
+            animalsAtRDV.Items.Clear();
+            selectedAnimal = null;
+            selectedRdv = null;
+
+            selectedDate = new DateTime(e.Start.Year, e.Start.Month, e.Start.Day);
+
+            if (DayController.getDay(selectedDate) == null)
+            {
+                DayController.addDay(selectedDate);
+            }
+
+            rdvOfDay = new List<RENDEZ_VOUS>(AppointmentController.getAppointmentsFromDate(selectedDate));
+
+            foreach (RENDEZ_VOUS rdv in rdvOfDay)
+            {
+                consultOfDay.Items.Add(rdv);
+            }
+            EnableButtons();
+        }
+
+
+        /// <summary>
+        /// Permet de sélectionner un rendez vous et d'afficher les informations de ce rendez vous et ses ordonnance
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void rdvSelection(object sender, EventArgs e)
         {
             infosConsult.Clear();
@@ -239,32 +294,12 @@ namespace Mauxnimale_CE2.ui
             EnableButtons();
 
         }
-
-        private void dateSelection(object sender, DateRangeEventArgs e)
-        {
-            infosConsult.Clear();
-            consultOfDay.Items.Clear();
-            prescription.Clear();
-            animalsAtRDV.Items.Clear();
-            selectedAnimal = null;
-            selectedRdv = null;
-
-            selectedDate = new DateTime(e.Start.Year, e.Start.Month, e.Start.Day);
-
-            if (DayController.getDay(selectedDate) == null)
-            {
-                DayController.addDay(selectedDate);
-            }
-
-            rdvOfDay = new List<RENDEZ_VOUS>(AppointmentController.getAppointmentsFromDate(selectedDate));
-
-            foreach (RENDEZ_VOUS rdv in rdvOfDay)
-            {
-                consultOfDay.Items.Add(rdv);
-            }
-            EnableButtons();
-        }
-
+        
+        /// <summary>
+        /// Permet d'afficher l'ordonnance d'un animal pour un rendez vous
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AnimalComboBoxSearch(object sender, EventArgs e)
         {
             selectedAnimal = (ANIMAL)animalsAtRDV.SelectedItem;
@@ -300,6 +335,10 @@ namespace Mauxnimale_CE2.ui
         #endregion
 
         #region Buttons
+
+        /// <summary>
+        /// Permet d'afficher les boutons correspondants et possiblement cliquables dans la situation actuelle de l'interface
+        /// </summary>
         public void EnableButtons()
         {
             if(selectedRdv != null)
@@ -335,12 +374,22 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        /// <summary>
+        /// Renvoie vers l'interface Home
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void backClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
             window.switchInterface(new InterfaceHome(window, user));
         }
 
+        /// <summary>
+        /// Change le mode de l'interfacepour afficher les ordonnace ou les infos du rdv
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SwitchDisplauClick(object sender, EventArgs e)
         {
             prescriptionMode = !prescriptionMode;
@@ -385,33 +434,67 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        /// <summary>
+        /// Renvoie vers l'interface de modification de la consultation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void modifConsultClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
             window.switchInterface(new InterfaceAppointmentModification(window, user, selectedRdv));
         }
        
+        /// <summary>
+        /// Renvoie vers l'interface de modification d'une ordonnace
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void modifOrdonnanceClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
             window.switchInterface(new InterfacePrescriptionCreation(window, user, ordonnance));
         }
+
+        /// <summary>
+        /// Supprime l'ordonnance sélectionnée
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
         private void deletePrescriClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            DialogResult mb = MessageBox.Show("Voulez vous vraiment supprimer cette ordonnance ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            if (mb == DialogResult.OK)
+            {
+                PrescriptionController.DeletePrescription(ordonnance);
+                window.Controls.Clear();
+                this.load();
+            }
         }
 
+        /// <summary>
+        /// Crée une ordonnance pour l'animal sélectionné
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void createOrdonanceClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
             window.switchInterface(new InterfacePrescriptionCreation(window, user, selectedRdv,selectedAnimal));
         }
 
+
+        /// <summary>
+        /// Supprime le rendez vous sélectionné
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void deleteConsultClick(object sender, EventArgs e)
         {
             if (selectedRdv!=null)
             {
-                DialogResult mb = MessageBox.Show("Are you sure you want to Delete", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                DialogResult mb = MessageBox.Show("Voulez vous vraiment supprimer ce rendez vous et toutes informations liées (ses ordonnances)", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
                 if (mb == DialogResult.OK)
                 {
                     AppointmentController.deleteAppointment(selectedRdv);
@@ -421,6 +504,11 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        /// <summary>
+        /// Renvoie vers la page de création d'une consultation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void createConsultClick(object sender, EventArgs e)
         {
             window.Controls.Clear();

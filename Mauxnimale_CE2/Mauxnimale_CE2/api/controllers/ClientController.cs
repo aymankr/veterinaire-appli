@@ -71,7 +71,7 @@ namespace Mauxnimale_CE2.api.controllers
             var client = from c in DbContext.get().CLIENT
                          where c.NOMCLIENT.StartsWith(name)
                          select c;
-            return client.ToList();
+            return client.OrderBy(customer => customer.NOMCLIENT).ToList();
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Mauxnimale_CE2.api.controllers
             var client = from c in DbContext.get().CLIENT
                          where c.PRENOMCLIENT.StartsWith(surname)
                          select c;
-            return client.ToList();
+            return client.OrderBy(customer => customer.NOMCLIENT).ToList();
         }
 
         /// <summary>

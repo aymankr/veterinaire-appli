@@ -44,6 +44,14 @@ namespace Mauxnimale_CE2.api.controllers
             DbContext.get().SaveChanges();
         }
 
+        /// <summary>
+        /// Supprime l'ancienne ordonnance et créé une nouvelle ordonnance avec les modification voulues
+        /// </summary>
+        /// <param name="prescription"></param>
+        /// <param name="productsWithQuantities"></param>
+        /// <param name="cares"></param>
+        /// <param name="orders"></param>
+        /// <param name="diagnostique"></param>
         public static void modifPrescription(ORDONNANCE prescription, Dictionary<PRODUIT, int> productsWithQuantities, List<SOIN> cares, string orders, string diagnostique)
         {
             ORDONNANCE newPrescription = new ORDONNANCE()
@@ -58,6 +66,12 @@ namespace Mauxnimale_CE2.api.controllers
 
         }
 
+        /// <summary>
+        /// Retourne une ordonnance grâce au rendez vous et à l'animal concrené
+        /// </summary>
+        /// <param name="rdv"></param>
+        /// <param name="animal"></param>
+        /// <returns></returns>
         public static ORDONNANCE GetORDONNANCEFromRDVAndAnimal(RENDEZ_VOUS rdv, ANIMAL animal)
         {
             ORDONNANCE ordonnance = (from o in DbContext.get().ORDONNANCE
@@ -66,6 +80,10 @@ namespace Mauxnimale_CE2.api.controllers
             return ordonnance;
         }
 
+        /// <summary>
+        /// supprime une Ordonnance de la base
+        /// </summary>
+        /// <param name="prescription"></param>
         public static void DeletePrescription(ORDONNANCE prescription)
         {
             List<PRODUITLIES> prods = prescription.PRODUITLIES.ToList(); 

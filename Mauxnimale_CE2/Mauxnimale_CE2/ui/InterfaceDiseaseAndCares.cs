@@ -23,6 +23,11 @@ namespace Mauxnimale_CE2.ui
         private MALADIE selectedDisease;
         private SOIN selectedCare;
 
+        /// <summary>
+        /// Constructeur de l'interface
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="user"></param>
         public InterfaceDiseaseAndCares(MainWindow window, SALARIE user) : base(window, user)
         {
             header = new Header(window);

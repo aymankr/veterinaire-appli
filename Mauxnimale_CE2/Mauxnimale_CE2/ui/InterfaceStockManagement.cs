@@ -22,10 +22,26 @@ namespace Mauxnimale_CE2.ui
         ListBox products;
         List<PRODUIT> productsList = new List<PRODUIT>();
 
+        /// <summary>
+        /// Constructeur de l'interface
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="user"></param>
         public InterfaceStockManagement(MainWindow window, SALARIE user) : base(window, user)
         {
             header = new Header(this.window);
             footer = new Footer(this.window, user);
+        }
+
+        /// <summary>
+        /// Fonction permettant de générer l'interface
+        /// </summary>
+        public override void load()
+        {
+            header.load("Plannimaux - Gestion des stocks");
+            footer.load();
+            generateBox();
+            generateButton();
         }
 
         public void generateBox()
@@ -53,14 +69,9 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(products);
         }
 
-        public override void load()
-        {
-            header.load("Plannimaux - Gestion des stocks");
-            footer.load();
-            generateBox();
-            generateButton();
-        }
-
+        /// <summary>
+        /// Génère les bouttons
+        /// </summary>
         public void generateButton()
         {
             newProduct = new UIButton(UIColor.ORANGE, "Nouveau Produit", Math.Min(window.Width / 4, window.Height / 3));
@@ -83,6 +94,7 @@ namespace Mauxnimale_CE2.ui
             back.Click += new EventHandler(backClick);
             window.Controls.Add(back);
         }
+
 
         public void backClick(object sender, EventArgs e)
         {

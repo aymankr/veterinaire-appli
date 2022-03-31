@@ -36,13 +36,20 @@ namespace Mauxnimale_CE2.ui
         DateTimePicker startTimePicker, endTimePicker;
         RichTextBox descriptionTexBox;
 
-
+        /// <summary>
+        /// Constructeur de l'interface
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="user"></param>
         public InterfaceAppointmentCreation(MainWindow window, SALARIE user) : base(window, user)
         {
             header = new Header(window);
             footer = new Footer(window, base.user);
         }
 
+        /// <summary>
+        /// Fonction permettant de générer l'interface
+        /// </summary>
         public override void load()
         {
             header.load("Mauxnimale - Création d'une consultations");

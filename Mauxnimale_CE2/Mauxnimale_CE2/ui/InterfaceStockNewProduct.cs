@@ -23,10 +23,166 @@ namespace Mauxnimale_CE2.ui
         DateTimePicker expirationDate;
         TextBox name;
 
+        /// <summary>
+        /// Constructeur de l'interface
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="user"></param>
         public InterfaceStockNewProduct(MainWindow window, SALARIE user) : base(window, user)
         {
             header = new Header(window);
             footer = new Footer(window, user);
+        }
+
+        /// <summary>
+        /// Fonction permettant de générer l'interface
+        /// </summary>
+        public override void load()
+        {
+            header.load("Plannimaux - Nouveau produit");
+            footer.load();
+            generateTextBoxes();
+            generateBox();
+            generateNumUpDown();
+            generateDatePicker();
+            generateButton();
+            generateLabel();
+        }
+
+        /// <summary>
+        /// Génère les Labels de l'interface
+        /// </summary>
+        public void generateLabel()
+        {
+            lQuantity = new Label();
+            lQuantity.Location = new Point(window.Width / 20, window.Height * 42 / 100);
+            setLabel(lQuantity, "Quantité");
+            lInitialCost = new Label();
+            lInitialCost.Location = new Point(window.Width / 20, window.Height * 52 / 100);
+            setLabel(lInitialCost, "Prix d'achat");
+            lResellCost = new Label();
+            lResellCost.Location = new Point(window.Width / 20, window.Height * 62 / 100);
+
+            setLabel(lResellCost, "Prix de revente");
+            lExpirationDate = new Label();
+            lExpirationDate.Location = new Point(window.Width / 20, window.Height * 22 / 100);
+            setLabel(lExpirationDate, "Date d'expiration");
+            lName = new Label();
+            lName.Location = new Point(window.Width / 20, window.Height * 12 / 100);
+            setLabel(lName, "Nom");
+            lType = new Label();
+            lType.Location = new Point(window.Width / 20, window.Height / 3);
+            setLabel(lType, "Type");
+        }
+
+        /// <summary>
+        /// Génère les bouttons
+        /// </summary>
+        public void generateButton()
+        {
+            addProduct = new UIButton(UIColor.ORANGE, "Nouveau Produit", Math.Min(window.Width / 4, window.Height / 3));
+            addProduct.Location = new System.Drawing.Point(window.Width * 2 / 5, window.Height * 75 / 100);
+            addProduct.Click += new EventHandler(newProductClick);
+            window.Controls.Add(addProduct);
+
+            back = new UIRoundButton(window.Width / 20, "<");
+            back.Location = new System.Drawing.Point(window.Width * 9 / 10, window.Height / 10);
+            back.Click += new EventHandler(backClick);
+            window.Controls.Add(back);
+
+            home = new UIRoundButton(window.Width / 20, "«");
+            home.Location = new System.Drawing.Point(window.Width * 8 / 10, window.Height / 10);
+            home.Click += new EventHandler(homeClick);
+            window.Controls.Add(home);
+        }
+
+        public void setLabel(Label l, string s)
+        {
+            l.Font = new System.Drawing.Font("Poppins", window.Height * 2 / 100);
+            l.ForeColor = UIColor.LIGHTBLUE;
+            l.Text = s;
+            l.Size = new System.Drawing.Size(window.Width / 3, window.Height * 6 / 100);
+            window.Controls.Add(l);
+        }
+
+        private void generateBox()
+        {
+            type = new ComboBox();
+            foreach (TYPE_PRODUIT typeProduct in ProductController.getTypes())
+            {
+                type.Items.Add(typeProduct);
+            }
+            type.Size = new System.Drawing.Size(window.Width / 2, window.Height / 7);
+            type.DropDownStyle = ComboBoxStyle.DropDownList;
+            type.Font = new System.Drawing.Font("Poppins", window.Height / 40);
+            type.Location = new Point(window.Width / 4, window.Height * 5 / 15);
+            type.ForeColor = Color.Gray;
+            type.SelectedIndexChanged += new EventHandler(typeSelectedChange);
+            window.Controls.Add(type);
+        }
+
+
+        public void generateDatePicker()
+        {
+            expirationDate = new DateTimePicker();
+            expirationDate.Format = DateTimePickerFormat.Custom;
+            expirationDate.CustomFormat = "dd:MM";
+            expirationDate.Size = new Size(window.Width / 2, window.Height * 5 / 100);
+            expirationDate.Location = new Point(window.Width / 4, window.Height * 22 / 100);
+            expirationDate.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 100);
+            expirationDate.ForeColor = Color.Black;
+            window.Controls.Add(expirationDate);
+        }
+
+        public void generateTextBoxes()
+        {
+            name = new TextBox();
+            name.LostFocus += new EventHandler(nameLeave);
+            name.GotFocus += new EventHandler(nameEnter);
+            name.Size = new Size(window.Width / 2, window.Height * 5 / 100);
+            name.Location = new Point(window.Width / 4, window.Height * 12 / 100);
+            name.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 100);
+            name.ForeColor = Color.Gray;
+            name.Text = "Nom";
+            window.Controls.Add(name);
+        }
+
+        public void generateNumUpDown()
+        {
+            initialCost = new NumericUpDown();
+            initialCost.Size = new Size(window.Width / 2, window.Height * 5 / 100);
+            initialCost.Location = new Point(window.Width / 4, window.Height * 52 / 100);
+            initialCost.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 100);
+            initialCost.ForeColor = Color.Black;
+            initialCost.Minimum = 0;
+            initialCost.Maximum = 100000;
+            window.Controls.Add(initialCost);
+
+            resellCost = new NumericUpDown();
+            resellCost.Size = new Size(window.Width / 2, window.Height * 5 / 100);
+            resellCost.Location = new Point(window.Width / 4, window.Height * 62 / 100);
+            resellCost.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 100);
+            resellCost.ForeColor = Color.Black;
+            resellCost.Minimum = 0;
+            resellCost.Maximum = 100000;
+            window.Controls.Add(resellCost);
+
+            quantity = new NumericUpDown();
+            quantity.Size = new Size(window.Width / 2, quantity.Height);
+            quantity.Location = new Point(window.Width / 4, window.Height * 42 / 100);
+            quantity.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 100);
+            quantity.ForeColor = Color.Black;
+            quantity.Minimum = 0;
+            quantity.Maximum = 100000;
+            window.Controls.Add(quantity);
+        }
+
+        public void setBox(TextBox textBox, string text)
+        {
+            textBox.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 100);
+            textBox.ForeColor = Color.Gray;
+            textBox.Text = text;
+            window.Controls.Add(textBox);
         }
 
         #region Input events handling
@@ -94,145 +250,5 @@ namespace Mauxnimale_CE2.ui
             }
         }
         #endregion
-
-        public void generateLabel()
-        {
-            lQuantity = new Label();
-            lQuantity.Location = new Point(window.Width / 20, window.Height * 42 / 100);
-            setLabel(lQuantity, "Quantité");
-            lInitialCost = new Label();
-            lInitialCost.Location = new Point(window.Width / 20, window.Height * 52 / 100);
-            setLabel(lInitialCost, "Prix d'achat");
-            lResellCost = new Label();
-            lResellCost.Location = new Point(window.Width / 20, window.Height * 62 / 100);
-            setLabel(lResellCost, "Prix de revente");
-            lExpirationDate = new Label();
-            lExpirationDate.Location = new Point(window.Width / 20, window.Height * 22 / 100);
-            setLabel(lExpirationDate, "Date d'expiration");
-            lName = new Label();
-            lName.Location = new Point(window.Width / 20, window.Height * 12 / 100);
-            setLabel(lName, "Nom");
-            lType = new Label();
-            lType.Location = new Point(window.Width / 20, window.Height / 3);
-            setLabel(lType, "Type");
-        }
-
-        public void generateButton()
-        {
-            addProduct = new UIButton(UIColor.ORANGE, "Nouveau Produit", Math.Min(window.Width / 4, window.Height / 3));
-            addProduct.Location = new System.Drawing.Point(window.Width * 2 / 5, window.Height * 75 / 100);
-            addProduct.Click += new EventHandler(newProductClick);
-            window.Controls.Add(addProduct);
-
-            back = new UIRoundButton(window.Width / 20, "<");
-            back.Location = new System.Drawing.Point(window.Width * 9 / 10, window.Height / 10);
-            back.Click += new EventHandler(backClick);
-            window.Controls.Add(back);
-
-            home = new UIRoundButton(window.Width / 20, "«");
-            home.Location = new System.Drawing.Point(window.Width * 8 / 10, window.Height / 10);
-            home.Click += new EventHandler(homeClick);
-            window.Controls.Add(home);
-        }
-
-        public void setLabel(Label l, string s)
-        {
-            l.Font = new System.Drawing.Font("Poppins", window.Height * 2 / 100);
-            l.ForeColor = UIColor.LIGHTBLUE;
-            l.Text = s;
-            l.Size = new System.Drawing.Size(window.Width / 3, window.Height * 6 / 100);
-            window.Controls.Add(l);
-        }
-
-        private void generateBox()
-        {
-            type = new ComboBox();
-            foreach (TYPE_PRODUIT typeProduct in ProductController.getTypes())
-            {
-                type.Items.Add(typeProduct);
-            }
-            type.Size = new System.Drawing.Size(window.Width / 2, window.Height / 7);
-            type.DropDownStyle = ComboBoxStyle.DropDownList;
-            type.Font = new System.Drawing.Font("Poppins", window.Height / 40);
-            type.Location = new Point(window.Width / 4, window.Height * 5 / 15);
-            type.ForeColor = Color.Gray;
-            type.SelectedIndexChanged += new EventHandler(typeSelectedChange);
-            window.Controls.Add(type);
-        }
-
-        public override void load()
-        {
-            header.load("Plannimaux - Nouveau produit");
-            footer.load();
-            generateTextBoxes();
-            generateBox();
-            generateNumUpDown();
-            generateDatePicker();
-            generateButton();
-            generateLabel();
-        }
-
-        public void generateDatePicker()
-        {
-            expirationDate = new DateTimePicker();
-            expirationDate.Format = DateTimePickerFormat.Custom;
-            expirationDate.CustomFormat = "dd:MM";
-            expirationDate.Size = new Size(window.Width / 2, window.Height * 5 / 100);
-            expirationDate.Location = new Point(window.Width / 4, window.Height * 22 / 100);
-            expirationDate.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 100);
-            expirationDate.ForeColor = Color.Black;
-            window.Controls.Add(expirationDate);
-        }
-
-        public void generateTextBoxes()
-        {
-            name = new TextBox();
-            name.LostFocus += new EventHandler(nameLeave);
-            name.GotFocus += new EventHandler(nameEnter);
-            name.Size = new Size(window.Width / 2, window.Height * 5 / 100);
-            name.Location = new Point(window.Width / 4, window.Height * 12 / 100);
-            name.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 100);
-            name.ForeColor = Color.Gray;
-            name.Text = "Nom";
-            window.Controls.Add(name);
-        }
-
-        public void generateNumUpDown()
-        {
-            initialCost = new NumericUpDown();
-            initialCost.Size = new Size(window.Width / 2, window.Height * 5 / 100);
-            initialCost.Location = new Point(window.Width / 4, window.Height * 52 / 100);
-            initialCost.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 100);
-            initialCost.ForeColor = Color.Black;
-            initialCost.Minimum = 0;
-            initialCost.Maximum = 100000;
-            window.Controls.Add(initialCost);
-
-            resellCost = new NumericUpDown();
-            resellCost.Size = new Size(window.Width / 2, window.Height * 5 / 100);
-            resellCost.Location = new Point(window.Width / 4, window.Height * 62 / 100);
-            resellCost.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 100);
-            resellCost.ForeColor = Color.Black;
-            resellCost.Minimum = 0;
-            resellCost.Maximum = 100000;
-            window.Controls.Add(resellCost);
-
-            quantity = new NumericUpDown();
-            quantity.Size = new Size(window.Width / 2, quantity.Height);
-            quantity.Location = new Point(window.Width / 4, window.Height * 42 / 100);
-            quantity.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 100);
-            quantity.ForeColor = Color.Black;
-            quantity.Minimum = 0;
-            quantity.Maximum = 100000;
-            window.Controls.Add(quantity);
-        }
-
-        public void setBox(TextBox textBox, string text)
-        {
-            textBox.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 100);
-            textBox.ForeColor = Color.Gray;
-            textBox.Text = text;
-            window.Controls.Add(textBox);
-        }
     }
 }

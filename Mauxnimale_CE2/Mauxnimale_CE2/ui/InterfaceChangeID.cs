@@ -18,57 +18,20 @@ namespace Mauxnimale_CE2.ui
         TextBox oldID, newID, confirmID;
         Label lOldID, lNewID, lConfirmID;
 
+        /// <summary>
+        /// Constructeur de l'interface
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="user"></param>
         public InterfaceChangeID(MainWindow window, SALARIE user) : base(window, user)
         {
             header = new Header(window);
             footer = new Footer(window, user);
         }
 
-        public void newIDLeave(object sender, EventArgs e)
-        {
-            if (newID.Text.Length == 0)
-            {
-                newID.Text = "Nouveau identifiant";
-            }
-        }
-
-        public void oldIDLeave(object sender, EventArgs e)
-        {
-            if (oldID.Text.Length == 0)
-            {
-                oldID.Text = "Ancien identifiant";
-            }
-        }
-
-        public void confirmIDLeave(object sender, EventArgs e)
-        {
-            if (confirmID.Text.Length == 0)
-            {
-                confirmID.Text = "Confirmez l'identifiant";
-            }
-        }
-        public void confirmIDClick(object sender, EventArgs e)
-        {
-            if (confirmID.Text.Length != 0 && oldID.Text.Length != 0 && newID.Text.Length != 0 && confirmID.Text != "Confirmez l'identifiant" && newID.Text != "Nouveau identifiant" && oldID.Text != "Ancien identifiant")
-            {
-                UserController.updateLogin(user, confirmID.Text);
-                window.Controls.Clear();
-                window.switchInterface(new InterfaceAccountManagement(window, user));
-            }
-        }
-
-        public void homeClick(object sender, EventArgs e)
-        {
-            window.Controls.Clear();
-            window.switchInterface(new InterfaceHome(window, user));
-        }
-
-        public void backClick(object sender, EventArgs e)
-        {
-            window.Controls.Clear();
-            window.switchInterface(new InterfaceAccountManagement(window, user));
-        }
-
+        /// <summary>
+        /// Fonction permettant de générer l'interface
+        /// </summary>
         public override void load()
         {
             header.load("Plannimaux - Changement d'identifiant");
@@ -96,6 +59,9 @@ namespace Mauxnimale_CE2.ui
             setBox(confirmID, "Confirmez l'identifiant");
         }
 
+        /// <summary>
+        /// Génère les Labels de l'interface
+        /// </summary>
         public void generateLabel()
         {
             lOldID = new Label();
@@ -109,6 +75,9 @@ namespace Mauxnimale_CE2.ui
             setLabel(lConfirmID, "Confirmer Identifiant");
         }
 
+        /// <summary>
+        /// Génère les bouttons
+        /// </summary>
         private void generateButton()
         {
             confirm = new UIButton(UIColor.ORANGE, "Confirmer changement", window.Width / 5);
@@ -128,6 +97,12 @@ namespace Mauxnimale_CE2.ui
             back.Click += new EventHandler(backClick);
         }
 
+
+        /// <summary>
+        /// Sets les differents labels
+        /// </summary>
+        /// <param name="l"></param>
+        /// <param name="s"></param>
         public void setLabel(Label l, string s)
         {
             l.Font = new System.Drawing.Font("Poppins", window.Height * 3 / 100);
@@ -137,6 +112,11 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Add(l);
         }
 
+        /// <summary>
+        /// Sets les différentes boxs
+        /// </summary>
+        /// <param name="box"></param>
+        /// <param name="text"></param>
         public void setBox(TextBox box, String text)
         {
             box.Size = new System.Drawing.Size(window.Width / 2, window.Height * 5 / 100);
@@ -144,5 +124,82 @@ namespace Mauxnimale_CE2.ui
             box.Text = text;
             window.Controls.Add(box);
         }
+
+        /// <summary>
+        /// Met un placeholder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void newIDLeave(object sender, EventArgs e)
+        {
+            if (newID.Text.Length == 0)
+            {
+                newID.Text = "Nouveau identifiant";
+            }
+        }
+
+        /// <summary>
+        /// Met un placeholder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void oldIDLeave(object sender, EventArgs e)
+        {
+            if (oldID.Text.Length == 0)
+            {
+                oldID.Text = "Ancien identifiant";
+            }
+        }
+
+        /// <summary>
+        /// Met un placeholder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void confirmIDLeave(object sender, EventArgs e)
+        {
+            if (confirmID.Text.Length == 0)
+            {
+                confirmID.Text = "Confirmez l'identifiant";
+            }
+        }
+
+        /// <summary>
+        /// Confirme la modification de l'indentifant
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void confirmIDClick(object sender, EventArgs e)
+        {
+            if (confirmID.Text.Length != 0 && oldID.Text.Length != 0 && newID.Text.Length != 0 && confirmID.Text != "Confirmez l'identifiant" && newID.Text != "Nouveau identifiant" && oldID.Text != "Ancien identifiant")
+            {
+                UserController.updateLogin(user, confirmID.Text);
+                window.Controls.Clear();
+                window.switchInterface(new InterfaceAccountManagement(window, user));
+            }
+        }
+
+        /// <summary>
+        /// Retourne vers l'interface de menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void homeClick(object sender, EventArgs e)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceHome(window, user));
+        }
+
+        /// <summary>
+        /// retourne vers l'interface de modification de l'utilisateur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void backClick(object sender, EventArgs e)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceAccountManagement(window, user));
+        }
+
     }
 }

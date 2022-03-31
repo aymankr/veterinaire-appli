@@ -41,6 +41,11 @@ namespace Mauxnimale_CE2.ui
 
         UIRoundButton backButton;
 
+        /// <summary>
+        /// Constructeur de l'interface
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="user"></param>
         public InterfaceUpdateRelatedToAnimals(MainWindow window, SALARIE user, object o, AInterface originInterface) : base(window, user)
         {
             this.originInterface = originInterface;

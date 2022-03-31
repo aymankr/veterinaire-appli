@@ -18,6 +18,11 @@ namespace Mauxnimale_CE2.ui
         private UIButton validate;
         private UIRoundButton backButton;
 
+        /// <summary>
+        /// Constructeur de l'interface
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="user"></param>
         public InterfaceNewClient(MainWindow window, SALARIE user) : base(window, user)
         {
             header = new Header(window);

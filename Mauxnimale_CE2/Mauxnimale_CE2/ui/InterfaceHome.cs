@@ -106,7 +106,7 @@ namespace Mauxnimale_CE2.ui
             manageConsultation.Location = new System.Drawing.Point(window.Width * 6 / 10, window.Height * 325 / 1000);
             window.Controls.Add(manageConsultation);
 
-            manageClients = new UIButton(UIColor.DARKBLUE, "Gestion des consultations", window.Width / 4);
+            manageClients = new UIButton(UIColor.DARKBLUE, "Gestion de la clientèle", window.Width / 4);
             manageClients.Location = new System.Drawing.Point(window.Width * 465 / 1000, window.Height * 525 / 1000);
             window.Controls.Add(manageClients);
 

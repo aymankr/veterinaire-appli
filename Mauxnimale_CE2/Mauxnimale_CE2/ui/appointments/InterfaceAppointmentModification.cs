@@ -34,7 +34,8 @@ namespace Mauxnimale_CE2.ui.appointments
 
         Label calendarLabel, clientLabel, animalLabel, appointmentTypeLabel, timeLabel, descriptionLabel, selectedAnimalsLabel;
 
-        ComboBox clientComboBox, animalComboBox, appointmentTypeComboBox, selectedAnimals;
+        ComboBox clientComboBox, animalComboBox, appointmentTypeComboBox;
+        ListBox selectedAnimals;
         DateTimePicker startTimePicker, endTimePicker;
         RichTextBox descriptionTexBox;
 
@@ -180,17 +181,16 @@ namespace Mauxnimale_CE2.ui.appointments
             #endregion
 
             #region selectedAnimals
-            selectedAnimals = new ComboBox();
-            selectedAnimals.Size = new Size(window.Width * 20 / 100, window.Height * 6 / 20);
+            selectedAnimals = new ListBox();
+            selectedAnimals.Size = new Size(window.Width * 20 / 100, window.Height * 3 / 20);
             selectedAnimals.Location = new Point(window.Width * 750 / 1000, window.Height * 10 / 40);
             foreach(ANIMAL animal in rdv.ANIMAL)
             {
                 selectedAnimals.Items.Add(animal);
                 animalsInRDV.Add(animal);
             }
-            selectedAnimals.TextChanged += new EventHandler(AnimalSelectionComboBoxSearch);
             selectedAnimals.GotFocus += new EventHandler(AnimalSelectionComboBoxSearch);
-            selectedAnimals.SelectedIndexChanged += new EventHandler(AnimalSelectionComboBoxSearch);
+            selectedAnimals.SelectedValueChanged += new EventHandler(AnimalSelectionComboBoxSearch);
             #endregion
 
             #region typeBox
@@ -323,60 +323,36 @@ namespace Mauxnimale_CE2.ui.appointments
 
             ANIMAL selectedAnimal = (ANIMAL)selectedAnimals.SelectedItem;
 
-            if (selectedAnimal == null)
+            if (animalsInRDV.Contains(selectedAnimal))
             {
-                selectedAnimals.Items.Clear();
-            }
-            else if (animalsInRDV.Contains(selectedAnimal))
-            {
-                Console.WriteLine("wesh");
                 animalsInRDV.Remove(selectedAnimal);
+                selectedAnimals.Items.Remove(selectedAnimal);
             }
-
-            selectedAnimals.Items.Clear();
-
-
-
-            if (selectedAnimals.Text.Length == 0)
-            {
-                List<ANIMAL> animaux = ClientController.ListOfAnimal(selectedClient);
-                foreach (ANIMAL animal in animalsInRDV)
-                {
-                    selectedAnimals.Items.Add(animal);
-                    Console.WriteLine(animal);
-                }
-
-            }
-            else
-            {
-                selectedAnimals.Select(selectedAnimals.Text.Length, 0);
-                foreach (ANIMAL animal in animalsInRDV)
-                {
-
-                    selectedAnimals.Items.Add(animal);
-                    Console.WriteLine(animal);
-                }
-            }
+            addButtons();
 
         }
 
         private void AnimalComboBoxFocus(object sender, EventArgs e)
         {
-            if (animalComboBox.Text.Length == 0)
+            if (selectedClient != null)
             {
-                List<ANIMAL> animaux = ClientController.ListOfAnimal(selectedClient);
-                foreach (ANIMAL animal in animaux)
+
+                if (animalComboBox.Text.Length == 0)
                 {
-                    animalComboBox.Items.Add(animal);
+                    List<ANIMAL> animaux = ClientController.ListOfAnimal(selectedClient);
+                    foreach (ANIMAL animal in animaux)
+                    {
+                        animalComboBox.Items.Add(animal);
+                    }
                 }
-            }
-            else
-            {
-                animalComboBox.Select(animalComboBox.Text.Length, 0);
-                List<ANIMAL> animaux = ClientController.ListAnimalByName(selectedClient, animalComboBox.Text);
-                foreach (ANIMAL animal in animaux)
+                else
                 {
-                    animalComboBox.Items.Add(animal);
+                    animalComboBox.Select(animalComboBox.Text.Length, 0);
+                    List<ANIMAL> animaux = ClientController.ListAnimalByName(selectedClient, animalComboBox.Text);
+                    foreach (ANIMAL animal in animaux)
+                    {
+                        animalComboBox.Items.Add(animal);
+                    }
                 }
             }
         }
@@ -412,6 +388,7 @@ namespace Mauxnimale_CE2.ui.appointments
         {
             selectedClient = (CLIENT)clientComboBox.SelectedItem;
             animalsInRDV = new HashSet<ANIMAL>();
+            selectedAnimals.Items.Clear();
             animalComboBox.Items.Clear();
             animalComboBox.Text = "";
             if (selectedClient == null)
@@ -463,7 +440,7 @@ namespace Mauxnimale_CE2.ui.appointments
 
         private void addButtons()
         {
-            if (selectedType != null && selectedClient != null && animalsInRDV != null && selectedJOURNEE != null && RDVStart != null && RDVEnd != null)
+            if (selectedType != null && selectedClient != null && animalsInRDV.Count > 0 && selectedJOURNEE != null && RDVStart != null && RDVEnd != null)
             {
                 modifConsultButton.Enabled = true;
             }

@@ -93,5 +93,17 @@ namespace Mauxnimale_CE2.api.controllers
         {
             return DbContext.get().RENDEZ_VOUS.ToList();
         }
+
+
+        public static void AddTypeRDV(string name)
+        {
+            TYPE_RDV type = new TYPE_RDV
+            {
+                NOMTYPE = name,
+                MONTANT = 0
+            };
+            DbContext.get().TYPE_RDV.Add(type);
+            DbContext.get().SaveChanges();
+        }
     }
 }

@@ -308,11 +308,10 @@ namespace Mauxnimale_CE2.ui.appointments
 
             if (animalsInRDV.Contains(selectedAnimal))
             {
-                Console.WriteLine("wesh");
                 animalsInRDV.Remove(selectedAnimal);
                 selectedAnimals.Items.Remove(selectedAnimal);
             }
-        
+            addButtons();
             
         }
 
@@ -435,7 +434,7 @@ namespace Mauxnimale_CE2.ui.appointments
 
         }
 
-
+        
         #endregion
 
         #region Buttons

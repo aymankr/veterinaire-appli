@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="api\controllers\AppointmentController.cs" />
     <Compile Include="api\controllers\CareAndDiseaseController.cs" />
+    <Compile Include="api\controllers\CareController.cs" />
     <Compile Include="api\controllers\ClientController.cs" />
     <Compile Include="api\controllers\InvoiceController.cs" />
     <Compile Include="api\controllers\PrescriptionController.cs" />
@@ -151,6 +152,19 @@
     <Compile Include="ui\appointments\InterfacePrescriptionCreation.cs" />
     <Compile Include="ui\diseasesAndCares\InterfaceUpdateCareOrDiseases.cs" />
     <Compile Include="ui\diseasesAndCares\InterfaceNewCaresAndDiseases.cs" />
+    <Compile Include="ui\components\ClientsListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ui\components\ProductTypesComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ui\components\SellProduct.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ui\components\StockProduct.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ui\stocks\InterfaceNewProductType.cs" />
     <Compile Include="ui\components\EmployeesComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -179,9 +193,6 @@
     <Compile Include="ui\appointments\InterfaceAppointmentModification.cs" />
     <Compile Include="ui\accounts\InterfaceChangeID.cs" />
     <Compile Include="ui\accounts\InterfaceChangePassword.cs" />
-    <Compile Include="ui\stats\InterfaceStatsClient.cs" />
-    <Compile Include="ui\stats\InterfaceStatsProducts.cs" />
-    <Compile Include="ui\stocks\InterfaceChangeStock.cs" />
     <Compile Include="ui\diseasesAndCares\InterfaceDiseaseAndCares.cs" />
     <Compile Include="ui\employees\InterfaceEmployeesManagement.cs" />
     <Compile Include="ui\accounts\InterfaceFirstConnection.cs" />
@@ -192,15 +203,17 @@
     <Compile Include="ui\accounts\InterfaceConnection.cs" />
     <Compile Include="ui\accounts\InterfaceAccountManagement.cs" />
     <Compile Include="ui\employees\InterfaceVacationManagement.cs" />
+    <Compile Include="ui\stocks\InterfaceProductsTypeManagement.cs" />
+    <Compile Include="ui\stocks\InterfaceSell.cs" />
     <Compile Include="ui\InterfaceHome.cs" />
     <Compile Include="ui\accounts\InterfaceInscription.cs" />
     <Compile Include="ui\InterfaceLegalMentions.cs" />
     <Compile Include="ui\clients\InterfaceUpdateRelatedToAnimals.cs" />
     <Compile Include="ui\clients\InterfaceNewsRelatedToAnimals.cs" />
+    <Compile Include="ui\stocks\InterfaceUpdateProduct.cs" />
     <Compile Include="ui\stats\InterfaceStatsPage.cs" />
     <Compile Include="ui\clients\InterfaceUpdateClient.cs" />
-    <Compile Include="ui\stocks\InterfaceStockManagement.cs" />
-    <Compile Include="ui\stocks\InterfaceStockNewProduct.cs" />
+    <Compile Include="ui\stocks\InterfaceNewProduct.cs" />
     <Compile Include="ui\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -214,6 +227,7 @@
       <DependentUpon>UIRoundButton.cs</DependentUpon>
     </Compile>
     <Compile Include="ui\clients\InterfaceNewClient.cs" />
+    <Compile Include="ui\stocks\InterfaceStockManagement.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

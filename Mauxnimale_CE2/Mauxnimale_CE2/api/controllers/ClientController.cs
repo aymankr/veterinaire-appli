@@ -88,6 +88,16 @@ namespace Mauxnimale_CE2.api.controllers
         }
 
         /// <summary>
+        /// Permet de rechercher des clients depuis leur nom ou prénom
+        /// </summary>
+        /// <param name="name">Nom recherché</param>
+        /// <returns>La liste des client ou leur prénom commence par ce prénom</returns>
+        public static List<CLIENT> GetClientsByName(string name)
+        {
+            return DbContext.get().CLIENT.Where(c => c.NOMCLIENT.Contains(name) || c.PRENOMCLIENT.Contains(name)).ToList();
+        }
+
+        /// <summary>
         /// Récupérer tous les clients, triés par nom
         /// </summary>
         /// <returns></returns>

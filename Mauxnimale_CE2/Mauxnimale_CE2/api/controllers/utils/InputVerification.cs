@@ -77,5 +77,32 @@ namespace Mauxnimale_CE2.api.controllers.utils
         {
             return date1.CompareTo(date2) < 0;
         }
+
+        /// <summary>
+        /// Méthode permettant de normaliser le prénom du nouveau client.
+        /// C'est à dire première lettre en majuscule et le reste en minuscule.
+        /// </summary>
+        /// <returns>Le prénom normalisé</returns>
+        public static string capitalizeText(string text)
+        {
+            char[] letters = text.ToCharArray();
+            string textWithCapital = "";
+            string letter;
+            bool firstLetter = true;
+            foreach (char c in letters)
+            {
+                if (firstLetter)
+                {
+                    letter = c.ToString().ToUpper();
+                    firstLetter = false;
+                }
+                else
+                {
+                    letter = c.ToString().ToLower();
+                }
+                textWithCapital += letter;
+            }
+            return textWithCapital;
+        }
     }
 }

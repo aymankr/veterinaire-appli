@@ -29,10 +29,14 @@ namespace Mauxnimale_CE2.ui
             footer = new Footer(window, base.user);
         }
 
+        /// <summary>
+        /// Permet de générer tous les éléments de la fenêtre.
+        /// </summary>
         public override void load()
         {
             header.load("Gestions des maladies et soins");
             footer.load();
+            GenerateBackButton();
             GenerateListBox();
             GenerateTextBox();
             GenerateButton();
@@ -40,6 +44,10 @@ namespace Mauxnimale_CE2.ui
             AddDataInCares();
         }
 
+
+        /// <summary>
+        /// Pemet d'afficher toutes les maladies.
+        /// </summary>
         private void AddDataInDiseases()
         {
             diseasesLB.Items.Clear();
@@ -50,6 +58,10 @@ namespace Mauxnimale_CE2.ui
             }
         }
         
+        /// <summary>
+        /// Permet d'ajouter tous les soin si l'utilisateur n'a pas choisi de maladie.
+        /// Permet d'ajouter tous les soins associées à une maladie si l'utilisateur en a choisi une.
+        /// </summary>
         private void AddDataInCares()
         {
             if(selectedDisease == null)
@@ -71,6 +83,9 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        /// <summary>
+        /// Pemrete de générer les boutons
+        /// </summary>
         public void GenerateButton()
         {
             newDisease = new UIButton(UIColor.ORANGE, "Nouveau", window.Width / 8)
@@ -119,7 +134,7 @@ namespace Mauxnimale_CE2.ui
         }
 
         /// <summary>
-        /// Permet de générer toutes les ComboBox de l'interface.s
+        /// Permet de générer toutes les ComboBox de l'interface
         /// </summary>
         public void GenerateListBox()
         {
@@ -146,6 +161,9 @@ namespace Mauxnimale_CE2.ui
             caresLB.SelectedIndexChanged += new EventHandler(CareSelection);
         }
 
+        /// <summary>
+        /// Permet de générer les TextBox, alias les barres de recherches.
+        /// </summary>
         private void GenerateTextBox()
         {
             researchDisease = new TextBox
@@ -175,6 +193,11 @@ namespace Mauxnimale_CE2.ui
             researchCare.GotFocus += new EventHandler(GotFocus);
         }
 
+        /// <summary>
+        /// Permet de changer le texte quand l'utilisateur clic sur les barres de recherche.
+        /// </summary>
+        /// <param name="sender">Les barres de recherches</param>
+        /// <param name="e">Prise de focus</param>
         private void GotFocus(object sender, EventArgs e)
         {
             if(sender.Equals(researchCare) && researchCare.Text == "Recherche...")
@@ -334,5 +357,22 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        #region BackButton
+        private void GenerateBackButton()
+        {
+            backButton = new UIRoundButton(window.Width / 20, "<")
+            {
+                Location = new Point(window.Width * 9 / 10, window.Height / 10)
+            };
+            window.Controls.Add(backButton);
+            backButton.Click += new EventHandler(BackPage);
+        }
+
+        private void BackPage(object sender, EventArgs e)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceHome(window, user));
+        }
+        #endregion
     }
 }

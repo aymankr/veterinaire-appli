@@ -11,8 +11,8 @@ namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceNewCaresAndDiseases : AInterface
     {
-        Header header;
-        Footer footer;
+        readonly Header header;
+        readonly Footer footer;
 
         #region DiseaseForm
         Label nameDiseaseForm;
@@ -35,7 +35,9 @@ namespace Mauxnimale_CE2.ui
             footer = new Footer(window, base.user);
         }
 
-
+        /// <summary>
+        /// Permet de générer les éléments de la fenêtre.
+        /// </summary>
         public override void load()
         {
             header.load("Ajout d'une maladie ou d'un soin");
@@ -47,6 +49,7 @@ namespace Mauxnimale_CE2.ui
             GenerateCaresForm();
         }
 
+        #region BackButton
         private void GenerateBackButton()
         {
             backButton = new UIRoundButton(window.Width / 20, "<")
@@ -62,6 +65,7 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Clear();
             window.switchInterface(new InterfaceDiseaseAndCares(window, user));
         }
+        #endregion
 
         /// <summary>
         /// Permet de générer les élémetns du formulaire d'ajout d'une maladie.
@@ -146,7 +150,7 @@ namespace Mauxnimale_CE2.ui
             {
                 allPossibleCares.Items.Clear();
                 allPossibleCares.Items.Add(" ");
-                foreach(SOIN care in CareAndDiseaseController.ResearchCareByName(researchCare.Text))
+                foreach(SOIN care in CareAndDiseaseController.SearchCaresByNames(researchCare.Text))
                 {
                     allPossibleCares.Items.Add(care);
                 }
@@ -292,6 +296,7 @@ namespace Mauxnimale_CE2.ui
                 if (CareAndDiseaseController.AddCare(NormalizeName(careDescription.Text)))
                 {
                     MessageBox.Show("Le soin à été ajouté à la base.", "Comfirmation d'ajout", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    AddDataInCaresList();
                 } else
                 {
                     MessageBox.Show("Le soin est déjà présent dans la base.", "Annulation d'ajout", MessageBoxButtons.OK, MessageBoxIcon.Warning);

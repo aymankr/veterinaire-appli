@@ -37,7 +37,7 @@ namespace Mauxnimale_CE2.api.controllers
         {
             foreach(SOIN care in DbContext.get().SOIN)
             {
-                if(newCare == care)
+                if(newCare.DESCRIPTION == care.DESCRIPTION)
                 {
                     return true;
                 }
@@ -56,11 +56,21 @@ namespace Mauxnimale_CE2.api.controllers
             DbContext.get().SaveChanges();
         }
 
+        /// <summary>
+        /// Liste de tous les soins.
+        /// </summary>
+        /// <returns>La liste de tous les soins</returns>
         public static ICollection<SOIN> AllCares()
         {
             return DbContext.get().SOIN.ToList();
         }
 
+        /// <summary>
+        /// Permet d'ajouter une maladie à la base.
+        /// </summary>
+        /// <param name="name">Nom de la nouvelle maladie</param>
+        /// <param name="associatedCares">Les soins qui lui sont associés</param>
+        /// <returns></returns>
         public static bool AddDisease(string name, ICollection<SOIN> associatedCares)
         {
             MALADIE m = new MALADIE
@@ -90,7 +100,7 @@ namespace Mauxnimale_CE2.api.controllers
         private static bool DiseasesAlreadyExist(MALADIE testedDisease)
         {
             foreach(MALADIE currentDisease in DbContext.get().MALADIE){
-                if (currentDisease == testedDisease)
+                if (currentDisease.NOMMALADIE == testedDisease.NOMMALADIE && currentDisease.SOIN == testedDisease.SOIN)
                 {
                     return true;
                 }
@@ -98,6 +108,10 @@ namespace Mauxnimale_CE2.api.controllers
             return false;
         }
 
+        /// <summary>
+        /// Permet de supprimer une maladie de la base.
+        /// </summary>
+        /// <param name="disease">La maladie a enlever</param>
         public static void RemoveDisease(MALADIE disease)
         {
             disease.LIEN_MALADIE.Clear();
@@ -105,11 +119,20 @@ namespace Mauxnimale_CE2.api.controllers
             DbContext.get().SaveChanges();
         }
 
+        /// <summary>
+        /// Récupère toutes les maladies da la base.
+        /// </summary>
+        /// <returns>La liste de toutes les maladies</returns>
         public static ICollection<MALADIE> AllDiseases()
         {
             return DbContext.get().MALADIE.ToList();
         }
 
+        /// <summary>
+        /// Permet de rechercher une maladie en fonction de son nom.
+        /// </summary>
+        /// <param name="name">Partie du nom de la maladie</param>
+        /// <returns>La liste des maladies qui ont le nom recherché dans leur nom</returns>
         internal static ICollection<MALADIE> SearchDiseasesByName(string name)
         {
             var diseases = from d in DbContext.get().MALADIE
@@ -118,6 +141,11 @@ namespace Mauxnimale_CE2.api.controllers
             return diseases.ToList();
         }
 
+        /// <summary>
+        /// Permet de rechercher un soin en fonction de son nom.
+        /// </summary>
+        /// <param name="name">Partie du nom du soin</param>
+        /// <returns>La liste des soins qui ont le nom recherché dans leur nom</returns>
         internal static ICollection<SOIN> SearchCaresByNames(string name)
         {
             var cares = from c in DbContext.get().SOIN
@@ -126,17 +154,14 @@ namespace Mauxnimale_CE2.api.controllers
             return cares.ToList();
         }
 
+        /// <summary>
+        /// Permet de récupérer les soins liés à une maladie donnée.
+        /// </summary>
+        /// <param name="disease">Maladie</param>
+        /// <returns>La liste des soins associés à cette maladie</returns>
         internal static ICollection<SOIN> ListCaresByDisease(MALADIE disease)
         {
             return disease.SOIN.ToList();
-        }
-
-        internal static ICollection<SOIN> ResearchCareByName(string name)
-        {
-            var result = from c in DbContext.get().SOIN
-                         where c.DESCRIPTION.Contains(name)
-                         select c;
-            return result.ToList();
         }
 
         internal static bool UpdateDisease(MALADIE disease, string name, List<SOIN> cares)

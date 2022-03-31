@@ -292,7 +292,7 @@ namespace Mauxnimale_CE2.ui
             {
                 allPossibleCares.Items.Clear();
                 allPossibleCares.Items.Add(" ");
-                foreach (SOIN care in CareAndDiseaseController.ResearchCareByName(researchCare.Text))
+                foreach (SOIN care in CareAndDiseaseController.SearchCaresByNames(researchCare.Text))
                 {
                     allPossibleCares.Items.Add(care);
                 }
@@ -330,6 +330,7 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        #region BackButton
         private void GenerateBackButton()
         {
             backButton = new UIRoundButton(window.Width / 20, "<")
@@ -345,6 +346,7 @@ namespace Mauxnimale_CE2.ui
             window.Controls.Clear();
             window.switchInterface(new InterfaceDiseaseAndCares(window, user));
         }
+        #endregion
 
         /// <summary>
         /// Méthode permettant de normaliser le prénom du nouveau client.

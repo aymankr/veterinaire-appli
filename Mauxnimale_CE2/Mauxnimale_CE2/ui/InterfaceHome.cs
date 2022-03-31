@@ -10,6 +10,7 @@ using Mauxnimale_CE2.ui.employees;
 using Mauxnimale_CE2.ui.stocks;
 using Mauxnimale_CE2.ui.appointments;
 using Mauxnimale_CE2.ui.stats;
+using Mauxnimale_CE2.api.controllers;
 
 namespace Mauxnimale_CE2.ui
 {
@@ -59,9 +60,31 @@ namespace Mauxnimale_CE2.ui
             events.BackColor = Color.White;
             events.ReadOnly = true;
             events.Multiline = true;
-            events.Size = new System.Drawing.Size(window.Width * 25 / 100, window.Height * 45 / 100);
+            events.Size = new Size(window.Width * 25 / 100, window.Height * 45 / 100);
             events.Location = new Point(window.Width * 25 / 1000, window.Height * 3 / 10);
+            setEvents();
             window.Controls.Add(events);
+
+        }
+
+        private void setEvents()
+        {
+            JOURNEE today = DayController.getDay(DateTime.Today);
+            events.AppendText("Aujourd'hui" + today.ToString() + Environment.NewLine);
+            foreach(JOURNEE_SALARIE js in today.JOURNEE_SALARIE)
+            {
+                if (js.CONGE)
+                {
+                    events.AppendText(js.SALARIE + "est absent.e" + Environment.NewLine);
+                }
+            }
+            events.AppendText("Vos Rendez-Vous :" + Environment.NewLine);
+            foreach(RENDEZ_VOUS rdv in today.RENDEZ_VOUS)
+            {
+                events.AppendText(rdv + Environment.NewLine);
+            }
+
+
         }
 
         public void generateButton()

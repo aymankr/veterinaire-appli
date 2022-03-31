@@ -189,14 +189,14 @@ namespace Mauxnimale_CE2.ui.appointments
             createOrdonnance.Enabled = false;    
             #endregion
 
-            #region delete Button
+            #region deleteConsult Button
             deleteConsult = new UIButton(UIColor.DARKBLUE, "Supprimer Consultation", window.Width * 3 / 20);
             deleteConsult.Location = new Point(window.Width * 9 / 40, window.Height * 14 / 20);
             deleteConsult.Click += new EventHandler(deleteConsultClick);
             deleteConsult.Enabled = false;
             #endregion
 
-            #region delete Button
+            #region deletePrescri Button
             deletePrescri = new UIButton(UIColor.DARKBLUE, "Supprimer Ordonnance", window.Width * 3 / 20);
             deletePrescri.Location = new Point(window.Width * 9 / 40, window.Height * 14 / 20);
             deletePrescri.Click += new EventHandler(deletePrescriClick);
@@ -315,7 +315,7 @@ namespace Mauxnimale_CE2.ui.appointments
             {
                 prescription.AppendText("PAS D'ORDONNANCE POUR LE MOMENT");
             }else{
-                prescription.AppendText("Date : " +ordonnance.RENDEZ_VOUS.JOURNEE.DATE.Day + "/" + ordonnance.RENDEZ_VOUS.JOURNEE.DATE.Month + "/" + ordonnance.RENDEZ_VOUS.JOURNEE.DATE.Year + Environment.NewLine);
+                prescription.AppendText("Date : " + ordonnance.RENDEZ_VOUS.JOURNEE + Environment.NewLine);
                 prescription.AppendText("Horraire : " + ordonnance.RENDEZ_VOUS.HEUREDEBUT + " à " + ordonnance.RENDEZ_VOUS.HEUREFIN + Environment.NewLine);
                 prescription.AppendText("Client : " + ordonnance.RENDEZ_VOUS.CLIENT + Environment.NewLine);
                 prescription.AppendText("Animal : " + ordonnance.ANIMAL + Environment.NewLine);

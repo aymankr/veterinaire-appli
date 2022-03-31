@@ -147,6 +147,7 @@
     <Compile Include="api\entities\TYPE_RDV.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ui\appointments\InterfaceNewAppointmentType.cs" />
     <Compile Include="ui\appointments\InterfacePrescriptionCreation.cs" />
     <Compile Include="ui\diseasesAndCares\InterfaceUpdateCareOrDiseases.cs" />
     <Compile Include="ui\diseasesAndCares\InterfaceNewCaresAndDiseases.cs" />

@@ -3,30 +3,22 @@ using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.api.entities;
 
-namespace Mauxnimale_CE2.ui.stats
+namespace Mauxnimale_CE2.ui
 {
     internal class InterfaceStatsPage : AInterface
     {
-        Header header;
-        Footer footer;
+        readonly Header header;
+        readonly Footer footer;
 
         UIButton productPage, clientPage;
         UIRoundButton back;
 
-        /// <summary>
-        /// Constructeur de l'interface
-        /// </summary>
-        /// <param name="window"></param>
-        /// <param name="user"></param>
         public InterfaceStatsPage(MainWindow window, SALARIE user) : base(window, user)
         {
             header = new Header(window);
             footer = new Footer(window, user);
         }
 
-        /// <summary>
-        /// Fonction permettant de générer l'interface
-        /// </summary>
         public override void load()
         {
             header.load("Mauxnimale - Page Statistiques");
@@ -35,7 +27,7 @@ namespace Mauxnimale_CE2.ui.stats
         }
 
         /// <summary>
-        /// Génère les bouttons
+        /// Permet de générer les boutons de l'interface.
         /// </summary>
         public void generateButton()
         {
@@ -56,17 +48,26 @@ namespace Mauxnimale_CE2.ui.stats
             back.Click += new EventHandler(backClick);
         }
 
-
+        /// <summary>
+        /// Permet de charger les éléments de la page de statistique des produits.
+        /// </summary>
+        /// <param name="sender">Bouton stats produit</param>
+        /// <param name="e">clic</param>
         public void productPageClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            //form.changerClasse(new Interface...());
+            window.switchInterface(new InterfaceStatsProducts(window, user));
         }
 
+        /// <summary>
+        /// Permet de charger l'interface statistique client.
+        /// </summary>
+        /// <param name="sender">Bouton stats client</param>
+        /// <param name="e"></param>
         public void clientPageClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            //form.changerClasse(new Interface...());
+            window.switchInterface(new InterfaceStatsClient(window, user));
         }
 
         public void backClick(object sender, EventArgs e)

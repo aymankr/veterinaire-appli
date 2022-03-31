@@ -29,6 +29,15 @@ namespace Mauxnimale_CE2.api.controllers
         }
 
         /// <summary>
+        /// Permet de récupérer tous les animaux de la base.
+        /// </summary>
+        /// <returns></returns>
+        public static ICollection<ANIMAL> AllAnimals()
+        {
+            return DbContext.get().ANIMAL.ToList();
+        }
+
+        /// <summary>
         /// Méthode permettant d'ajouter à la base de données un animal.
         /// </summary>
         /// <param name="breed">La race de l'animal</param>
@@ -92,9 +101,9 @@ namespace Mauxnimale_CE2.api.controllers
 
             // On supprime l'animal
             animalToRemove.RENDEZ_VOUS.Clear();
-
-            DbContext.get().ANIMAL.Remove(animalToRemove);
-            DbContext.get().SaveChanges();
+            PT4_S4P2C_E2Entities dbContext = DbContext.get();
+            dbContext.ANIMAL.Remove(animalToRemove);
+            dbContext.SaveChanges();
         }
 
         /// <summary>

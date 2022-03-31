@@ -193,5 +193,46 @@ namespace Mauxnimale_CE2.api.controllers
             dbContext.TYPE_PRODUIT.Add(newType);
             dbContext.SaveChanges();
         }
+
+        /// <summary>
+        /// Permet de récupérer le top trois des produit trié par leur stock
+        /// </summary>
+        /// <returns>le tableau contenant les 3 types ayant le plus de produit</returns>
+        public static TYPE_PRODUIT[] getTypeProductOrderByStock()
+        {
+            
+            TYPE_PRODUIT[] types = DbContext.get().TYPE_PRODUIT.OrderBy(type => type.IDTYPE).ToArray();
+            int[] nbProducts = new int[types.Length];
+            int i = 0;
+            foreach(TYPE_PRODUIT typeProduct in types)
+            {
+                typeProduct.PRODUIT.ToList().ForEach(p => nbProducts[i] += p.QUANTITEENSTOCK);
+                i++;
+            }
+            TYPE_PRODUIT[] topTreeTypes = new TYPE_PRODUIT[3];
+            i = 0;
+            while (topTreeTypes[2] == null)
+            {
+                int max = 0;
+                int pos = 0;
+                int maxPos = 0;
+                foreach(int typeProduct in nbProducts)
+                {
+                    if(typeProduct > max)
+                    {
+                        max = typeProduct;
+                        topTreeTypes[i] = types[pos];
+                        Console.WriteLine(types[pos + 1]);
+                        maxPos = pos;
+                    } else
+                    {
+                        pos++;
+                    }
+                }
+                nbProducts[maxPos] = 0;
+                i++;
+            }
+            return topTreeTypes;
+        }
     }
 }

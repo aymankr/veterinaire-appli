@@ -21,13 +21,13 @@ namespace Mauxnimale_CE2.ui
         {
             header = new Header(window);
             footer = new Footer(window, user);
-            loginTextBox = generateLoginTextBox();
         }
 
         public override void load()
         {
             header.load("Mauxnimale - Création de compte");
             footer.load();
+            loginTextBox = generateLoginTextBox();
             generateButton();
             window.Controls.Add(generateSubmitButton());
             window.Controls.Add(loginTextBox);

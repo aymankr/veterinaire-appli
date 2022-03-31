@@ -14,7 +14,7 @@ namespace Mauxnimale_CE2.api.entities
     
     public partial class LIEN_SOIN
     {
-        public int LIENID { get; set; }
+        public int IDLIEN { get; set; }
         public int IDSOIN { get; set; }
         public int IDORDONNANCE { get; set; }
     

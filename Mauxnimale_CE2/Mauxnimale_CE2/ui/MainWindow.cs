@@ -12,7 +12,11 @@ namespace Mauxnimale_CE2
             InitializeComponent();
             Resize += new EventHandler(windowResize);
 
+<<<<<<< HEAD
             interfac = new InterfaceConnection(this, null);
+=======
+            interfac = new InterfaceAppointmentManagment(this, null);
+>>>>>>> 45636f7 (modification des ordonnance fonctionnelle)
             interfac.load();
 
             Refresh();

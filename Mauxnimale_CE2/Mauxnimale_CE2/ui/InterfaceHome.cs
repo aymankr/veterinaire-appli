@@ -9,6 +9,7 @@ using Mauxnimale_CE2.ui.accounts;
 using Mauxnimale_CE2.ui.employees;
 using Mauxnimale_CE2.ui.stocks;
 using Mauxnimale_CE2.ui.appointments;
+using Mauxnimale_CE2.ui.stats;
 
 namespace Mauxnimale_CE2.ui
 {

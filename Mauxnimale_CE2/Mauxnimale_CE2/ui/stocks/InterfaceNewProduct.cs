@@ -1,14 +1,14 @@
-﻿using Mauxnimale_CE2.api.controllers;
-using Mauxnimale_CE2.api.entities;
-using Mauxnimale_CE2.ui.components;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
+using Mauxnimale_CE2.api.controllers;
+using Mauxnimale_CE2.api.entities;
 
-namespace Mauxnimale_CE2.ui
+namespace Mauxnimale_CE2.ui.stocks
 {
-    internal class InterfaceNewProduct : AInterface
+    public class InterfaceNewProduct : AInterface
     {
         private Header _header;
         private Footer _footer;

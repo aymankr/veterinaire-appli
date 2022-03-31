@@ -32,51 +32,6 @@ namespace Mauxnimale_CE2.ui.accounts
         /// <summary>
         /// Fonction permettant de générer l'interface
         /// </summary>
-        public void newIDLeave(object sender, EventArgs e)
-        {
-            if (newID.Text.Length == 0)
-            {
-                newID.Text = "Nouvel identifiant";
-            }
-        }
-
-        public void oldIDLeave(object sender, EventArgs e)
-        {
-            if (oldID.Text.Length == 0)
-            {
-                oldID.Text = "Ancien identifiant";
-            }
-        }
-
-        public void confirmIDLeave(object sender, EventArgs e)
-        {
-            if (confirmID.Text.Length == 0)
-            {
-                confirmID.Text = "Confirmez l'identifiant";
-            }
-        }
-        public void confirmIDClick(object sender, EventArgs e)
-        {
-            if (confirmID.Text.Length != 0 && oldID.Text.Length != 0 && newID.Text.Length != 0 && confirmID.Text != "Confirmez l'identifiant" && newID.Text != "Nouveau identifiant" && oldID.Text != "Ancien identifiant")
-            {
-                UserController.updateLogin(user, confirmID.Text);
-                window.Controls.Clear();
-                window.switchInterface(new InterfaceAccountManagement(window, user));
-            }
-        }
-
-        public void homeClick(object sender, EventArgs e)
-        {
-            window.Controls.Clear();
-            window.switchInterface(new InterfaceHome(window, user));
-        }
-
-        public void backClick(object sender, EventArgs e)
-        {
-            window.Controls.Clear();
-            window.switchInterface(new InterfaceAccountManagement(window, user));
-        }
-
         public override void load()
         {
             header.load("Plannimaux - Changement d'identifiant");

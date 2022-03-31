@@ -9,7 +9,7 @@ using Mauxnimale_CE2.api.entities;
 
 namespace Mauxnimale_CE2.ui.stocks
 {
-    internal class InterfaceStockManagement : AInterface
+    public class InterfaceStockManagement : AInterface
     {
         private Header _header;
         private Footer _footer;
@@ -20,7 +20,7 @@ namespace Mauxnimale_CE2.ui.stocks
         private ProductTypesComboBox _productsType;
         private TextBox _productsNameFilter;
 
-        private UIButton _newProductButton;
+        private UIButton _newProductButton, _typeButton;
 
 
         /// <summary>
@@ -51,6 +51,8 @@ namespace Mauxnimale_CE2.ui.stocks
 
             // Données
             addAllProducts();
+
+            window.Controls.Add(_productsContainer);
         }
 
         private void generateProductsType()
@@ -62,6 +64,8 @@ namespace Mauxnimale_CE2.ui.stocks
 
             // Evenements
             _productsType.SelectedIndexChanged += onTypeSelected;
+
+            window.Controls.Add(_productsType);
         }
 
         private void generateProductsNameFilter()
@@ -73,6 +77,8 @@ namespace Mauxnimale_CE2.ui.stocks
 
             // Evenement
             _productsNameFilter.TextChanged += onProductNameFilterType;
+
+            window.Controls.Add(_productsNameFilter);
         }
 
         private void generateBackButton()
@@ -80,13 +86,25 @@ namespace Mauxnimale_CE2.ui.stocks
             _back = new UIRoundButton(window.Width / 20, "<");
             _back.Location = new Point(window.Width * 9 / 10, window.Height / 10);
             _back.Click += new EventHandler(backClick);
+            window.Controls.Add(_back);
         }
 
         private void generateNewProductButton()
         {
             _newProductButton = new UIButton(UIColor.ORANGE, "Ajouter un nouveau produit", window.Width / 8);
-            _newProductButton.Location = new Point(window.Width / 2 - _newProductButton.Width / 2, _productsContainer.Bottom + 15);
+            _newProductButton.Height = window.Height / 20;
+            _newProductButton.Location = new Point(window.Width / 2 - _newProductButton.Width - 20, _productsContainer.Bottom + 15);
             _newProductButton.Click += onNewProductButtonClick;
+            window.Controls.Add(_newProductButton);
+        }
+
+        private void generateTypeButton()
+        {
+            _typeButton = new UIButton(UIColor.ORANGE, "Gérer les types de produit", window.Width / 8);
+            _typeButton.Height = _newProductButton.Height;
+            _typeButton.Location = new Point(window.Width / 2 + 20, _newProductButton.Top);
+            _typeButton.Click += onTypeButtonClick;
+            window.Controls.Add(_typeButton);
         }
 
         #endregion
@@ -96,7 +114,7 @@ namespace Mauxnimale_CE2.ui.stocks
         /// <summary>
         /// Retourne au menu principal.
         /// </summary>
-        public void backClick(object sender, EventArgs e)
+        private void backClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
             window.switchInterface(new InterfaceHome(window, user));
@@ -105,10 +123,19 @@ namespace Mauxnimale_CE2.ui.stocks
         /// <summary>
         /// Remplace l'interface actuelle par celle de l'ajout d'un produit.
         /// </summary>
-        public void onNewProductButtonClick(object sender, EventArgs e)
+        private void onNewProductButtonClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
             window.switchInterface(new InterfaceNewProduct(window, user));
+        }
+
+        /// <summary>
+        /// Remplace l'interface actuelle par celle de gestion des types de produit.
+        /// </summary>
+        private void onTypeButtonClick(object sender, EventArgs eventArgs)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceProductsTypeManagement(window, user));
         }
 
         /// <summary>
@@ -274,12 +301,7 @@ namespace Mauxnimale_CE2.ui.stocks
             generateProductsType();
             generateProductsNameFilter();
             generateNewProductButton();
-
-            window.Controls.Add(_back);
-            window.Controls.Add(_newProductButton);
-            window.Controls.Add(_productsContainer);
-            window.Controls.Add(_productsType);
-            window.Controls.Add(_productsNameFilter);
+            generateTypeButton();
         }
     }
 }

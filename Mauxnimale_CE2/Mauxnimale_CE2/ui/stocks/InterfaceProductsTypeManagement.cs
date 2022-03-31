@@ -8,7 +8,7 @@ using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.controllers;
 using Mauxnimale_CE2.api.entities;
 
-namespace Mauxnimale_CE2.ui
+namespace Mauxnimale_CE2.ui.stocks
 {
     public class InterfaceProductsTypeManagement : AInterface
     {

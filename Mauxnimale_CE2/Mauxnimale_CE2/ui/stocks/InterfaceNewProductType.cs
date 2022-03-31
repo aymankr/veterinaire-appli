@@ -6,7 +6,7 @@ using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.controllers;
 using Mauxnimale_CE2.api.entities;
 
-namespace Mauxnimale_CE2.ui
+namespace Mauxnimale_CE2.ui.stocks
 {
     public class InterfaceNewProductType : AInterface
     {
@@ -126,7 +126,7 @@ namespace Mauxnimale_CE2.ui
 
         public override void load()
         {
-            _header.load("Mauxnimale - Ajout d'un nouveau type de produit");
+            _header.load("Mauxnimale - Nouveau type de produit");
             _footer.load();
 
             generateNameBox();

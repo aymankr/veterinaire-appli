@@ -164,10 +164,7 @@
     <Compile Include="ui\components\StockProduct.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ui\InterfaceDiseaseAndCares.cs" />
-    <Compile Include="ui\InterfaceNewCaresAndDiseases.cs" />
-    <Compile Include="ui\InterfaceNewProductType.cs" />
-    <Compile Include="ui\InterfacePrescriptionCreation.cs" />
+    <Compile Include="ui\stocks\InterfaceNewProductType.cs" />
     <Compile Include="ui\components\EmployeesComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -206,16 +203,17 @@
     <Compile Include="ui\accounts\InterfaceConnection.cs" />
     <Compile Include="ui\accounts\InterfaceAccountManagement.cs" />
     <Compile Include="ui\employees\InterfaceVacationManagement.cs" />
-    <Compile Include="ui\InterfaceSell.cs" />
+    <Compile Include="ui\stocks\InterfaceProductsTypeManagement.cs" />
+    <Compile Include="ui\stocks\InterfaceSell.cs" />
     <Compile Include="ui\InterfaceHome.cs" />
     <Compile Include="ui\accounts\InterfaceInscription.cs" />
     <Compile Include="ui\InterfaceLegalMentions.cs" />
     <Compile Include="ui\clients\InterfaceUpdateRelatedToAnimals.cs" />
     <Compile Include="ui\clients\InterfaceNewsRelatedToAnimals.cs" />
+    <Compile Include="ui\stocks\InterfaceUpdateProduct.cs" />
     <Compile Include="ui\stats\InterfaceStatsPage.cs" />
     <Compile Include="ui\clients\InterfaceUpdateClient.cs" />
-    <Compile Include="ui\InterfaceStockManagement.cs" />
-    <Compile Include="ui\InterfaceNewProduct.cs" />
+    <Compile Include="ui\stocks\InterfaceNewProduct.cs" />
     <Compile Include="ui\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -229,6 +227,7 @@
       <DependentUpon>UIRoundButton.cs</DependentUpon>
     </Compile>
     <Compile Include="ui\clients\InterfaceNewClient.cs" />
+    <Compile Include="ui\stocks\InterfaceStockManagement.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

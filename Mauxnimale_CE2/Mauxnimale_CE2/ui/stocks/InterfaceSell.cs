@@ -2,17 +2,19 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using Mauxnimale_CE2.ui.clients;
 using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.controllers;
 using Mauxnimale_CE2.api.entities;
 
-namespace Mauxnimale_CE2.ui
+namespace Mauxnimale_CE2.ui.stocks
 {
     internal class InterfaceSell : AInterface
     {
         private Header _header;
         private Footer _footer;
+        private UIRoundButton _back;
 
         private Label _productsLabel;
         private CheckedListBox _products;
@@ -37,19 +39,6 @@ namespace Mauxnimale_CE2.ui
             _footer = new Footer(window, user);
 
             _productsAdded = new List<SellProduct>();
-
-            generateProductsList();
-            generateProductsType();
-            generateProductsNameFilter();
-
-            generateClientsList();
-            generateClientsNameFilter();
-
-            generateSellVisual();
-            generateSellTotal();
-
-            generateButtons();
-            generateLabels();
         }
 
         #region Génération des composants de l'interface
@@ -67,6 +56,8 @@ namespace Mauxnimale_CE2.ui
 
             // Evénements
             _products.ItemCheck += onProductCheckedChange;
+
+            window.Controls.Add(_products);
         }
 
         private void generateProductsType()
@@ -78,6 +69,8 @@ namespace Mauxnimale_CE2.ui
 
             // Evenements
             _productsType.SelectedIndexChanged += onTypeSelected;
+
+            window.Controls.Add(_productsType);
         }
 
         private void generateProductsNameFilter()
@@ -89,6 +82,8 @@ namespace Mauxnimale_CE2.ui
 
             // Evenement
             _productsNameFilter.TextChanged += onProductNameFilterType;
+
+            window.Controls.Add(_productsNameFilter);
         }
 
         private void generateClientsList()
@@ -100,6 +95,8 @@ namespace Mauxnimale_CE2.ui
 
             // Evénements
             _clients.SelectedValueChanged += onClientChoosed;
+
+            window.Controls.Add(_clients);
         }
 
         private void generateClientsNameFilter()
@@ -111,6 +108,8 @@ namespace Mauxnimale_CE2.ui
 
             // Evenement
             _clientsNameFilter.TextChanged += onClientNameFilterType;
+
+            window.Controls.Add(_clientsNameFilter);
         }
 
         private void generateSellVisual()
@@ -121,6 +120,8 @@ namespace Mauxnimale_CE2.ui
             _sellVisual.Size = new Size(window.Width / 4, window.Height / 2);
             _sellVisual.Location = new Point(_clients.Right + window.Width / 20, window.Height / 4);
             _sellVisual.BorderStyle = BorderStyle.FixedSingle;
+
+            window.Controls.Add(_sellVisual);
         }
 
         private void generateSellTotal()
@@ -138,17 +139,28 @@ namespace Mauxnimale_CE2.ui
         private void generateButtons()
         {
             _stockButton = new UIButton(UIColor.ORANGE, "Gestion du stock", window.Width / 5);
+            _stockButton.Height = window.Height / 20;
             _stockButton.Location = new Point(_products.Left + _products.Width / 2 - _stockButton.Width / 2, _products.Bottom + 10);
             _stockButton.Click += onStockButtonClick;
+            window.Controls.Add(_stockButton);
 
             _clientsButton = new UIButton(UIColor.ORANGE, "Gestion des clients", window.Width / 5);
+            _clientsButton.Height = window.Height / 20;
             _clientsButton.Location = new Point(_clients.Left + _clients.Width / 2 - _clientsButton.Width / 2, _clients.Bottom + 10);
             _clientsButton.Click += onClientsButtonClick;
+            window.Controls.Add(_clientsButton);
 
             _sellButton = new UIButton(UIColor.ORANGE, "Réaliser la vente", window.Width / 5);
+            _sellButton.Height = window.Height / 20;
             _sellButton.Location = new Point(_sellVisual.Left + _sellVisual.Width / 2 - _sellButton.Width / 2, _sellVisual.Bottom + 10);
             _sellButton.Click += onSellButtonClick;
             _sellButton.Enabled = false;
+            window.Controls.Add(_sellButton);
+
+            _back = new UIRoundButton(window.Width / 20, "<");
+            _back.Location = new Point(window.Width * 9 / 10, window.Height / 10);
+            _back.Click += new EventHandler(backClick);
+            window.Controls.Add(_back);
         }
 
         private void generateLabels()
@@ -159,6 +171,7 @@ namespace Mauxnimale_CE2.ui
             _productsLabel.Text = "Produits";
             _productsLabel.Font = new Font("Poppins", window.Height * 3 / 100);
             _productsLabel.ForeColor = Color.Gray;
+            window.Controls.Add(_productsLabel);
 
             _clientsLabel = new Label();
             _clientsLabel.Size = new Size(window.Width / 4, window.Height / 20);
@@ -166,6 +179,7 @@ namespace Mauxnimale_CE2.ui
             _clientsLabel.Text = "Clients";
             _clientsLabel.Font = new Font("Poppins", window.Height * 3 / 100);
             _clientsLabel.ForeColor = Color.Gray;
+            window.Controls.Add(_clientsLabel);
 
             _sellVisualLabel = new Label();
             _sellVisualLabel.Size = new Size(window.Width / 4, window.Height / 20);
@@ -173,11 +187,21 @@ namespace Mauxnimale_CE2.ui
             _sellVisualLabel.Text = "Vente en cours";
             _sellVisualLabel.Font = new Font("Poppins", window.Height * 3 / 100);
             _sellVisualLabel.ForeColor = Color.Gray;
+            window.Controls.Add(_sellVisualLabel);
         }
 
         #endregion
 
         #region Gestion des événements
+
+        /// <summary>
+        /// Retourne au menu principal.
+        /// </summary>
+        public void backClick(object sender, EventArgs e)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceHome(window, user));
+        }
 
         /// <summary>
         /// Remplace l'interface actuelle par celle de gestion du stock de produits.
@@ -445,20 +469,18 @@ namespace Mauxnimale_CE2.ui
             _header.load("Plannimaux - Réaliser une vente");
             _footer.load();
 
-            window.Controls.Add(_products);
-            window.Controls.Add(_productsType);
-            window.Controls.Add(_productsNameFilter);
-            window.Controls.Add(_productsLabel);
-            window.Controls.Add(_stockButton);
+            generateProductsList();
+            generateProductsType();
+            generateProductsNameFilter();
 
-            window.Controls.Add(_clients);
-            window.Controls.Add(_clientsNameFilter);
-            window.Controls.Add(_clientsLabel);
-            window.Controls.Add(_clientsButton);
+            generateClientsList();
+            generateClientsNameFilter();
 
-            window.Controls.Add(_sellVisual);
-            window.Controls.Add(_sellVisualLabel);
-            window.Controls.Add(_sellButton);
+            generateSellVisual();
+            generateSellTotal();
+
+            generateButtons();
+            generateLabels();
         }
     }
 }

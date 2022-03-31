@@ -6,9 +6,9 @@ using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.controllers;
 using Mauxnimale_CE2.api.entities;
 
-namespace Mauxnimale_CE2.ui
+namespace Mauxnimale_CE2.ui.stocks
 {
-    internal class InterfaceUpdateProduct : AInterface
+    public class InterfaceUpdateProduct : AInterface
     {
         private PRODUIT _product;
 

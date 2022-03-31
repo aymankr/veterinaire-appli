@@ -170,7 +170,7 @@ namespace Mauxnimale_CE2.ui.appointments
             medsComboBox.TextChanged += new EventHandler(MedsComboSearch);
             medsComboBox.GotFocus += new EventHandler(MedsComboSearch);
             medsComboBox.SelectedIndexChanged += new EventHandler(MedsComboSearch);
-            foreach(PRODUIT med in ProductController.getProducts())
+            foreach(PRODUIT med in ProductController.getProducts(true))
             {
                 medsComboBox.Items.Add(med);
             }
@@ -355,7 +355,7 @@ namespace Mauxnimale_CE2.ui.appointments
             
             if (medsComboBox.Text.Length == 0)
             {
-                ICollection<PRODUIT> produits = ProductController.getProducts();
+                ICollection<PRODUIT> produits = ProductController.getProducts(true);
                 foreach(PRODUIT product in produits)
                 {
                     medsComboBox.Items.Add(product);
@@ -363,7 +363,7 @@ namespace Mauxnimale_CE2.ui.appointments
             }
             else
             {
-                List<PRODUIT> produits = ProductController.getByName(medsComboBox.Text);
+                List<PRODUIT> produits = ProductController.getProductsByName(medsComboBox.Text, true);
                 foreach (PRODUIT product in produits)
                 {
                     medsComboBox.Items.Add(product);

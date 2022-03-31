@@ -32,7 +32,7 @@ namespace Mauxnimale_CE2.api.controllers
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static ICollection<PRODUIT> getProductsFromType(TYPE_PRODUIT type)
+        public static List<PRODUIT> getProductsFromType(TYPE_PRODUIT type)
         {
             List<PRODUIT> products = (from p in DbContext.get().PRODUIT
                                 where p.IDTYPE == type.IDTYPE
@@ -65,20 +65,59 @@ namespace Mauxnimale_CE2.api.controllers
         /// Récupérer tous les produits
         /// </summary>
         /// <returns></returns>
-        public static ICollection<PRODUIT> getProducts()
+        public static List<PRODUIT> getProducts()
         {
-            return (from p in DbContext.get().PRODUIT
-                    select p).ToList();
+            return DbContext.get().PRODUIT.ToList();
+        }
+
+        /// <summary>
+        /// Récupère les produits dont le nom contient la chaine donnée en paramètre.
+        /// </summary>
+        /// <param name="name">Le nom ou partie du nom du produit</param>
+        /// <returns>les produits dont le nom contient la chaine donnée en paramètre</returns>
+        public static List<PRODUIT> getProductsByName(string name)
+        {
+            return DbContext.get().PRODUIT.Where(p => p.NOMPRODUIT.Contains(name)).ToList();
+        }
+
+        /// <summary>
+        /// Récupère les produits dont le nom contient la chaine donnée en paramètre et correspondant au type donné.
+        /// </summary>
+        /// <param name="name">Le nom ou partie du nom du produit</param>
+        /// <param name="type">Le type des produits</param>
+        /// <returns>les produits dont le nom contient la chaine donnée en paramètre et le dont le type correspond à celui donné</returns>
+        public static List<PRODUIT> getProductsByNameAndType(string name, TYPE_PRODUIT type)
+        {
+            return DbContext.get().PRODUIT.Where(p => p.NOMPRODUIT.Contains(name) && p.IDTYPE.Equals(type.IDTYPE)).ToList();
+        }
+
+        /// <summary>
+        /// Récupère le produit avec l'id donné s'il existe.
+        /// </summary>
+        /// <param name="id">l'id du produit</param>
+        /// <returns>le produit avec l'id donné ou null s'il n'existe pas</returns>
+        public static PRODUIT getProductById(int id)
+        {
+            return DbContext.get().PRODUIT.Find(id);
         }
 
         /// <summary>
         /// Récupérer tous les types de produit
         /// </summary>
         /// <returns></returns>
-        public static ICollection<TYPE_PRODUIT> getTypes()
+        public static List<TYPE_PRODUIT> getTypes()
         {
-            return (from t in DbContext.get().TYPE_PRODUIT
-                                      select t).ToList();
+            return DbContext.get().TYPE_PRODUIT.ToList();
+        }
+
+        /// <summary>
+        /// Retrouve un produit par son ID.
+        /// </summary>
+        /// <param name="id">l'id du type à chercher</param>
+        /// <returns>Le type du produit avec l'id correspondant ou null si non trouvé</returns>
+        public static TYPE_PRODUIT getTypeById(int id)
+        {
+            return DbContext.get().TYPE_PRODUIT.Find(id);
         }
 
         /// <summary>

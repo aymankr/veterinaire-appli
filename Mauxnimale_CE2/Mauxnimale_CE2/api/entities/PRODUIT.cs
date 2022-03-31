@@ -38,7 +38,7 @@ namespace Mauxnimale_CE2.api.entities
 
         public override string ToString()
         {
-            return NOMPRODUIT + " : " + QUANTITEENSTOCK + " en stock";
+            return NOMPRODUIT + " : " + PRIXDEVENTECLIENT + " € (En stock : " + QUANTITEENSTOCK + ")";
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Mauxnimale_CE2.ui.employees
 
         private SALARIE _selectedEmployee;
 
-        private ComboBox _employeesList;
+        private EmployeesComboBox _employeesList;
         private TextBox _lastName, _firstName, _salary;
         private DateTimePicker _internshipStart, _internshipEnd;
 
@@ -29,6 +29,14 @@ namespace Mauxnimale_CE2.ui.employees
         {
             _header = new Header(window);
             _footer = new Footer(window, user);
+            _selectedEmployee = null;
+
+            generateHomeButton();
+            generateComboBox();
+            generateVacationButton();
+            generateForm();
+            generateModifyInfosButton();
+            setFormEnabled(false);
         }
 
         #region Components generation
@@ -53,18 +61,18 @@ namespace Mauxnimale_CE2.ui.employees
 
         private void generateVacationButton()
         {
-            _vacationManagementButton = new UIButton(UIColor.ORANGE, "Gestion des congés", window.Width/4);
+            _vacationManagementButton = new UIButton(UIColor.ORANGE, "Gestion des congés", 200);
             _vacationManagementButton.Name = "VacationManagementButon";
             _vacationManagementButton.Location = new Point(_employeesList.Location.X + _employeesList.Width / 2 - _vacationManagementButton.Width / 2,
-                                                           window.Height * 7 / 10);
+                                                           window.Height - 300);
             _vacationManagementButton.Click += new EventHandler(onVacationManagementButtonClick);
         }
 
         private void generateModifyInfosButton()
         {
-            _modifyInfosButton = new UIButton(UIColor.ORANGE, "Modifier les informations", window.Width / 4);
+            _modifyInfosButton = new UIButton(UIColor.ORANGE, "Modifier les informations", 200);
             _modifyInfosButton.Name = "ModifyInfosButton";
-            _modifyInfosButton.Location = new Point(_salary.Location.X + _salary.Width / 2 - _modifyInfosButton.Width / 2, window.Height *7/10);
+            _modifyInfosButton.Location = new Point(_salary.Location.X + _salary.Width / 2 - _modifyInfosButton.Width / 2, window.Height - 300);
             _modifyInfosButton.Click += new EventHandler(onModifyInfosClick);
             _modifyInfosButton.Enabled = false;
 

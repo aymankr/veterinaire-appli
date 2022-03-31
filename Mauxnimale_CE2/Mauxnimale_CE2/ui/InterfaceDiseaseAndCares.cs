@@ -29,10 +29,14 @@ namespace Mauxnimale_CE2.ui
             footer = new Footer(window, base.user);
         }
 
+        /// <summary>
+        /// Permet de générer tous les éléments de la fenêtre.
+        /// </summary>
         public override void load()
         {
             header.load("Gestions des maladies et soins");
             footer.load();
+            GenerateBackButton();
             GenerateListBox();
             GenerateTextBox();
             GenerateButton();
@@ -40,6 +44,10 @@ namespace Mauxnimale_CE2.ui
             AddDataInCares();
         }
 
+
+        /// <summary>
+        /// Pemet d'afficher toutes les maladies.
+        /// </summary>
         private void AddDataInDiseases()
         {
             diseasesLB.Items.Clear();
@@ -50,6 +58,10 @@ namespace Mauxnimale_CE2.ui
             }
         }
         
+        /// <summary>
+        /// Permet d'ajouter tous les soin si l'utilisateur n'a pas choisi de maladie.
+        /// Permet d'ajouter tous les soins associées à une maladie si l'utilisateur en a choisi une.
+        /// </summary>
         private void AddDataInCares()
         {
             if(selectedDisease == null)
@@ -71,6 +83,9 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        /// <summary>
+        /// Pemrete de générer les boutons
+        /// </summary>
         public void GenerateButton()
         {
             newDisease = new UIButton(UIColor.ORANGE, "Nouveau", window.Width / 8)
@@ -119,7 +134,7 @@ namespace Mauxnimale_CE2.ui
         }
 
         /// <summary>
-        /// Permet de générer toutes les ComboBox de l'interface.s
+        /// Permet de générer toutes les ComboBox de l'interface
         /// </summary>
         public void GenerateListBox()
         {
@@ -146,6 +161,9 @@ namespace Mauxnimale_CE2.ui
             caresLB.SelectedIndexChanged += new EventHandler(CareSelection);
         }
 
+        /// <summary>
+        /// Permet de générer les TextBox, alias les barres de recherches.
+        /// </summary>
         private void GenerateTextBox()
         {
             researchDisease = new TextBox
@@ -175,6 +193,11 @@ namespace Mauxnimale_CE2.ui
             researchCare.GotFocus += new EventHandler(GotFocus);
         }
 
+        /// <summary>
+        /// Permet de changer le texte quand l'utilisateur clic sur les barres de recherche.
+        /// </summary>
+        /// <param name="sender">Les barres de recherches</param>
+        /// <param name="e">Prise de focus</param>
         private void GotFocus(object sender, EventArgs e)
         {
             if(sender.Equals(researchCare) && researchCare.Text == "Recherche...")
@@ -227,6 +250,11 @@ namespace Mauxnimale_CE2.ui
             }
         }
 
+        /// <summary>
+        /// Permet d'afficher les boutons de suppression liés à un soin.
+        /// </summary>
+        /// <param name="sender">Liste contenant les soins</param>
+        /// <param name="e">Sélection d'un soin</param>
         private void CareSelection(object sender, EventArgs e)
         {
             selectedCare = (caresLB.SelectedItem != " ") ? (SOIN)caresLB.SelectedItem : null;
@@ -242,6 +270,11 @@ namespace Mauxnimale_CE2.ui
             window.Refresh();
         }
 
+        /// <summary>
+        /// Permet d'afficher les boutons de suppression liés à une maladie.
+        /// </summary>
+        /// <param name="sender">Liste contenant les maladies</param>
+        /// <param name="e">Sélection d'un soin</param>
         private void DiseaseSelection(object sender, EventArgs e)
         {
             selectedDisease = (diseasesLB.SelectedItem != " ") ? (MALADIE)diseasesLB.SelectedItem : null;
@@ -262,6 +295,11 @@ namespace Mauxnimale_CE2.ui
             window.Refresh();
         }
         
+        /// <summary>
+        /// Permet de supprimer un soin.
+        /// </summary>
+        /// <param name="sender">Bouton de suppression</param>
+        /// <param name="e">clic</param>
         private void DeleteCare(object sender, EventArgs e)
         {
             var result = MessageBox.Show("Êtes vous sure de vouloir supprimer ce soin. Cette action sera IRRÉVERSIBLE.", "Demande de comfirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
@@ -269,14 +307,16 @@ namespace Mauxnimale_CE2.ui
             {
                 CareAndDiseaseController.RemoveCare(selectedCare);
                 MessageBox.Show("Le soin a été supprimé avec succès.", "Validation de suppression", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                AddDataInCares();
+                AddDataInDiseases();
             }
         }
 
-        private void OpenUpdateCareAndDiseaseInterface(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// Permet de supprimer une maladie.
+        /// </summary>
+        /// <param name="sender">Bouton de suppression</param>
+        /// <param name="e">clic</param>
         private void DeleteDisease(object sender, EventArgs e)
         {
             var result = MessageBox.Show("Êtes vous sure de vouloir supprimer cette maladie. Cette action sera IRRÉVERSIBLE.", "Demande de comfirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
@@ -284,13 +324,55 @@ namespace Mauxnimale_CE2.ui
             {
                 CareAndDiseaseController.RemoveDisease(selectedDisease);
                 MessageBox.Show("La maladie a été supprimée avec succès.", "Validation de suppression", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                AddDataInDiseases();
+                AddDataInCares();
             }
         }
 
+        /// <summary>
+        /// Permet de lancer l'interface d'ajout de soins et maladies.
+        /// </summary>
+        /// <param name="sender">Tous les boutons "nouveau"</param>
+        /// <param name="e">clic</param>
         private void OpenNewCareAndDiseseaseInterface(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceNewCaresAndDiseases(window, user));
         }
 
+        /// <summary>
+        /// Permet de lancer l'interface de modification suivant l'élément choisi.
+        /// </summary>
+        /// <param name="sender">Bouton de modification d'une maladie ou d'un soin</param>
+        /// <param name="e">clic</param>
+        private void OpenUpdateCareAndDiseaseInterface(object sender, EventArgs e)
+        {
+            window.Controls.Clear();
+            if (sender.Equals(updateDisease))
+            {
+                window.switchInterface(new InterfaceUpdateCareOrDiseases(window, user, selectedDisease));
+            } else if (sender.Equals(updateCare))
+            {
+                window.switchInterface(new InterfaceUpdateCareOrDiseases(window, user, selectedCare));
+            }
+        }
+
+        #region BackButton
+        private void GenerateBackButton()
+        {
+            backButton = new UIRoundButton(window.Width / 20, "<")
+            {
+                Location = new Point(window.Width * 9 / 10, window.Height / 10)
+            };
+            window.Controls.Add(backButton);
+            backButton.Click += new EventHandler(BackPage);
+        }
+
+        private void BackPage(object sender, EventArgs e)
+        {
+            window.Controls.Clear();
+            window.switchInterface(new InterfaceHome(window, user));
+        }
+        #endregion
     }
 }

@@ -5,12 +5,14 @@ using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.api.controllers;
+using Mauxnimale_CE2.ui.appointments;
 
 namespace Mauxnimale_CE2.ui.clients
 {
     internal class InterfaceNewClient : AInterface
     {
         // Mise en forme du haut et du bas de la fenêtre
+        private readonly AInterface originInterface;
         private readonly Header header;
         private readonly Footer footer;
         // Les différents éléments de la fenêtre
@@ -23,10 +25,11 @@ namespace Mauxnimale_CE2.ui.clients
         /// </summary>
         /// <param name="window"></param>
         /// <param name="user"></param>
-        public InterfaceNewClient(MainWindow window, SALARIE user) : base(window, user)
+        public InterfaceNewClient(MainWindow window, SALARIE user, AInterface originInterface) : base(window, user)
         {
             header = new Header(window);
             footer = new Footer(window, base.user);
+            this.originInterface = originInterface;
         }
 
         /// <summary>
@@ -106,8 +109,16 @@ namespace Mauxnimale_CE2.ui.clients
 
         private void BackPage(object sender, EventArgs e)
         {
-            window.Controls.Clear();
-            window.switchInterface(new InterfaceClient(window, user));
+            if (originInterface.GetType().ToString().Contains("InterfaceClient"))
+            {
+                window.Controls.Clear();
+                window.switchInterface(new InterfaceClient(window, user));
+            }
+            else if (originInterface.GetType().ToString().Contains("InterfaceAppointmentCreation"))
+            {
+                window.Controls.Clear();
+                window.switchInterface(new InterfaceAppointmentCreation(window, user));
+            }
         }
 
         /// <summary>

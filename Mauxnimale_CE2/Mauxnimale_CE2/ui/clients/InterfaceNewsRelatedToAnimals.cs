@@ -5,6 +5,7 @@ using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.api.controllers;
+using Mauxnimale_CE2.ui.appointments;
 
 namespace Mauxnimale_CE2.ui.clients
 {
@@ -80,10 +81,13 @@ namespace Mauxnimale_CE2.ui.clients
         private void BackPage(object sender, EventArgs e)
         {
             // Permet de retourne sur l'interface qui avait lancée cette interface
-            if (originInterface.GetType().ToString().Split('.')[2] == "InterfaceClient")
+            if (originInterface.GetType().ToString().Contains("InterfaceClient"))
             {
                 window.Controls.Clear();
                 window.switchInterface(new InterfaceClient(window, user));
+            }else if (originInterface.GetType().ToString().Contains("InterfaceAppointmentCreation")) {
+                window.Controls.Clear();
+                window.switchInterface(new InterfaceAppointmentCreation(window, user));
             }
         }
 

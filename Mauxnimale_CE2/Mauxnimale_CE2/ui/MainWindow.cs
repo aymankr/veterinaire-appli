@@ -1,4 +1,5 @@
 using Mauxnimale_CE2.ui;
+using Mauxnimale_CE2.ui.appointments;
 using System;
 using System.Windows.Forms;
 
@@ -12,11 +13,7 @@ namespace Mauxnimale_CE2
             InitializeComponent();
             Resize += new EventHandler(windowResize);
 
-<<<<<<< HEAD
-            interfac = new InterfaceConnection(this, null);
-=======
             interfac = new InterfaceAppointmentManagment(this, null);
->>>>>>> 45636f7 (modification des ordonnance fonctionnelle)
             interfac.load();
 
             Refresh();

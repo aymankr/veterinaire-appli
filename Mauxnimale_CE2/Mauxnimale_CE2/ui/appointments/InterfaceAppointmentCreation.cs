@@ -6,6 +6,7 @@ using Mauxnimale_CE2.ui.components;
 using Mauxnimale_CE2.ui.components.componentsTools;
 using Mauxnimale_CE2.api.entities;
 using Mauxnimale_CE2.api.controllers;
+using Mauxnimale_CE2.ui.clients;
 
 namespace Mauxnimale_CE2.ui.appointments
 {
@@ -463,13 +464,13 @@ namespace Mauxnimale_CE2.ui.appointments
         public void NewClientClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            //form.changerClasse(new Interface...());
+            window.switchInterface(new InterfaceNewClient(window, user, this));
         }
 
         public void NewAnimalClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            //form.changerClasse(new Interface...());
+            window.switchInterface(new InterfaceNewsRelatedToAnimals(window, user, this));
         }
 
         public void createConsultClick(object sender, EventArgs e)

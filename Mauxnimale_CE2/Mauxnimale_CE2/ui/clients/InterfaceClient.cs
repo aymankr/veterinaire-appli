@@ -270,7 +270,7 @@ namespace Mauxnimale_CE2.ui.clients
         private void OpenNewClientInterface(object sender, EventArgs e)
         {
             window.Controls.Clear();
-            window.switchInterface(new InterfaceNewClient(window, user));
+            window.switchInterface(new InterfaceNewClient(window, user, this));
         }
 
         /// <summary>

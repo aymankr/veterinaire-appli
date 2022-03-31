@@ -507,7 +507,7 @@ namespace Mauxnimale_CE2.ui.appointments
             if (modif)
             {
                 Console.WriteLine(products.Keys.ToString(), cares, prescription, diagnostic);
-                PrescriptionController.ModifPrescription(ordonnance, products, cares, prescription, diagnostic);
+                PrescriptionController.modifPrescription(ordonnance, products, cares, prescription, diagnostic);
             }
             else
             {

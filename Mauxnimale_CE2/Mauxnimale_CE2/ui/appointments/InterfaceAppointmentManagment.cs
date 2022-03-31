@@ -139,6 +139,12 @@ namespace Mauxnimale_CE2.ui.appointments
             calendar.Size = new Size(window.Width * 20 / 100, window.Height * 45 / 100);
             calendar.DateSelected += new DateRangeEventHandler(dateSelection);
             selectedDate = DateTime.Now;
+            List<DateTime> dateRDVs = new List<DateTime>(); 
+            foreach(RENDEZ_VOUS rdv in AppointmentController.getAllRDV())
+            {
+                dateRDVs.Add(rdv.JOURNEE.DATE);
+            }
+            calendar.BoldedDates = dateRDVs.ToArray();
             #endregion
 
             window.Controls.Add(consultOfDay);

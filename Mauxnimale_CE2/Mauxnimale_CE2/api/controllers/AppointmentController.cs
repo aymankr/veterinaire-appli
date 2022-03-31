@@ -88,5 +88,10 @@ namespace Mauxnimale_CE2.api.controllers
             rdv.RAISON = reason;
             DbContext.get().SaveChanges();
         }
+
+        public static List<RENDEZ_VOUS> getAllRDV()
+        {            
+            return DbContext.get().RENDEZ_VOUS.ToList();
+        }
     }
 }

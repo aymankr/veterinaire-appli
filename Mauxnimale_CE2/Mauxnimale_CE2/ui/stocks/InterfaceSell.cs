@@ -47,6 +47,7 @@ namespace Mauxnimale_CE2.ui.stocks
         {
             // Style
             _products = new CheckedListBox();
+            _products.Font = new Font("Poppins", window.Height * 2 / 100);
             _products.Size = new Size(window.Width / 4, window.Height / 2);
             _products.Location = new Point(window.Width / 20, window.Height / 4);
             _products.CheckOnClick = true;
@@ -105,6 +106,7 @@ namespace Mauxnimale_CE2.ui.stocks
             _clientsNameFilter = new TextBox();
             _clientsNameFilter.Size = new Size(window.Width / 4, window.Height / 20);
             _clientsNameFilter.Location = new Point(_clients.Left, _clients.Top - (10 + _clientsNameFilter.Height));
+            _clientsNameFilter.Font = new Font("Poppins", window.Height * 3 / 100);
 
             // Evenement
             _clientsNameFilter.TextChanged += onClientNameFilterType;
@@ -466,7 +468,7 @@ namespace Mauxnimale_CE2.ui.stocks
 
         public override void load()
         {
-            _header.load("Plannimaux - Réaliser une vente");
+            _header.load("Mauxnimal - Réaliser une vente");
             _footer.load();
 
             generateProductsList();

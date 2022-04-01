@@ -291,7 +291,7 @@ namespace Mauxnimale_CE2.ui.stocks
 
         public override void load()
         {
-            _header.load("Plannimaux - Modifier un produit");
+            _header.load("Mauxnimal - Modifier un produit");
             _footer.load();
             generateTextBoxes();
             generateTypeList();

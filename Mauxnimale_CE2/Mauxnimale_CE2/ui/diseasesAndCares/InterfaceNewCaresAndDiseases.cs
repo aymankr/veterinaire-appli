@@ -135,7 +135,7 @@ namespace Mauxnimale_CE2.ui.diseasesAndCares
 
             validateDiseaseForm = new UIButton(UIColor.ORANGE, "Ajouter", window.Width * 15 / 100)
             {
-                Font = new Font("Poppins", window.Height * 1 / 100),
+                Font = new Font("Poppins", window.Height * 2 / 100),
                 Height = window.Height / 25,
                 Location = new Point(window.Width * 7 / 50, window.Height * 15 / 20),
                 Size = new Size(window.Width * 3 / 10, window.Height * 1 / 15),
@@ -280,7 +280,7 @@ namespace Mauxnimale_CE2.ui.diseasesAndCares
 
             validateCareForm = new UIButton(UIColor.ORANGE, "Ajouter", window.Width * 15 / 100)
             {
-                Font = new Font("Poppins", window.Height * 1 / 100),
+                Font = new Font("Poppins", window.Height * 2 / 100),
                 Height = window.Height / 25,
                 Location = new Point(window.Width * 30 / 50, window.Height * 6 / 20),
                 Size = new Size(window.Width * 3 / 10, window.Height * 1 / 15),

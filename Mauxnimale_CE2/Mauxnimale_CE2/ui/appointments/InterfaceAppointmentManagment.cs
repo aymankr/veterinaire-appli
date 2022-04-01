@@ -183,9 +183,9 @@ namespace Mauxnimale_CE2.ui.appointments
             #endregion
 
             #region CreateOrdoButton
-            createOrdonnance = new UIButton(UIColor.DARKBLUE, "Créer ordonance", window.Width * 3 / 20);
+            createOrdonnance = new UIButton(UIColor.DARKBLUE, "Créer ordonnance", window.Width * 3 / 20);
             createOrdonnance.Location = new Point(window.Width * 23 / 40, window.Height * 14 / 20);
-            createOrdonnance.Click += new EventHandler(createOrdonanceClick);
+            createOrdonnance.Click += new EventHandler(createOrdonnanceClick);
             createOrdonnance.Enabled = false;    
             #endregion
 
@@ -484,7 +484,7 @@ namespace Mauxnimale_CE2.ui.appointments
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void createOrdonanceClick(object sender, EventArgs e)
+        public void createOrdonnanceClick(object sender, EventArgs e)
         {
             window.Controls.Clear();
             window.switchInterface(new InterfacePrescriptionCreation(window, user, selectedRdv,selectedAnimal));

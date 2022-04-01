@@ -26,7 +26,7 @@ namespace Mauxnimale_CE2.ui.accounts
 
         public override void load()
         {
-            header.load("Plannimaux - Gestion du compte");
+            header.load("Mauxnimal - Gestion du compte");
             footer.load();
             generateButton();
             generateTextBox();

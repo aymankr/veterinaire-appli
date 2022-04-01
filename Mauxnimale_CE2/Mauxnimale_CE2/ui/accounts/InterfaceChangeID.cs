@@ -34,7 +34,7 @@ namespace Mauxnimale_CE2.ui.accounts
         /// </summary>
         public override void load()
         {
-            header.load("Plannimaux - Changement d'identifiant");
+            header.load("Mauxnimal - Changement d'identifiant");
             footer.load();
             generateTextBox();
             generateLabel();

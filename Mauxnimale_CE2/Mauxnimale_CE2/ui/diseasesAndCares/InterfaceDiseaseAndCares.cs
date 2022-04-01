@@ -96,7 +96,7 @@ namespace Mauxnimale_CE2.ui.diseasesAndCares
             newDisease = new UIButton(UIColor.ORANGE, "Nouveau", window.Width / 8)
             {
                 Height = window.Height / 25,
-                Location = new Point(window.Width * 20 / 1000, window.Height * 10 / 15)
+                Location = new Point(window.Width * 20 / 1000, window.Height * 30 / 40)
             };
             newDisease.Click += new EventHandler(OpenNewCareAndDiseseaseInterface);
             window.Controls.Add(newDisease);
@@ -104,21 +104,21 @@ namespace Mauxnimale_CE2.ui.diseasesAndCares
             deleteDisease = new UIButton(UIColor.ORANGE, "Supprimer", window.Width / 8)
             {
                 Height = window.Height / 25,
-                Location = new Point(window.Width * 295 / 1000, window.Height * 10 / 15)
+                Location = new Point(window.Width * 295 / 1000, window.Height * 30 / 40)
             };
             deleteDisease.Click += new EventHandler(DeleteDisease);
 
             updateDisease = new UIButton(UIColor.ORANGE, "Modifier", window.Width / 8)
             {
                 Height = window.Height / 25,
-                Location = new Point(window.Width * 157 / 1000, window.Height * 10 / 15)
+                Location = new Point(window.Width * 157 / 1000, window.Height * 30 / 40)
             };
             updateDisease.Click += new EventHandler(OpenUpdateCareAndDiseaseInterface);
 
             newCare = new UIButton(UIColor.ORANGE, "Nouveau", window.Width / 8)
             {
                 Height = window.Height / 25,
-                Location = new Point(window.Width * 520 / 1000, window.Height * 10 / 15)
+                Location = new Point(window.Width * 520 / 1000, window.Height * 30 / 40)
             };
             newCare.Click += new EventHandler(OpenNewCareAndDiseseaseInterface);
             window.Controls.Add(newCare);
@@ -126,14 +126,14 @@ namespace Mauxnimale_CE2.ui.diseasesAndCares
             deleteCare = new UIButton(UIColor.ORANGE, "Supprimer", window.Width / 8)
             {
                 Height = window.Height / 25,
-                Location = new Point(window.Width * 789 / 1000, window.Height * 10 / 15)
+                Location = new Point(window.Width * 789 / 1000, window.Height * 30 / 40)
             };
             deleteCare.Click += new EventHandler(DeleteCare);
 
             updateCare = new UIButton(UIColor.ORANGE, "Modifier", window.Width / 8)
             {
                 Height = window.Height / 25,
-                Location = new Point(window.Width * 655 / 1000, window.Height * 10 / 15)
+                Location = new Point(window.Width * 655 / 1000, window.Height * 30 / 40)
             };
             updateCare.Click += new EventHandler(OpenUpdateCareAndDiseaseInterface);
         }
@@ -145,10 +145,10 @@ namespace Mauxnimale_CE2.ui.diseasesAndCares
         {
             diseasesLB = new ListBox
             {
-                Font = new Font("Poppins", window.Height / 100),
+                Font = new Font("Poppins", window.Height * 2 / 100),
                 ForeColor = Color.Black,
                 BackColor = Color.White,
-                Location = new Point(window.Width * 20 / 1000, window.Height * 2 / 14),
+                Location = new Point(window.Width * 20 / 1000, window.Height * 10 / 40),
                 Size = new Size(window.Width * 40 / 100, window.Height * 50 / 100)
             };
             window.Controls.Add(diseasesLB);
@@ -156,10 +156,10 @@ namespace Mauxnimale_CE2.ui.diseasesAndCares
 
             caresLB = new ListBox
             {
-                Font = new Font("Poppins", window.Height / 100),
+                Font = new Font("Poppins", window.Height * 2 / 100),
                 ForeColor = Color.Black,
                 BackColor = Color.White,
-                Location = new Point(window.Width * 520 / 1000, window.Height * 2 / 14),
+                Location = new Point(window.Width * 520 / 1000, window.Height * 10 / 40),
                 Size = new Size(window.Width * 40 / 100, window.Height * 50 / 100)
             };
             window.Controls.Add(caresLB);
@@ -177,7 +177,7 @@ namespace Mauxnimale_CE2.ui.diseasesAndCares
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 ForeColor = Color.Gray,
                 BackColor = Color.White,
-                Location = new Point(window.Width * 20 / 1000, window.Height / 10),
+                Location = new Point(window.Width * 20 / 1000, window.Height * 9 / 40),
                 Size = new Size(window.Width * 40 / 100, window.Height * 50 / 100)
             };
             window.Controls.Add(researchDisease);
@@ -190,7 +190,7 @@ namespace Mauxnimale_CE2.ui.diseasesAndCares
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 ForeColor = Color.Gray,
                 BackColor = Color.White,
-                Location = new Point(window.Width * 520 / 1000, window.Height / 10),
+                Location = new Point(window.Width * 520 / 1000, window.Height * 9 / 40),
                 Size = new Size(window.Width * 40 / 100, window.Height * 50 / 100)
             };
             window.Controls.Add(researchCare);

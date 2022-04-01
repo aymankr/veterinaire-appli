@@ -114,7 +114,7 @@ namespace Mauxnimale_CE2.ui.appointments
 
             #region Selected Animals Label
             selectedAnimalsLabel = new Label();
-            selectedAnimalsLabel.Text = "Annimaux au RDV";
+            selectedAnimalsLabel.Text = "Animaux au RDV";
             selectedAnimalsLabel.TextAlign = ContentAlignment.MiddleLeft;
             selectedAnimalsLabel.Font = new Font("Poppins", window.Height * 2 / 100);
             selectedAnimalsLabel.ForeColor = UIColor.DARKBLUE;

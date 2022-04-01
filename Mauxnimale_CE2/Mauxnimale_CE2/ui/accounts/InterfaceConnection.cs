@@ -25,14 +25,14 @@ namespace Mauxnimale_CE2.ui
 
         public override void load()
         {
-            header.load("Connection");
+            header.load("Connexion");
             generate_Button();
             generate_TextBox();
         }
 
         public void generate_Button()
         {
-            connectionButton = new UIButton(UIColor.ORANGE, "Connection", 190);
+            connectionButton = new UIButton(UIColor.ORANGE, "Connexion", 190);
             connectionButton.Font = UIFont.BigButtonFont;
             connectionButton.Location = new Point((this.window.Width / 2) - (connectionButton.Width / 2) - 25, 2 * (this.window.Height / 3));
             window.Controls.Add(connectionButton);

@@ -34,7 +34,7 @@ namespace Mauxnimale_CE2.ui.accounts
         /// </summary>
         public override void load()
         {
-            header.load("Plannimaux - Changement de mot de passe");
+            header.load("Mauxnimal - Changement de mot de passe");
             footer.load();
             generateTextBox();
             generateLabel();

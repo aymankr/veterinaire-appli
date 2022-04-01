@@ -52,7 +52,7 @@ namespace Mauxnimale_CE2.ui.stocks
         public void generateButtons()
         {
             _addProductButton = new UIButton(UIColor.ORANGE, "Nouveau Produit", Math.Min(window.Width / 3, window.Height / 2));
-            _addProductButton.Location = new Point(window.Width * 2 / 5, window.Height * 75 / 100);
+            _addProductButton.Location = new Point(window.Width * 2 / 5, window.Height * 60 / 100);
             _addProductButton.Click += new EventHandler(newProductClick);
             window.Controls.Add(_addProductButton);
 
@@ -261,7 +261,7 @@ namespace Mauxnimale_CE2.ui.stocks
 
         public override void load()
         {
-            _header.load("Plannimaux - Nouveau produit");
+            _header.load("Mauxnimal - Nouveau produit");
             _footer.load();
             generateTextBoxes();
             generateBox();

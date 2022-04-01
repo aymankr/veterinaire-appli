@@ -98,11 +98,11 @@ namespace Mauxnimale_CE2.ui.employees
 
         private void generateButtons()
         {
-            _addVacationButton = new UIButton(UIColor.ORANGE, "Add vacation", 250);
+            _addVacationButton = new UIButton(UIColor.ORANGE, "Ajouter Congé", 250);
             _addVacationButton.Location = new Point(_calendar.Left - 25, window.Height - 300);
             _addVacationButton.Click += onAddVacationClick;
 
-            _removeVacationButton = new UIButton(UIColor.ORANGE, "Remove vacation", 250);
+            _removeVacationButton = new UIButton(UIColor.ORANGE, "Retirer Congé", 250);
             _removeVacationButton.Location = new Point(_addVacationButton.Right + 20, window.Height - 300);
             _removeVacationButton.Click += onRemoveVacationClick;
         }

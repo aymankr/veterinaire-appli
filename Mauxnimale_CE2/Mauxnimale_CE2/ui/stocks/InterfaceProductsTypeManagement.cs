@@ -40,6 +40,8 @@ namespace Mauxnimale_CE2.ui.stocks
             _typesList = new ListBox();
             _typesList.Size = new Size(window.Width / 4, window.Height / 2);
             _typesList.Location = new Point(window.Width / 20, window.Height / 3);
+            _typesList.Font = new Font("Poppins", window.Height * 2 / 100);
+
 
             // Données
             updateTypeList(ProductController.getTypes());

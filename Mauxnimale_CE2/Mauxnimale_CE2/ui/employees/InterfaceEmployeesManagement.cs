@@ -36,6 +36,7 @@ namespace Mauxnimale_CE2.ui.employees
             generateVacationButton();
             generateForm();
             generateModifyInfosButton();
+            generateDeleteButton();
             setFormEnabled(false);
         }
 
@@ -61,32 +62,32 @@ namespace Mauxnimale_CE2.ui.employees
 
         private void generateVacationButton()
         {
-            _vacationManagementButton = new UIButton(UIColor.ORANGE, "Gestion des congés", 200);
+            _vacationManagementButton = new UIButton(UIColor.ORANGE, "Gestion des congés", window.Width * 2 / 10);
             _vacationManagementButton.Name = "VacationManagementButon";
             _vacationManagementButton.Location = new Point(_employeesList.Location.X + _employeesList.Width / 2 - _vacationManagementButton.Width / 2,
-                                                           window.Height - 300);
+                                                           window.Height * 30 / 40);
             _vacationManagementButton.Click += new EventHandler(onVacationManagementButtonClick);
         }
 
         private void generateModifyInfosButton()
         {
-            _modifyInfosButton = new UIButton(UIColor.ORANGE, "Modifier les informations", 200);
+            _modifyInfosButton = new UIButton(UIColor.ORANGE, "Modifier les informations", window.Width * 2 / 10);
             _modifyInfosButton.Name = "ModifyInfosButton";
-            _modifyInfosButton.Location = new Point(_salary.Location.X + _salary.Width / 2 - _modifyInfosButton.Width / 2, window.Height - 300);
+            _modifyInfosButton.Location = new Point(_salary.Location.X + _salary.Width / 2 - _modifyInfosButton.Width / 2, window.Height * 30 / 40);
             _modifyInfosButton.Click += new EventHandler(onModifyInfosClick);
             _modifyInfosButton.Enabled = false;
 
-            _createEmployee = new UIButton(UIColor.ORANGE, "Créer un compte", window.Width / 4);
-            _createEmployee.Location = new Point(_employeesList.Location.X + _employeesList.Width / 2 - _vacationManagementButton.Width / 2, window.Height * 5 / 10);
+            _createEmployee = new UIButton(UIColor.ORANGE, "Créer un compte", window.Width * 2 / 10);
+            _createEmployee.Location = new Point(_employeesList.Location.X + _employeesList.Width / 2 - _createEmployee.Width / 2, window.Height * 18 / 40);
             _createEmployee.Click += new EventHandler(createEmployeeClick);
             window.Controls.Add(_createEmployee);
         }
 
         private void generateDeleteButton()
         {
-            _deleteButton = new UIButton(UIColor.ORANGE, "Supprimer employé", window.Width / 6);
+            _deleteButton = new UIButton(UIColor.ORANGE, "Supprimer compte", window.Width * 2 / 10);
             _deleteButton.Name = "DeleteButton";
-            _deleteButton.Location = new Point(window.Width * 3 / 8, window.Height  * 6 / 8);
+            _deleteButton.Location = new Point(_employeesList.Location.X + _employeesList.Width / 2 - _deleteButton.Width / 2, window.Height * 24 / 40);
             _deleteButton.Click += new EventHandler(deleteButtonClick);
         }
 
@@ -276,6 +277,7 @@ namespace Mauxnimale_CE2.ui.employees
         /// <param name="enabled">true pour autoriser, false pour interdire.</param>
         private void setFormEnabled(bool enabled)
         {
+
             _deleteButton.Enabled = enabled;
             _salary.Enabled = enabled;
             _internshipStart.Enabled = enabled;

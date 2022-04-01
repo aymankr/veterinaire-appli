@@ -53,7 +53,7 @@ namespace Mauxnimale_CE2.ui.appointments
 
         public void GenerateButtons()
         {
-            confirmNewType = new UIButton(UIColor.ORANGE, "Ajouter le type", 190)
+            confirmNewType = new UIButton(UIColor.ORANGE, "Ajouter le type", window.Width * 5 / 20)
             {
                 Font = UIFont.BigButtonFont,
                 Enabled = false

@@ -23,7 +23,7 @@ namespace Mauxnimale_CE2.ui
         public void generateLabel()
         {
             text = new Label();
-            text.Text = "MENTIONS LÉGALES \n \n L’application Plannimaux® est éditée par l’équipe projet S3A - E1, enregistrée au registre de l’IUT Informatique de Bordeaux(33). \n \n Hébergeur des Services: OVH –  2 rue Kellermann – 59100 ROUBAIX – France ";
+            text.Text = "MENTIONS LÉGALES \n \n L’application Mauxnimal® est éditée par l’équipe projet S3A - E1, enregistrée au registre de l’IUT Informatique de Bordeaux(33). \n \n Hébergeur des Services: OVH –  2 rue Kellermann – 59100 ROUBAIX – France ";
             text.TextAlign = ContentAlignment.MiddleLeft;
             text.Font = new System.Drawing.Font("Poppins", window.Height * 2 / 100);
             text.ForeColor = Color.Black;
@@ -33,7 +33,7 @@ namespace Mauxnimale_CE2.ui
         }
         public override void load()
         {
-            header.load("Plannimaux");
+            header.load("Mauxnimal");
             footer.load();
             generateLabel();
             generateButton();

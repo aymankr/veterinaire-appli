@@ -23,7 +23,7 @@ namespace Mauxnimale_CE2.ui
         public void generateLabel()
         {
             text = new Label();
-            text.Text = "En cas de problème avec l’application Plannimaux®, nous sommes joignables à ces coordonnées \n \n Téléphone: 06 95 35 69 27 \n E - mail : contact @lesdevs.com";
+            text.Text = "En cas de problème avec l’application Mauxnimal®, nous sommes joignables à ces coordonnées \n \n Téléphone: 06 95 35 69 27 \n E - mail : contact @lesdevs.com";
             text.TextAlign = ContentAlignment.MiddleLeft;
             text.Font = new System.Drawing.Font("Poppins", window.Height * 2 / 100);
             text.ForeColor = Color.Black;
@@ -33,7 +33,7 @@ namespace Mauxnimale_CE2.ui
         }
         public override void load()
         {
-            header.load("Plannimaux");
+            header.load("Mauxnimal");
             footer.load();
             generateLabel();
             generateButton();

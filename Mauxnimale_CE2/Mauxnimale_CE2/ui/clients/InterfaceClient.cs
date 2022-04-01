@@ -62,10 +62,10 @@ namespace Mauxnimale_CE2.ui.clients
                 Font = new Font("Poppins", window.Height / 100),
                 ForeColor = Color.Black,
                 BackColor = Color.White,
-                Location = new Point(window.Width * 20 / 1000, window.Height * 2 / 14)
+                Location = new Point(window.Width * 20 / 1000, window.Height * 10 / 40)
             };
             ;
-            listClient.Size = new Size(window.Width * 40 / 100, window.Height * 50 / 100);
+            listClient.Size = new Size(window.Width * 40 / 100, window.Height * 38 / 100);
             window.Controls.Add(listClient);
             listClient.SelectedIndexChanged += new EventHandler(ClientSelection);
 
@@ -75,8 +75,8 @@ namespace Mauxnimale_CE2.ui.clients
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 ForeColor = Color.Black,
                 BackColor = Color.White,
-                Location = new Point(window.Width * 20 / 1000, window.Height * 9 / 14),
-                Size = new Size(window.Width * 40 / 100, window.Height * 16 / 100)
+                Location = new Point(window.Width * 20 / 1000, window.Height * 25 / 40),
+                Size = new Size(window.Width * 40 / 100, window.Height * 15 / 100)
             };
             window.Controls.Add(listInfoClient);
 
@@ -86,8 +86,8 @@ namespace Mauxnimale_CE2.ui.clients
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 ForeColor = Color.Black,
                 BackColor = Color.White,
-                Location = new Point(window.Width * 520 / 1000, window.Height * 2 / 14),
-                Size = new Size(window.Width * 37 / 100, window.Height * 50 / 100)
+                Location = new Point(window.Width * 520 / 1000, window.Height * 10 / 40),
+                Size = new Size(window.Width * 37 / 100, window.Height * 38 / 100)
             };
             window.Controls.Add(listAnimal);
             listAnimal.SelectedIndexChanged += new EventHandler(AnimalSelection);
@@ -98,8 +98,8 @@ namespace Mauxnimale_CE2.ui.clients
                 Font = new Font("Poppins", window.Height * 1 / 100),
                 ForeColor = Color.Black,
                 BackColor = Color.White,
-                Location = new Point(window.Width * 520 / 1000, window.Height * 9 / 14),
-                Size = new Size(window.Width * 37 / 100, window.Height * 16 / 100)
+                Location = new Point(window.Width * 520 / 1000, window.Height * 25 / 40),
+                Size = new Size(window.Width * 37 / 100, window.Height * 15 / 100)
             };
             window.Controls.Add(listInfoAnimal);
         }
@@ -113,7 +113,7 @@ namespace Mauxnimale_CE2.ui.clients
             researchBar.Font = new Font("Poppins", window.Height * 1 / 100);
             researchBar.ForeColor = Color.Black;
             researchBar.BackColor = Color.White;
-            researchBar.Location = new Point(window.Width * 20 / 1000, window.Height / 10);
+            researchBar.Location = new Point(window.Width * 20 / 1000, window.Height * 8 / 40);
             researchBar.Size = new Size(window.Width * 22 / 100, window.Height * 5 / 100);
             window.Controls.Add(researchBar);
             researchBar.TextChanged += new EventHandler(Research);
@@ -171,7 +171,7 @@ namespace Mauxnimale_CE2.ui.clients
             byName = new UIButton(UIColor.ORANGE, "Par nom", window.Width / 12)
             {
                 Font = new Font("Poppins", window.Height * 1 / 100),
-                Location = new Point(window.Width * 245 / 1000, window.Height / 11)
+                Location = new Point(window.Width * 245 / 1000, window.Height * 8 / 40)
             };
             window.Controls.Add(byName);
             byName.Click += new EventHandler(ChangeMode);
@@ -179,7 +179,7 @@ namespace Mauxnimale_CE2.ui.clients
             bySurname = new UIButton(UIColor.LIGHTBLUE, "Par prénom", window.Width / 12)
             {
                 Font = new Font("Poppins", window.Height * 1 / 100),
-                Location = new Point(window.Width * 335 / 1000, window.Height / 11)
+                Location = new Point(window.Width * 335 / 1000, window.Height * 8 / 40)
             };
             window.Controls.Add(bySurname);
             bySurname.Click += new EventHandler(ChangeMode);

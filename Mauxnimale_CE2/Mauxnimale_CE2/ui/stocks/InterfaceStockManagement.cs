@@ -207,6 +207,7 @@ namespace Mauxnimale_CE2.ui.stocks
                                                              new Point(0, i * (_productsContainer.Height / 4 + 10)),
                                                              removeProductFromView,
                                                              window, user);
+                stockProduct.Font = new Font("Poppins", window.Height * 2    / 100);
                 _products.Add(stockProduct);
                 _productsContainer.Controls.Add(stockProduct);
                 i++;
@@ -293,7 +294,7 @@ namespace Mauxnimale_CE2.ui.stocks
 
         public override void load()
         {
-            _header.load("Plannimaux - Gestion des stocks");
+            _header.load("Mauxnimal - Gestion des stocks");
             _footer.load();
 
             generateBackButton();

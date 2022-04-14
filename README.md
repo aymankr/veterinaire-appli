@@ -15,7 +15,7 @@ Pour utiliser l’application, il est nécessaire :
 
 Pour obtenir l’application, il faut tout d’abord télécharger l’archive .zip disponible ici : 
 
-[https://gitlab-ce.iut.u-bordeaux.fr/groupe-pt4-s4p2c-e2/pt4_veto_s4p2c_e2/-/blob/main/Release.7z](https://gitlab-ce.iut.u-bordeaux.fr/groupe-pt4-s4p2c-e2/pt4_veto_s4p2c_e2/-/blob/main/Release.7z) 
+[https://github.com/aymankr/veterinaire-appli/blob/main/Release.7z](https://github.com/aymankr/veterinaire-appli/blob/main/Release.7z) 
 
 et extraire son contenue dans le répertoire de votre choix.
 
